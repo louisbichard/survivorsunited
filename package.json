@@ -1,0 +1,17 @@
+{
+  "name": "survivorsunited",
+  "version": "1.0.0",
+  "description": "Dashboard based website for survivors united",
+  "main": "backend/apibroker.js",
+  "dependencies": {
+    "colors": "^1.0.2",
+    "express": "^4.9.5",
+    "passport": "^0.2.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Louis John Bichard",
+  "license": "ISC"
+}
