@@ -1,17 +1,117 @@
-<html>
+<html ng-app="SU">
 
 <head>
-    <!-- Require jQuery & Boostrap in head to prevent flash first -->
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <!-- ================BOOTSTRAP================ -->
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+    <!-- ================FONT AWESOME================ -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <!-- ================SURVIVORS UNITED SPECIFIC================ -->
+    <link type="text/css" href="./styles/utilities.css">
 </head>
 
-<body>
+<body ng-controller="mainController">
+    <header>
+        <nav class="navbar navbar-default">
+            <div class="container">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="/">Survivors United</a>
+                </div>
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="#search">
+                            <i class="fa fa-search"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#messages">
+                            <i class="fa fa-envelope"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#notifications">
+                            <i class="fa fa-bell"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#login">  Login (You are not logged in)</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
     <div class="container">
-        <p>Node server running at: http://127.0.0.1:3000/</p>
-        <p>Hello world!</p>
+        <div class="row">
+            <div class="col-md-3 col-lg-3">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <h4>Main</h4>
+                                <p><a href="#"><i class="fa fa-home"></i> Dashboard</a>
+                                </p>
+                                <p><a href="#mentor"><i class="fa fa-male"></i> Mentor</a>
+                                </p>
+                                <p><a href="#forum"><i class="fa fa-home"></i> Forum</a>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <h4>Events</h4>
+                                <p>
+                                    <a href="#upcoming_events"><i class="fa fa-calendar"></i> Upcoming events</a> 
+                                </p>
+                                <p>
+                                    <a href="#events_calendar"><i class="fa fa-calendar"></i> Events calendar</a> 
+                                </p>
+                                <p>
+                                    <a href="#watched_events"><i class="fa fa-eye"></i> Watched events</a> 
+                                </p>
+                                <p>
+                                    <a href="#subscribed_events"><i class="fa fa-home"></i> Subscribed events</a> 
+                                </p>
+                                <p>
+                                    <a href="#create_event"><i class="fa fa-plus"></i> Create event</a> 
+                                </p>
+                            </div>
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <h4>Account</h4>
+                                <p><a href="#account"><i class="fa fa-user"></i> Account details</a>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <h4>Admin</h4>
+                                <p><a href="#account"><i class="fa fa-users"></i> User management</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-9 col-lg-9">
+                <div id="main">
+                    <div ng-view></div>
+                    {{ message }}
+                </div>
+            </div>
+        </div>
     </div>
+
+    <!-- ================JQUERY================ -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <!-- ================BOOTSTRAP================ -->
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <!-- ================ANGULAR LIBRARIES================ -->
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js"></script>
+    <script src="/bower_components/angular-route/angular-route.js"></script>
+    <!-- ================ANGULAR CUSTOM================ -->
+    <script src="./scripts/app.js"></script>
 </body>
 
 </html>
