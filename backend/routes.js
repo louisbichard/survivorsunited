@@ -15,7 +15,7 @@ module.exports = function(app, passport) {
     //DEFAULT ENDPOINT
     //----------------
     app.get('/', function(req, res) {
-        res.end("isAuth called, is auth " + req.isAuthenticated() );
+        res.end("isAuth called, is auth " + req.isAuthenticated());
     });
 
     //AUTHENTICATION API'S
@@ -24,41 +24,60 @@ module.exports = function(app, passport) {
     //LOGIN
     //-----
     app.post('/login', passport.authenticate('local'), function(req, res, next) {
-        res.end("isAuth called, is auth " + req.isAuthenticated() );
+        res.end("isAuth called, is auth " + req.isAuthenticated());
     });
 
     //LOGOUT
     //-----
     app.get('/logout', function(req, res) {
         req.logout();
-        res.end("isAuth called, is auth " + req.isAuthenticated() );
+        res.end("isAuth called, is auth " + req.isAuthenticated());
+    });
+
+    //REGISTER
+    //-----
+    app.post('/register', function(req, res) {
+        colourful_output('/register');        
+
+        var result = require('./auth/register.js')(res, req);
+        return result.then(function(data) {
+            data = JSON.stringify(data);
+            return res.end(data);
+        }).caught(function(err) {
+            // **TODO** Implement better handling
+            err = JSON.stringify(err);
+            return res.end(err);
+        })
     });
 
     //IS AUTHENTICATED
     //----------------
     app.get('/isAuthenticated', function(req, res) {
-        res.end("isAuth called, is auth " + req.isAuthenticated() );
+        res.end("isAuth called, is auth " + req.isAuthenticated());
     });
 
     //USER API'S
     //==========
 
     //USER ENDPOINTS
-    //--------------
+    //--------------    
     app.get('/user/listall', function(req, res) {
-
-        // Verbose output
-        console.log('API called: '.green + 'listall'.blue);
+        colourful_output('/user/listall');
 
         // Return and display API
         var result = require('./users/listall.js')();
-        return result.then(function(data){
-            return res.end(data);    
-        }).caught(function(err){
-            // **TODO** Implement better handling
-            console.log(err);
+        return result.then(function(data) {                            
+            return res.end(data);
+        }).caught(function(err) {
+            
+            // **TODO** Implement better handling            
             return res.end(err);
         })
     });
 
 };
+
+
+var colourful_output = function(api_name) {
+    console.log('API called: '.green + api_name.blue);
+}
