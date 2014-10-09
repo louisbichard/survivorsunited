@@ -1,0 +1,56 @@
+
+[{
+    "ID": 123456789,
+    "username": "some_username",
+    "password": "password", 
+    "date_created": "24-03-2014", 
+    "first_name": "bob", 
+    "role": "Basic", 
+    "mentor": {
+        "id": 33467878090,
+        "assigned": true
+    },
+    "address": {
+        "name": "The old church",
+        "number": 5, 
+        "street": "High street", 
+        "postcode": "S52 LDG"
+    }
+},
+{
+    "ID": 123456789,
+    "username": "some_other_username",
+    "password": "password", 
+    "date_created": "24-03-2014", 
+    "first_name": "Kath", 
+    "role": "Admin", 
+    "mentor": {
+        "id": 33467878090,
+        "assigned": true
+    },
+    "address": {
+        "name": "The old church",
+        "number": 5, 
+        "street": "High street", 
+        "postcode": "S52 LDG"
+    }
+}, 
+{
+    "ID": 123456789,
+    "username": "some_other_username",
+    "password": "password", 
+    "date_created": "24-03-2014", 
+    "first_name": "Kath", 
+    "role": "Admin", 
+    "mentor": {
+        "id": 33467878090,
+        "assigned": true
+    },
+    "address": {
+        "name": "The old church",
+        "number": 5, 
+        "street": "High street", 
+        "postcode": "S52 LDG"
+    }
+}
+]
