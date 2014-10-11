@@ -9,8 +9,13 @@ var colors = require('colors');
 
 module.exports = function(app, passport) {
 
-    //DEFAULT (ROOT) API
-    //==================
+    //ALLOW CORS
+    //----------
+    app.all('*', function(req, res, next) {
+        res.header("Access-Control-Allow-Origin", "*");
+        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+        next();
+    });
 
     //DEFAULT ENDPOINT
     //----------------
@@ -37,11 +42,11 @@ module.exports = function(app, passport) {
     //REGISTER
     //-----
     app.post('/register', function(req, res) {
-        colourful_output('/register');        
-
+        colourful_output('/register');
         var result = require('./auth/register.js')(res, req);
-        return result.then(function(data) {
+        return result.then(function(data) {            
             data = JSON.stringify(data);
+
             return res.end(data);
         }).caught(function(err) {
             // **TODO** Implement better handling
@@ -66,11 +71,24 @@ module.exports = function(app, passport) {
 
         // Return and display API
         var result = require('./users/listall.js')();
-        return result.then(function(data) {                            
+        return result.then(function(data) {
             return res.end(data);
         }).caught(function(err) {
-            
+
             // **TODO** Implement better handling            
+            return res.end(err);
+        })
+    });
+
+    app.post('/user/remove', function(req, res) {
+        colourful_output('/user/remove');
+        var result = require('./users/remove.js')(res, req);
+        return result.then(function(data) {            
+            data = JSON.stringify(data);
+            return res.end(data);
+        }).caught(function(err) {
+            // **TODO** Implement better handling
+            err = JSON.stringify(err);
             return res.end(err);
         })
     });

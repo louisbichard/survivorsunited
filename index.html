@@ -1,12 +1,23 @@
 <html ng-app="SU">
 
+
+
+
+
+<link rel="shortcut icon" href="./assets/survivorsunited.ico" />
+
+
 <head>
     <!-- ================BOOTSTRAP================ -->
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
     <!-- ================FONT AWESOME================ -->
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <!-- ================TOASTR STYLES================ -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet">
     <!-- ================SURVIVORS UNITED SPECIFIC================ -->
     <link type="text/css" href="./styles/utilities.css">
+    <!-- ================ANGULAR STYLES UNITED SPECIFIC================ -->
+    <link type="text/css" href="./styles/angular.css">    
 </head>
 
 <body ng-controller="mainController">
@@ -43,7 +54,7 @@
 
     <div class="container">
         <div class="row">
-            <div class="col-md-3 col-lg-3">
+            <div class="col-sm-3 col-md-3 col-lg-3">
                 <div class="panel panel-default">
                     <div class="panel-body">
                         <div class="panel panel-default">
@@ -87,31 +98,40 @@
                         <div class="panel panel-default">
                             <div class="panel-body">
                                 <h4>Admin</h4>
-                                <p><a href="#account"><i class="fa fa-users"></i> User management</a>
+                                <p><a href="#user_management"><i class="fa fa-users"></i> User management</a>
                                 </p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-9 col-lg-9">
+            <div class="col-sm-9 col-md-9 col-lg-9">
                 <div id="main">
                     <div ng-view></div>
-                    {{ message }}
                 </div>
             </div>
         </div>
     </div>
-
+    <!-- ================NPM INSTALLED PACKAGES============== -->
+    <script src="./scripts/bundle.js"></script>
     <!-- ================JQUERY================ -->
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <!-- ================BOOTSTRAP================ -->
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <!-- ================TOASTR NOTIFICATIONS================ -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
     <!-- ================ANGULAR LIBRARIES================ -->
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js"></script>
     <script src="/bower_components/angular-route/angular-route.js"></script>
     <!-- ================ANGULAR CUSTOM================ -->
     <script src="./scripts/app.js"></script>
+    <!-- ================ANGULAR CUSTOM================ -->
+    <script src="./scripts/notifications.js"></script>
+    <!-- ================ANGULAR CUSTOM================ -->
+    <script src="./scripts/user_management_controller.js"></script>
+    <!-- ================ANGULAR ROUTES================ -->
+    <script src="./scripts/angular.routes.js"></script>
+
 </body>
 
 </html>

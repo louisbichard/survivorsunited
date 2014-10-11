@@ -57,7 +57,7 @@ module.exports = function(res, req) {
 
             // Extend username and password with a timebased uuid
             _.extend(post_params, {
-                ID: uuid.v1(),
+                id: uuid.v1(),
                 date_created: new Date().getTime(),
                 role: "basic"
             });
