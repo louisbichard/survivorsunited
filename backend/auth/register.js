@@ -14,8 +14,6 @@ var _ = require('lodash');
 module.exports = function(res, req) {
     var post_params = req.body;
 
-    console.log(new Date());
-
     //VALIDATION
     //-------------------------------------------------
     // Username and Password must be present
@@ -78,8 +76,5 @@ module.exports = function(res, req) {
                 error: "unable to read file, because: " + e.message
             }
         });
-
-    //TERMINATE THE API
-
 
 };

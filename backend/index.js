@@ -33,43 +33,16 @@ app.use(cookieParser())
         secret: 'lou',
         resave: true,
         saveUninitialized: true
-    }))
+    }));
 
-//###INITIALISING PASSPORT
-    .use(passport.initialize())
-    .use(passport.session());
+//##COOKIE SETUP
+require('./utilities/cookies.js')(app); // load our routes and pass in our app and fully configured passport
 
-//###PASSPORT LOCAL STRATEGY
-passport.use(new passportLocal.Strategy(function(username, password, done) {    
-    console.log(' in passport strat', username, password, done);
-    // **TODO:** Update to fake DB
-    if (username === password) return done(null, {
-        id: username,
-        name: username
-    });
-    else return done(null, null);
-
-}));
-
-//###PASSPORT SERALISE USER
-passport.serializeUser(function(user, done) {
-  console.log('serialising', user, done);
-    done(null, user.id);
-});
-
-//###PASSPORT DESERIALISE USER
-passport.deserializeUser(function(id, done) {
-    //Query database or cache here
-    console.log('deserialising', id, done);
-    done(null, {
-        id: id,
-        name: id
-    });
-});
+//##HEADER SETUP
+require('./utilities/headers.js')(app); // load our routes and pass in our app and fully configured passport
 
 //##ROUTES
-
-require('./routes.js')(app, passport); // load our routes and pass in our app and fully configured passport
+require('./utilities/backend.routes.js')(app, passport); // load our routes and pass in our app and fully configured passport
 
 //##PORT SETUP
 app.listen(port);

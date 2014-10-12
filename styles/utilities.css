@@ -1,3 +1,10 @@
 .full-width {
 	width: 100%;
 }
+
+.cats {
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+}

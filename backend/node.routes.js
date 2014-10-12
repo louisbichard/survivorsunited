@@ -1,42 +1,44 @@
 //REQUIRED LIBRARIES
 //------------------
-var url = require('url');
-var incrementer = 0;
 var colors = require('colors');
+var uuid = require('node-uuid');
+var sessions = require('./auth/sessions.js');
 
 //API ENDPOINTS
 //=============
 
-module.exports = function(app, passport) {
-
-    //ALLOW CORS
-    //----------
-    app.all('*', function(req, res, next) {
-        res.header("Access-Control-Allow-Origin", "*");
-        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-        next();
-    });
-
-    //DEFAULT ENDPOINT
-    //----------------
-    app.get('/', function(req, res) {
-        res.end("isAuth called, is auth " + req.isAuthenticated());
-    });
+module.exports = function(app) {
 
     //AUTHENTICATION API'S
     //====================
 
     //LOGIN
     //-----
-    app.post('/login', passport.authenticate('local'), function(req, res, next) {
-        res.end("isAuth called, is auth " + req.isAuthenticated());
+    app.post('/auth/login', function(req, res, next) {
+        colourful_output('/auth/login');
+        var result = require('./auth/login.js')(res, req);
+        return result.then(function(data) {
+            data = JSON.stringify(data);
+            return res.end(data);
+        }).caught(function(err) {
+            // **TODO** Implement better handling
+            err = JSON.stringify(err);
+            return res.end(err);
+        });
     });
 
-    //LOGOUT
+        //LOGIN
     //-----
-    app.get('/logout', function(req, res) {
-        req.logout();
-        res.end("isAuth called, is auth " + req.isAuthenticated());
+    app.get('/auth/isauthenticated', function(req, res, next) {
+        colourful_output('/auth/isauthenticated');
+        return sessions.isAuthenticated(req.cookies.auth).then(function(data) {
+            data = JSON.stringify(data);
+            return res.end(data);
+        }).caught(function(err) {
+            // **TODO** Implement better handling
+            err = JSON.stringify(err);
+            return res.end(err);
+        });
     });
 
     //REGISTER
@@ -44,7 +46,7 @@ module.exports = function(app, passport) {
     app.post('/register', function(req, res) {
         colourful_output('/register');
         var result = require('./auth/register.js')(res, req);
-        return result.then(function(data) {            
+        return result.then(function(data) {
             data = JSON.stringify(data);
 
             return res.end(data);
@@ -52,13 +54,7 @@ module.exports = function(app, passport) {
             // **TODO** Implement better handling
             err = JSON.stringify(err);
             return res.end(err);
-        })
-    });
-
-    //IS AUTHENTICATED
-    //----------------
-    app.get('/isAuthenticated', function(req, res) {
-        res.end("isAuth called, is auth " + req.isAuthenticated());
+        });
     });
 
     //USER API'S
@@ -77,20 +73,20 @@ module.exports = function(app, passport) {
 
             // **TODO** Implement better handling            
             return res.end(err);
-        })
+        });
     });
 
     app.post('/user/remove', function(req, res) {
         colourful_output('/user/remove');
         var result = require('./users/remove.js')(res, req);
-        return result.then(function(data) {            
+        return result.then(function(data) {
             data = JSON.stringify(data);
             return res.end(data);
         }).caught(function(err) {
             // **TODO** Implement better handling
             err = JSON.stringify(err);
             return res.end(err);
-        })
+        });
     });
 
 };
@@ -98,4 +94,4 @@ module.exports = function(app, passport) {
 
 var colourful_output = function(api_name) {
     console.log('API called: '.green + api_name.blue);
-}
+};

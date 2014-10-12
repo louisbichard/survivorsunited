@@ -3,13 +3,14 @@
         <form role="form">
             <div class="form-group text-center">
                 <label for="exampleInputEmail1">Username</label>
-                <input type="email" class="text-center form-control" id="exampleInputEmail1" placeholder="Enter email">
+                <input ng-model= "user.username" class="text-center form-control" placeholder="Enter email">
             </div>
             <div class="form-group text-center">
-                <label for="exampleInputPassword1">Password</label>
-                <input type="password" class="text-center form-control" id="exampleInputPassword1" placeholder="Password">
+                <label  for="exampleInputPassword1">Password</label>
+                <input ng-model="user.password" type="password" class="text-center form-control" placeholder="Password">
             </div>
-            <button type="submit" class="full-width btn btn-default">Submit</button>
+            <button type="submit" ng-click="login(user)" class="full-width btn btn-default">Submit</button>
+            {{user}}
         </form>
     </div>
-</div>
+</div> 
