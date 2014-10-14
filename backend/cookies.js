@@ -34,10 +34,10 @@ module.exports = function(app) {
             });
 
             sessions.setCookieSession(cookie_value)
-            .caught(function(){
-                // **TODO:** Implement better error handling
-                console.log('error in writing cookie!');
-            });
+                .caught(function() {
+                    // **TODO:** Implement better error handling
+                    console.log('error in writing cookie!');
+                });
 
         }
 

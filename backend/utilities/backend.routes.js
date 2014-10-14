@@ -57,21 +57,34 @@ module.exports = function(app) {
         });
     });
 
-    //USER API'S
-    //==========
 
-    //USER ENDPOINTS
-    //--------------    
-    app.get('/user/listall', function(req, res) {
-        colourful_output('/user/listall');
-        return require('./../users/listall.js')()
+    //SESSION API'S
+    //=============
+    app.get('/sessions/listall', function(req, res) {
+        colourful_output('/sessions/listall');
+        return require('./../sessions/sessions.listall.js')()
             .then(function(data) {
                 return res.end(data);
             })
             .caught(function(err) {
                 // **TODO:** do this better
                 return res.end('error in caught' + err);
+            });
+
+    });
+
+    //USER ENDPOINTS
+    //--------------    
+    app.get('/user/listall', function(req, res) {
+        colourful_output('/user/listall');
+        return require('./../users/users.listall.js')()
+            .then(function(data) {
+                return res.end(data);
             })
+            .caught(function(err) {
+                // **TODO:** do this better
+                return res.end('error in caught' + err);
+            });
 
     });
 
