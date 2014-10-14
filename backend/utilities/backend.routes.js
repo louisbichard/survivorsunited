@@ -2,7 +2,7 @@
 //------------------
 var colors = require('colors');
 var uuid = require('node-uuid');
-var sessions = require('./../auth/sessions.js');
+/*var sessions = require('./../auth/sessions.js');*/
 
 //API ENDPOINTS
 //=============
@@ -31,14 +31,13 @@ module.exports = function(app) {
     //-----
     app.get('/auth/isauthenticated', function(req, res, next) {
         colourful_output('/auth/isauthenticated');
-        return sessions.isAuthenticated(req.cookies.auth).then(function(data) {
-            data = JSON.stringify(data);
-            return res.end(data);
-        }).caught(function(err) {
-            // **TODO** Implement better handling
-            err = JSON.stringify(err);
-            return res.end(err);
-        });
+        var isAuth = require('./../auth/auth.isAuthenticated')(req);
+        return isAuth
+            .then(function(data) {
+                return res.end(data);
+            }).caught(function(err) {
+                return res.end(err);
+            });
     });
 
     //REGISTER

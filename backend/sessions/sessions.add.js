@@ -5,18 +5,50 @@
 //REQUIRED LIBRARIES
 //------------------
 var Promise = require('bluebird');
-var db_connection = require('../utilities/database.js');
+var database = require('../utilities/database.js');
+var uuid = require('node-uuid');
+var session_id = uuid.v4();
+var MongoClient = Promise.promisifyAll(require("mongodb")).MongoClient;
+var _ = require('lodash');
 
-module.exports = function(user_id, session_id) {
+module.exports = function(req, res) {
 
-    return db_connection('sessions')
-        .then(function(row) {
-            return row;
+    return MongoClient.connectAsync(database.connection)
+        .then(insertIntoDB)
+        .then(function(){
+            setCookie(req, res);
         })
-        .caught(function() {
-            return {
-                success: false,
-                error_message: 'Failed to get users'
-            };
+        .caught(function(err) {
+            console.log('Failed to set sessions (' + err + ')');
         });
+};
+
+var insertIntoDB = function(db) {
+    var collection = Promise.promisifyAll(db.collection('sessions'));
+    var record_to_insert = {
+        session_id: session_id
+    };
+
+    return Promise.props({
+        raw_db_results: collection.insertAsync(record_to_insert),
+        count: collection.countAsync()
+    });
+};
+
+var setCookie = function(req, res) {
+
+    res.cookie('auth', session_id, {
+        httpOnly: true,
+        maxAge: 900000
+    });
+    
+    /*var cookieAsync = Promise.promisifyAll(res.cookie);
+    cookieAsync = _.bind(cookieAsync, this);
+
+    console.log(cookieAsync);
+    cookieAsync('auth', session_id, {
+        httpOnly: true,
+        maxAge: 900000
+    });*/
+
 };

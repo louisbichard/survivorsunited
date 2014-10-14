@@ -24,8 +24,9 @@ var app = express();
 
 //###SETUP EXPRESS ADD ON'S
 app.use(cookieParser())
-    //Setup both body parser for JSON, and basic form encoding
-    .use(bodyParser.json())
+
+//Setup both body parser for JSON, and basic form encoding
+.use(bodyParser.json())
     .use(bodyParser.urlencoded({
         extended: true
     }))
@@ -35,14 +36,16 @@ app.use(cookieParser())
         saveUninitialized: true
     }));
 
+
+
 //##COOKIE SETUP
-require('./utilities/cookies.js')(app); // load our routes and pass in our app and fully configured passport
+require('./utilities/cookies.js')(app);
 
 //##HEADER SETUP
-require('./utilities/headers.js')(app); // load our routes and pass in our app and fully configured passport
+require('./utilities/headers.js')(app);
 
 //##ROUTES
-require('./utilities/backend.routes.js')(app, passport); // load our routes and pass in our app and fully configured passport
+require('./utilities/backend.routes.js')(app, passport);
 
 //##PORT SETUP
 app.listen(port);

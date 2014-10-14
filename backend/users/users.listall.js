@@ -5,18 +5,35 @@
 //REQUIRED LIBRARIES
 //------------------
 var Promise = require('bluebird');
-var db_connection = require('../utilities/database.js');
+var MongoClient = Promise.promisifyAll(require("mongodb")).MongoClient;
+var database = require('../utilities/database.js');
 
 module.exports = function() {
 
-    return db_connection('users')
-        .then(function(row) {
-            return row;
+    
+    return MongoClient.connectAsync(database.connection)
+        .then(function(db) {
+            var collection = Promise.promisifyAll(db.collection('users'));
+            return Promise.props({
+                    find: collection.findAsync(),
+                    count: collection.countAsync()
+                })
+                .then(function(result) {
+
+                    var find = Promise.promisifyAll(result.find);
+                    return find.toArrayAsync()
+                        .then(function(records) {
+                            return {
+                                success: true,
+                                count: result.count,
+                                result: records
+                            };
+                        });
+                });
         })
+        .then(JSON.stringify)
         .caught(function() {
-            return {
-                success: false,
-                error_message: 'Failed to get users'
-            };
+            console.log('Error adding record in database');
         });
+
 };
