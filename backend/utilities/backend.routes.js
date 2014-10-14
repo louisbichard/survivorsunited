@@ -14,21 +14,6 @@ module.exports = function(app) {
 
     //LOGIN
     //-----
-    app.post('/auth/login', function(req, res, next) {
-        colourful_output('/auth/login');
-        var result = require('./auth/login.js')(res, req);
-        return result.then(function(data) {
-            data = JSON.stringify(data);
-            return res.end(data);
-        }).caught(function(err) {
-            // **TODO** Implement better handling
-            err = JSON.stringify(err);
-            return res.end(err);
-        });
-    });
-
-    //LOGIN
-    //-----
     app.get('/auth/isauthenticated', function(req, res, next) {
         colourful_output('/auth/isauthenticated');
         var isAuth = require('./../auth/auth.isAuthenticated')(req);
@@ -39,23 +24,6 @@ module.exports = function(app) {
                 return res.end(err);
             });
     });
-
-    //REGISTER
-    //-----
-    app.post('/register', function(req, res) {
-        colourful_output('/register');
-        var result = require('./auth/register.js')(res, req);
-        return result.then(function(data) {
-            data = JSON.stringify(data);
-
-            return res.end(data);
-        }).caught(function(err) {
-            // **TODO** Implement better handling
-            err = JSON.stringify(err);
-            return res.end(err);
-        });
-    });
-
 
     //SESSION API'S
     //=============
@@ -81,24 +49,16 @@ module.exports = function(app) {
                 return res.end(data);
             })
             .caught(function(err) {
-                // **TODO:** do this better
                 return res.end('error in caught' + err);
             });
 
     });
 
-    app.post('/user/remove', function(req, res) {
-        colourful_output('/user/remove');
-        var result = require('./users/remove.js')(res, req);
-        return result.then(function(data) {
-            data = JSON.stringify(data);
-            return res.end(data);
-        }).caught(function(err) {
-            // **TODO** Implement better handling
-            err = JSON.stringify(err);
-            return res.end(err);
-        });
+    app.post('/user/add', function(req, res) {
+        colourful_output('/user/add');
+        require('../users/user.add.js')(req, res);
     });
+
 
 };
 
