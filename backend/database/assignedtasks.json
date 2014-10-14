@@ -1,7 +1,0 @@
-// Assigned tasks
-[{
-    "ID": 123456789 //{UUID} The task reference ID
-    "user": 03456789, //{UUID} The users ID
-    "task": 4567890, //{UUID} The users task
-    "open": true //{Binary} The users state
-}]
