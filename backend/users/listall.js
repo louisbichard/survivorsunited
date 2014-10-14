@@ -5,21 +5,23 @@
 //REQUIRED LIBRARIES
 //------------------
 var Promise = require('bluebird');
-var fs = Promise.promisifyAll(require("fs"));
-var _ = require('lodash');
-var moment = require('moment');
-
-
+var MongoClient = Promise.promisifyAll(require("mongodb")).MongoClient;
+//var db_connection = require('./../utilities/database.js');
 
 module.exports = function() {
+    // Connect to the db
 
-    return fs.readFileAsync('./database/users.json')
-        .then(function(data) {
-        	return data;
-        })        
-        .catch(SyntaxError, function(e) {
-            console.error("file contains invalid json");
-        }).error(function(e) {
-            console.error("unable to read file, because: ", e.message);
+    return MongoClient.connectAsync("mongodb://localhost:27017/su")
+    .then(function(db) {
+        var collection = Promise.promisifyAll(db.collection('users'));
+        return collection.findAsync().then(function(result) {
+            Promise.promisifyAll(result);
+            return result.toArrayAsync()
+                .then(function(row) {
+                    return JSON.stringify(row);
+                });
         });
+    }).caught(function() {
+        return "error in caught";
+    });
 };

@@ -64,16 +64,15 @@ module.exports = function(app) {
     //--------------    
     app.get('/user/listall', function(req, res) {
         colourful_output('/user/listall');
+        return require('./../users/listall.js')()
+            .then(function(data) {
+                return res.end(data);
+            })
+            .caught(function(err) {
+                // **TODO:** do this better
+                return res.end('error in caught' + err);
+            })
 
-        // Return and display API
-        var result = require('./../users/listall.js')();
-        return result.then(function(data) {
-            return res.end(data);
-        }).caught(function(err) {
-
-            // **TODO** Implement better handling            
-            return res.end(err);
-        });
     });
 
     app.post('/user/remove', function(req, res) {
