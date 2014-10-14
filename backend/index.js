@@ -36,8 +36,6 @@ app.use(cookieParser())
         saveUninitialized: true
     }));
 
-
-
 //##COOKIE SETUP
 require('./utilities/cookies.js')(app);
 
