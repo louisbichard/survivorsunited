@@ -74,7 +74,7 @@ module.exports = function(app) {
 
     //USER ENDPOINTS
     //--------------    
-    app.get('/user/listall', function(req, res) {
+    app.get('/users/listall', function(req, res) {
         colourful_output('/user/listall');
         return require('./../users/users.listall.js')()
             .then(function(data) {

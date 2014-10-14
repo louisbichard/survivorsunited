@@ -47,7 +47,7 @@ var findSessionInDB = function(db, current_session_id) {
                 .toArrayAsync()
                 .then(send_result);
         }).caught(function(){
-            console.log('error creating result for is authenticated (auth.isAuthenticated.js)')
+            console.log('error creating result for is authenticated (auth.isAuthenticated.js)');
         });
 };
 
