@@ -37,18 +37,11 @@ var insertIntoDB = function(db) {
 
 var setCookie = function(req, res) {
 
+    console.log('Setting user session');
+
     res.cookie('auth', session_id, {
         httpOnly: true,
         maxAge: 900000
     });
-    
-    /*var cookieAsync = Promise.promisifyAll(res.cookie);
-    cookieAsync = _.bind(cookieAsync, this);
-
-    console.log(cookieAsync);
-    cookieAsync('auth', session_id, {
-        httpOnly: true,
-        maxAge: 900000
-    });*/
 
 };

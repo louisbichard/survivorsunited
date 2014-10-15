@@ -12,8 +12,15 @@ module.exports = function(app) {
     //AUTHENTICATION API'S
     //====================
 
-    //LOGIN
-    //-----
+    //LOG IN
+    //------
+    app.post('/auth/login', function(req, res) {
+        colourful_output('/user/listall');
+        return require('./../auth/auth.login.js')(req, res);
+    });
+
+    //IS AUTHENTICATED
+    //----------------
     app.get('/auth/isauthenticated', function(req, res, next) {
         colourful_output('/auth/isauthenticated');
         var isAuth = require('./../auth/auth.isAuthenticated')(req);
@@ -44,14 +51,7 @@ module.exports = function(app) {
     //--------------    
     app.get('/users/listall', function(req, res) {
         colourful_output('/user/listall');
-        return require('./../users/users.listall.js')()
-            .then(function(data) {
-                return res.end(data);
-            })
-            .caught(function(err) {
-                return res.end('error in caught' + err);
-            });
-
+        return require('./../users/users.listall.js')(res);
     });
 
     app.post('/user/add', function(req, res) {

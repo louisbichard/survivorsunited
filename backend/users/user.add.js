@@ -24,20 +24,20 @@ module.exports = function(request, result) {
     //-------------------------------------------------
     // Username and Password must be present
     if (!post_params.username || !post_params.password) {
-        return_result({
+        res.end(JSON.stringify({
             success: false,
-            error: "no username or password specified"
-        });
+            error_message: "no username or password specified"
+        }));
     }
 
     //VALIDATION
     //-------------------------------------------------
     // Password insufficient complexity
     if (post_params.password.length < 5) {
-        return_result({
+        res.end(JSON.stringify({
             success: false,
-            error: "Password must be more than 5 characters"
-        });
+            error_message: "Password must be more than 5 characters"
+        }));
     }
 
     return MongoClient.connectAsync(database.connection)
@@ -48,7 +48,9 @@ module.exports = function(request, result) {
         .then(check_if_user_exists)
         .then(add_record)
         .then(JSON.stringify)
-        .then(return_result)
+        .then(function(result) {
+            res.end(result);
+        })
         .caught(function(err) {
             console.log('Error adding record in database: (' + err + ")");
         });
@@ -56,7 +58,7 @@ module.exports = function(request, result) {
 
 var find_data = function() {
     var collection = Promise.promisifyAll(user_database.collection('users'));
-    return collection.findAsync({
+    return collection.countAsync({
         username: post_params.username
     });
 };
@@ -72,40 +74,28 @@ var add_record = function(database) {
             result: "user added to the DB"
         };
     }).caught(function(err) {
-        return_result({
+        res.end(JSON.stringify({
             success: true,
             result: "user added to the DB"
-        });
+        }));
     });
 };
 
 
 
-var check_if_user_exists = function(result) {
-    var find = Promise.promisifyAll(result);
-    return find.toArrayAsync()
-        .then(function(records) {
+var check_if_user_exists = function(count) {
 
-            //VALIDATION
-            //-------------------------------------------------
-            // Password insufficient complexity
-            if (records.length > 0) {
-                return_result({
-                    success: false,
-                    error: "Username exists"
-                });
-            } else {
-                return {
-                    success: true,
-                    result: records
-                };
-            }
-        });
-};
-
-var return_result = function(result) {
-    res.end(JSON.stringify({
-        success: true,
-        result: result
-    }));
+    //VALIDATION
+    //-------------------------------------------------
+    // Password insufficient complexity
+    if (count >= 1) {
+        res.end(JSON.stringify({
+            success: false,
+            error_message: "Username exists"
+        }));
+    } else {
+        return {
+            success: true
+        };
+    }
 };
