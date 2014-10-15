@@ -5,7 +5,7 @@
   var suite = APIeasy.describe('your/awesome/api');
 
    //TEST TITLE
-  utilities.colourful_log('/user/listall', 'underline');
+  utilities.colourful_log('/users/listall', 'underline');
 
    //LIST ALL USERS
    //------------------------

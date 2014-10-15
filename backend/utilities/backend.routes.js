@@ -23,13 +23,7 @@ module.exports = function(app) {
     //----------------
     app.get('/auth/isauthenticated', function(req, res, next) {
         colourful_output('/auth/isauthenticated');
-        var isAuth = require('./../auth/auth.isAuthenticated')(req);
-        return isAuth
-            .then(function(data) {
-                return res.end(data);
-            }).caught(function(err) {
-                return res.end(err);
-            });
+        var isAuth = require('./../auth/auth.isAuthenticated')(req, res);
     });
 
     //SESSION API'S
@@ -57,6 +51,11 @@ module.exports = function(app) {
     app.post('/user/add', function(req, res) {
         colourful_output('/user/add');
         require('../users/user.add.js')(req, res);
+    });
+
+    app.post('/user/delete', function(req, res) {
+        colourful_output('/user/add');
+        require('../users/user.delete.js')(req, res);
     });
 
 

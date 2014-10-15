@@ -10,8 +10,12 @@ var uuid = require('node-uuid');
 var session_id = uuid.v4();
 var MongoClient = Promise.promisifyAll(require("mongodb")).MongoClient;
 var _ = require('lodash');
+var req;
+var res;
 
-module.exports = function(req, res) {
+module.exports = function(request, result) {
+    req = request;
+    res = result;
 
     return MongoClient.connectAsync(database.connection)
         .then(insertIntoDB)
@@ -24,15 +28,15 @@ module.exports = function(req, res) {
 };
 
 var insertIntoDB = function(db) {
+
+    console.log(session_id);
+
     var collection = Promise.promisifyAll(db.collection('sessions'));
     var record_to_insert = {
-        session_id: session_id
+        _id: session_id
     };
 
-    return Promise.props({
-        raw_db_results: collection.insertAsync(record_to_insert),
-        count: collection.countAsync()
-    });
+    return collection.insertAsync(record_to_insert);
 };
 
 var setCookie = function(req, res) {
@@ -40,8 +44,7 @@ var setCookie = function(req, res) {
     console.log('Setting user session');
 
     res.cookie('auth', session_id, {
-        httpOnly: true,
-        maxAge: 900000
+        httpOnly: true
     });
 
 };
