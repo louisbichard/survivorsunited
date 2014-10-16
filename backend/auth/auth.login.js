@@ -30,7 +30,7 @@ module.exports = function(req, res) {
 
     //VALIDATION: User has no session to bind to user
     if (!req.cookies.auth) {
-        respond.failure('No username or password specified');
+        respond.failure('User doesnt have session');
     }
 
     var find_data = function() {

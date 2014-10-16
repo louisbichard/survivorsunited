@@ -12,8 +12,13 @@ module.exports = function(app) {
     //AUTHENTICATION
     //==============
     app.post('/auth/login', function(req, res) {
-        colourful_output('/user/listall');
+        colourful_output('/auth/login');
         return require('./../auth/auth.login.js')(req, res);
+    });
+
+    app.get('/auth/logout', function(req, res) {
+        colourful_output('/auth/logoutl');
+        return require('./../auth/auth.logout.js')(req, res);
     });
 
     app.get('/auth/isauthenticated', function(req, res, next) {
@@ -31,7 +36,7 @@ module.exports = function(app) {
     //USER
     //----
     app.get('/users/listall', function(req, res) {
-        colourful_output('/user/listall');
+        colourful_output('/users/listall');
         return require('./../users/users.listall.js')(req, res);
     });
 
@@ -41,7 +46,7 @@ module.exports = function(app) {
     });
 
     app.post('/user/delete', function(req, res) {
-        colourful_output('/user/add');
+        colourful_output('/user/delete');
         require('../users/user.delete.js')(req, res);
     });
 
