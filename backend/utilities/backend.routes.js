@@ -9,40 +9,27 @@ var uuid = require('node-uuid');
 
 module.exports = function(app) {
 
-    //AUTHENTICATION API'S
-    //====================
-
-    //LOG IN
-    //------
+    //AUTHENTICATION
+    //==============
     app.post('/auth/login', function(req, res) {
         colourful_output('/user/listall');
         return require('./../auth/auth.login.js')(req, res);
     });
 
-    //IS AUTHENTICATED
-    //----------------
     app.get('/auth/isauthenticated', function(req, res, next) {
         colourful_output('/auth/isauthenticated');
         var isAuth = require('./../auth/auth.isAuthenticated')(req, res);
     });
 
-    //SESSION API'S
-    //=============
+    //SESSION
+    //=======
     app.get('/sessions/listall', function(req, res) {
         colourful_output('/sessions/listall');
-        return require('./../sessions/sessions.listall.js')()
-            .then(function(data) {
-                return res.end(data);
-            })
-            .caught(function(err) {
-                // **TODO:** do this better
-                return res.end('error in caught' + err);
-            });
-
+        return require('./../sessions/sessions.listall.js')(req, res);
     });
 
-    //USER ENDPOINTS
-    //--------------    
+    //USER
+    //----
     app.get('/users/listall', function(req, res) {
         colourful_output('/user/listall');
         return require('./../users/users.listall.js')(req, res);

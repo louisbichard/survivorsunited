@@ -12,17 +12,6 @@ module.exports = function(req, res) {
         file: __dirname + __filename
     });
 
-    var send_result = function(result) {
-        var find = Promise.promisifyAll(result.find);
-        return find.toArrayAsync()
-            .then(function(records) {
-                respond.success({
-                    count: result.count,
-                    users: records
-                });
-            });
-    };
-
     var get_user_db = function(db) {
         var collection = Promise.promisifyAll(db.collection('users'));
         return Promise.props({
@@ -31,8 +20,26 @@ module.exports = function(req, res) {
         });
     };
 
+    var get_user_data = function(result) {
+        var count = result.count;
+        var find = Promise.promisifyAll(result.find);
+
+        return find.toArrayAsync()
+            .then(function(users) {
+                return {
+                    users: users,
+                    count: count
+                };
+            });
+    };
+
+    var send_result = function(vals) {
+        respond.success(vals);
+    };
+
     return MongoClient.connectAsync(database.connection)
         .then(get_user_db)
+        .then(get_user_data)
         .then(send_result)
         .caught(function(err) {
             respond.failure('Could not list users!', err);
