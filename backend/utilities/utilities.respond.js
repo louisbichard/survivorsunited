@@ -52,6 +52,7 @@ module.exports = function(args) {
             // THROW ERROR TO CONSOLE
             console.log(error_message_joined);
 
+
             // TERMINATE REST API
             var construct_response = JSON.stringify({
                 success: false,
@@ -59,6 +60,24 @@ module.exports = function(args) {
             });
 
             args.res.end(construct_response);
+        },
+
+        generalFailure: function(technical_message) {
+
+            var error_message = [
+                '\n',
+                'General failure: '.red,
+                technical_message.toString().yellow,
+                '\n',
+
+                'Location: '.blue,
+                args.file.yellow,
+                '\n'
+            ];
+            var error_message_joined = error_message.join('');
+
+            // THROW ERROR TO CONSOLE
+            console.log(error_message_joined);
         }
     };
 };

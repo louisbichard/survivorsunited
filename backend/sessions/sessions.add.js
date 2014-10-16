@@ -1,50 +1,40 @@
-//USERS API
-//------------------
-// ENDPOINT /user/...
+//ADD SESSION
 
-//REQUIRED LIBRARIES
-//------------------
 var Promise = require('bluebird');
 var database = require('../utilities/database.js');
-var uuid = require('node-uuid');
-var session_id = uuid.v4();
 var MongoClient = Promise.promisifyAll(require("mongodb")).MongoClient;
-var _ = require('lodash');
-var req;
-var res;
 
-module.exports = function(request, result) {
-    req = request;
-    res = result;
+module.exports = function(req, res) {
+
+    var respond = require('../utilities/utilities.respond.js')({
+        req: req,
+        res: res,
+        file: __dirname + __filename
+    });
+
+    var insertIntoDB = function(db) {
+        var collection = Promise.promisifyAll(db.collection('sessions'));
+        return collection.insertAsync({})
+            .then(function(result) {
+                // RETURN THE ID SET BY THE DB
+                return result[0]._id;
+            });
+    };
+
+    var setCookie = function(id) {
+
+        console.log('Setting user session as: ' + id);
+
+        res.cookie('auth', id, {
+            httpOnly: true
+        });
+
+    };
 
     return MongoClient.connectAsync(database.connection)
         .then(insertIntoDB)
-        .then(function(){
-            setCookie(req, res);
-        })
+        .then(setCookie)
         .caught(function(err) {
-            console.log('Failed to set sessions (' + err + ')');
+            respond.generalFailure(err);
         });
-};
-
-var insertIntoDB = function(db) {
-
-    console.log(session_id);
-
-    var collection = Promise.promisifyAll(db.collection('sessions'));
-    var record_to_insert = {
-        _id: session_id
-    };
-
-    return collection.insertAsync(record_to_insert);
-};
-
-var setCookie = function(req, res) {
-
-    console.log('Setting user session');
-
-    res.cookie('auth', session_id, {
-        httpOnly: true
-    });
-
 };
