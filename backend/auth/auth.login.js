@@ -45,14 +45,22 @@ module.exports = function(req, res) {
 
         var collection = Promise.promisifyAll(user_database.collection('sessions'));
 
+        console.log('loooking for session', req.cookies.auth);
+
         // SET SESSION TO USER ID
+
+        var mongo = require('mongodb');
+        var BSON = mongo.BSONPure;
+        var o_id = new BSON.ObjectID(req.cookies.auth);
+
         return collection.updateAsync({
-            _id: req.cookies.auth
+            _id: o_id
         }, {
             $set: {
                 user_id: current_user._id
             }
         }).then(function(result) {
+            console.log('insert results', result);
 
             // CHECK RECORDS WERE ACTUALLY UPDATED
             // TODO: Probably no need to throw console error here, valid. 
@@ -70,6 +78,7 @@ module.exports = function(req, res) {
     var validate_credentials = function(records) {
 
         var current_user = records[0];
+
 
         //VALIDATION: No users found for username
         if (records.length < 1) {
@@ -107,6 +116,6 @@ module.exports = function(req, res) {
         .then(validate_credentials)
         .then(bind_user_id_to_session)
         .caught(function(err) {
-            respond.failure('Password is incorrect', err);
+            respond.failure('Error authenticating user', err);
         });
 };

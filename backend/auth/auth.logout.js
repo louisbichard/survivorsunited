@@ -13,6 +13,6 @@ module.exports = function(req, res) {
     });
 
     res.clearCookie('auth');
-    respond.success('WOOOO!');
+    respond.success('User logged out successfully!');
 
 };
