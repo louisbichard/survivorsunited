@@ -30,6 +30,9 @@ module.exports = function(args) {
             args.res.end(construct_response);
         },
         failure: function(friendly_message, technical_message) {
+
+            // ASSUME THE FRIENDLY IS BOTH IF NO TECHNICAL DEFINED
+            technical_message = technical_message || friendly_message;
             var error_message = [
                 '\n',
                 'REST Failure: '.red,
@@ -51,7 +54,6 @@ module.exports = function(args) {
 
             // THROW ERROR TO CONSOLE
             console.log(error_message_joined);
-
 
             // TERMINATE REST API
             var construct_response = JSON.stringify({
