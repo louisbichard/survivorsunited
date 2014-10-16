@@ -45,7 +45,7 @@ module.exports = function(app) {
     //--------------    
     app.get('/users/listall', function(req, res) {
         colourful_output('/user/listall');
-        return require('./../users/users.listall.js')(res);
+        return require('./../users/users.listall.js')(req, res);
     });
 
     app.post('/user/add', function(req, res) {

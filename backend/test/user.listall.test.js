@@ -15,13 +15,7 @@
       .setHeader('Content-Type', 'application/json')
       .get('/users/listall')
       .expect(200)
-      .expect('Should have success', utilities.successIsTrue)
-      .expect('Has count value', function(err, res, body) {
-          utilities.hasProperty(err, res, body, 'count', 'number');
-      })
-      .expect('Has result value', function(err, res, body) {
-          utilities.hasProperty(err, res, body, 'result', 'object');
-      })
+      .expect('Has appropriate properties', utilities.hasAppropriateProperties)
       .export(module);
 
    //ADD OUTPUT SPACE AT END

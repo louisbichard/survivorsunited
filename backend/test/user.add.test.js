@@ -14,10 +14,7 @@
       .setHeader('Content-Type', 'application/json')
       .post(test_endpoint, {})
       .expect(200)
-      .expect('Has error message', function(err, res, body) {
-          utilities.hasProperty(err, res, body, 'error_message', 'string');
-      })
-      .expect('Should have success', utilities.successIsFalse)
+      .expect('Has appropriate properties', utilities.hasAppropriateProperties)
       .export(module);
 
    // TEST WITHOUT USERNAME
@@ -29,10 +26,7 @@
           password: "password"
       })
       .expect(200)
-      .expect('Should have success', utilities.successIsFalse)
-      .expect('Has error message', function(err, res, body) {
-          utilities.hasProperty(err, res, body, 'error_message', 'string');
-      })
+      .expect('Has appropriate properties', utilities.hasAppropriateProperties)
       .export(module);
 
 
@@ -46,10 +40,7 @@
           password: "pass"
       })
       .expect(200)
-      .expect('Should have success as false', utilities.successIsFalse)
-      .expect('Has error message', function(err, res, body) {
-          utilities.hasProperty(err, res, body, 'error_message', 'string');
-      })
+      .expect('Has appropriate properties', utilities.hasAppropriateProperties)
       .export(module);
 
    // ADDS RANDOM USER
@@ -62,10 +53,7 @@
           password: "password"
       })
       .expect(200)
-      .expect('Should have success as false', utilities.successIsTrue)
-      .expect('Has result', function(err, res, body) {
-          utilities.hasProperty(err, res, body, 'result', 'string');
-      })
+      .expect('Has appropriate properties', utilities.hasAppropriateProperties)
       .export(module);
 
    // CANNOT ADD USER PREVIOUSLY ADDED
@@ -78,10 +66,7 @@
           password: "password"
       })
       .expect(200)
-      .expect('Should have success as false', utilities.successIsFalse)
-      .expect('Has error message', function(err, res, body) {
-          utilities.hasProperty(err, res, body, 'error_message', 'string');
-      })
+      .expect('Has appropriate properties', utilities.hasAppropriateProperties)
       .export(module);
 
    //ADD OUTPUT SPACE AT END
