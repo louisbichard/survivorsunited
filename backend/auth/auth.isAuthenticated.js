@@ -29,6 +29,7 @@ module.exports = function(req, res) {
     };
 
     var sendResult = function(records) {
+        console.log(records);
         var isAuth = !!records[0];
         respond.success(isAuth);
     };

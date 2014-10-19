@@ -1,8 +1,8 @@
 var notification = function(header, text, type, options) {
     var task;
-    var header = header || "";
-    var type = type || "success";
-    var options = options || {};
+    header = header || "";
+    type = type || "success";
+    options = options || {};
     options = _.defaults(options, {
         "closeButton": false,
         "debug": false,
@@ -17,17 +17,28 @@ var notification = function(header, text, type, options) {
         "showMethod": "fadeIn",
         "hideMethod": "fadeOut"
     });
-    if (!!options.promisifyOnHidden) {
-        task = Promise.defer();
-        options["onHidden"] = function() {
-            task.resolve();
-        };
-    }
     toastr.options = options;
 
     var toastTypes = ['success', 'error', 'warning', 'info'];
     if (type in toastTypes != -1) toastr[type](text, header);
-    if (!!options.promisifyOnHidden) {
-        return task.promise;
+};
+
+var REST_notification = function(API_return, title) {
+    var result = API_return.result;
+    var error_message = API_return.error_message;
+    var success = API_return.success;
+
+    if (API_return.success === true) {
+
+        //TODO: VALIDATE IF RESULT IS NOT STRING
+        title = title || "Success";
+        notification(title, result);
+        
+    } else {
+
+        //TODO: VALIDATE IF NO ERROR MESSAGE
+        title = title || "Something went wrong";
+        notification(title, error_message, 'error');
     }
-}
+
+};

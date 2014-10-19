@@ -43,7 +43,7 @@ module.exports = function(req, res, id) {
             });
     };
 
-    var send_result = function(vals) {
+    var bindUserToRequestObject = function(vals) {
         req.user = vals;
     };
 
@@ -74,7 +74,7 @@ module.exports = function(req, res, id) {
         .then(get_session_db)
         .then(getUserIDFromSession)
         .then(getUserDB)
-        .then(send_result)
+        .then(bindUserToRequestObject)
         .caught(postErrorToConsole);
 
 };

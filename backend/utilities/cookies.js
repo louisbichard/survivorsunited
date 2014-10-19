@@ -4,7 +4,6 @@ var Promise = require('bluebird');
 module.exports = function(app) {
 
     app.all('*', function(req, res, next) {
-        console.log('session of user:' + req.cookies.auth);
         var auth_cookie = req.cookies.auth;
 
         if (auth_cookie === undefined) {

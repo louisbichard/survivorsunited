@@ -35,6 +35,11 @@ module.exports = function(app) {
 
     //USER
     //====
+    app.get('/user/current', function(req, res) {
+        colourful_output('/user/current');
+        return require('./../users/user.current.js')(req, res);
+    });
+
     app.get('/users/listall', function(req, res) {
         colourful_output('/users/listall');
         return require('./../users/users.listall.js')(req, res);
