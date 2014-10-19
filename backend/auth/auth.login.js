@@ -45,7 +45,7 @@ module.exports = function(req, res) {
 
         var collection = Promise.promisifyAll(user_database.collection('sessions'));
 
-        console.log('loooking for session', req.cookies.auth);
+
 
         // SET SESSION TO USER ID
 
@@ -60,7 +60,6 @@ module.exports = function(req, res) {
                 user_id: current_user._id
             }
         }).then(function(result) {
-            console.log('insert results', result);
 
             // CHECK RECORDS WERE ACTUALLY UPDATED
             // TODO: Probably no need to throw console error here, valid. 

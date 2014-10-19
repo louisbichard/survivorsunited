@@ -9,13 +9,13 @@ SU.controller('loginController', function($scope, $http) {
                 if (data.success) {
                     notification("Logged in!");
                 } else {
-                    notification('Oh no!', data.error, 'error');
+                    notification('Oh no!', data.error_message, 'error');
                 }
             })
             .error(function(data, status, headers, config) {
                 notification('Oh no!', 'Something went wrong when trying to login!', 'error');
                 return false;
             });
-    }
+    };
     
 });

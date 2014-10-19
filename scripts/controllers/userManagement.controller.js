@@ -1,7 +1,7 @@
 SU.controller('userManagementController', function($scope, $http, allUsersFactory, registerUserFactory) {
     $scope.add_user = function() {
         return $http
-            .post('http://localhost:3000/register', $scope.new_user)
+            .post('http://localhost:3000/user/add', $scope.new_user)
             .success(function(data, status, headers, config) {
                 if (data.success) {
                     notification('Success!', 'user: ' + $scope.new_user.username + ' added!');
@@ -12,15 +12,15 @@ SU.controller('userManagementController', function($scope, $http, allUsersFactor
                 }
             })
             .error(function(data, status, headers, config) {
-                notification('Oh no!', 'Something went wrong when trying to register a user!', 'error');
+                notification('Oh no!', 'Something went wrong when trying to add a user!', 'error');
                 return false;
             });
     };
 
     $scope.removeUser = function(user) {
         return $http
-            .post('http://localhost:3000/user/remove', {
-                id: user.id
+            .post('http://localhost:3000/user/delete', {
+                id: user._id
             })
             .success(function(data, status, headers, config) {
                 if (data.success) {
@@ -28,11 +28,12 @@ SU.controller('userManagementController', function($scope, $http, allUsersFactor
                     $scope.users = [];
                     $scope.refreshUsers();
                 } else {
-                    notification('Oh no!', data.error, 'error');
+                    console.log('something went wrong');
+                    notification('Oh no!', data.error_message, 'error');
                 }
             })
             .error(function(data, status, headers, config) {
-                notification('Oh no!', 'Something went wrong when trying to register a user!', 'error');
+                notification('Oh no!', 'Something went wrong when trying to remove a user!', 'error');
                 return false;
             });
     };
@@ -40,7 +41,7 @@ SU.controller('userManagementController', function($scope, $http, allUsersFactor
     $scope.refreshUsers = function() {
         $scope.users = [];
         allUsersFactory.then(function(users) {
-            $scope.users = users.data;
+            $scope.users = users.data.result.users;
         });
     };
 

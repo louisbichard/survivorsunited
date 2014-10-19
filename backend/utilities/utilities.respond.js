@@ -58,7 +58,7 @@ module.exports = function(args) {
             // TERMINATE REST API
             var construct_response = JSON.stringify({
                 success: false,
-                error_messsage: friendly_message
+                error_message: friendly_message
             });
 
             args.res.end(construct_response);

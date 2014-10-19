@@ -1,34 +1,26 @@
-//USERS API
-//------------------
-// ENDPOINT /user/...
+//ENDPOINT /user/delete
 
-//REQUIRED LIBRARIES
-//------------------
 var Promise = require('bluebird');
 var MongoClient = Promise.promisifyAll(require("mongodb")).MongoClient;
 var database = require('../utilities/database.js');
 
 //SETUP PARAMETERS
-//------------------
 var post_params = {};
-var req = {};
-var res = {};
-var user_database = {};
 
-module.exports = function(request, result) {
-    req = request;
-    res = result;
+
+module.exports = function(req, res) {
+
+    var respond = require('../utilities/utilities.respond.js')({
+        req: req,
+        res: res,
+        file: __dirname + __filename
+    });
+
     post_params = req.body || {};
 
-    //VALIDATION
-    //-------------------------------------------------
-    // No ID specified
-    console.log(post_params.id);
+    //VALIDATION: No ID specified
     if (!post_params.id) {
-        res.end(JSON.stringify({
-            success: false,
-            error_message: "no ID specified"
-        }));
+        respond.failure("no ID specified");
     }
 
     return MongoClient.connectAsync(database.connection)
@@ -38,7 +30,7 @@ module.exports = function(request, result) {
         .then(find_data)
         .then(delete_record)
         .caught(function(err) {
-            console.log('Error adding record in database: (' + err + ")");
+            respond.failure("Could not remove user", err);
         });
 };
 
@@ -57,21 +49,12 @@ var delete_record = function(database) {
 
         // CHECK HOW MANY USERS WERE REMOVED
         if (result[1].n === 0) {
-            res.end(JSON.stringify({
-                success: false,
-                result: "ID " + post_params.id +" does not match a user"
-            }));
+            respond.failure('ID does not match a user');
         } else {
-            res.end(JSON.stringify({
-                success: false,
-                result: "User removed"
-            }));
+            respond.success('User removed');
         }
 
     }).caught(function(err) {
-        res.end(JSON.stringify({
-            success: false,
-            result: "user could not be removed from the DB"
-        }));
+        respond.failure('User could not be removed');
     });
 };
