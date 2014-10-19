@@ -20,9 +20,7 @@ module.exports = function(request, result) {
     res = result;
     post_params = req.body || {};
 
-    //VALIDATION
-    //-------------------------------------------------
-    // Username and Password must be present
+    //VALIDATION: Username and Password must be present
     if (!post_params.username || !post_params.password) {
         res.end(JSON.stringify({
             success: false,
@@ -30,9 +28,7 @@ module.exports = function(request, result) {
         }));
     }
 
-    //VALIDATION
-    //-------------------------------------------------
-    // Password insufficient complexity
+    //VALIDATION; Password insufficient complexity
     if (post_params.password.length < 5) {
         res.end(JSON.stringify({
             success: false,
@@ -85,9 +81,7 @@ var add_record = function(database) {
 
 var check_if_user_exists = function(count) {
 
-    //VALIDATION
-    //-------------------------------------------------
-    // Password insufficient complexity
+    //VALIDATION: Password insufficient complexity
     if (count >= 1) {
         res.end(JSON.stringify({
             success: false,

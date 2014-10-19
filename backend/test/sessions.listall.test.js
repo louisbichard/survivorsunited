@@ -16,6 +16,12 @@
       .get(test_endpoint)
       .expect(200)
       .expect('Has appropriate properties', utilities.hasAppropriateProperties)
+      .expect('Has result array', function(err, res, body, val, type){
+        utilities.hasResultProperty(err, res, body, 'result', 'object');
+      })
+      .expect('Has count value', function(err, res, body, val, type){
+        utilities.hasResultProperty(err, res, body, 'count', 'number');
+      })
       .export(module);
 
    //ADD OUTPUT SPACE AT END

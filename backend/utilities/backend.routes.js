@@ -34,10 +34,15 @@ module.exports = function(app) {
     });
 
     //USER
-    //----
+    //====
     app.get('/users/listall', function(req, res) {
         colourful_output('/users/listall');
         return require('./../users/users.listall.js')(req, res);
+    });
+
+    app.post('/user/update', function(req, res) {
+        colourful_output('/users/update');
+        return require('./../users/user.update.js')(req, res);
     });
 
     app.post('/user/add', function(req, res) {

@@ -16,6 +16,19 @@ module.exports = {
 
     },
 
+    hasResultProperty: function(err, res, body, property, type) {
+        body = JSON.parse(body);
+
+        if (!body.result || body.result[property] === undefined) {
+            throw new Error('Expected result.' + property + ' to exist ');
+        }
+
+        if (typeof body.result[property] !== type) {
+            throw new Error('Expected ' + property + ' property of result to be of type' + type);
+        }
+
+    },
+
     colourful_log: function(api_name, option) {
         if (option) {
             console.log(api_name.green[option]);
