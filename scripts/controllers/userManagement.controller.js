@@ -24,7 +24,7 @@ SU.controller('userManagementController', function($scope, $http, allUsersFactor
             })
             .success(function(data, status, headers, config) {
                 if (data.success) {
-                    notification('Success!', 'user: ' + user.username + "(" (user.id) + ") removed!");
+                    notification('Success!', 'user: ' + user.username + "(" + user.id + ") removed!");
                     $scope.users = [];
                     $scope.refreshUsers();
                 } else {

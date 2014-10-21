@@ -3,6 +3,8 @@
 var Promise = require('bluebird');
 var MongoClient = Promise.promisifyAll(require("mongodb")).MongoClient;
 var database = require('../utilities/database.js');
+var utility_date = require('../utilities/utilities.dates.js');
+var _ = require('lodash');
 
 module.exports = function(req, res) {
 
@@ -27,10 +29,18 @@ module.exports = function(req, res) {
         return find.toArrayAsync()
             .then(function(users) {
                 return {
-                    users: users,
+                    users: format_dates(users),
                     count: count
                 };
             });
+    };
+
+    var format_dates = function(users) {
+            return _.map(users, function(user) {
+            console.log(user);
+            user.date_created = utility_date.unixToReadable(user.date_created);
+            return user;
+        });
     };
 
     var send_result = function(vals) {

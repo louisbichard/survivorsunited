@@ -23,6 +23,32 @@ module.exports = function(req, res) {
         respond.failure("no ID specified");
     }
 
+    var find_data = function() {
+        var collection = Promise.promisifyAll(user_database.collection('users'));
+        return collection.countAsync({
+            username: post_params.username
+        });
+    };
+
+    var delete_record = function() {
+        var id = database.getObjectID(post_params.id);
+        var collection = Promise.promisifyAll(user_database.collection('users'));
+        return collection.removeAsync({
+            _id: id
+        }).then(function(result) {
+
+            // CHECK HOW MANY USERS WERE REMOVED
+            if (result[1].n === 0) {
+                respond.failure('ID does not match a user');
+            } else {
+                respond.success('User removed');
+            }
+
+        }).caught(function(err) {
+            respond.failure('User could not be removed');
+        });
+    };
+
     return MongoClient.connectAsync(database.connection)
         .then(function(db) {
             user_database = db;
@@ -32,29 +58,4 @@ module.exports = function(req, res) {
         .caught(function(err) {
             respond.failure("Could not remove user", err);
         });
-};
-
-var find_data = function() {
-    var collection = Promise.promisifyAll(user_database.collection('users'));
-    return collection.countAsync({
-        username: post_params.username
-    });
-};
-
-var delete_record = function(database) {
-    var collection = Promise.promisifyAll(user_database.collection('users'));
-    return collection.removeAsync({
-        _id: post_params.id
-    }).then(function(result) {
-
-        // CHECK HOW MANY USERS WERE REMOVED
-        if (result[1].n === 0) {
-            respond.failure('ID does not match a user');
-        } else {
-            respond.success('User removed');
-        }
-
-    }).caught(function(err) {
-        respond.failure('User could not be removed');
-    });
 };

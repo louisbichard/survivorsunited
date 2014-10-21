@@ -63,7 +63,8 @@ var add_record = function(database) {
     var collection = Promise.promisifyAll(user_database.collection('users'));
     return collection.insertAsync({
         username: post_params.username,
-        password: post_params.password
+        password: post_params.password,
+        date_created: new Date().getTime()
     }).then(function(result) {
         return {
             success: true,
