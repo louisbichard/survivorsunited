@@ -14,24 +14,34 @@ module.exports = function(req, res) {
         file: __dirname + __filename
     });
 
+    req.user = req.user || {};
+
+    //VALIDATION: USER HAS NO MENTOR
+    if (!req.user && !req.user.mentor) {
+        respond.success(false);
+    }
+
     var get_user_db = function(db) {
+        var mentor_id = req.user.mentor;
+        var oid = database.getObjectID(mentor_id);
+        console.log(oid);
         var collection = Promise.promisifyAll(db.collection('users'));
-        return Promise.props({
-            find: collection.findAsync(),
-            count: collection.countAsync()
+        return collection.findAsync({
+            _id: oid
         });
     };
 
     var get_user_data = function(result) {
         var count = result.count;
-        var find = Promise.promisifyAll(result.find);
+        var find = Promise.promisifyAll(result);
 
         return find.toArrayAsync()
-            .then(function(users) {
-                return {
-                    users: format_dates(users),
-                    count: count
-                };
+            .then(function(mentor) {
+                //VALIDATION 
+                if(!mentor[0]) {
+                    respond.failure('Assigned mentor not found');
+                }
+                return mentor[0];
             });
     };
 

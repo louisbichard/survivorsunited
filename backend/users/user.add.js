@@ -64,7 +64,9 @@ var add_record = function(database) {
     return collection.insertAsync({
         username: post_params.username,
         password: post_params.password,
-        date_created: new Date().getTime()
+        date_created: new Date().getTime(),
+        mentor: false,
+        role: "basic"
     }).then(function(result) {
         return {
             success: true,

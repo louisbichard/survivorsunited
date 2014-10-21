@@ -3,19 +3,16 @@ var colors = require('colors');
 
 module.exports = function(args) {
 
-    //VALIDATION
-    //----------
-    // ENSURE req, res & filename are specified
+    //VALIDATION: ENSURE args are specified
+    if (!args) throw new Error('No arguements passed to response utility');
 
+    //VALIDATION: ENSURE req, res & filename are specified    
     if (!args.req) throw new Error('No request object passed to response utility');
     if (!args.res) throw new Error('No response object passed to response utility');
     if (!args.file) throw new Error('No request object passed to response utility');
 
 
-    //VALIDATION
-    //----------
-    // ENSURE arguments are correct file type
-
+    //VALIDATION: ENSURE arguments are correct file type
     if (((typeof args.req) !== 'object')) throw new Error('Incorrect type for request passed to response utility');
     if (((typeof args.res) !== 'object')) throw new Error('Incorrect type for response passed to response utility');
     if (((typeof args.file) !== 'string')) throw new Error('Incorrect type for request passed to response utility');

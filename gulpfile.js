@@ -21,6 +21,12 @@ gulp.task('database', shell.task([
 ]));
 
 gulp.task('test-http', shell.task([
-	"node backend/test/test.output.js",
-    "vows backend/test/*.test.js"
+	"node backend/tests/endpoint_tests/test.output.js",
+    "vows backend/tests/endpoint_tests/*.test.js"
 ]));
+
+gulp.task('test-backend', shell.task([
+	"node backend/tests/unit_tests/test.output.js",
+    "jasmine-node backend/tests/unit_tests  --color"
+]));
+

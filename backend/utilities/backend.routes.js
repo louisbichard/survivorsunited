@@ -60,6 +60,13 @@ module.exports = function(app) {
         require('../users/user.delete.js')(req, res);
     });
 
+    //MENTOR
+    //======
+    app.get('/user/assigned_mentor', function(req, res) {
+        colourful_output('/user/assigned_mentor');
+        return require('./../users/user.assigned_mentor.js')(req, res);
+    });
+
 
 };
 
