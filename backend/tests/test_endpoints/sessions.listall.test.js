@@ -1,7 +1,7 @@
   var APIeasy = require('api-easy');
   var assert = require('assert');
   var suite = APIeasy.describe('your/awesome/api');
-  var utilities = require('./test_utilities.js');
+  var utilities = require('../test_utilities/test_utilities.js');
 
    //TEST HEADER
   var test_endpoint = "/sessions/listall";

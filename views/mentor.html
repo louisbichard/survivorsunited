@@ -1,26 +1,25 @@
 <div class="panel panel-default">
     <div class="panel-body">
         <h2>Your mentor</h2>
+        <h4>{{mentor.first_name}} {{mentor.last_name}}</h4>
         <hr>
         <div class="row">
             <div class="col-md-4 col-lg-4">
                 <div class="panel panel-default">
                     <div class="panel-body">
                         <form role="form">
-                            <img class="img-responsive" src="http://img2.wikia.nocookie.net/__cb20140518071050/towerofsaviors/images/archive/4/47/20140518072131!Placeholder.png">
+                            <img class="img-responsive" src="{{mentor.img}}">
                         </form>
                     </div>
                 </div>
             </div>
             <div class="col-md-8 col-lg-8">
-                <p>
-                    <h4> Bob Turnpike</h4>
-                <p>
-                    <strong>Biography:</strong>
+                <strong>Biography:</strong>
                 </p>
-                <p>Sed posuere consectetur est at lobortis. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Curabitur blandit tempus porttitor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Donec ullamcorper nulla non metus auctor fringilla. Nullam id dolor id nibh ultricies vehicula ut id elit. Donec id elit non mi porta gravida at eget metus. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Curabitur blandit tempus porttitor.</p>
                 <p>
-                    <strong>Phone:</strong>Something</p>
+                    {{mentor.bio}}
+                </p>
+                <strong>Email: &nbsp;</strong>{{mentor.email}}</p>
             </div>
         </div>
     </div>

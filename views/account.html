@@ -1,9 +1,11 @@
 <div class="row">
-    <div class="col-md-8 col-lg-8">
+    <div class="col-md-6 col-lg-6">
+
+        <!-- ACCOUNT DETAILS -->
         <div class="panel panel-default">
             <div class="panel-body">
                 <form role="form">
-                    <h4>Account</h4>
+                    <h4><i class="fa fa-cog"></i>&nbsp;Account</h4>
                     <hr>
                     <div class="form-group">
                         <label>ID</label>
@@ -21,56 +23,106 @@
                         <label>Email</label>
                         <input ng-model="user.email" class="form-control" placeholder="Email">
                     </div>
+                    <div class="form-group">
+                        <label>Severity</label>
+                        <select ng-model="user.severity_grade" class="form-control">
+                            <option class="primary">1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                        </select>
+                    </div>
                 </form>
             </div>
         </div>
 
+        <!-- USERS GENERAL DETAILS -->
         <div class="panel panel-default">
             <div class="panel-body">
                 <form role="form">
-                    <h4>Personal contact</h4>
+                    <h4><i class="fa fa-pencil"></i>&nbsp;Personal</h4>
                     <hr>
                     <div class="form-group">
                         <label>First name</label>
                         <input value="{{user.first_name}}" ng-model="user.first_name" class="form-control" placeholder="First name">
                     </div>
                     <div class="form-group">
-                        <label>Last name</label>                        
+                        <label>Last name</label>
                         <input value="{{user.last_name}}" ng-model="user.last_name" class="form-control" placeholder="Last name">
                     </div>
                 </form>
             </div>
         </div>
+
+
+        <!-- BIOGRAPHY -->
         <div class="panel panel-default">
             <div class="panel-body">
                 <form role="form">
-                    <h4>Custom details panel</h4>
-                    TODO: ALLOW USER TO ADD ANY FIELDS
+                    <h4><i class="fa fa-book"></i>&nbsp;Biography</h4>
                     <hr>
+                    <textarea value="{{user.biography}}" ng-model="user.bio" class="form-control" rows="3" placeholder="Tell us something about yourself"></textarea>
                 </form>
             </div>
         </div>
-        <div class="panel panel-default">
-            <div class="panel-body">
-                <form role="form">
-                    <h4>Review changes</h4>
-                    TODO: IMPLEMENT REVIEW OF CHANGED VALUES
-                </form>
-            </div>
-        </div>
-        <button type="button" ng-click="updateContact()" class="btn btn-success">Update<i class="fa fa-plus"></i>
-        </button>
+
     </div>
-    <div class="col-md-4 col-lg-4">
+
+    <div class="col-md-6 col-lg-6">
         <div class="panel panel-default">
             <div class="panel-body">
                 <form role="form">
-                    <h4>Avatar</h4>
+                    <h4><i class="fa fa-user"></i>&nbsp;Avatar</h4>
                     <hr>
-                    <img class="img-responsive" src="http://img2.wikia.nocookie.net/__cb20140518071050/towerofsaviors/images/archive/4/47/20140518072131!Placeholder.png">
+                    <img class="img-responsive" src="{{user.img}}" />
                     <br>
+                    <input value="{{user.img}}" ng-model="user.img" class="form-control" placeholder="Last name">
                     <button type="submit" class="full-width btn btn-default">Upload</button>
                 </form>
+            </div>
+        </div>
+
+        <!-- ADDRESS DETAILS -->
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <form role="form">
+                    <h4><i class="fa fa-home"></i>&nbsp;Address</h4>
+                    <hr>
+                    <div class="form-group">
+                        <label>Street name</label>
+                        <input value="{{user.address_street}}" ng-model="user.address_street" class="form-control" placeholder="Street name">
+                    </div>
+                    <div class="form-group">
+                        <label>Address line 1</label>
+                        <input value="{{user.address_line_1}}" ng-model="user.address_line_1" class="form-control" placeholder="Line 1">
+                    </div>
+                    <div class="form-group">
+                        <label>Address line 2</label>
+                        <input value="{{user.address_line_2}}" ng-model="user.address_line_2" class="form-control" placeholder="Line 2">
+                    </div>
+                    <div class="form-group">
+                        <label>Postcode</label>
+                        <input value="{{user.address_postcode}}" ng-model="user.address_postcode" class="form-control" placeholder="Postcode">
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div ng-show="update_params" class="row">
+    <div class="col-md-12 col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-body ">
+                <h4>Review changes</h4>
+                <p ng-repeat="(key, val) in update_params">
+                    {{key}}: {{val}} &nbsp;
+                    <!-- TODO: MAKE WORK -->
+                    <!--- <i data-key="{{key}}" ng-click="discardUpdatedField(key)" class="fa fa-trash"></i> -->
+                </p>
+                <button type="button" ng-click="updateContact()" class="btn btn-success">Update &nbsp;<i class="fa fa-plus"></i>
+                </button>
             </div>
         </div>
     </div>

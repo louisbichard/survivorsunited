@@ -1,5 +1,4 @@
 // ENDPOINT /auth/isAuthenticated
-
 var Promise = require('bluebird');
 var MongoClient = Promise.promisifyAll(require("mongodb")).MongoClient;
 var database = require('../utilities/database.js');

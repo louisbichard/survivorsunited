@@ -67,9 +67,38 @@ module.exports = function(app) {
         return require('./../users/user.assigned_mentor.js')(req, res);
     });
 
+    //EVENTS
+    //======
+    app.get('/events/listall', function(req, res) {
+        colourful_output('/events/listall');
+        return require('./../events/events.listall.js')(req, res);
+    });
+
+    app.post('/events/add', function(req, res) {
+        colourful_output('/events/add');
+        return require('./../events/events.add.js')(req, res);
+    });
+
+    app.get('/events/watching/current', function(req, res) {
+        colourful_output('/events/watching/current');
+        return require('./../events/events.current.watching.js')(req, res);
+    });
+
+    app.post('/events/watch', function(req, res) {
+        colourful_output('/events/watch');
+        return require('./../events/events.current.watch.js')(req, res);
+    });
+
+    app.post('/events/subscribe', function(req, res) {
+        colourful_output('/events/subscribe');
+        return require('./../events/events.current.subscribe.js')(req, res);
+    });
 
 };
 
+var call_api = function(){
+
+};
 
 var colourful_output = function(api_name) {
     console.log('API called: '.green + api_name.blue);

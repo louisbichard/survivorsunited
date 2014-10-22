@@ -1,5 +1,4 @@
 SU.controller('mainController', function($scope, $http) {
-    $scope.test = "main controller!";
     $http
         .get('http://localhost:3000/user/current')
         .success(function(data, status, headers, config) {

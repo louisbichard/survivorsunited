@@ -1,4 +1,9 @@
 SU.controller('userManagementController', function($scope, $http, allUsersFactory, registerUserFactory) {
+
+    var userCreationDates = function(users) {
+        return 20;
+    };
+
     $scope.add_user = function() {
         return $http
             .post('http://localhost:3000/user/add', $scope.new_user)
@@ -26,7 +31,7 @@ SU.controller('userManagementController', function($scope, $http, allUsersFactor
                 if (data.success) {
                     notification('Success!', 'user: ' + user.username + "(" + user.id + ") removed!");
                     $scope.users = [];
-                    $scope.refreshUsers();
+                    refreshUsers();
                 } else {
                     console.log('something went wrong');
                     notification('Oh no!', data.error_message, 'error');
@@ -38,14 +43,17 @@ SU.controller('userManagementController', function($scope, $http, allUsersFactor
             });
     };
 
-    $scope.refreshUsers = function() {
+    
+    // AUTOMATICALLY INVOKED
+    var refreshUsers = function() {
         $scope.users = [];
         allUsersFactory.then(function(users) {
-            $scope.users = users.data.result.users;
+            var user_data = users.data.result.users;
+            $scope.users = user_data;
+            $scope.user_count = users.data.result.count;
+            $scope.user_creation_dates = userCreationDates(user_data);
         });
-    };
-
-    $scope.refreshUsers();
+    }();
 
 
 });

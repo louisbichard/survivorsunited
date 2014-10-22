@@ -3,7 +3,7 @@ SU.config(function($routeProvider) {
 
     // ROOT ROUTE
     // ==========
-    .when('/', {
+        .when('/', {
         templateUrl: '../views/home.html',
         controller: 'mainController'
     })
@@ -11,9 +11,9 @@ SU.config(function($routeProvider) {
     // ACCOUNT
     // =======
     .when('/mentor', {
-        templateUrl: '../views/mentor.html',
-        controller: 'aboutController'
-    })
+            templateUrl: '../views/mentor.html',
+            controller: 'mentorController'
+        })
         .when('/account', {
             templateUrl: '../views/account.html',
             controller: 'accountController'
@@ -31,9 +31,9 @@ SU.config(function($routeProvider) {
     // UTILTIES
     // =======
     .when('/search', {
-        templateUrl: '../views/search.html',
-        controller: 'aboutController'
-    })
+            templateUrl: '../views/evemt',
+            controller: 'aboutController'
+        })
         .when('/messages', {
             templateUrl: '../views/messages.html',
             controller: 'aboutController'
@@ -46,19 +46,19 @@ SU.config(function($routeProvider) {
     // EVENT ROUTES
     // ============
     .when('/upcoming_events', {
-        templateUrl: '../views/upcoming_events.html',
-        controller: 'aboutController'
-    })
+            templateUrl: '../views/events_watched_subscribed_upcoming.html',
+            controller: 'upcomingEventsController'
+        })
+        .when('/watched_events', {
+            templateUrl: '../views/events_watched_subscribed_upcoming.html',
+            controller: 'upcomingEventsController'
+        })
         .when('/create_event', {
             templateUrl: '../views/create_event.html',
-            controller: 'aboutController'
+            controller: 'addEventController'
         })
         .when('/subscribed_events', {
             templateUrl: '../views/watched_events.html',
-            controller: 'mainController'
-        })
-        .when('/watched_events', {
-            templateUrl: '../views/subscribed_events.html',
             controller: 'mainController'
         })
         .when('/events_calendar', {
