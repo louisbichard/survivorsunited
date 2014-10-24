@@ -1,5 +1,6 @@
 var colors = require('colors');
 var _ = require('lodash');
+var log = require('../../utilities/logger.js');
 
 module.exports = {
 
@@ -29,11 +30,12 @@ module.exports = {
 
     },
 
-    colourful_log: function(api_name, option) {
-        if (option) {
-            console.log(api_name.green[option]);
-        } else {
-            console.log(api_name.magenta);
+    hasSuccessMessage: function(err, res, body, value) {
+        body = JSON.parse(body);
+
+        if (body.result !== value) {
+            throw new Error('Success message is incorrect');
         }
-    }
+    },
+    DELAY: 500
 };

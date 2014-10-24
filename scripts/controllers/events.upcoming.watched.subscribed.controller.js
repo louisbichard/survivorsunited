@@ -5,9 +5,11 @@ SU.controller('upcomingEventsController', function($scope, $http, $location) {
     var api = APP.utilties.api_route;
 
     if($location.$$path === '/watched_events') {
+        $scope.title = "Watched";
         api += "/events/watching/current";
     }
     else {
+        $scope.title = "Upcoming";
         api += "/events/listall";
     }
 

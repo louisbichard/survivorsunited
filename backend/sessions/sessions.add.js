@@ -14,7 +14,9 @@ module.exports = function(req, res) {
 
     var insertIntoDB = function(db) {
         var collection = Promise.promisifyAll(db.collection('sessions'));
-        return collection.insertAsync({})
+        return collection.insertAsync({
+            user_id: false
+        })
             .then(function(result) {
                 // RETURN THE ID SET BY THE DB
                 return result[0]._id;

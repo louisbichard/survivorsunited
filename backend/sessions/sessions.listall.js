@@ -43,7 +43,7 @@ module.exports = function(req, res) {
         .then(extract_sessions)
         .then(send_response)
         .caught(function(err) {
-            respond.failure('Could not list users!', err);
+            respond.failure('Could not list sessions', err);
         });
 
 };

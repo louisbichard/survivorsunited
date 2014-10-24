@@ -2,14 +2,12 @@
   var assert = require('assert');
   var suite = APIeasy.describe('your/awesome/api');
   var utilities = require('../test_utilities/test_utilities.js');
+  var log = require('../../utilities/logger.js');
 
-   //TEST HEADER
   var test_endpoint = "/user/assigned_mentor";
-  utilities.colourful_log(test_endpoint, 'underline');
+  log.test.endpoint(test_endpoint);
 
-   //SESSION MANAGEMENT API TESTS
-   //----------------------------
-  utilities.colourful_log('Assigned mentor API');
+  log.test.describe('Assigned mentor API');
   suite
       .use('localhost', 3000)
       .setHeader('Content-Type', 'application/json')
@@ -17,6 +15,3 @@
       .expect(200)
       .expect('Has appropriate properties', utilities.hasAppropriateProperties)
       .export(module);
-
-   //ADD OUTPUT SPACE AT END
-  console.log(' ');

@@ -26,20 +26,22 @@ module.exports = function(req, res, id) {
         });
     };
 
-    var getUserDB = function(user_id) {
-        return callMongo()
-            .then(function(db) {
-                return getUserByID(db, user_id);
-            });
-    };
-
     var getUserIDFromSession = function(result) {
         var find = Promise.promisifyAll(result);
 
         return find
             .toArrayAsync()
             .then(function(session) {
+                if(!session) Promise.reject();
                 return session[0].user_id;
+            });
+    };
+
+    var getUserDB = function(user_id) {
+        return callMongo()
+            .then(function(db) {
+                console.log('called session, and found user id', user_id);
+                return getUserByID(db, user_id);
             });
     };
 
@@ -67,7 +69,7 @@ module.exports = function(req, res, id) {
     };
 
     var postErrorToConsole = function(err) {
-        respond.failure('Could not list users!', err);
+        console.log('Could not bind user to session', err);
     };
 
     return callMongo()

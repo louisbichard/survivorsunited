@@ -61,7 +61,7 @@ module.exports = function(req, res) {
         .then(get_user_data)
         .then(send_result)
         .caught(function(err) {
-            respond.failure('Could not list users!', err);
+            respond.failure('Could not find assigned mentor', err);
         });
 
 };

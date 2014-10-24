@@ -48,3 +48,4 @@ require('./utilities/backend.routes.js')(app, passport);
 //##PORT SETUP
 app.listen(port);
 console.log("-------- Server running at http://127.0.0.1:" + port + "/ --------");
+console.log("-------- Database: " + process.env.DATABASE + "  --------");
