@@ -28,6 +28,7 @@ clean_db()
     })
     .then(function() {
         return new Promise(function(resolve, reject) {
+            
             suite
                 .use('localhost', 3000)
                 .setHeader('Content-Type', 'application/json')

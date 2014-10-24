@@ -17,15 +17,29 @@ module.exports = {
 
     },
 
-    hasResultProperty: function(err, res, body, property, type) {
+    hasResultProperty: function(err, res, body, property, type, val) {
         body = JSON.parse(body);
 
+        if (!body.result) {
+            throw new Error('API does not return success');
+        }
+
+        //CHECK PROPERTY EXISTS
         if (!body.result || body.result[property] === undefined) {
             throw new Error('Expected result.' + property + ' to exist ');
         }
 
+        //CHECK TYPEOF THE PROPERTY
         if (typeof body.result[property] !== type) {
             throw new Error('Expected ' + property + ' property of result to be of type' + type);
+        }
+
+        //CHECK VALUE OF THE PROPERTY
+        var value = body.result[property];
+        if (val && body.result[property] !== val) {
+            log.debug('body', body.result[property]);
+            log.debug('debug', property, val, value);
+            throw new Error('Expected value of ' + property + ' to be: ' + val + '  instead got ' + value);
         }
 
     },
