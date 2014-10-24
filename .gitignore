@@ -1,6 +1,7 @@
 # DATABASE #
 
 backend/data
+node_modules
 
 # OS generated files #
 ######################
