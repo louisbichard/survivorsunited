@@ -11,7 +11,7 @@ gulp.task('default', shell.task([
     "set -x DATABASE su",
 
     //SETUP DATABASE DATA
-    "nodemon backend/index.js",
+    "nodemon backend/index.js"
 ]));
 
 gulp.task('test-endpoints', function() {

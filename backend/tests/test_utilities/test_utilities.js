@@ -9,7 +9,7 @@ var USER_ID = "544b7656702a87d900b4392f";
 module.exports = {
 
     // CONSTANTS
-    DELAY: 200,
+    DELAY: 1000,
 
     hasAppropriateProperties: function(err, res, body) {
         body = JSON.parse(body);

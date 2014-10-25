@@ -13,10 +13,11 @@ module.exports = function(req, res) {
     });
 
     var post_params = req.body;
+    var event_id;
 
     //CAREFULLY CONVERT TO ID
     try {
-        var event_id = database.getObjectID(post_params.id);
+        event_id = database.getObjectID(post_params.id);
     } catch (err) {
         respond.failure('event ID was not valid', err);
     }

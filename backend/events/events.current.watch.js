@@ -12,9 +12,17 @@ module.exports = function(req, res) {
     });
 
     var post_params = req.body;
+    var event_id;
+
+    //CAREFULLY CONVERT TO ID
+    try {
+        event_id = database.getObjectID(post_params.id);
+    } catch (err) {
+        respond.failure('event ID was not valid', err);
+    }
 
     //VALIDATION
-    if (!post_params.event_id) {
+    if (!post_params.id) {
         respond.failure('No event ID passed');
     }
 
@@ -22,7 +30,7 @@ module.exports = function(req, res) {
 
         var collection = Promise.promisifyAll(db.collection('events'));
         return collection.updateAsync({
-            _id: database.getObjectID(post_params.event_id)
+            _id: database.getObjectID(event_id)
         }, {
             $addToSet: {
                 watching: req.user._id
@@ -36,7 +44,7 @@ module.exports = function(req, res) {
         if (num_rows_changed === 0) {
             respond.failure('Event not found');
         }
-        
+
         respond.success('User is now watching event');
     };
 

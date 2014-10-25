@@ -59,6 +59,10 @@ module.exports = {
         describe: function(text) {
             text = "testing " + text;
             console.log(text.magenta);
+        },
+        complete: function(num_tests) {
+            var text = "Testing complete! Completed: ";
+            console.log(text.green.underline, num_tests, '\n');
         }
     }
 };
