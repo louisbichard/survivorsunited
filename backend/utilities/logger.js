@@ -31,9 +31,12 @@ module.exports = {
     error: function(text) {
         console.log("Error: ".white.bgRed, text, '\n');
     },
+
+    //DEPRECATED, USE TEST SUBMODULE
     testFailed: function(err) {
         console.log("Test failed: ".white.bgRed, err, '\n');
     },
+
     promiseCaught: function(text, err) {
         console.log(text.white.bgRed, err, '\n');
     },
@@ -41,23 +44,21 @@ module.exports = {
         console.log('\n');
     },
     test: {
+        failed: function(endpoint, err) {
+            var text = "Test failed in " + endpoint;
+            console.log(text.white.bgRed, err, '\n');
+        },
         databaseChange: function(text) {
-            text = "Datbase:: " + text;
+            text = "Database:: " + text;
             console.log(text.cyan);
         },
         endpoint: function(text) {
+            text = 'Endpoint being tested:' + text.blue;
             console.log(text.blue);
         },
         describe: function(text) {
+            text = "testing " + text;
             console.log(text.magenta);
         }
     }
 };
-
-
-/*
- log.test.endpoint(test_endpoint);
-
-          log.test.describe('Testing general logout');
-  var log = require('../../utilities/logger.js');
-*/

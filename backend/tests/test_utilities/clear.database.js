@@ -7,9 +7,11 @@ var _ = require('lodash');
 var database = require('../../utilities/database.js');
 var log = require('../../utilities/logger.js');
 
-var collections_to_clean = ['users', 'sessions'];
+var collections_to_clean = ['users', 'sessions', 'events'];
 
 module.exports = function cleanDatabases() {
+
+    // CONSTRUCT OBJECT OF PROMISES TO REMOVE ALL COLLECTIONS IN ARRAY
     var getCollection = function(db) {
         return _.reduce(collections_to_clean, function(prev, curr) {
             prev[curr] = Promise.promisifyAll(db.collection(curr)).removeAsync({});
@@ -17,10 +19,12 @@ module.exports = function cleanDatabases() {
         }, {});
     };
 
+    // LAUNCH PROMISE OBJECTS
     var removeData = function(collection) {
         return Promise.props(collection);
     };
 
+    // RUN IF ALL THE DATABASE REMOVALS WORK
     var logIfSuccess = function(data) {
         log.test.databaseChange('Mock data removed');
         return data;

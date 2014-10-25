@@ -2,6 +2,7 @@
 var Promise = require('bluebird');
 var MongoClient = Promise.promisifyAll(require("mongodb")).MongoClient;
 var database = require('../utilities/database.js');
+var log = require('../utilities/logger.js');
 
 module.exports = function(req, res) {
 
@@ -13,16 +14,22 @@ module.exports = function(req, res) {
 
     var post_params = req.body;
 
+    //CAREFULLY CONVERT TO ID
+    try {
+        var event_id = database.getObjectID(post_params.id);
+    } catch (err) {
+        respond.failure('event ID was not valid', err);
+    }
+
     //VALIDATION
-    if (!post_params.event_id) {
+    if (!post_params.id) {
         respond.failure('No event ID passed');
     }
 
     var find_data = function(db) {
-
         var collection = Promise.promisifyAll(db.collection('events'));
         return collection.updateAsync({
-            _id: database.getObjectID(post_params.event_id)
+            _id: event_id
         }, {
             $addToSet: {
                 attending: req.user._id

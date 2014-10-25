@@ -3,8 +3,13 @@ var _ = require('lodash');
 var log = require('../../utilities/logger.js');
 var database = require('../../utilities/database.js');
 var AUTH_COOKIE = "544a4603c639328a1adc6723";
+var EVENT_ID = database.getObjectID("544a8c615161f3314349f1ab");
+var USER_ID = "544b7656702a87d900b4392f";
 
 module.exports = {
+
+    // CONSTANTS
+    DELAY: 200,
 
     hasAppropriateProperties: function(err, res, body) {
         body = JSON.parse(body);
@@ -47,17 +52,20 @@ module.exports = {
     },
 
     successIsFalse: function(err, res, body) {
-
+        // FORMAT REQUEST BODY
         body = JSON.parse(body);
+
+        // THROW ERROR IF TEST ISN'T FALSE
         if (body.success !== false) {
             throw new Error('Expected success to be false');
         }
     },
 
     successIsTrue: function(err, res, body) {
+        //FORMAT REQUEST BODY
         body = JSON.parse(body);
-        //log.debug('body', body);
 
+        // THROW ERROR IF REST ISN'T FALSE
         if (body.success !== true) {
             throw new Error('Expected success to be true');
         }
@@ -67,26 +75,44 @@ module.exports = {
         body = JSON.parse(body);
 
         if (body.error_message !== message) {
-            throw new Error('Success message is incorrect');
+            throw new Error('Error message is incorrect, expected: ' + message + ' but got: ' + body.error_message);
         }
     },
 
-    hasSuccessMessage: function(err, res, body, value) {
+    hasSuccessMessage: function(err, res, body, message) {
+        //FORMAT REQUEST BODY
         body = JSON.parse(body);
 
-        if (body.result !== value) {
-            throw new Error('Success message is incorrect, expected: ' + value + ' but got: ' + body.result);
+        //THROW ERROR IF MESSAGE IS NOT EXPECTED
+        if (body.result !== message) {
+            var output = [
+                'Success message is incorrect, expected:',
+                message,
+                ' but got: ',
+                body.result,
+                'error message was:',
+                body.error_message
+            ];
+            throw new Error(output.join('\n'));
         }
     },
 
+    // SET OUTGOING REQUEST AS MONGO AUTH COOKIE CONSTANT
     setAuthCookie: function(outgoing) {
         outgoing.headers['Cookie'] = 'auth=' + AUTH_COOKIE;
         return outgoing;
     },
 
+    // GET CONSTANT MONGO ID
     getAuthCookie: function() {
         return database.getObjectID(AUTH_COOKIE);
     },
 
-    DELAY: 1000
+    //COLLECTION OF DUMMY ID'S FOR STUBBING TESTS
+    dummy_id: {
+
+        //USE EVENTS AS EVENT IS A RESERVED WORD
+        EVENT_ID: EVENT_ID,
+        USER_ID: USER_ID
+    }
 };

@@ -15,18 +15,18 @@ module.exports = function cleanDatabases(args) {
         }
     });
 
-    var getCollection = function(db) {        
+    var getCollection = function(db) {
         return _.reduce(args, function(prev, curr) {
             prev[curr] = Promise.promisifyAll(db.collection(curr.collection)).insertAsync(curr.data);
             return prev;
         }, {});
     };
 
-    var insertData = function(collection) {        
+    var insertData = function(collection) {
         return Promise.props(collection);
     };
 
-    var logIfSuccess = function(data) {        
+    var logIfSuccess = function(data) {
         log.test.databaseChange('Mock data inserted');
         return data;
     };
@@ -37,6 +37,6 @@ module.exports = function cleanDatabases(args) {
         .then(logIfSuccess)
         .caught(function(err) {
             console.log(err);
-            throw new Error('Could not delete databases', '\n');
+            throw new Error('Could not setup databases', '\n');
         });
 };

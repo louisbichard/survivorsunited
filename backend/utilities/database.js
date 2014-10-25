@@ -1,5 +1,6 @@
 var mongo = require('mongodb');
 var database = process.env.DATABASE;
+var respond = require('../utilities/utilities.respond.js');
 
 if (!database) {
     throw new Error('Database environment variable is undefined!');

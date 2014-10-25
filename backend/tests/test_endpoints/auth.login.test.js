@@ -16,7 +16,7 @@ clean_db()
 // DESCRIBE
 .then(function() {
     log.test.endpoint(test_endpoint);
-    log.test.describe('Logging in with invalid params');
+    log.test.describe('Attempting logging in without credentials');
 })
 
 //RUN
@@ -42,7 +42,39 @@ clean_db()
 
 //CLEAN
 .then(clean_db)
-/*
+
+// DESCRIBE
+.then(function(data) {
+    log.test.describe('Logging in with too small password');
+})
+
+// RUN
+.then(function() {
+    return new Promise(function(resolve, reject) {
+
+        suite.discuss('When authenticating')
+            .discuss('with username and password')
+            .use('localhost', 3000)
+            .setHeader('Content-Type', 'application/json')
+            .post(test_endpoint, {
+                username: "username",
+                password: "aaa"
+            })
+            .expect(200)
+            .expect('Error message is as expected', function(err, res, body) {
+                utilities.hasErrorMessage(err, res, body, 'Password must be more than 5 characters');
+            })
+            .expect('Success is true', utilities.successIsFalse)
+            .next();
+
+        _.delay(resolve, utilities.DELAY);
+
+    });
+})
+
+//CLEAN
+.then(clean_db)
+
 // DESCRIBE
 .then(function(data) {
     log.test.describe('Logging in without password');
@@ -60,7 +92,10 @@ clean_db()
                 username: "username"
             })
             .expect(200)
-            .expect('Success is true', utilities.successisFalse)
+            .expect('Success is true', utilities.successIsFalse)
+            .expect('Error message is as expected', function(err, res, body) {
+                utilities.hasErrorMessage(err, res, body, 'No username or password specified');
+            })
             .next();
 
         _.delay(resolve, utilities.DELAY);
@@ -70,7 +105,7 @@ clean_db()
 
 // CLEAN
 .then(clean_db)
-*/
+
 // SETUP
 .then(function() {
     return setup_db(

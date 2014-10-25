@@ -10,30 +10,41 @@ var clean_db = require('../test_utilities/clear.database.js');
 var log = require('../../utilities/logger.js');
 var _ = require('lodash');
 
+// CLEAN  
 clean_db()
-    .then(function() {
-        log.test.endpoint(test_endpoint);
-        log.test.describe('Testing general logout');
-    })
-    .then(function() {
-        return new Promise(function(resolve, reject) {
-            
-            suite
-                .use('localhost', 3000)
-                .setHeader('Content-Type', 'application/json')
-                .get(test_endpoint)
-                .expect(200)
-                .expect('Success message is correct', function(err, res, body) {
-                    utilities.hasSuccessMessage(err, res, body, 'User is already logged out');
-                })
-                .export(module);
 
-            _.delay(resolve, utilities.DELAY);
+//DESCRIBE
+.then(function() {
+    log.test.endpoint(test_endpoint);
+    log.test.describe('Testing general logout');
+})
 
-        });
-    })
-    .then(process.exit)
-    .caught(function(err) {
-        log.testFailed(test_endpoint, err);
-        process.exit();
+// RUN
+.then(function() {
+    return new Promise(function(resolve, reject) {
+
+        suite
+            .use('localhost', 3000)
+            .setHeader('Content-Type', 'application/json')
+            .get(test_endpoint)
+            .expect(200)
+            .expect('Success message is correct', function(err, res, body) {
+                utilities.hasSuccessMessage(err, res, body, 'User is already logged out');
+            })
+            .export(module);
+
+        _.delay(resolve, utilities.DELAY);
+
     });
+})
+
+// EXIT 
+.then(process.exit)
+
+// CATCH ERRORS
+.caught(function(err) {
+    log.testFailed(test_endpoint, err);
+
+    //EXIT REGARDLESS
+    process.exit();
+});
