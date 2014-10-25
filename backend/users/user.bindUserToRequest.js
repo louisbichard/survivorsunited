@@ -4,6 +4,7 @@ var Promise = require('bluebird');
 var MongoClient = Promise.promisifyAll(require("mongodb")).MongoClient;
 var database = require('../utilities/database.js');
 var log = require('../utilities/logger.js');
+var add_session = require('../sessions/sessions.add.js');
 
 module.exports = function(req, res, id) {
 
@@ -37,7 +38,20 @@ module.exports = function(req, res, id) {
 
     var validateSessionObject = function(session) {
         if (!session) Promise.reject('Session failed to be found');
-        return session[0].user_id;
+
+
+
+
+        //IF SESSION NOT IN DB, THEN CREATE THEM A NEW ONE, AND BIND TO THAT
+        if (session[0]) {
+            return session[0].user_id;
+        } else {
+            return add_session(req, res)
+                .then(function(session) {
+                    return session;
+                });
+        }
+
     };
 
     var getUserDB = function(user_id) {

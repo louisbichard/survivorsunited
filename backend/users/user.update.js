@@ -4,6 +4,7 @@ var Promise = require('bluebird');
 var MongoClient = Promise.promisifyAll(require("mongodb")).MongoClient;
 var database = require('../utilities/database.js');
 var _ = require('bluebird');
+var log = require('../utilities/logger.js');
 
 module.exports = function(req, res) {
 
@@ -13,11 +14,26 @@ module.exports = function(req, res) {
         file: __dirname + __filename
     });
 
+    //VALIDATE THAT USER IS AUTHENTICATED
+    respond.rejectAnon();
+
     var post_params = req.body;
-    var user_id = post_params.id || req.user._id;
+    var user_id;
+
+    try {
+        user_id = database.getObjectID(post_params.id || req.user._id || "");
+    } catch (e) {
+        //SET USER_ID to 
+        user_id = false;
+    }
 
     //VALIDATION: Make sure there is more info than just ID
-    if (Object.keys(post_params).length === 0 ) {
+    if (Object.keys(post_params).length === 0) {
+        respond.failure('No data passed for updating user');
+    }
+
+    //VALIDATION: Make sure there is more info than just ID
+    if (Object.keys(post_params).length === 0) {
         respond.failure('No data passed for updating user');
     }
 
@@ -41,7 +57,7 @@ module.exports = function(req, res) {
 
         var collection = Promise.promisifyAll(db.collection('users'));
         return collection.updateAsync({
-            _id: database.getObjectID(user_id)
+            _id: user_id
         }, {
             $set: post_params
         });
@@ -53,12 +69,11 @@ module.exports = function(req, res) {
     };
 
     var objectKeysToString = function(object) {
-
-        return Object.keys(object).join(' <br> ');
+        return Object.keys(object).join(', ');
     };
 
     var send_response = function() {
-        var changed_field_names = objectKeysToString(post_params);
+        var changed_field_names = "Updated user details for: " + objectKeysToString(post_params);
         respond.success(changed_field_names);
     };
 

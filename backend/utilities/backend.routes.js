@@ -74,6 +74,11 @@ module.exports = function(app) {
         return require('./../events/events.listall.js')(req, res);
     });
 
+    app.get('/events/listwatchers', function(req, res) {
+        colourful_output('/events/listwatchers');
+        return require('./../events/events.listWatchers.js')(req, res);
+    });
+
     app.post('/events/add', function(req, res) {
         colourful_output('/events/add');
         return require('./../events/events.add.js')(req, res);

@@ -6,7 +6,7 @@
                 <h4>Total events ({{events_count}})</h4>
                 <hr>
                 <input ng-model="searchText" class="form-control" placeholder="search">
-                <br> 
+                <br>
 
                 <div ng-repeat="event in events | filter:searchText" class="row">
                     <div class="col-md-12 col-lg-12">
@@ -34,14 +34,8 @@
                                                 <strong>Current attendee's:</strong>&nbsp; {{event.attending}}
                                             </p>
                                             <p>
-                                                <strong>Current watchers:</strong>&nbsp; {{event.watchers}}
+                                                <strong>Current watchers's:</strong>&nbsp; <a href="#users_watching_event?id={{event._id}}">current watchers</a>
                                             </p>
-                                            <div class="row">
-                                                <div ng-repeat="watcher in event.watchers" class="col-md-3 col-lg-3">
-                                                    <img class="img-responsive" src="http://img2.wikia.nocookie.net/__cb20140518071050/towerofsaviors/images/archive/4/47/20140518072131!Placeholder.png">
-                                                    <p class="text-center">ID: &nbsp; {{watcher}}</p>
-                                                </div>
-                                            </div>
 
                                             <h4>Description</h4>
                                             <p>{{event.description}}</p>

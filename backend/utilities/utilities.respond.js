@@ -1,5 +1,6 @@
 // Response utility
 var colors = require('colors');
+var log = require('./logger.js');
 
 module.exports = function(args) {
 
@@ -18,6 +19,19 @@ module.exports = function(args) {
     if (((typeof args.file) !== 'string')) throw new Error('Incorrect type for request passed to response utility');
 
     return {
+        rejectAnon: function() {
+            var message = 'User is not authenticated';
+
+            var construct_response = JSON.stringify({
+                success: false,
+                error_message: message
+            });
+
+            // CHECK REQUEST OBJECT FOR USER CREDENTIALS
+            if (!args.req.user) {
+                args.res.end(construct_response);
+            }
+        },
         success: function(message) {
             var construct_response = JSON.stringify({
                 success: true,

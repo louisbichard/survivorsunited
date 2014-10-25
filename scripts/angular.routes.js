@@ -28,37 +28,61 @@ SU.config(function($routeProvider) {
         })
 
 
+
+
+
     // UTILTIES
     // =======
+
+    //MAIN SEARCH PAGE
     .when('/search', {
-            templateUrl: '../views/evemt',
-            controller: 'aboutController'
-        })
-        .when('/messages', {
-            templateUrl: '../views/messages.html',
-            controller: 'aboutController'
-        })
-        .when('/notifications', {
-            templateUrl: '../views/notifications.html',
-            controller: 'aboutController'
-        })
+        templateUrl: '../views/evemt',
+        controller: 'aboutController'
+    })
+
+    //MAIN MESSAGES PAGE
+    .when('/messages', {
+        templateUrl: '../views/messages.html',
+        controller: 'aboutController'
+    })
+
+    //MAIN NOTIFICATIONS PAGE
+    .when('/notifications', {
+        templateUrl: '../views/notifications.html',
+        controller: 'aboutController'
+    })
+
+
+
 
     // EVENT ROUTES
     // ============
+
+    //UPCOMING EVENTS PAGE
     .when('/upcoming_events', {
-            templateUrl: '../views/events_watched_subscribed_upcoming.html',
-            controller: 'upcomingEventsController'
-        })
-        .when('/watched_events', {
-            templateUrl: '../views/events_watched_subscribed_upcoming.html',
-            controller: 'upcomingEventsController'
-        })
-        .when('/create_event', {
+        templateUrl: '../views/events_watched_subscribed_upcoming.html',
+        controller: 'upcomingEventsController'
+    })
+
+    //USERS WATCHING AN EVENT
+    .when('/users_watching_event', {
+        templateUrl: '../views/users_watching_event.html',
+        controller: 'usersWatchingEventController'
+    })
+
+    //USERS CURRERNTLY WATCHED EVENTS
+    .when('/watched_events', {
+        templateUrl: '../views/events_watched_subscribed_upcoming.html',
+        controller: 'upcomingEventsController'
+    })
+
+
+    .when('/create_event', {
             templateUrl: '../views/create_event.html',
             controller: 'addEventController'
         })
         .when('/subscribed_events', {
-            templateUrl: '../views/watched_events.html',
+            templateUrl: '../views/events_watched_subscribed_upcoming.html.html',
             controller: 'mainController'
         })
         .when('/events_calendar', {

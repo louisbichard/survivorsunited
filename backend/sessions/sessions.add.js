@@ -19,6 +19,7 @@ module.exports = function(req, res) {
             user_id: false
         })
             .then(function(result) {
+
                 // RETURN THE ID SET BY THE DB
                 return result[0]._id;
             });
@@ -27,10 +28,15 @@ module.exports = function(req, res) {
     var setCookie = function(id) {
 
         log.general('Setting session as', id);
+        
+        //REMOVE ANY PREVIOUS COOKIES
+        res.clearCookie('auth');
 
+        //SET NEW COOKIE
         res.cookie('auth', id, {
             httpOnly: true
         });
+        return id;
 
     };
 
