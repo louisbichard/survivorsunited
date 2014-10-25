@@ -8,9 +8,8 @@ var fs = Promise.promisifyAll(require('fs'));
 var _ = require('lodash');
 
 
-var start = function() {
-    return fs.readdirAsync('./backend/tests/test_endpoints');
-
+var readDirectory = function(path) {
+    return fs.readdirAsync(path);
 };
 
 var run_tests_sequentially = function(files) {
@@ -40,7 +39,14 @@ var run_tests_sequentially = function(files) {
 
 //AWESOME FINALE
 var run_finale_sequence = function() {
-    return execute.execAsync('cat backend/utilities/boom_test_complete');
+    return readDirectory('backend/test_outputs')
+        .then(function(files) {
+            //CHOOSE RANDOM
+            var random_int = (Math.random() * (files.length)).toString().split('.')[0];
+            var chosen_file = files[random_int];
+            var command = 'cat backend/test_outputs/' + chosen_file;
+            return execute.execAsync(command);
+        });
 };
 
 var log_finale_to_console = function(result) {
@@ -49,7 +55,7 @@ var log_finale_to_console = function(result) {
 
 module.exports = {
     run: function() {
-        return start()
+        return readDirectory("./backend/tests/test_endpoints")
             .then(run_tests_sequentially)
             .then(function(result) {
                 log.test.complete(result);

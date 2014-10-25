@@ -12,9 +12,13 @@ module.exports = function(req, res) {
         file: __dirname + __filename
     });
 
-
-
     var post_params = req.body;
+    var watchers = [];
+
+    // ADD USER AS WATCHER IF FOUND
+    if (req.user && req.user._id) {
+        watchers.push(req.user._id);
+    }
 
     //VALIDATION: ENSURE VALUES ARE SET
     _.each(['title', 'date', 'price', 'description'], function(field) {
@@ -34,7 +38,7 @@ module.exports = function(req, res) {
             title: post_params.title,
             description: post_params.description,
             date: post_params.date,
-            watchers: [req.user._id],
+            watchers: watchers,
             attending: [],
             price: post_params.price
         });

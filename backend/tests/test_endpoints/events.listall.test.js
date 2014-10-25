@@ -1,24 +1,54 @@
 var test_endpoint = "/events/listall";
 
-var APIeasy = require('api-easy');
+var Promise = require('bluebird');
 var assert = require('assert');
-var suite = APIeasy.describe('your/awesome/api');
 var utilities = require('../test_utilities/test_utilities.js');
+var setup_db = require('../test_utilities/setup.database.js');
+var clean_db = require('../test_utilities/clear.database.js');
 var log = require('../../utilities/logger.js');
+var _ = require('lodash');
+var APIeasy = require('api-easy');
+var suite = APIeasy.describe(test_endpoint);
 
-log.test.endpoint(test_endpoint);
-log.test.describe('Listing all events');
+// CLEAN
+clean_db()
 
-suite
-    .use('localhost', 3000)
-    .setHeader('Content-Type', 'application/json')
-    .get(test_endpoint)
-    .expect(200)
-    .expect('Has appropriate properties', utilities.hasAppropriateProperties)
-    .expect('Has result array', function(err, res, body, val, type) {
-        utilities.hasResultProperty(err, res, body, 'result', 'object');
-    })
-    .expect('Has count value', function(err, res, body, val, type) {
-        utilities.hasResultProperty(err, res, body, 'count', 'number');
-    })
-    .export(module);
+// DESCRIBE
+.then(function() {
+    log.test.endpoint(test_endpoint);
+    log.test.describe('Lists all events');
+})
+
+//RUN
+.then(function() {
+    return new Promise(function(resolve, reject) {
+
+        suite
+            .use('localhost', 3000)
+            .setHeader('Content-Type', 'application/json')
+            .get(test_endpoint)
+            .expect(200)
+            .expect('Has result array', function(err, res, body, val, type) {
+                utilities.hasResultProperty(err, res, body, 'result', 'object');
+            })
+            .expect('Has count value', function(err, res, body, val, type) {
+                utilities.hasResultProperty(err, res, body, 'count', 'number');
+            })
+            .export(module);
+
+        _.delay(resolve, utilities.DELAY);
+
+    });
+})
+
+// EXIT TEST
+.then(process.exit)
+
+// CATCH ERRORS
+.caught(function(err) {
+    log.debug('err', err);
+    log.test.failed(test_endpoint, err);
+
+    //EXIT REGARDLESS
+    process.exit();
+});
