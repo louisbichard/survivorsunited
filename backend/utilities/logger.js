@@ -4,20 +4,29 @@ module.exports = {
     heading: function(text) {
         console.log(text.red);
     },
-    general: function(text) {
-        console.log(text.blue);
+    general: function(text, data) {
+        console.log(text.blue, data, '\n');
     },
-    success: function(text) {
+    success: function(text, data) {
         text = text.green;
-        console.log(text.underline);
+        if (data) {
+            console.log(text.underline, data);
+        } else {
+            console.log(text.underline);
+        }
     },
-    failure: function(text) {
+    failure: function(text, err) {
+        if (!err) err = "";
         text = text.red;
-        console.log(text.underline);
+        console.log(text.underline, err);
     },
     debug: function(text, data) {
-        text = 'Debugging ('.white + text.white + ') '.white;
-        console.log(text.bgBlue, data, '\n');
+        if (!data) {
+            console.log('Debugging'.bgBlue.white, text);
+        } else {
+            text = 'Debugging ('.white + text.white + ') '.white;
+            console.log(text.bgBlue, data, '\n');
+        }
     },
     error: function(text) {
         console.log("Error: ".white.bgRed, text, '\n');

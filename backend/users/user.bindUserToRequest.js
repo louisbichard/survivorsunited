@@ -3,6 +3,7 @@
 var Promise = require('bluebird');
 var MongoClient = Promise.promisifyAll(require("mongodb")).MongoClient;
 var database = require('../utilities/database.js');
+var log = require('../utilities/logger.js');
 
 module.exports = function(req, res, id) {
 
@@ -27,20 +28,22 @@ module.exports = function(req, res, id) {
     };
 
     var getUserIDFromSession = function(result) {
+
         var find = Promise.promisifyAll(result);
 
         return find
-            .toArrayAsync()
-            .then(function(session) {
-                if(!session) Promise.reject();
-                return session[0].user_id;
-            });
+            .toArrayAsync();
+    };
+
+    var validateSessionObject = function(session) {
+        if (!session) Promise.reject('Session failed to be found');
+        return session[0].user_id;
     };
 
     var getUserDB = function(user_id) {
+
         return callMongo()
             .then(function(db) {
-                console.log('called session, and found user id', user_id);
                 return getUserByID(db, user_id);
             });
     };
@@ -59,22 +62,23 @@ module.exports = function(req, res, id) {
             .then(getUserFromUserDB);
     };
 
-    var getUserFromUserDB = function(result) {
-        var find = Promise.promisifyAll(result);
+    var getUserFromUserDB = function(db_result) {
+        var find = Promise.promisifyAll(db_result);
         return find
             .toArrayAsync()
-            .then(function(session) {
-                return session[0];
+            .then(function(user) {
+                return user[0];
             });
     };
 
     var postErrorToConsole = function(err) {
-        console.log('Could not bind user to session', err);
+        log.failure('Could not bind user to session', err);
     };
 
     return callMongo()
         .then(get_session_db)
         .then(getUserIDFromSession)
+        .then(validateSessionObject)
         .then(getUserDB)
         .then(bindUserToRequestObject)
         .caught(postErrorToConsole);

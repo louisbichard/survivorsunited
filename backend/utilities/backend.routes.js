@@ -17,7 +17,7 @@ module.exports = function(app) {
     });
 
     app.get('/auth/logout', function(req, res) {
-        colourful_output('/auth/logoutl');
+        colourful_output('/auth/logout');
         return require('./../auth/auth.logout.js')(req, res);
     });
 

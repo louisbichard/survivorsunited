@@ -12,17 +12,6 @@ var _ = require('lodash');
 
 clean_db()
     .then(function() {
-        return setup_db(
-            [{
-                collection: "users",
-                data: {}
-            }, {
-                collection: "sessions",
-                data: {}
-            }]
-        );
-    })
-    .then(function() {
         log.test.endpoint(test_endpoint);
         log.test.describe('Testing general logout');
     })
@@ -34,6 +23,9 @@ clean_db()
                 .setHeader('Content-Type', 'application/json')
                 .get(test_endpoint)
                 .expect(200)
+                .expect('Success message is correct', function(err, res, body) {
+                    utilities.hasSuccessMessage(err, res, body, 'User is already logged out');
+                })
                 .export(module);
 
             _.delay(resolve, utilities.DELAY);

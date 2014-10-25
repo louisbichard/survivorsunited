@@ -3,6 +3,7 @@
 var Promise = require('bluebird');
 var MongoClient = Promise.promisifyAll(require("mongodb")).MongoClient;
 var database = require('../utilities/database.js');
+var log = require('../utilities/logger.js');
 
 //CUSTOM PARAMETERS
 var post_params = {};
@@ -24,7 +25,7 @@ module.exports = function(req, res) {
     }
 
     //VALIDATION: Password insufficient complexity
-    if (post_params.password.length < 5) {
+    else if (post_params.username && post_params.password && post_params.password.length < 5) {
         respond.failure('Password must be more than 5 characters');
     }
 
@@ -45,8 +46,6 @@ module.exports = function(req, res) {
 
         var collection = Promise.promisifyAll(user_database.collection('sessions'));
 
-
-
         // SET SESSION TO USER ID
 
         var mongo = require('mongodb');
@@ -64,7 +63,7 @@ module.exports = function(req, res) {
             // CHECK RECORDS WERE ACTUALLY UPDATED
             // TODO: Probably no need to throw console error here, valid. 
             if (result[1].n === 0) {
-                respond.failure('Login failed', 'No records were updated, session not found');
+                respond.failure('Login failed', 'Session not found');
             } else {
                 respond.success('User logged in successfully');
             }

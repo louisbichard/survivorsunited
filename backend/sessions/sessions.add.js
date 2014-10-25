@@ -3,6 +3,7 @@
 var Promise = require('bluebird');
 var database = require('../utilities/database.js');
 var MongoClient = Promise.promisifyAll(require("mongodb")).MongoClient;
+var log = require('../utilities/logger.js');
 
 module.exports = function(req, res) {
 
@@ -25,7 +26,7 @@ module.exports = function(req, res) {
 
     var setCookie = function(id) {
 
-        console.log('Setting user session as: ' + id);
+        log.general('Setting session as', id);
 
         res.cookie('auth', id, {
             httpOnly: true

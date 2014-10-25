@@ -15,25 +15,25 @@ module.exports = function cleanDatabases(args) {
         }
     });
 
-    var getCollection = function(db) {
+    var getCollection = function(db) {        
         return _.reduce(args, function(prev, curr) {
             prev[curr] = Promise.promisifyAll(db.collection(curr.collection)).insertAsync(curr.data);
             return prev;
         }, {});
     };
 
-    var removeData = function(collection) {
+    var insertData = function(collection) {        
         return Promise.props(collection);
     };
 
-    var logIfSuccess = function(data) {
+    var logIfSuccess = function(data) {        
         log.test.databaseChange('Mock data inserted');
         return data;
     };
 
     return MongoClient.connectAsync(database.connection)
         .then(getCollection)
-        .then(removeData)
+        .then(insertData)
         .then(logIfSuccess)
         .caught(function(err) {
             console.log(err);

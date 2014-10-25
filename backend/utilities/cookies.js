@@ -1,5 +1,7 @@
 var add_session = require('../sessions/sessions.add.js');
+var bindUserToRequest = require('../users/user.bindUserToRequest.js');
 var Promise = require('bluebird');
+var log = require('../utilities/logger.js');
 
 module.exports = function(app) {
 
@@ -15,20 +17,18 @@ module.exports = function(app) {
                 .caught(function() {
                     console.log('Error in writing cookie! (cookie.js:12)');
                 });
-
-
         }
 
         //IF COOKIE FROM BROWSER FOUND 
         else {
 
-            require('../users/user.bindUserToRequest.js')(req, res, auth_cookie)
+            bindUserToRequest(req, res, auth_cookie)
                 .then(next)
-                .caught(function() {                    
+                .caught(function() {
                     //TODO: REPLACE WITH VERBOSE COLOURED OUTPUT
                     console.log('Error in writing cookie! (cookie.js:12)');
                 });
-        
+
         }
     });
 };

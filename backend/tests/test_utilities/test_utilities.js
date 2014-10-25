@@ -1,6 +1,8 @@
 var colors = require('colors');
 var _ = require('lodash');
 var log = require('../../utilities/logger.js');
+var database = require('../../utilities/database.js');
+var AUTH_COOKIE = "544a4603c639328a1adc6723";
 
 module.exports = {
 
@@ -44,12 +46,47 @@ module.exports = {
 
     },
 
+    successIsFalse: function(err, res, body) {
+
+        body = JSON.parse(body);
+        if (body.success !== false) {
+            throw new Error('Expected success to be false');
+        }
+    },
+
+    successIsTrue: function(err, res, body) {
+        body = JSON.parse(body);
+        //log.debug('body', body);
+
+        if (body.success !== true) {
+            throw new Error('Expected success to be true');
+        }
+    },
+
+    hasErrorMessage: function(err, res, body, message) {
+        body = JSON.parse(body);
+
+        if (body.error_message !== message) {
+            throw new Error('Success message is incorrect');
+        }
+    },
+
     hasSuccessMessage: function(err, res, body, value) {
         body = JSON.parse(body);
 
         if (body.result !== value) {
-            throw new Error('Success message is incorrect');
+            throw new Error('Success message is incorrect, expected: ' + value + ' but got: ' + body.result);
         }
     },
-    DELAY: 500
+
+    setAuthCookie: function(outgoing) {
+        outgoing.headers['Cookie'] = 'auth=' + AUTH_COOKIE;
+        return outgoing;
+    },
+
+    getAuthCookie: function() {
+        return database.getObjectID(AUTH_COOKIE);
+    },
+
+    DELAY: 1000
 };
