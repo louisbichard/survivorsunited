@@ -1,5 +1,8 @@
 var test_endpoint = '/users/listall';
 
+var log = require('../../utilities/logger.js');
+log.test.endpoint(test_endpoint);
+
 var Promise = require('bluebird');
 var APIeasy = require('api-easy');
 var suite = APIeasy.describe(test_endpoint);
@@ -7,12 +10,11 @@ var assert = require('assert');
 var utilities = require('../test_utilities/test_utilities.js');
 var setup_db = require('../test_utilities/setup.database.js');
 var clean_db = require('../test_utilities/clear.database.js');
-var log = require('../../utilities/logger.js');
+
 var _ = require('lodash');
 
 clean_db()
     .then(function() {
-        log.test.endpoint(test_endpoint);
         log.test.describe('Listing all users');
     })
     .then(function() {

@@ -2,6 +2,7 @@
 var Promise = require('bluebird');
 var MongoClient = Promise.promisifyAll(require("mongodb")).MongoClient;
 var database = require('../utilities/database.js');
+var log = require('../utilities/logger.js');
 
 module.exports = function(req, res) {
 
@@ -11,18 +12,26 @@ module.exports = function(req, res) {
         file: __dirname + __filename
     });
 
+    //VALIDATE THAT USER ID EXISTS
+    if (!req.user) {
+        respond.failure('User is not authenticated');
+    }
+
+    // PERFORM AFTER VALIDATING
+    var user_id = database.getObjectID(req.user._id);
+
     var find_data = function(db) {
 
         var collection = Promise.promisifyAll(db.collection('events'));
         return Promise.props({
             find: collection.findAsync({
                 watchers: {
-                    $in: [database.getObjectID(req.user._id)]
+                    $in: [user_id]
                 }
             }),
             count: collection.countAsync({
                 watchers: {
-                    $in: [database.getObjectID(req.user._id)]
+                    $in: [user_id]
                 }
             })
         });
@@ -30,7 +39,6 @@ module.exports = function(req, res) {
     };
 
     var extract_sessions = function(result) {
-
         var find = Promise.promisifyAll(result.find);
         return find.toArrayAsync()
             .then(function(records) {

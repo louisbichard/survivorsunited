@@ -4,7 +4,26 @@ var log = require('../../utilities/logger.js');
 var database = require('../../utilities/database.js');
 var AUTH_COOKIE = "544a4603c639328a1adc6723";
 var EVENT_ID = database.getObjectID("544a8c615161f3314349f1ab");
-var USER_ID = "544b7656702a87d900b4392f";
+var USER_ID = database.getObjectID("544b7656702a87d900b4392f");
+
+/**
+ * [getSubObjects description]
+ * @param  {[type]} body   - an object of any depth
+ * @param  {[type]} string - A string delimited by decimals to denote another layer in an object,
+ *                           Works also with no decimals
+ * @return {[type]}        "result.result" will get "hello" from: {result: {result: "hello"}}
+ */
+var getSubObjects = function(body, string) {
+    return _.reduce(string.split('.'), function(prev, curr) {
+
+        //ENSURE SUB OBJECT EXISTS
+        if (!prev[curr]) {
+            throw new Error('Sub object not found in test');
+        }
+
+        return prev[curr];
+    }, body);
+};
 
 module.exports = {
 
@@ -44,9 +63,41 @@ module.exports = {
         //CHECK VALUE OF THE PROPERTY
         var value = body.result[property];
         if (val && body.result[property] !== val) {
-            log.debug('body', body.result[property]);
-            log.debug('debug', property, val, value);
             throw new Error('Expected value of ' + property + ' to be: ' + val + '  instead got ' + value);
+        }
+
+    },
+
+    propertyHasLength: function(err, res, body, property, length) {
+        // FORMAT REQUEST BODY
+        body = JSON.parse(body);
+
+        //GET SUB OBJECT IF NECESSARY
+        var value = getSubObjects(body, property);
+
+        //CHECK PROPERTY EXISTS
+        if (!value) {
+            throw new Error('cannot check length of undefined');
+        }
+
+        var property_length = value.length;
+
+        //CHECK PROPERTY IS A NUMBER
+        if (!value instanceof Array) {
+            throw new Error('Can only check the length of arrays');
+        }
+
+        //CHECK PROPERTY LENGTH IS AS EXPECTED
+        if (property_length !== length) {
+            var output = [
+                "expected:",
+                property,
+                "to be of length",
+                length,
+                "but found as",
+                property_length
+            ];
+            throw new Error(output.join(' '));
         }
 
     },
@@ -67,7 +118,7 @@ module.exports = {
 
         // THROW ERROR IF REST ISN'T FALSE
         if (body.success !== true) {
-            throw new Error('Expected success to be true');
+            throw new Error('Expected success to be true, error message: ' + body.error_message);
         }
     },
 

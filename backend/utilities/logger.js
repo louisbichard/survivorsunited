@@ -53,7 +53,7 @@ module.exports = {
             console.log(text.cyan);
         },
         endpoint: function(text) {
-            text = 'Endpoint being tested:' + text.blue;
+            text = '---------------' + text.blue +  '---------------';
             console.log(text.blue);
         },
         describe: function(text) {

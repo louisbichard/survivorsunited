@@ -1,13 +1,14 @@
 var test_endpoint = "/user/add";
 
+var log = require('../../utilities/logger.js');
+log.test.endpoint(test_endpoint);
+
 var APIeasy = require('api-easy');
 var assert = require('assert');
 var test_user = "test_user" + new Date().getTime() + "@test.com";
 var utilities = require('../test_utilities/test_utilities.js');
 var suite = APIeasy.describe('your/awesome/api');
-var log = require('../../utilities/logger.js');
 
-log.test.endpoint(test_endpoint);
 
 // TEST WITHOUT USERNAME & PASSWORD
 log.test.describe('adding a user without credentials');

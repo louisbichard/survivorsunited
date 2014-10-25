@@ -1,11 +1,13 @@
 var test_endpoint = "/events/subscribe";
 
+var log = require('../../utilities/logger.js');
+log.test.endpoint(test_endpoint);
+
 var Promise = require('bluebird');
 var assert = require('assert');
 var utilities = require('../test_utilities/test_utilities.js');
 var setup_db = require('../test_utilities/setup.database.js');
 var clean_db = require('../test_utilities/clear.database.js');
-var log = require('../../utilities/logger.js');
 var _ = require('lodash');
 var APIeasy = require('api-easy');
 var suite = APIeasy.describe(test_endpoint);
@@ -15,7 +17,6 @@ clean_db()
 
 // DESCRIBE
 .then(function() {
-    log.test.endpoint(test_endpoint);
     log.test.describe('Validates no ID sent');
 })
 
