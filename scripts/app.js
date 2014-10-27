@@ -1,5 +1,5 @@
 // create the module and name it survivorsUnited
-var SU = angular.module('SU', ['ngRoute']);
+var SU = angular.module('SU', ['ngRoute', 'angularCharts']);
 
 
 

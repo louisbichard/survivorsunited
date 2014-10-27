@@ -5,6 +5,8 @@ var database = require('../../utilities/database.js');
 var AUTH_COOKIE = "544a4603c639328a1adc6723";
 var EVENT_ID = database.getObjectID("544a8c615161f3314349f1ab");
 var USER_ID = database.getObjectID("544b7656702a87d900b4392f");
+var FAKE = database.getObjectID("544ce6a966509b000046d959");
+
 
 /**
  * [getSubObjects description]
@@ -30,6 +32,7 @@ module.exports = {
     // CONSTANTS
     DELAY: 250,
 
+    //DEPRECATED, PLEASE REMOVE (DO NOT USE)
     hasAppropriateProperties: function(err, res, body) {
         body = JSON.parse(body);
 
@@ -164,6 +167,7 @@ module.exports = {
 
         //USE EVENTS AS EVENT IS A RESERVED WORD
         EVENT_ID: EVENT_ID,
-        USER_ID: USER_ID
+        USER_ID: USER_ID,
+        FAKE: FAKE
     }
 };

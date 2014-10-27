@@ -1,7 +1,42 @@
 SU.controller('userManagementController', function($scope, $http, allUsersFactory, registerUserFactory) {
 
+    var currentValues = function(output) {
+        return _.reduce(output, function(prev, curr) {
+            prev.push(curr.x);
+            return prev;
+        }, []);
+    };
+
     var userCreationDates = function(users) {
-        return 20;
+
+
+        //TODO: UNIT TEST THIS FUNCTION!!!
+        var chart_data = _.reduce(users, function(prev, curr) {
+            var index = $.inArray(curr.date_created, currentValues(prev));
+            if (index > -1) {
+                prev[index].y[0] ++;
+            } else {
+                prev.push({
+                    x: curr.date_created,
+                    y: [1]
+                });
+            }
+            return prev;
+        }, []);
+
+        // CREATE SERIES (JUST AN ARRAY OF EMPTY STRINGS)
+        var n = chart_data.length;
+        var series = Array(n).join(".").split(".");
+
+        $scope.chart_data.data = chart_data;
+        $scope.chart_data.series = series;
+    };
+
+    $scope.chart_config = {
+    };
+
+    $scope.chart_data = {
+
     };
 
     $scope.add_user = function() {
@@ -11,7 +46,7 @@ SU.controller('userManagementController', function($scope, $http, allUsersFactor
                 if (data.success) {
                     notification('Success!', 'user: ' + $scope.new_user.username + ' added!');
                     $scope.users = [];
-                    $scope.refreshUsers();
+                    //$scope.refreshUsers();
                 } else {
                     notification('Oh no!', data.error, 'error');
                 }
@@ -43,7 +78,7 @@ SU.controller('userManagementController', function($scope, $http, allUsersFactor
             });
     };
 
-    
+
     // AUTOMATICALLY INVOKED
     var refreshUsers = function() {
         $scope.users = [];

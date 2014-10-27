@@ -22,7 +22,7 @@ module.exports = {
     },
     debug: function(text, data) {
         if (!data) {
-            console.log('Debugging'.bgBlue.white, text);
+            console.log('Debugging'.bgBlue.white, text, '\n');
         } else {
             text = 'Debugging ('.white + text.white + ') '.white;
             console.log(text.bgBlue, data, '\n');
@@ -55,6 +55,9 @@ module.exports = {
         endpoint: function(text) {
             text = '---------------' + text.blue +  '---------------';
             console.log(text.blue);
+        },
+        hasTODO: function() {
+            console.log('Suite has unimplemented tests'.yellow.underline);
         },
         describe: function(text) {
             text = "testing " + text;

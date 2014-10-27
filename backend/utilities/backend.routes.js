@@ -74,9 +74,9 @@ module.exports = function(app) {
         return require('./../events/events.listall.js')(req, res);
     });
 
-    app.get('/events/listwatchers', function(req, res) {
+    app.get('/events/listWatchersOrAttendees', function(req, res) {
         colourful_output('/events/listwatchers');
-        return require('./../events/events.listWatchers.js')(req, res);
+        return require('./../events/events.listWatchersOrAttendees.js')(req, res);
     });
 
     app.post('/events/add', function(req, res) {
@@ -89,9 +89,9 @@ module.exports = function(app) {
         return require('./../events/events.current.watching.js')(req, res);
     });
 
-    app.post('/events/watch', function(req, res) {
-        colourful_output('/events/watch');
-        return require('./../events/events.current.watch.js')(req, res);
+    app.post('/events/watchOrAttend', function(req, res) {
+        colourful_output('/events/watchOrAttend');
+        return require('./../events/events.current.watchOrAttend.js')(req, res);
     });
 
     app.post('/events/subscribe', function(req, res) {

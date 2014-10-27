@@ -82,7 +82,7 @@ SU.config(function($routeProvider) {
             controller: 'addEventController'
         })
         .when('/subscribed_events', {
-            templateUrl: '../views/events_watched_subscribed_upcoming.html.html',
+            templateUrl: '../views/events_watched_subscribed_upcoming.html',
             controller: 'mainController'
         })
         .when('/events_calendar', {

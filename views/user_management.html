@@ -1,15 +1,74 @@
 <div class="row">
-    <div class="col-md-12 col-sm-12">
+    <div class="col-md-6 col-sm-6">
         <div class="panel panel-default">
             <div class="panel-body">
                 <h2>User Management</h2>
-                <p>Here you can add, delete and update users details</p>
-                <p>Current amount of users in the system: {{user_count}}</p>
-                <p>User creation dates: {{user_creation_dates}}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-sm-6">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <h2>Total users: {{user_count}}</h2>
             </div>
         </div>
     </div>
 </div>
+
+
+
+
+<div class="row">
+
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <h2>User sign ups</h2>
+
+                <!-- REMOVE THIS INLINE STYLE! -->
+                <style>
+                .chart {
+                    width: 1000px;
+                    height: 500px;
+                }
+                </style>
+
+                <!-- CHART DIRECTIVE -->
+                <div data-ac-chart="'line'" data-ac-data="chart_data" data-ac-config="chart_config" class="chart">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <h2>Number of severity users</h2>
+                <!-- TODO: ADD CHART FOR NUMBER OF SEVERITY USERS IN SYSTEM  -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <h2>Number of users without mentors</h2>
+                <!-- TODO: ADD CHART FOR NUMBER OF USERS WITHOUT MENTORS  -->
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
 <div class="row">
     <div class="col-md-12 col-sm-12">
         <div class="row">

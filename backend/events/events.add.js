@@ -1,4 +1,9 @@
 // ENDPOINT /events/listall
+// 
+
+// TODO: TEST
+// 1) ONLY ALLOW AUTHENTICATED USERS
+
 var Promise = require('bluebird');
 var MongoClient = Promise.promisifyAll(require("mongodb")).MongoClient;
 var database = require('../utilities/database.js');
@@ -11,6 +16,8 @@ module.exports = function(req, res) {
         res: res,
         file: __dirname + __filename
     });
+
+    respond.rejectAnon();
 
     var post_params = req.body;
     var watchers = [];
@@ -38,9 +45,11 @@ module.exports = function(req, res) {
             title: post_params.title,
             description: post_params.description,
             date: post_params.date,
-            watchers: watchers,
+            watching: watchers,
             attending: [],
-            price: post_params.price
+            date_created: new Date().getTime(),
+            price: post_params.price,
+            created_by: req.user._id
         });
     };
 

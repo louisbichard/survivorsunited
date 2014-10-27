@@ -1,7 +1,10 @@
 // ENDPOINT /events/listall
+
 var Promise = require('bluebird');
 var MongoClient = Promise.promisifyAll(require("mongodb")).MongoClient;
 var database = require('../utilities/database.js');
+var utilities_general = require('../utilities/utilities.general.js');
+var log = require('../utilities/logger.js');
 
 module.exports = function(req, res) {
 
@@ -11,19 +14,37 @@ module.exports = function(req, res) {
         file: __dirname + __filename
     });
 
-    var post_params = req.body;
+    // ONLY ALLOW AUTHENTICATED USERS
+    respond.rejectAnon();
+
+    var POST_params = req.body;
     var event_id;
 
-    //CAREFULLY CONVERT TO ID
+    // CAREFULLY CONVERT TO ID
     try {
-        event_id = database.getObjectID(post_params.id);
+        event_id = database.getObjectID(POST_params.id);
     } catch (err) {
         respond.failure('event ID was not valid', err);
     }
 
-    //VALIDATION
-    if (!post_params.id) {
+    // VALIDATION
+    if (!POST_params.id) {
         respond.failure('No event ID passed');
+    }
+
+    var type = POST_params.type;
+    var a_valid_event_type = utilities_general.inArray(['attending', 'watching'], type);
+
+    // VALIDATE TYPE, MUST BE WATCHERS OR ATTENDING
+    if (!type || !a_valid_event_type) {
+        respond.failure('Event type not specified or invalid');
+    }
+
+    // SET FIELDS TO RETRIEVE FROM EVENTS COLLECTION AS THE TYPE SPECIFIED IN THE POST
+    var events_props_to_get = {};
+
+    if (req.user) {
+        events_props_to_get[type] = req.user._id;
     }
 
     var find_data = function(db) {
@@ -32,9 +53,7 @@ module.exports = function(req, res) {
         return collection.updateAsync({
             _id: database.getObjectID(event_id)
         }, {
-            $addToSet: {
-                watching: req.user._id
-            }
+            $addToSet: events_props_to_get
         });
     };
 
@@ -45,7 +64,7 @@ module.exports = function(req, res) {
             respond.failure('Event not found');
         }
 
-        respond.success('User is now watching event');
+        respond.success('You are now ' + type + ' the event');
     };
 
 

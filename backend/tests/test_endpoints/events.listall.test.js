@@ -20,6 +20,33 @@ clean_db()
     log.test.describe('Lists all events');
 })
 
+// SETUP
+.then(function() {
+    return setup_db(
+        [
+
+            // STUB OUT FAKE SESSION
+            {
+                collection: "sessions",
+                data: {
+                    _id: utilities.getAuthCookie(),
+                    user_id: utilities.dummy_id.USER_ID
+                }
+            },
+
+            //STUB OUT FAKE USER
+            {
+                collection: "users",
+                data: {
+                    _id: utilities.dummy_id.USER_ID,
+                    username: "somebody",
+                    password: "password"
+                }
+            }
+        ]
+    );
+})
+
 //RUN
 .then(function() {
     return new Promise(function(resolve, reject) {
@@ -32,6 +59,7 @@ clean_db()
             .expect('Has result array', function(err, res, body, val, type) {
                 utilities.hasResultProperty(err, res, body, 'result', 'object');
             })
+            .before('setAuth', utilities.setAuthCookie)
             .expect('Has count value', function(err, res, body, val, type) {
                 utilities.hasResultProperty(err, res, body, 'count', 'number');
             })

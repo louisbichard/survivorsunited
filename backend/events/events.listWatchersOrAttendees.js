@@ -1,4 +1,14 @@
 // ENDPOINT /events/listall
+
+
+// TODO: ADD TESTS 
+// 
+// 1) DOES NOT ACCEPT INVALID EVENT TYPES (type)
+// 2) DOES NOT ACCEPT WHEN NO ID (id)
+// 3) EVENT NOT FOUND
+// 
+
+
 var Promise = require('bluebird');
 var MongoClient = Promise.promisifyAll(require("mongodb")).MongoClient;
 var database = require('../utilities/database.js');
@@ -16,8 +26,24 @@ module.exports = function(req, res) {
 
     GET_params = utilities_general.GET_params(req);
 
+    //GET event ID as passed as 'id'
     var event_id = GET_params.id;
 
+    //ASSESS WHETHER WATCHER OR ATTENDEES IS REQUIRED
+    var type = GET_params.type;
+
+    var a_valid_event_type = utilities_general.inArray(['attending', 'watching'], type);
+
+    //VALIDATE TYPE, MUST BE WATCHERS OR ATTENDING
+    if (!type || !a_valid_event_type) {
+        respond.failure('Event type not specified or invalid');
+    }
+
+    //SET FIELDS TO RETRIEVE FROM EVENTS COLLECTION AS THE TYPE SPECIFIED IN THE GET
+    var events_props_to_get = {};
+    events_props_to_get[type] = true;
+
+    //CONVERT PASSED ID TO OBJECT ID
     try {
         event_id = database.getObjectID(event_id);
     } catch (err) {
@@ -32,7 +58,6 @@ module.exports = function(req, res) {
 
         var collection = Promise.promisifyAll(db.collection('events'));
 
-        //RETRIEVE ALL WATCHERS
         return collection.findAsync(
 
             //FIND EVENT BY PASSED IT
@@ -41,17 +66,18 @@ module.exports = function(req, res) {
             },
 
             //JUST RETRIEVE WATCHER
-            {
-                watchers: true,
-            });
+            events_props_to_get
+        );
     };
 
     var extractWatchers = function(result) {
-
         var find = Promise.promisifyAll(result);
         return find.toArrayAsync()
             .then(function(records) {
-                return records[0].watchers;
+                if (records.length === 0) {
+                    respond.failure('Event not found');
+                }
+                return records[0][type];
             });
     };
 

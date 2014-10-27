@@ -3,6 +3,11 @@
 SU.controller('accountController', function($scope, currentUserFactory, $http, $timeout) {
     var user_original = {};
 
+    //user.severity_grade == 'high'
+    $scope.severity = function() {
+        return true;
+    };
+
     var assignUsersTo = function(users) {
         var user_data = users.data.result;
 

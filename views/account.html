@@ -5,8 +5,19 @@
         <div class="panel panel-default">
             <div class="panel-body">
                 <form role="form">
-                    <h4><i class="fa fa-cog"></i>&nbsp;Account</h4>
+                    <h4><i class="fa fa-cog"></i>&nbsp;Personal</h4>
                     <hr>
+
+
+                    <div class="panel" ng-class="{'panel-danger': user.severity_grade === 'High', 'panel-warning': user.severity_grade === 'Medium', 'panel-info': user.severity_grade === 'Low'}">
+                        <div class="panel-heading">
+                            Vulnerability: {{user.severity_grade}}
+                        </div>
+                    </div>
+
+                    <p>SEVERITY!</P>
+
+
                     <div class="form-group">
                         <label>ID</label>
                         <input disabled="disabled" class="form-control" value="{{user._id}}">
@@ -19,29 +30,8 @@
                         <label>Password</label>
                         <input value="{{user.password}}" class="form-control" placeholder="Password">
                     </div>
-                    <div class="form-group">
-                        <label>Email</label>
-                        <input ng-model="user.email" class="form-control" placeholder="Email">
-                    </div>
-                    <div class="form-group">
-                        <label>Severity</label>
-                        <select ng-model="user.severity_grade" class="form-control">
-                            <option class="primary">1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                            <option>5</option>
-                        </select>
-                    </div>
-                </form>
-            </div>
-        </div>
-
-        <!-- USERS GENERAL DETAILS -->
-        <div class="panel panel-default">
-            <div class="panel-body">
-                <form role="form">
-                    <h4><i class="fa fa-pencil"></i>&nbsp;Personal</h4>
+                    <br>
+                    <h4>Personal</h4>
                     <hr>
                     <div class="form-group">
                         <label>First name</label>
@@ -50,6 +40,18 @@
                     <div class="form-group">
                         <label>Last name</label>
                         <input value="{{user.last_name}}" ng-model="user.last_name" class="form-control" placeholder="Last name">
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input ng-model="user.email" class="form-control" placeholder="Email">
+                    </div>
+                    <div class="form-group">
+                        <label>Severity</label>
+                        <select ng-model="user.severity_grade" class="form-control">
+                            <option class="primary">Low</option>
+                            <option>Medium</option>
+                            <option>High</option>
+                        </select>
                     </div>
                 </form>
             </div>
@@ -76,9 +78,8 @@
                     <h4><i class="fa fa-user"></i>&nbsp;Avatar</h4>
                     <hr>
                     <img class="img-responsive" src="{{user.img}}" />
-                    <br>
-                    <input value="{{user.img}}" ng-model="user.img" class="form-control" placeholder="Last name">
-                    <button type="submit" class="full-width btn btn-default">Upload</button>
+                    <input value="{{user.img}}" ng-model="user.img" class="form-control" placeholder="Image URL">
+                    <!-- <button type="submit" class="full-width btn btn-default">Upload</button> -->
                 </form>
             </div>
         </div>

@@ -12,12 +12,24 @@ var _ = require('lodash');
 var APIeasy = require('api-easy');
 var suite = APIeasy.describe(test_endpoint);
 
+// TODO
+// 
+// REJECTS ANON
+// 
+
+log.test.hasTODO();
+
+// CURRENT
+//
+// REJECTS REQUEST WITH NO TITLE FIELD
+// ACCEPTS WITH VALID EVENT TITLE 
+
 // CLEAN
 clean_db()
 
 // DESCRIBE
 .then(function() {
-    log.test.describe('Rejects events without title, date, price and description');
+    log.test.describe('Rejects no title field');
 })
 
 //RUN
@@ -40,9 +52,37 @@ clean_db()
     });
 })
 
+.then(clean_db)
+
+// SETUP
+.then(function() {
+    return setup_db(
+        [
+
+            // STUB OUT FAKE SESSION
+            {
+                collection: "sessions",
+                data: {
+                    _id: utilities.getAuthCookie(),
+                    user_id: utilities.dummy_id.USER_ID
+                }
+            },
+
+            //STUB OUT FAKE USER
+            {
+                collection: "users",
+                data: {
+                    _id: utilities.dummy_id.USER_ID,
+                    username: "somebody",
+                    password: "password"
+                }
+            }
+        ]
+    );
+})
+
 // DESCRIBE
 .then(function() {
-    log.test.endpoint(test_endpoint);
     log.test.describe('Accepts events with title');
 })
 
@@ -59,6 +99,7 @@ clean_db()
                 price: 'some example price',
                 description: 'some description'
             })
+            .before('setAuth', utilities.setAuthCookie)
             .expect(200)
             .expect('Expect success to be true', utilities.successIsTrue)
             .export(module);
