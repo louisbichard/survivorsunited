@@ -1,0 +1,77 @@
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <h2>All system users ({{user_count}})</h2>
+                <hr> 
+                <input ng-model="searchText" class="form-control" placeholder="search">
+                <hr>
+                <div ng-repeat="user in users | filter:searchText">
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12">
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-md-10 col-sm-10">
+                                            <p>
+                                                <strong>{{user.username}}&nbsp;</strong>({{user._id}})
+                                            </p>
+                                        </div>
+                                        <div class="col-md-2 col-sm-2">
+                                            <div class="btn-group">
+                                                <button data-id="{{user.id}}" ng-click="removeUser(user)" type="button" class="btn btn-default btn-danger">
+                                                    <i class="fa fa-trash"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-md-12 col-sm-12">
+                                            <p>
+                                                <strong>Severity:&nbsp;</strong>
+                                                {{user.severity_grade}}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12 col-sm-12">
+                                            <p>
+                                                <strong>First name:&nbsp;</strong>{{user.first_name}}
+                                            </p>
+                                            <p>
+                                                <Strong>Last name:&nbsp;</strong>{{user.last_name}}
+                                            </p>
+                                            <p>
+                                                <Strong>Currently assigned mentor:&nbsp;</strong>{{user.mentor}}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="row">
+                                        <div class="col-md-4 col-sm-4">
+                                            <p>
+                                                <strong>Created:&nbsp;</strong>{{user.date_created}}
+
+                                            </p>
+                                        </div>
+                                        <div class="col-md-4 col-sm-4">
+                                            <p>
+                                                <strong>Password:&nbsp;</strong>{{user.password}}
+                                            </p>
+                                        </div>
+                                        <div class="col-md-4 col-sm-4">
+                                            <p>
+                                                <strong>Role:&nbsp;</strong>{{user.role}}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

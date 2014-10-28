@@ -22,6 +22,14 @@ SU.config(function($routeProvider) {
             templateUrl: '../views/user_management.html',
             controller: 'userManagementController'
         })
+     .when('/user_details', {
+            templateUrl: '../views/user_details.html',
+            controller: 'userDetailsController'
+        })
+          .when('/user_add', {
+            templateUrl: '../views/user_add.html',
+            controller: 'userAddController'
+        })
         .when('/login', {
             templateUrl: '../views/login.html',
             controller: 'loginController'

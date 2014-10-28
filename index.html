@@ -10,8 +10,6 @@
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
     <!-- ================TOASTR STYLES================ -->
     <link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet">
-    <!-- ================SURVIVORS UNITED SPECIFIC================ -->
-    <link type="text/css" href="./styles/utilities.css">
 </head>
 
 <body ng-controller="mainController">
@@ -61,8 +59,6 @@
                                 <h4>Main</h4>
                                 <p><a href="#"><i class="fa fa-home"></i> Dashboard</a>
                                 </p>
-                                <p><a href="#mentor"><i class="fa fa-male"></i> Mentor</a>
-                                </p>
                                 <p><a href="#forum"><i class="fa fa-home"></i> Forum</a>
                                 </p>
                             </div>
@@ -70,6 +66,9 @@
                         <div class="panel panel-default">
                             <div class="panel-body">
                                 <h4>Events</h4>
+                                <p>
+                                    <a href="#create_event"><i class="fa fa-plus"></i> Create event</a> 
+                                </p>
                                 <p>
                                     <a href="#upcoming_events"><i class="fa fa-calendar"></i> Upcoming events</a> 
                                 </p>
@@ -82,22 +81,30 @@
                                 <p>
                                     <a href="#subscribed_events"><i class="fa fa-home"></i> Subscribed events</a> 
                                 </p>
-                                <p>
-                                    <a href="#create_event"><i class="fa fa-plus"></i> Create event</a> 
-                                </p>
                             </div>
                         </div>
                         <div class="panel panel-default">
                             <div class="panel-body">
                                 <h4>Account</h4>
-                                <p><a href="#account"><i class="fa fa-user"></i> Account details</a>
+                                <p>
+                                    <a href="#account"><i class="fa fa-user"></i> Account details</a>
+                                </p>
+                                <p>
+                                    <a href="#mentor"><i class="fa fa-male"></i> Mentor</a>
                                 </p>
                             </div>
                         </div>
                         <div class="panel panel-default">
                             <div class="panel-body">
                                 <h4>Admin</h4>
-                                <p><a href="#user_management"><i class="fa fa-users"></i> User management</a>
+                                <p>
+                                    <a href="#user_add"><i class="fa fa-plus"></i> Add user </a>
+                                </p>
+                                <p>
+                                    <a href="#user_management"><i class="fa fa-area-chart"></i> User statistics </a>
+                                </p>
+                                <p>
+                                    <a href="#user_details"><i class="fa fa-pencil"></i> Edit users </a>
                                 </p>
                             </div>
                         </div>
@@ -129,11 +136,13 @@
     <!-- ================TOASTR NOTIFICATIONS================ -->
     <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
     <!-- ================ANGULAR LIBRARIES================ -->
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js"></script>
+    <script src="/bower_components/angular/angular.min.js"></script>
     <script src="/bower_components/angular-route/angular-route.js"></script>
+    <!-- TODO: MAKE THIS WORK -->
+    <!-- <script src="/bower_components/angular-animate/angular-animate.min.js"></script> -->
     <!-- ================ANGULAR CUSTOM================ -->
     <script src="./scripts/app.js"></script>
-    <!-- ================ANGULAR CUSTOM================ -->
+    <!-- ================GENERAL CUSTOM================ -->
     <script src="./scripts/notifications.js"></script>
     <!-- ================ANGULAR CONTROLLERS================ -->
     <!-- MAIN -->
@@ -142,23 +151,28 @@
     <script src="./scripts/controllers/auth.login.controller.js"></script>
     <!-- USER -->
     <script src="./scripts/controllers/user.management.controller.js"></script>
+    <script src="./scripts/controllers/user.details.controller.js"></script>
     <script src="./scripts/controllers/user.account.controller.js"></script>
+    <script src="./scripts/controllers/user.add.controller.js"></script>
     <!-- MENTOR -->
     <script src="./scripts/controllers/mentor.assigned.js"></script>
     <!-- EVENTS -->
     <script src="./scripts/controllers/events.upcoming.watched.subscribed.controller.js"></script>
     <script src="./scripts/controllers/event.add.controller.js"></script>
     <script src="./scripts/controllers/events.usersWatchingEvent.js"></script>
-
     <!-- ================ANGULAR ROUTES================ -->
     <script src="./scripts/angular.routes.js"></script>
+    <!-- ================ANGULAR DIRECTIVES================ -->
+    <script src="./scripts/directives/keypress.enter.directive.js"></script>
+    <!-- ================ANGULAR SERVICES================ -->
+    <script src="./scripts/services/chart.service.js"></script>
+    <script src="./scripts/services/api.service.js"></script>
     <!-- ================ANGULAR FACTORIES================ -->
     <script src="./scripts/factories/users.all.factory.js"></script>
     <script src="./scripts/factories/isAuthenticated.factory.js"></script>
     <script src="./scripts/factories/user.current.factory.js"></script>
-
     <!-- ================ANGULAR PLUGINS================ -->
-    <script src='./bower_components/d3/d3.min.js' type='text/javascript'></script> 
+    <script src='./bower_components/d3/d3.min.js' type='text/javascript'></script>
     <script src='./bower_components/angular-charts/dist/angular-charts.min.js' type='text/javascript'></script>
 
 </body>

@@ -1,40 +1,61 @@
-//USERS API
-//------------------
-// ENDPOINT /user/...
+//ENDPOINT /user/add
 
-//REQUIRED LIBRARIES
-//------------------
+// TODO: ADD TESTS
+// 
+// 1) ADD CHECK FOR SUCCESS MESSAGE
+
 var Promise = require('bluebird');
 var MongoClient = Promise.promisifyAll(require("mongodb")).MongoClient;
 var database = require('../utilities/database.js');
+var log = require('../utilities/logger.js');
 
-//SETUP PARAMETERS
-//------------------
-var post_params = {};
-var req = {};
-var res = {};
-var user_database = {};
+module.exports = function(req, res) {
 
-module.exports = function(request, result) {
-    req = request;
-    res = result;
-    post_params = req.body || {};
+    var respond = require('../utilities/utilities.respond.js')({
+        req: req,
+        res: res,
+        file: __dirname + __filename
+    });
+
+    var post_params = req.body;
 
     //VALIDATION: Username and Password must be present
     if (!post_params.username || !post_params.password) {
-        res.end(JSON.stringify({
-            success: false,
-            error_message: "no username or password specified"
-        }));
+        respond.failure("no username or password specified");
     }
 
     //VALIDATION; Password insufficient complexity
     if (post_params.password.length < 5) {
-        res.end(JSON.stringify({
-            success: false,
-            error_message: "Password must be more than 5 characters"
-        }));
+        respond.failure("Password must be more than 5 characters");
     }
+
+    var find_data = function() {
+        var collection = Promise.promisifyAll(user_database.collection('users'));
+        log.debug('2');
+        log.debug('post params!', req.body);
+        return collection.countAsync({
+            username: post_params.username
+        });
+    };
+
+    var add_record = function() {
+        var collection = Promise.promisifyAll(user_database.collection('users'));
+        return collection.insertAsync({
+            username: post_params.username,
+            password: post_params.password,
+            date_created: new Date().getTime(),
+            mentor: false,
+            role: "basic",
+            severity_grade: "Low"
+        });
+    };
+
+    var check_if_user_exists = function(count) {
+        if (count >= 1) {
+            respond.failure("Username already exists");
+        }
+        return count;
+    };
 
     return MongoClient.connectAsync(database.connection)
         .then(function(db) {
@@ -43,56 +64,10 @@ module.exports = function(request, result) {
         .then(find_data)
         .then(check_if_user_exists)
         .then(add_record)
-        .then(JSON.stringify)
         .then(function(result) {
-            res.end(result);
+            respond.success("User " + post_params.username + ' added');
         })
         .caught(function(err) {
-            console.log('Error adding record in database: (' + err + ")");
+            respond.failure('Could not add user', 'Error adding record in database: (' + err + ')');
         });
-};
-
-var find_data = function() {
-    var collection = Promise.promisifyAll(user_database.collection('users'));
-    return collection.countAsync({
-        username: post_params.username
-    });
-};
-
-var add_record = function(database) {
-    var collection = Promise.promisifyAll(user_database.collection('users'));
-    return collection.insertAsync({
-        username: post_params.username,
-        password: post_params.password,
-        date_created: 149433600,
-        mentor: false,
-        role: "basic"
-    }).then(function(result) {
-        return {
-            success: true,
-            result: "user added to the DB"
-        };
-    }).caught(function(err) {
-        res.end(JSON.stringify({
-            success: true,
-            result: "user added to the DB"
-        }));
-    });
-};
-
-
-
-var check_if_user_exists = function(count) {
-
-    //VALIDATION: Password insufficient complexity
-    if (count >= 1) {
-        res.end(JSON.stringify({
-            success: false,
-            error_message: "Username exists"
-        }));
-    } else {
-        return {
-            success: true
-        };
-    }
 };

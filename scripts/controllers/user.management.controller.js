@@ -1,94 +1,57 @@
-SU.controller('userManagementController', function($scope, $http, allUsersFactory, registerUserFactory) {
+SU.controller('userManagementController', function($scope, $http, allUsersFactory, apiService, chartService) {
 
-    var currentValues = function(output) {
-        return _.reduce(output, function(prev, curr) {
-            prev.push(curr.x);
-            return prev;
-        }, []);
+    $scope.signup_chart_config = {};
+    $scope.signup_chart_data = {};
+    $scope.severity_chart_config = {
+        "labels": true,
+        "legend": {
+            "display": true,
+            "position": "right"
+        },
+        colors: ['#0bff14', '#fffb10', '#ff2b1d']
     };
+    $scope.severity_chart_data = {};
+ 
 
-    var userCreationDates = function(users) {
+    // USERS WITHOUT MENTORS
+    // =====================
 
-
-        //TODO: UNIT TEST THIS FUNCTION!!!
-        var chart_data = _.reduce(users, function(prev, curr) {
-            var index = $.inArray(curr.date_created, currentValues(prev));
-            if (index > -1) {
-                prev[index].y[0] ++;
-            } else {
-                prev.push({
-                    x: curr.date_created,
-                    y: [1]
-                });
+    var usersWithoutMentors = function(users) {
+        $scope.without_mentors = _.reduce(users, function(prev, user) {
+            if (!user.mentor) {
+                prev++;
             }
             return prev;
-        }, []);
-
-        // CREATE SERIES (JUST AN ARRAY OF EMPTY STRINGS)
-        var n = chart_data.length;
-        var series = Array(n).join(".").split(".");
-
-        $scope.chart_data.data = chart_data;
-        $scope.chart_data.series = series;
+        }, 0);
     };
-
-    $scope.chart_config = {
-    };
-
-    $scope.chart_data = {
-
-    };
-
-    $scope.add_user = function() {
-        return $http
-            .post('http://localhost:3000/user/add', $scope.new_user)
-            .success(function(data, status, headers, config) {
-                if (data.success) {
-                    notification('Success!', 'user: ' + $scope.new_user.username + ' added!');
-                    $scope.users = [];
-                    //$scope.refreshUsers();
-                } else {
-                    notification('Oh no!', data.error, 'error');
-                }
-            })
-            .error(function(data, status, headers, config) {
-                notification('Oh no!', 'Something went wrong when trying to add a user!', 'error');
-                return false;
-            });
-    };
-
-    $scope.removeUser = function(user) {
-        return $http
-            .post('http://localhost:3000/user/delete', {
-                id: user._id
-            })
-            .success(function(data, status, headers, config) {
-                if (data.success) {
-                    notification('Success!', 'user: ' + user.username + "(" + user.id + ") removed!");
-                    $scope.users = [];
-                    refreshUsers();
-                } else {
-                    console.log('something went wrong');
-                    notification('Oh no!', data.error_message, 'error');
-                }
-            })
-            .error(function(data, status, headers, config) {
-                notification('Oh no!', 'Something went wrong when trying to remove a user!', 'error');
-                return false;
-            });
-    };
-
 
     // AUTOMATICALLY INVOKED
     var refreshUsers = function() {
         $scope.users = [];
         allUsersFactory.then(function(users) {
             var user_data = users.data.result.users;
+
+            //SETUP USERS FOR LIST
             $scope.users = user_data;
+
+            //SETUP USER RESULT COUNT
             $scope.user_count = users.data.result.count;
-            $scope.user_creation_dates = userCreationDates(user_data);
+
+            //SETUP CREATION DATE CHART
+            $scope.signup_chart_data = {
+                data: chartService.userCreationDates(user_data),
+                series: chartService.blankSeries(user_data.length)
+            };
+
+            //SETUP SEVERITY CHART
+            $scope.severity_chart_data = {
+                data: chartService.userSeverityGrade(user_data),
+                series: chartService.blankSeries(user_data.length)
+            };
+
+
+            //SETUP USERS WITHOUT MENTORS
+            usersWithoutMentors(user_data);
         });
     }();
-
-
 });
