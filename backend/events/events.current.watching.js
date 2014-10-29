@@ -23,29 +23,18 @@ module.exports = function(req, res) {
     var find_data = function(db) {
 
         var collection = Promise.promisifyAll(db.collection('events'));
-        return Promise.props({
-            find: collection.findAsync({
-                watchers: {
-                    $in: [user_id]
-                }
-            }),
-            count: collection.countAsync({
-                watchers: {
-                    $in: [user_id]
-                }
-            })
+        return collection.findAsync({
+            watching: {
+                $in: [user_id]
+            }
         });
-
     };
 
     var extract_sessions = function(result) {
-        var find = Promise.promisifyAll(result.find);
+        var find = Promise.promisifyAll(result);
         return find.toArrayAsync()
             .then(function(records) {
-                return {
-                    count: result.count,
-                    result: records
-                };
+                return records;
             });
     };
 

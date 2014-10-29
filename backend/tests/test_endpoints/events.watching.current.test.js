@@ -46,7 +46,7 @@ clean_db()
                     description: "some testing event",
                     date: "some_date",
                     price: "price",
-                    watchers: [utilities.dummy_id.USER_ID]
+                    watching: [utilities.dummy_id.USER_ID]
                 }
             }
         ]
@@ -69,12 +69,7 @@ clean_db()
             .before('setAuth', utilities.setAuthCookie)
             .expect(200)
             .expect('is Successful', utilities.successIsTrue)
-            .expect('Has result array', function(err, res, body) {
-                utilities.hasResultProperty(err, res, body, 'result', 'object');
-            })
-            .expect('Has result array of 1 value', function(err, res, body) {
-                utilities.propertyHasLength(err, res, body, 'result.result', 1);
-            })
+            .expect('Has a result array', _.partialRight(utilities.propertyHasLength, 'result', 1))
             .export(module);
 
         _.delay(resolve, utilities.DELAY);

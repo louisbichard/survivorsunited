@@ -26,10 +26,7 @@ module.exports = function(req, res) {
     var find_data = function(db) {
 
         var collection = Promise.promisifyAll(db.collection('events'));
-        return Promise.props({
-            find: collection.findAsync(),
-            count: collection.countAsync()
-        });
+        return collection.findAsync();
     };
 
     var formatRecords = function(events) {
@@ -67,13 +64,10 @@ module.exports = function(req, res) {
     };
 
     var extract_events = function(result) {
-        var find = Promise.promisifyAll(result.find);
+        var find = Promise.promisifyAll(result);
         return find.toArrayAsync()
             .then(function(records) {
-                return {
-                    count: result.count,
-                    result: formatRecords(records)
-                };
+                return records;
             });
     };
 

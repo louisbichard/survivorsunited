@@ -42,7 +42,16 @@ clean_db()
                     username: "somebody",
                     password: "password"
                 }
+            },
+
+            {
+                collection: "events",
+                data: {
+                    _id: utilities.dummy_id.EVENT_ID,
+                    title: "blah"
+                }
             }
+
         ]
     );
 })
@@ -56,13 +65,8 @@ clean_db()
             .setHeader('Content-Type', 'application/json')
             .get(test_endpoint)
             .expect(200)
-            .expect('Has result array', function(err, res, body, val, type) {
-                utilities.hasResultProperty(err, res, body, 'result', 'object');
-            })
+            .expect('Has a result array', _.partialRight(utilities.propertyHasLength, 'result', 1))
             .before('setAuth', utilities.setAuthCookie)
-            .expect('Has count value', function(err, res, body, val, type) {
-                utilities.hasResultProperty(err, res, body, 'count', 'number');
-            })
             .export(module);
 
         _.delay(resolve, utilities.DELAY);
