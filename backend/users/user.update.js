@@ -17,7 +17,8 @@ module.exports = function(req, res) {
     //VALIDATE THAT USER IS AUTHENTICATED
     respond.rejectAnon();
 
-    var post_params = req.body;
+    var post_params = req.body || {};
+
     var user_id;
 
     try {

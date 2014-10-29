@@ -3,7 +3,7 @@
         <div class="panel panel-default">
             <div class="panel-body">
                 <h2>All system users ({{user_count}})</h2>
-                <hr> 
+                <hr>
                 <input ng-model="searchText" class="form-control" placeholder="search">
                 <hr>
                 <div ng-repeat="user in users | filter:searchText">
@@ -12,15 +12,19 @@
                             <div class="panel panel-default">
                                 <div class="panel-body">
                                     <div class="row">
-                                        <div class="col-md-10 col-sm-10">
-                                            <p>
-                                                <strong>{{user.username}}&nbsp;</strong>({{user._id}})
-                                            </p>
+                                        <div class="col-md-8 col-sm-8">
+                                            <div class="panel" ng-class="{'panel-danger': user.severity_grade === 'High', 'panel-warning': user.severity_grade === 'Medium', 'panel-info': user.severity_grade === 'Low'}">
+                                                <div class="panel-heading">
+                                                    <strong>{{user.username}}&nbsp;</strong>({{user._id}})
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="col-md-2 col-sm-2">
-                                            <div class="btn-group">
+                                        <div class="col-md-4 col-sm-4">
+                                            <div class="btn-group  pull-right">
                                                 <button data-id="{{user.id}}" ng-click="removeUser(user)" type="button" class="btn btn-default btn-danger">
-                                                    <i class="fa fa-trash"></i>
+                                                    Delete &nbsp;<i class="fa fa-trash"></i>
+                                                </button>
+                                                <button type="button" ng-click="updateContact(user)" class="btn btn-success">Update &nbsp;<i class="fa fa-plus"></i>
                                                 </button>
                                             </div>
                                         </div>
@@ -28,17 +32,15 @@
                                     <hr>
                                     <div class="row">
                                         <div class="col-md-12 col-sm-12">
-                                            <p>
-                                                <strong>Severity:&nbsp;</strong>
-                                                {{user.severity_grade}}
-                                            </p>
+                                            <div class="form-group">
+                                                <label>First name</label>
+                                                <input class="form-control" value="{{user.first_name}}" placeholder="First name">
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-md-12 col-sm-12">
-                                            <p>
-                                                <strong>First name:&nbsp;</strong>{{user.first_name}}
-                                            </p>
+
                                             <p>
                                                 <Strong>Last name:&nbsp;</strong>{{user.last_name}}
                                             </p>
@@ -56,9 +58,11 @@
                                             </p>
                                         </div>
                                         <div class="col-md-4 col-sm-4">
-                                            <p>
-                                                <strong>Password:&nbsp;</strong>{{user.password}}
-                                            </p>
+                                            <div class="form-group">
+                                                <label>Password</label>
+                                                <input class="form-control" value="{{user.password}}" placeholder="Password">
+                                                {{user.password}}
+                                            </div>
                                         </div>
                                         <div class="col-md-4 col-sm-4">
                                             <p>

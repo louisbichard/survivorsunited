@@ -6,6 +6,12 @@
  * @return {[Object]} - different values between the two objects
  */
 var object_differences = function(original, dirty, options) {
+
+    //TODO: 
+    // 1) USE OMIT FOR THE VALUES NOT WANTED
+    // 2) USE FILTER INSTEAD OF REDUCE
+    // 
+    
     options = options || {};
     var ignore_val = options.ignore;
 

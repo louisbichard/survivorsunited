@@ -6,7 +6,8 @@ SU.service("apiService", function($http) {
 
         //TODO: PROMISIFY WITH BLUEBIRD
         return new Promise(function(resolve, reject) {
-            $http[type](route, params)
+            //ABSTRACT OUT URL
+            $http[type]('http://localhost:3000' + route, params)
                 .success(function(data, status, headers, config) {
                     if (data.success) {
                         notification('Success', data.result);

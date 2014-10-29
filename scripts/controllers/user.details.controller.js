@@ -1,11 +1,34 @@
-SU.controller('userDetailsController', function($scope, $http, allUsersFactory, apiService, chartService) {
+SU.controller('userDetailsController', function($scope, apiService, allUsersFactory) {
 
     $scope.removeUser = function(user) {
 
         return apiService
-            .post('http://localhost:3000/user/delete', {
+            .post('/user/delete', {
                 id: user._id
             })
+            .then(function(data) {
+                //REFRESH SCOPE
+                var user_to_remove = _.findWhere($scope.users, user);
+                $scope.users = _.without($scope.users, user_to_remove);
+            })
+            .caught(function() {
+                // TODO: HANDLE WHEN THE API ERRORS
+            });
+    };
+
+    $scope.updateContact = function(user) {
+
+
+        //TODO: MAKE THIS WORK
+        /*var original_user = _.findWhere($scope.original_users, {_id: id});
+        object_differences(original_user, changed_user);*/
+
+        changed_user = _.omit(user, ['$$hashKey', '_id', 'id']);
+        debugger;
+        //FIND ORIGINAL DETAILS OF USER
+
+        return apiService
+            .post('/user/update', changed_user)
             .then(function(data) {
                 //TODO: REFRESH USERS ON PAGE
             })
@@ -13,6 +36,10 @@ SU.controller('userDetailsController', function($scope, $http, allUsersFactory, 
                 // TODO: HANDLE WHEN THE API ERRORS
             });
     };
+
+    $scope.$watch('users', function() {
+        console.log('users have changed');
+    }, true);
 
     // AUTOMATICALLY INVOKED
     var refreshUsers = function() {
@@ -23,7 +50,11 @@ SU.controller('userDetailsController', function($scope, $http, allUsersFactory, 
             //SETUP USERS FOR LIST
             $scope.users = user_data;
 
+            //USELESS UNTIL UPDATE FUNCTION WORKS
+            $scope.original_users = user_data;
+
             //SETUP USER RESULT COUNT
+            // TODO: DOESNT UPDATE WHEN YOU DELETE
             $scope.user_count = users.data.result.count;
         });
     }();

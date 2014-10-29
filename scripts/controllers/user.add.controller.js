@@ -2,7 +2,7 @@ SU.controller('userAddController', function($scope, $http, allUsersFactory, apiS
 
     $scope.add_user = function() {
         return apiService
-            .post('http://localhost:3000/user/add', $scope.new_user)
+            .post('/user/add', $scope.new_user)
             .then(function(data) {
                 //TODO: REFRESH USERS ON PAGE
             })
