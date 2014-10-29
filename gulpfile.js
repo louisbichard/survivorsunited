@@ -14,37 +14,9 @@ gulp.task('default', shell.task([
     "nodemon backend/index.js"
 ]));
 
-gulp.task('test-endpoints', function() {
+gulp.task('test-backend', function() {
     run_endpoint_tests.run();
 });
-
-gulp.task('test-http', shell.task([
-    //SET DATABASE ENVIRONMENT VARIABLE AS TEST
-    "set -x DATABASE test",
-
-    //START SERVER AS BACKGROUND MODULE
-    "forever start backend/index.js",
-
-    //ADD SOME OUTPUT TO THE TOP OF THE TESTS
-    "node backend/tests/test_utilities/test.output.js",
-
-    //RUN
-    "vows backend/tests/test_endpoints/*.test.js",
-
-    //BREAK DOWN DATABASE
-    //"node backend/tests/test_utilities/clear.database.js",
-
-    //SET DATABASE ENVIRONMENT VARIABLE BACK TO SU
-    "set -x DATABASE su",
-
-    //STOP ALL FOREVER RUNNING PROCESSES
-    "forever stopall"
-]));
-
-gulp.task('test-backend', shell.task([
-    "node backend/tests/test_units/test.output.js",
-    "jasmine-node backend/tests/test_units  --color",
-]));
 
 gulp.task('test-frontend', shell.task([
     "jasmine-node tests --color"

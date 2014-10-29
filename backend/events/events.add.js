@@ -28,7 +28,7 @@ module.exports = function(req, res) {
     }
 
     //VALIDATION: ENSURE VALUES ARE SET
-    _.each(['title', 'date', 'price', 'description'], function(field) {
+    _.each(['title', 'start', 'end', 'price', 'description'], function(field) {
         if (!post_params[field]) {
             respond.failure('No ' + field + ' field specified');
         }
@@ -44,7 +44,8 @@ module.exports = function(req, res) {
         return collection.insertAsync({
             title: post_params.title,
             description: post_params.description,
-            date: post_params.date,
+            start: new Date(),
+            end: new Date(),
             watching: watchers,
             attending: [],
             date_created: new Date().getTime(),

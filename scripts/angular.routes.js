@@ -95,7 +95,7 @@ SU.config(function($routeProvider) {
         })
         .when('/events_calendar', {
             templateUrl: '../views/events_calendar.html',
-            controller: 'mainController'
+            controller: 'eventCalendarController'
         })
 
 

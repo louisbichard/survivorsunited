@@ -95,7 +95,8 @@ clean_db()
             .setHeader('Content-Type', 'application/json')
             .post(test_endpoint, {
                 title: 'An event title',
-                date: 'some unix date stamp',
+                start: 'some unix date stamp',
+                end: 'some unix date stamp',
                 price: 'some example price',
                 description: 'some description'
             })

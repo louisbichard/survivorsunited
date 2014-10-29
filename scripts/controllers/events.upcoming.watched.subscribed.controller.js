@@ -6,7 +6,7 @@ SU.controller('upcomingEventsController', function($scope, $http, $location) {
 
     if ($location.$$path === '/watched_events') {
         $scope.title = "Watched";
-        get_eventsapi = api_route + "/events/watching/current";
+        get_eventsapi = api_route + "/events/watching/current?type=watching";
     } else {
         $scope.title = "Upcoming";
         get_eventsapi = api_route +  "/events/listall";

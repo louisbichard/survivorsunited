@@ -1,5 +1,5 @@
 // create the module and name it survivorsUnited
-var SU = angular.module('SU', ['ngRoute', 'angularCharts']);
+var SU = angular.module('SU', ['ngRoute', 'angularCharts', 'ui.calendar']);
 
 SU.config(function($httpProvider) {
     $httpProvider.defaults.useXDomain = true;
