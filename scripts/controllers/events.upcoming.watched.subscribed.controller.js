@@ -19,15 +19,10 @@ SU.controller('upcomingEventsController', function($scope, $http, $location) {
             .get(get_eventsapi)
             .success(function(data, status, headers, config) {
                 $scope.events = data.result;
-                $scope.events_count = data.result.count;
             })
             .error(function(data, status, headers, config) {
                 notification('Oh no!', 'Something went wrong when trying to fetch events!', 'error');
             });
-    };
-
-    $scope.init = function() {
-        return get_events();
     }();
 
     //ADD USER AS WATCHING OR ATTENDING AN EVENT

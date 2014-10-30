@@ -19,5 +19,7 @@ gulp.task('test-backend', function() {
 });
 
 gulp.task('test-frontend', shell.task([
-    "jasmine-node tests --color"
+    "./node_modules/karma/bin/karma start"
 ]));
+
+

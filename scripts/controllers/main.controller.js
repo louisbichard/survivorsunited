@@ -1,4 +1,8 @@
 SU.controller('mainController', function($scope, $http) {
+
+    //TODO: REMOVE -> WAS USING WHEN IMPLEMENTING TEST FRAMEWORK
+    $scope.test = "test";
+
     $http
         .get('http://localhost:3000/user/current')
         .success(function(data, status, headers, config) {

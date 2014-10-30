@@ -44,20 +44,14 @@ SU.config(function($routeProvider) {
 
     //MAIN SEARCH PAGE
     .when('/search', {
-        templateUrl: '../views/evemt',
-        controller: 'aboutController'
-    })
-
-    //MAIN MESSAGES PAGE
-    .when('/messages', {
-        templateUrl: '../views/messages.html',
-        controller: 'aboutController'
+        templateUrl: '../views/search.html',
+        controller: 'loginController'
     })
 
     //MAIN NOTIFICATIONS PAGE
     .when('/notifications', {
         templateUrl: '../views/notifications.html',
-        controller: 'aboutController'
+        controller: 'loginController'
     })
 
 
@@ -103,7 +97,7 @@ SU.config(function($routeProvider) {
     // =====
     .when('/forum', {
         templateUrl: '../views/forum.html',
-        controller: 'aboutController'
+        controller: 'loginController'
     })
 
 
