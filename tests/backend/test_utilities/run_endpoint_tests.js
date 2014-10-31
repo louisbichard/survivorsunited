@@ -3,7 +3,7 @@ process.env.DATABASE = 'test';
 
 var Promise = require('bluebird');
 var execute = Promise.promisifyAll(require('child_process'));
-var log = require('../../utilities/logger.js');
+var log = require('../../../backend/utilities/logger.js');
 var fs = Promise.promisifyAll(require('fs'));
 var _ = require('lodash');
 
@@ -19,7 +19,7 @@ var run_tests_sequentially = function(files) {
     log.success('On database: ' + process.env.DATABASE);
 
     return Promise.reduce(files, function(total_num_tests, file_path) {
-        return execute.execAsync('node ' + './backend/tests/test_endpoints/' + file_path)
+        return execute.execAsync('node ' + './tests/backend/test_endpoints/' + file_path)
             .then(function(result) {
 
                 // LOG OUT THE TEXT OF THE TEST
@@ -39,12 +39,13 @@ var run_tests_sequentially = function(files) {
 
 //AWESOME FINALE
 var run_finale_sequence = function() {
-    return readDirectory('backend/test_outputs')
+    console.log(__dirname);
+    return readDirectory('./tests/test_outputs')
         .then(function(files) {
             //CHOOSE RANDOM
             var random_int = (Math.random() * (files.length)).toString().split('.')[0];
             var chosen_file = files[random_int];
-            var command = 'cat backend/test_outputs/' + chosen_file;
+            var command = 'cat ./tests/test_outputs/' + chosen_file;
             return execute.execAsync(command);
         });
 };
@@ -55,7 +56,7 @@ var log_finale_to_console = function(result) {
 
 module.exports = {
     run: function() {
-        return readDirectory("./backend/tests/test_endpoints")
+        return readDirectory("./tests/backend/test_endpoints")
             .then(run_tests_sequentially)
             .then(function(result) {
                 log.test.complete(result);

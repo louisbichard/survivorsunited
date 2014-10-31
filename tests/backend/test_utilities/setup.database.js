@@ -4,8 +4,9 @@ var Promise = require('bluebird');
 var MongoClient = Promise.promisifyAll(require("mongodb")).MongoClient;
 var colors = require('colors');
 var _ = require('lodash');
-var database = require('../../utilities/database.js');
-var log = require('../../utilities/logger.js');
+var database = require('../../../backend/utilities/database.js');
+var clean_db = require('./clear.database.js');
+
 
 module.exports = function cleanDatabases(args) {
 
@@ -27,11 +28,13 @@ module.exports = function cleanDatabases(args) {
     };
 
     var logIfSuccess = function(data) {
-        log.test.databaseChange('Mock data inserted');
         return data;
     };
 
-    return MongoClient.connectAsync(database.connection)
+    return clean_db()
+        .then(function(){
+            return MongoClient.connectAsync(database.connection);
+        })
         .then(getCollection)
         .then(insertData)
         .then(logIfSuccess)

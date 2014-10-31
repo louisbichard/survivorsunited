@@ -39,9 +39,6 @@ module.exports = function(req, res, id) {
     var validateSessionObject = function(session) {
         if (!session) Promise.reject('Session failed to be found');
 
-
-
-
         //IF SESSION NOT IN DB, THEN CREATE THEM A NEW ONE, AND BIND TO THAT
         if (session[0]) {
             return session[0].user_id;

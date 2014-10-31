@@ -1,6 +1,6 @@
-var test_endpoint = "/auth/logout";
+var test_endpoint = "/user/assign_mentor";
 
-var log = require('../../utilities/logger.js');
+var log = require('../../../backend/utilities/logger.js');
 log.test.endpoint(test_endpoint);
 
 var Promise = require('bluebird');
@@ -12,26 +12,37 @@ var setup_db = require('../test_utilities/setup.database.js');
 var clean_db = require('../test_utilities/clear.database.js');
 var _ = require('lodash');
 
-// CLEAN  
-clean_db()
+//SETUP
 
-//DESCRIBE
+// TODO
+// 
+// REJECTS CALL WITH NON EXISTANT MENTOR
+// ACCEPTS VALID ASSIGNMENT
+// REJECTS CALL TO ANONYMOUS USER
+// 
+
+log.test.hasTODO();
+
+//SETUP
+setup_db([])
+
+// DESCRIBE
 .then(function() {
-    log.test.describe('Testing general logout');
+    log.test.describe('Rejects calls without mentor_id');
 })
 
-// RUN
+//RUN
 .then(function() {
     return new Promise(function(resolve, reject) {
 
         suite
             .use('localhost', 3000)
             .setHeader('Content-Type', 'application/json')
-            .get(test_endpoint)
+            .post(test_endpoint)
             .expect(200)
-            .expect('Success message is correct', function(err, res, body) {
-                utilities.hasSuccessMessage(err, res, body, 'User is already logged out');
-            })
+            .before('setAuth', utilities.setAuthCookie)
+            .expect('sucessIsTrue', utilities.successIsFalse)
+            .expect('Has error message', _.partialRight(utilities.hasErrorMessage, 'No Mentor ID was sent'))
             .export(module);
 
         _.delay(resolve, utilities.DELAY);
@@ -39,12 +50,13 @@ clean_db()
     });
 })
 
-// EXIT 
+// EXIT TEST
 .then(process.exit)
 
 // CATCH ERRORS
 .caught(function(err) {
-    log.testFailed(test_endpoint, err);
+    log.debug('err', err);
+    log.test.failed(test_endpoint, err);
 
     //EXIT REGARDLESS
     process.exit();

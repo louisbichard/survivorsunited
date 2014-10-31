@@ -13,7 +13,8 @@ module.exports = function(req, res) {
         file: __dirname + __filename
     });
 
-    log.debug(req.user);
+    respond.rejectAnon();
+    
     if (!req.user) {
         respond.success('User is already logged out');
     }

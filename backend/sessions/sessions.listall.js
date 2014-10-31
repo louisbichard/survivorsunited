@@ -12,6 +12,8 @@ module.exports = function(req, res) {
         file: __dirname + __filename
     });
 
+    respond.rejectAnon();
+
     var find_data = function(db) {
 
         var collection = Promise.promisifyAll(db.collection('sessions'));

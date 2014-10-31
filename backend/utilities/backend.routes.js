@@ -67,6 +67,11 @@ module.exports = function(app) {
         return require('./../users/user.assigned_mentor.js')(req, res);
     });
 
+    app.post('/user/assign_mentor', function(req, res) {
+        colourful_output('/user/assign_mentor');
+        return require('./../users/user.assign_mentor.js')(req, res);
+    });
+
     //EVENTS
     //======
     app.get('/events/listall', function(req, res) {

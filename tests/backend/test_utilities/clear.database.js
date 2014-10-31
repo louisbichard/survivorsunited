@@ -4,8 +4,8 @@ var Promise = require('bluebird');
 var MongoClient = Promise.promisifyAll(require("mongodb")).MongoClient;
 var colors = require('colors');
 var _ = require('lodash');
-var database = require('../../utilities/database.js');
-var log = require('../../utilities/logger.js');
+var database = require('../../../backend/utilities/database.js');
+var log = require('../../../backend/utilities/logger.js');
 
 var collections_to_clean = ['users', 'sessions', 'events'];
 
@@ -26,7 +26,6 @@ module.exports = function cleanDatabases() {
 
     // RUN IF ALL THE DATABASE REMOVALS WORK
     var logIfSuccess = function(data) {
-        log.test.databaseChange('Mock data removed');
         return data;
     };
 

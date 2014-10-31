@@ -1,6 +1,6 @@
   var test_endpoint = "/user/assigned_mentor";
 
-  var log = require('../../utilities/logger.js');
+  var log = require('../../../backend/utilities/logger.js');
   log.test.endpoint(test_endpoint);
 
   var Promise = require('bluebird');
@@ -12,35 +12,30 @@
   var APIeasy = require('api-easy');
   var suite = APIeasy.describe(test_endpoint);
 
-  // CLEAN
-  clean_db()
-
-  // SETUP
-  .then(function() {
-      return setup_db(
-          [
-              //STUB OUT USERS
-              {
-                  collection: "users",
-                  data: {
-                      _id: utilities.dummy_id.USER_ID,
-                      username: "username",
-                      password: "password",
-                      mentor: utilities.dummy_id.USER_ID
-                  }
-              },
-
-              // STUB OUT SESSIONS
-              {
-                  collection: "sessions",
-                  data: {
-                      _id: utilities.getAuthCookie(),
-                      user_id: utilities.dummy_id.USER_ID
-                  }
+  //SETUP
+  setup_db(
+      [
+          //STUB OUT USERS
+          {
+              collection: "users",
+              data: {
+                  _id: utilities.dummy_id.USER_ID,
+                  username: "username",
+                  password: "password",
+                  mentor: utilities.dummy_id.USER_ID
               }
-          ]
-      );
-  })
+          },
+
+          // STUB OUT SESSIONS
+          {
+              collection: "sessions",
+              data: {
+                  _id: utilities.getAuthCookie(),
+                  user_id: utilities.dummy_id.USER_ID
+              }
+          }
+      ]
+  )
 
   // DESCRIBE
   .then(function() {

@@ -1,6 +1,6 @@
 var test_endpoint = "/user/update";
 
-var log = require('../../utilities/logger.js');
+var log = require('../../../backend/utilities/logger.js');
 log.test.endpoint(test_endpoint);
 
 var Promise = require('bluebird');
@@ -13,19 +13,19 @@ var clean_db = require('../test_utilities/clear.database.js');
 
 var _ = require('lodash');
 
-//CLEAN
-clean_db()
+/*//SETUP
+setup_db()
 
 //DESCRIBE
 .then(function() {
-    /*log.test.describe('Validates when no details are passed');*/
+    log.test.describe('Validates when no details are passed');
 })
 
 //RUN
 .then(function() {
     return new Promise(function(resolve, reject) {
 
-/*        suite.discuss('When authenticating')
+        suite.discuss('When authenticating')
             .discuss('and getting all sessions')
             .use('localhost', 3000)
             .setHeader('Content-Type', 'application/json')
@@ -36,20 +36,17 @@ clean_db()
                 //utilities.hasErrorMessage(err, res, body, 'User is not authenticated');
             })
             .expect(200)
-            .next();*/
+            .next();
 
         _.delay(resolve, utilities.DELAY);
 
     });
 })
 
-//CLEAN
-.then(clean_db)
-
-
+*/
 // SETUP
-.then(function() {
-    return setup_db(
+
+setup_db(
         [
             //STUB OUT USERS
             {
@@ -71,8 +68,7 @@ clean_db()
                 }
             }
         ]
-    );
-})
+    )
 
 //DESCRIBE
 .then(function() {
@@ -100,10 +96,6 @@ clean_db()
 
     });
 })
-
-
-//CLEAN
-.then(clean_db)
 
 // SETUP
 .then(function() {

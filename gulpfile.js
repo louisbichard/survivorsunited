@@ -1,7 +1,7 @@
 var gulp = require('gulp');
 var shell = require('gulp-shell');
 var database = require('./backend/utilities/database.js');
-var run_endpoint_tests = require('./backend/tests/test_utilities/run_endpoint_tests.js');
+var run_endpoint_tests = require('./tests/backend/test_utilities/run_endpoint_tests.js');
 
 gulp.task('default', shell.task([
     //SETUP TEST 

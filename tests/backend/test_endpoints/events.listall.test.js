@@ -1,6 +1,6 @@
 var test_endpoint = "/events/listall";
 
-var log = require('../../utilities/logger.js');
+var log = require('../../../backend/utilities/logger.js');
 log.test.endpoint(test_endpoint);
 
 var Promise = require('bluebird');
@@ -12,48 +12,45 @@ var _ = require('lodash');
 var APIeasy = require('api-easy');
 var suite = APIeasy.describe(test_endpoint);
 
-// CLEAN
-clean_db()
+// SETUP
+
+setup_db(
+    [
+
+        // STUB OUT FAKE SESSION
+        {
+            collection: "sessions",
+            data: {
+                _id: utilities.getAuthCookie(),
+                user_id: utilities.dummy_id.USER_ID
+            }
+        },
+
+        //STUB OUT FAKE USER
+        {
+            collection: "users",
+            data: {
+                _id: utilities.dummy_id.USER_ID,
+                username: "somebody",
+                password: "password"
+            }
+        },
+
+        {
+            collection: "events",
+            data: {
+                _id: utilities.dummy_id.EVENT_ID,
+                title: "blah"
+            }
+        }
+
+    ]
+)
+
 
 // DESCRIBE
 .then(function() {
     log.test.describe('Lists all events');
-})
-
-// SETUP
-.then(function() {
-    return setup_db(
-        [
-
-            // STUB OUT FAKE SESSION
-            {
-                collection: "sessions",
-                data: {
-                    _id: utilities.getAuthCookie(),
-                    user_id: utilities.dummy_id.USER_ID
-                }
-            },
-
-            //STUB OUT FAKE USER
-            {
-                collection: "users",
-                data: {
-                    _id: utilities.dummy_id.USER_ID,
-                    username: "somebody",
-                    password: "password"
-                }
-            },
-
-            {
-                collection: "events",
-                data: {
-                    _id: utilities.dummy_id.EVENT_ID,
-                    title: "blah"
-                }
-            }
-
-        ]
-    );
 })
 
 //RUN

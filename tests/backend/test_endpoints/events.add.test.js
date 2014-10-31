@@ -1,6 +1,6 @@
 var test_endpoint = "/events/add";
 
-var log = require('../../utilities/logger.js');
+var log = require('../../../backend/utilities/logger.js');
 log.test.endpoint(test_endpoint);
 
 var Promise = require('bluebird');
@@ -24,8 +24,7 @@ log.test.hasTODO();
 // REJECTS REQUEST WITH NO TITLE FIELD
 // ACCEPTS WITH VALID EVENT TITLE 
 
-// CLEAN
-clean_db()
+setup_db()
 
 // DESCRIBE
 .then(function() {
@@ -51,8 +50,6 @@ clean_db()
 
     });
 })
-
-.then(clean_db)
 
 // SETUP
 .then(function() {

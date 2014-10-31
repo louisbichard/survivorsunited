@@ -1,6 +1,6 @@
 var test_endpoint = "events/watching/current";
 
-var log = require('../../utilities/logger.js');
+var log = require('../../../backend/utilities/logger.js');
 log.test.endpoint(test_endpoint);
 
 var Promise = require('bluebird');
@@ -12,46 +12,43 @@ var _ = require('lodash');
 var APIeasy = require('api-easy');
 var suite = APIeasy.describe(test_endpoint);
 
-// CLEAN
-clean_db()
 
 // SETUP
-.then(function() {
-    return setup_db(
-        [
-            //STUB OUT USERS
-            {
-                collection: "users",
-                data: {
-                    _id: utilities.dummy_id.USER_ID,
-                    username: "username",
-                    password: "password"
-                }
-            },
-
-            // STUB OUT SESSIONS
-            {
-                collection: "sessions",
-                data: {
-                    _id: utilities.getAuthCookie(),
-                    user_id: utilities.dummy_id.USER_ID
-                }
-            },
-
-            //STUB OUT SESSIONS
-            {
-                collection: "events",
-                data: {
-                    title: "some event",
-                    description: "some testing event",
-                    date: "some_date",
-                    price: "price",
-                    watching: [utilities.dummy_id.USER_ID]
-                }
+setup_db(
+    [
+        //STUB OUT USERS
+        {
+            collection: "users",
+            data: {
+                _id: utilities.dummy_id.USER_ID,
+                username: "username",
+                password: "password"
             }
-        ]
-    );
-})
+        },
+
+        // STUB OUT SESSIONS
+        {
+            collection: "sessions",
+            data: {
+                _id: utilities.getAuthCookie(),
+                user_id: utilities.dummy_id.USER_ID
+            }
+        },
+
+        //STUB OUT SESSIONS
+        {
+            collection: "events",
+            data: {
+                title: "some event",
+                description: "some testing event",
+                date: "some_date",
+                price: "price",
+                watching: [utilities.dummy_id.USER_ID]
+            }
+        }
+    ]
+)
+
 
 // DESCRIBE
 .then(function() {

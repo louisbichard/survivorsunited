@@ -1,6 +1,6 @@
 var test_endpoint = '/auth/login';
 
-var log = require('../../utilities/logger.js');
+var log = require('../../../backend/utilities/logger.js');
 log.test.endpoint(test_endpoint);
 
 var Promise = require('bluebird');
@@ -13,10 +13,10 @@ var APIeasy = require('api-easy');
 var suite = APIeasy.describe(test_endpoint);
 
 // CLEAN
-clean_db()
+setup_db([])
 
 // DESCRIBE
-.then(function() {    
+.then(function() {
     log.test.describe('Attempting logging in without credentials');
 })
 
@@ -41,8 +41,8 @@ clean_db()
     });
 })
 
-//CLEAN
-.then(clean_db)
+//SETUP
+.then(setup_db)
 
 // DESCRIBE
 .then(function(data) {
@@ -73,8 +73,8 @@ clean_db()
     });
 })
 
-//CLEAN
-.then(clean_db)
+//SETUP
+.then(setup_db)
 
 // DESCRIBE
 .then(function(data) {
@@ -103,9 +103,6 @@ clean_db()
 
     });
 })
-
-// CLEAN
-.then(clean_db)
 
 // SETUP
 .then(function() {

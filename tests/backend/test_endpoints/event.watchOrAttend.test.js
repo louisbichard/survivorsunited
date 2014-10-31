@@ -1,6 +1,6 @@
 var test_endpoint = "/events/watchOrAttend";
 
-var log = require('../../utilities/logger.js');
+var log = require('../../../backend/utilities/logger.js');
 log.test.endpoint(test_endpoint);
 
 var Promise = require('bluebird');
@@ -31,8 +31,8 @@ log.test.hasTODO();
 // ACCEPTS VALID WATCHING
 //  
 
-// CLEAN
-clean_db()
+//SETUP
+setup_db()
 
 // DESCRIBE
 .then(function() {
@@ -60,8 +60,8 @@ clean_db()
     });
 })
 
-//CLEAN
-.then(clean_db)
+//SETUP
+.then(setup_db)
 
 //DESCRIBE
 .then(function() {
@@ -90,9 +90,6 @@ clean_db()
 
     });
 })
-
-//CLEAN
-.then(clean_db)
 
 // SETUP
 .then(function() {
@@ -160,10 +157,6 @@ clean_db()
     });
 })
 
-//CLEAN
-.then(clean_db)
-
-
 // SETUP
 .then(function() {
     return setup_db(
@@ -227,9 +220,6 @@ clean_db()
 
     });
 })
-
-//CLEAN
-.then(clean_db)
 
 
 // SETUP
@@ -297,9 +287,6 @@ clean_db()
     });
 })
 
-//CLEAN
-.then(clean_db)
-
 
 // SETUP
 .then(function() {
@@ -365,9 +352,6 @@ clean_db()
 
     });
 })
-
-//CLEAN
-.then(clean_db)
 
 // EXIT
 .then(process.exit)
