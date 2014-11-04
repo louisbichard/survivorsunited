@@ -14,8 +14,6 @@ module.exports = function(req, res) {
         file: __dirname + __filename
     });
 
-    respond.rejectAnon();
-
     var get_user_db = function(db) {
         var collection = Promise.promisifyAll(db.collection('users'));
         return Promise.props({

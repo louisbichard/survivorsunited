@@ -15,6 +15,8 @@ module.exports = function(config) {
 
         // list of files / patterns to load in the browser
         files: [
+            './tests/utilities/jasmineCustomMatchers.js',
+            './node_modules/karma-jasmine-async/src/jasmine.async.js',
             './scripts/bundle.js',
             './scripts/utilties.js',
             './bower_components/jquery/dist/jquery.min.js',
@@ -22,6 +24,10 @@ module.exports = function(config) {
             './bower_components/toastr/toastr.min.js',
             './bower_components/angular/angular.min.js',
             './bower_components/angular-route/angular-route.js',
+            './bower_components/d3/d3.min.js',
+            './bower_components/angular-charts/dist/angular-charts.min.js',
+            './bower_components/angular-ui-calendar/src/calendar.js',
+            './bower_components/fullcalendar/fullcalendar.js',
             './scripts/app.js',
             './scripts/notifications.js',
             './scripts/controllers/main.controller.js',
@@ -39,19 +45,16 @@ module.exports = function(config) {
             './scripts/directives/keypress.enter.directive.js',
             './scripts/services/chart.service.js',
             './scripts/services/api.service.js',
+            './scripts/services/utilities.service.js',
             './scripts/factories/users.all.factory.js',
             './scripts/factories/isAuthenticated.factory.js',
             './scripts/factories/user.current.factory.js',
-            './bower_components/d3/d3.min.js',
-            './bower_components/angular-charts/dist/angular-charts.min.js',
-            './bower_components/angular-ui-calendar/src/calendar.js',
-            './bower_components/fullcalendar/fullcalendar.js',
 
             //MOCKING FOR ANGULAR
             './bower_components/angular-mocks/angular-mocks.js',
 
             //INCLUDE ALL SPEC TEST FILES
-            'tests/*spec.js'
+            'tests/frontend/*spec.js'
         ],
 
 

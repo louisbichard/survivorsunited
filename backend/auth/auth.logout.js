@@ -12,8 +12,6 @@ module.exports = function(req, res) {
         res: res,
         file: __dirname + __filename
     });
-
-    respond.rejectAnon();
     
     if (!req.user) {
         respond.success('User is already logged out');

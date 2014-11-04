@@ -19,7 +19,7 @@ var auth_reject_message = "User is not authenticated";
 var endpoint = "users/listall";
 log.test.describe(endpoint);
 
-suite
+/*suite
     .use('localhost', 3000)
     .setHeader('Content-Type', 'application/json')
     .get(endpoint)
@@ -47,9 +47,9 @@ suite
     .before('setAuth', utilities.setAuthCookie)
     .expect('sucessIsTrue', utilities.successIsFalse)
     .expect('Has error message', _.partialRight(utilities.hasErrorMessage, auth_reject_message))
-    .next();
+    .next();*/
 
-suite
+/*suite
     .use('localhost', 3000)
     .setHeader('Content-Type', 'application/json')
     .get('user/current')
@@ -57,4 +57,4 @@ suite
     .before('setAuth', utilities.setAuthCookie)
     .expect('sucessIsTrue', utilities.successIsFalse)
     .expect('Has error message', _.partialRight(utilities.hasErrorMessage, auth_reject_message))
-    .export(module);
+    .export(module);*/

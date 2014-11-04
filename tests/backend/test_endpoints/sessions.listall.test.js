@@ -29,7 +29,6 @@ setup_db()
             .setHeader('Content-Type', 'application/json')
             .get(test_endpoint)
             .expect(200)
-            .expect('Has appropriate properties', utilities.hasAppropriateProperties)
             .expect('Has result array', function(err, res, body, val, type) {
                 utilities.hasResultProperty(err, res, body, 'result', 'object');
             })

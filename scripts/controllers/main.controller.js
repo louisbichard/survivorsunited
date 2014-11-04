@@ -23,7 +23,7 @@ SU.controller('mainController', function($scope, $http) {
 
         })
         .error(function(data, status, headers, config) {
-            // TODO : BETTER ERROR HANDLING 
+            // TODO : BETTER ERROR HANDLING
             console.log('is authenticated!');
         });
 
@@ -42,7 +42,5 @@ SU.controller('mainController', function($scope, $http) {
                 // TODO : BETTER ERROR HANDLING 
                 console.log('Something went wrong!');
             });
-
-        console.log('log out!');
     };
 });
