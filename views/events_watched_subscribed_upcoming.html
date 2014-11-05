@@ -1,67 +1,82 @@
+
+<!-- MODULE TITLE --> 
+<div class="panel panel-default">
+    <div class="panel-body">
+        <h1>{{module.title}}</h1>
+        <hr>
+        <h4>{{module.description}}</h4>
+    </div>
+</div>
+
+<!-- SEARCH INPUT --> 
+<input ng-if="events" ng-model="searchText" class="form-control" placeholder="search">
+<br> 
+
+<!-- EVENT CONTENT --> 
 <div class="row">
     <div class="col-md-12 col-lg-12">
         <div class="panel panel-default">
             <div class="panel-body">
-                <h2>{{title}} events</h2>
-                <hr>
-                <input ng-model="searchText" class="form-control" placeholder="search">
-                <br>
-
-                <div ng-repeat="event in events | filter:searchText" class="row">
-                    <div class="col-md-12 col-lg-12">
-                        <div class="panel panel-default">
-                            <div class="panel-body">
-                                <div class="row">
-                                    <div class="col-md-12 col-lg-12">
-                                        <h3>{{event.title}}</h3>
-                                    </div>
-                                    <div class="col-md-6 col-lg-6">
-                                        <img class="img-responsive" src="http://img2.wikia.nocookie.net/__cb20140518071050/towerofsaviors/images/archive/4/47/20140518072131!Placeholder.png">
-                                    </div>
+                <!-- SHOW IF NOT EVENTS --> 
+                <div ng-if="events <= 0">
+                    <p>There are no events</p>
+                </div>
+                <div class="row">
+                    <div ng-repeat="event in events | filter:searchText">
+                        <div class="col-md-6 col-lg-6">
+                            <div class="panel panel-default">
+                                <div class="panel-body">
                                     <div class="row">
+                                        <div class="col-md-12 col-lg-12">
+                                            <h3>{{event.title}}</h3>
+                                        </div>
                                         <div class="col-md-6 col-lg-6">
-                                            <p>
-                                                <strong>ID:</strong>&nbsp; {{event._id}}
-                                            </p>
-                                            <p>
-                                                <strong>Created by:</strong>&nbsp; {{event.created_by}} 
-                                                TODO: MAKE INTO READABLE STRING
-                                                <!-- //TODO: FORMAT AS STRING -->
-                                            </p>
-                                            <p>
-                                                <strong>Date:</strong>&nbsp; {{event.date}}
-                                            </p>
-                                            <p>
-                                                <strong>Date created:</strong>&nbsp; {{event.date_created}}
-                                            </p>
-                                            <p>
-                                                <strong>Price:</strong>&nbsp; {{event.price}}
-                                            </p>
-                                            <p>                                                
-                                                <strong>Current attendee's:</strong>&nbsp; <a href="#users_watching_event?id={{event._id}}&type=attending">current attendee's</a>
-                                            </p>
+                                            <img class="img-responsive" src="http://img2.wikia.nocookie.net/__cb20140518071050/towerofsaviors/images/archive/4/47/20140518072131!Placeholder.png">
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6 col-lg-6">
+                                                <p>
+                                                    <strong>ID:</strong>&nbsp; {{event._id}}
+                                                </p>
+                                                <p>
+                                                    <strong>Created by:</strong>&nbsp; {{event.created_by}} TODO: MAKE INTO READABLE STRING
+                                                    <!-- //TODO: FORMAT AS STRING -->
+                                                </p>
+                                                <p>
+                                                    <strong>Date:</strong>&nbsp; {{event.date}}
+                                                </p>
+                                                <p>
+                                                    <strong>Date created:</strong>&nbsp; {{event.date_created}}
+                                                </p>
+                                                <p>
+                                                    <strong>Price:</strong>&nbsp; {{event.price}}
+                                                </p>
+                                                <p>
+                                                    <strong>Current attendee's:</strong>&nbsp; <a href="#users_watching_event?id={{event._id}}&type=attending">current attendee's</a>
+                                                </p>
 
-                                            <!-- //TODO: IF USER IS ATTENDING ({{event.user_is_attending}}) ADD AN UNSUBSCRIBE BUTTON
+                                                <!-- //TODO: IF USER IS ATTENDING ({{event.user_is_attending}}) ADD AN UNSUBSCRIBE BUTTON
  -->
 
-                                            <button type="button" ng-click="watchOrAttend(event._id, 'attending')" class="btn btn-success">
-                                                Attend &nbsp;
-                                                <i class="fa fa-plus">
+                                                <button type="button" ng-click="watchOrAttend(event._id, 'attending')" class="btn btn-success">
+                                                    Attend &nbsp;
+                                                    <i class="fa fa-plus">
                                             </i>
-                                            </button>
+                                                </button>
 
-                                            <p>
-                                                <strong>Current watchers's:</strong>&nbsp; <a href="#users_watching_event?id={{event._id}}&type=watching">current watchers</a>
-                                            </p>
+                                                <p>
+                                                    <strong>Current watchers's:</strong>&nbsp; <a href="#users_watching_event?id={{event._id}}&type=watching">current watchers</a>
+                                                </p>
 
-                                            <button type="button" ng-click="watchOrAttend(event._id, 'watching')" class="btn btn-success">
-                                                Watch &nbsp;
-                                                <i class="fa fa-plus">
+                                                <button type="button" ng-click="watchOrAttend(event._id, 'watching')" class="btn btn-success">
+                                                    Watch &nbsp;
+                                                    <i class="fa fa-plus">
                                             </i>
-                                            </button>
+                                                </button>
 
-                                            <h4>Description</h4>
-                                            <p>{{event.description}}</p>
+                                                <h4>Description</h4>
+                                                <p>{{event.description}}</p>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

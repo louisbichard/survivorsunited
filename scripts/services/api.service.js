@@ -1,39 +1,53 @@
 SU.service("apiService", function($http, utilityService) {
 
+    /**
+     * [callAPI description]
+     * @param  {[type]} route   [description]
+     * @param  {[type]} params  [description]
+     * @param  {Object} options
+     *                          preventNotifications: {Boolean} prevents success notification
+     * @param  {String} type    POST or GET
+     * @return {[type]}         Result from api
+     */
     var callAPI = function(route, params, options, type) {
         params = params || {};
         options = options || {};
 
         //ABSTRACT OUT URL
-        return $http[type](utilityService.api_route + route, params)
-            .success(function(data, status, headers, config) {
-                if (data.success) {
-
-                    // TODO:  MAKE THIS OPTIONAL
-                    notification('Success', data.result);
-                    return data.result;
-                } else {
-
-                    //TODO: 
-                    // 1) REPLACE WITH RELEVANT MESSAGE FOR REJECT
-                    // 2) CONSOLE LOG
-                    // 3) OPTION FOR ERROR ON FAILURE
-
-                    console.log("WERE HERE!");
-                    if (!data.error_message) {
-                        notification('Oh no', 'An unknown error occured', 'error');
-                        return false;
+        return new Promise(function(resolve, reject) {
+            return $http[type](utilityService.api_route + route, params)
+                .success(function(data, status, headers, config) {
+                    if (data.success) {
+                        // TODO:  MAKE THIS OPTIONAL
+                        if (!options.preventNotifications) {
+                            notification('Success', data.result);
+                        }
+                        return resolve(data.result);
                     } else {
-                        notification('Oh no', data.error_message, 'error');
-                        return data.error_message;
-                    }
-                }
-            })
 
-        //TODO: IMPLEMENT
-        .error(function(data, status, headers, config) {
-            notification('Something went wrong', 'A connection error occured, please try again', 'error');
-            return false;
+                        //TODO: 
+                        // 1) REPLACE WITH RELEVANT MESSAGE FOR REJECT
+                        // 2) CONSOLE LOG
+                        // 3) OPTION FOR ERROR ON FAILURE
+                        if (!data.error_message) {
+                            if (!options.preventNotifications) {
+                                notification('Oh no', 'An unknown error occured', 'error');
+                            }
+                            return reject(false);
+                        } else {
+                            if (!options.preventNotifications) {
+                                notification('Oh no', data.error_message, 'error');
+                            }
+                            return reject(data.error_message);
+                        }
+                    }
+                })
+
+            //TODO: IMPLEMENT
+            .error(function(data, status, headers, config) {
+                notification('Something went wrong', 'A connection error occured, please try again', 'error');
+                return reject('TODO MAKE BETTER');
+            });
         });
 
     };

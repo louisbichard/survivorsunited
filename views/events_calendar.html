@@ -1,17 +1,14 @@
-
 <div class="row">
     <div class="col-md-12 col-lg-12">
         <div class="panel panel-default">
             <div class="panel-body">
                 <h1>Events calendar</h1>
-                <hr>
-                <div ui-calendar="uiConfig.calendar" class="span8 calendar" ng-model="eventSources"></div> 
 
+                <hr>
+                <button type="button" ng-click="getEvents()" class="btn btn-success">Refresh &nbsp;<i class="fa fa-plus"></i>
+                </button>
+                <div calendar="calendar" ui-calendar="uiConfig.calendar" class="span8 calendar" ng-model="eventSources"></div>
             </div>
         </div>
     </div>
 </div>
-
-
-
-

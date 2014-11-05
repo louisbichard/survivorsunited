@@ -7,6 +7,7 @@
 
 
     <title>SU</title>
+    <!-- STYLES -->
 
     <!-- ================BOOTSTRAP================ -->
     <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
@@ -16,41 +17,70 @@
     <link rel="stylesheet" type="text/css" href="bower_components/toastr/toastr.min.css">
     <!-- ================CALENDAR================ -->
     <link rel="stylesheet" type="text/css" href="bower_components/fullcalendar/fullcalendar.css">
-
-
+    <link rel="stylesheet" type="text/css" href="styles/loading.css">
 
 
 </head>
 
+
+
 <body ng-controller="mainController">
-    <header>
+    <div style="height:100%; width:100%; background:#1fbeca;" ng-class="{'hide': app_loaded === true}">
+
+        <div class="loader">
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square last"></div>
+            <div class="square clear"></div>
+            <div class="square"></div>
+            <div class="square last"></div>
+            <div class="square clear"></div>
+            <div class="square "></div>
+            <div class="square last"></div>
+        </div>
+    </div>
+
+
+    <!-- HEADER -->
+    <header class="hide" ng-class="{'show': app_loaded === true}">
         <div class="row">
-            <div class="col-sm-6 col-md-6 col-lg-6">
-            </div>
             <div class="col-sm-12 col-md-12 col-lg-12">
                 <nav class="navbar navbar-default">
                     <div class="navbar-header">
-                        <a class="navbar-brand" href="/">Survivors United </a>
-                        <a class="navbar-brand" href="./tests/coverage/Chrome%2038.0.2125%20(Mac%20OS%20X%2010.10.0)/index.html">Code coverage</a>
+                        <a class="navbar-brand" href="#dashboard">
+                            <h2>Survivors United</h2>
+                        </a>
+                        <a class="navbar-brand" href="./tests/coverage/Chrome%2038.0.2125%20(Mac%20OS%20X%2010.10.0)/index.html">
+                            <h2>Code coverage</h2>
+                        </a>
                     </div>
-
-                    <ul class="nav navbar-nav navbar-right">
+                    <ul ng-hide="anonymous_user" class="nav navbar-nav navbar-right">
                         <li>
                             <a href="#search">
-                                <i class="fa fa-search"></i>
+                                <h2>
+                                    <i class="fa fa-search"></i>
+                                </h2>
                             </a>
                         </li>
                         <li>
                             <a href="#notifications">
-                                <i class="fa fa-bell"></i>
+                                <h2>
+                                    <i class="fa fa-bell"></i>
+                                </h2>
                             </a>
                         </li>
                         <li>
-                            <a href="#account"><i class="fa fa-user"></i></a>
+                            <a href="#account">
+                                <h2>
+                                    <i class="fa fa-user"></i>
+                                </h2>
+                            </a>
                         </li>
                         <li>
                             <a href="#login" ng-click="logOut()">
-                                <i class="fa fa-sign-out"></i>
+                                <h2>
+                                    <i class="fa fa-sign-out"></i> 
+                                </h2>
                             </a>
                         </li>
                     </ul>
@@ -60,8 +90,10 @@
     </header>
 
 
-    <div class="row">
-        <div class="col-sm-2 col-md-2 col-lg-2">
+    <div class="row hide" ng-class="{'show': app_loaded === true}">
+
+        <!-- LEFT PANE -->
+        <div ng-hide="anonymous_user" class="col-sm-2 col-md-2 col-lg-2">
             <div class="panel panel-default">
                 <div class="panel-body">
                     <div class="row">
@@ -75,7 +107,7 @@
                     <h3>Main</h3>
                     <hr>
                     <h4>
-                        <a href="#"><i class="fa fa-home"></i> Dashboard</a>
+                        <a href="#dashboard"><i class="fa fa-home"></i> Dashboard</a>
                     </h4>
                     <h4>
                         <a href="#mentor"><i class="fa fa-male"></i> Mentor</a>
@@ -98,10 +130,6 @@
                     <h4>
                         <a href="#subscribed_events"><i class="fa fa-home"></i> Subscribed events</a> 
                     </h4>
-                    <h3>My Account</h3>
-                    <h4>
-
-                    </h4>
 
                     <h3>Admin</h3>
                     <hr>
@@ -117,19 +145,29 @@
                 </div>
             </div>
         </div>
+
+        <!-- MAIN PANE -->
+
         <div class="col-sm-10 col-md-10 col-lg-10">
             <div id="main">
                 <div ng-view></div>
             </div>
         </div>
     </div>
-    <div class="container">
+
+    <!-- FOOTER -->
+    <div class="container row hide" ng-class="{'show': app_loaded === true}">
         <div class="row">
             <div class="col-sm-12 col-md-12 col-lg-12 text-center">
                 <p>Copyright Survivors united ltd</p>
             </div>
         </div>
     </div>
+
+
+    <!-- SCRIPTS -->
+
+
     <!-- ================NPM INSTALLED PACKAGES============== -->
     <script src="./scripts/bundle.js"></script>
     <!-- ================CUSTOM UTILITIES============== -->
@@ -153,8 +191,6 @@
     <!-- ================ANGULAR CONTROLLERS================ -->
     <!-- MAIN -->
     <script src="./scripts/controllers/main.controller.js"></script>
-    <!-- AUTH -->
-    <script src="./scripts/controllers/auth.login.controller.js"></script>
     <!-- USER -->
     <script src="./scripts/controllers/user.management.controller.js"></script>
     <script src="./scripts/controllers/user.details.controller.js"></script>
@@ -173,6 +209,7 @@
     <script src="./scripts/directives/keypress.enter.directive.js"></script>
     <!-- ================ANGULAR SERVICES================ -->
     <script src="./scripts/services/chart.service.js"></script>
+    <script src="./scripts/services/date.service.js"></script>
     <script src="./scripts/services/api.service.js"></script>
     <script src="./scripts/services/utilities.service.js"></script>
     <!-- ================ANGULAR FACTORIES================ -->

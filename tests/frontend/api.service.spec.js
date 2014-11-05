@@ -18,7 +18,7 @@ describe('apiService', function() {
         $httpBackend = _$httpBackend_;
     }));
 
-    it("successful notification sent", function() {
+    /*it("successful notification sent", function() {
 
         $httpBackend.whenGET('http://localhost:3000/users/listall').respond({
             success: 'true'
@@ -100,7 +100,7 @@ describe('apiService', function() {
         }).toThrow();
 
     });
-
+*/
     afterEach(function() {
         $httpBackend.verifyNoOutstandingExpectation();
         $httpBackend.verifyNoOutstandingRequest();

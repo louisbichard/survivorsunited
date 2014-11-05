@@ -1,34 +1,8 @@
-SU.controller('eventCalendarController', function($scope, apiService) {
+SU.controller('eventCalendarController', function($scope, apiService, dateService) {
 
-    var date = new Date();
-    var d = date.getDate();
-    var m = date.getMonth();
-    var y = date.getFullYear();
+    // SET EVENTS AS NONE ON LOAD TO PREVENT ERROR
+    $scope.events = [];
 
-    $scope.changeTo = 'Hungarian';
-
-
-    apiService.get('/events/listall').then(function(events) {
-        //TODO: MAKE WORK
-        /*        $scope.$watch(function() {
-                    $scope.events = events.result;
-                    $scope.eventSources = [$scope.events];
-                }), true;*/
-
-        //TODO, refresh scope
-    });
-
-    /* event source that contains custom events on the scope */
-    $scope.events = [{
-        title: 'All Day Event',
-        start: new Date(y, m, 1)
-    }, {
-        title: 'Long Event',
-        start: new Date(y, m, d - 5),
-        end: new Date(y, m, d - 2)
-    }];
-
-    /* config object */
     $scope.uiConfig = {
         calendar: {
             header: {
@@ -40,6 +14,39 @@ SU.controller('eventCalendarController', function($scope, apiService) {
         }
     };
 
-    //BIND EVENTS ON
+
+
+    $scope.getEvents = function() {
+        apiService
+            .get('/events/listall', null, {
+                preventNotifications: true
+            })
+            .then(function(events) {
+
+                //CLEAR EVENTS
+                $scope.events.splice(0);
+
+                // EDIT ALL EVENTS AND UPDATE SCOPE OF EVENTS
+                events = _.each(events, function(event_item) {
+                    //CONVERT DATES
+                    event_item = _.pick(event_item, ['start', 'end', 'title']);
+                    event_item.start = dateService.formatTimeStampForCal(event_item.start);
+                    event_item.end = dateService.formatTimeStampForCal(event_item.end);
+                    $scope.events.push(event_item);
+                });
+
+                // LOAD CALENDAR ONTO PAGE
+                $scope.calendar.fullCalendar('render');
+            });
+    };
+
     $scope.eventSources = [$scope.events];
+
+
+
+
+
+    // BOOTSTRAP CONTROLLER
+    $scope.getEvents();
+
 });

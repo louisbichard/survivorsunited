@@ -1,15 +1,23 @@
 SU.config(function($routeProvider) {
     $routeProvider
 
-    // ROOT ROUTE
-    // ==========
+    //////////
+    // ROOT //
+    //////////
+
         .when('/', {
         templateUrl: '../views/home.html',
         controller: 'mainController'
     })
 
-    // ACCOUNT
-    // =======
+    .when('/dashboard', {
+        templateUrl: '../views/home.html',
+        controller: 'mentorController'//TODO: CHANGE
+    })
+
+    /////////////
+    // ACCOUNT //
+    /////////////
     .when('/mentor', {
             templateUrl: '../views/mentor.html',
             controller: 'mentorController'
@@ -22,17 +30,17 @@ SU.config(function($routeProvider) {
             templateUrl: '../views/user_management.html',
             controller: 'userManagementController'
         })
-     .when('/user_details', {
+        .when('/user_details', {
             templateUrl: '../views/user_details.html',
             controller: 'userDetailsController'
         })
-          .when('/user_add', {
+        .when('/user_add', {
             templateUrl: '../views/user_add.html',
             controller: 'userAddController'
         })
         .when('/login', {
             templateUrl: '../views/login.html',
-            controller: 'loginController'
+            controller: 'mainController'
         })
 
 

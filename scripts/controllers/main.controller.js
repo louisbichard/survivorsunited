@@ -1,46 +1,80 @@
-SU.controller('mainController', function($scope, $http) {
+SU.controller('mainController', function($scope, $http, apiService, $location) {
 
     //TODO: REMOVE -> WAS USING WHEN IMPLEMENTING TEST FRAMEWORK
     $scope.test = "test";
 
-    $http
-        .get('http://localhost:3000/user/current')
-        .success(function(data, status, headers, config) {
-            var welcome_message;
-            var result = data.result;
+    $scope.anonymous_user = false;
 
-            if (data.success) {
+    $scope.bootstrapDashboard = function() {
+
+        apiService.get('/user/current', null, {
+                preventNotifications: true
+            })
+            .then(function(result) {
+                var welcome_message;
+
+
                 welcome_message = "Welcome back! ";
-                if (result && result.first_name) welcome_message += result.first_name;
-                else if (result && result.username) welcome_message += result.username;
-                $scope.profile_link = "#account";
-            } else {
-                redrawUIAnon();
-            }
 
-            $scope.profile_link = "#account";
-            $scope.welcome_message = welcome_message;
+                if (result && result.first_name) {
+                    welcome_message += result.first_name;
+                } else if (result && result.username) {
+                    welcome_message += result.username;
+                }
 
-        })
-        .error(function(data, status, headers, config) {
-            // TODO : BETTER ERROR HANDLING
-            console.log('is authenticated!');
+                $scope.$apply(function() {
+                    $scope.profile_link = "#account";
+                    $scope.welcome_message = welcome_message;
+                    $scope.anonymous_user = false;
+                });
+
+
+                $scope.setAppLoaded();
+
+                //TODO: ADD IN FOR PROD
+                //_.delay($scope.setAppLoaded, 2300);
+
+            })
+            .caught(function(err) {
+                $scope.setAppLoaded();
+
+                //TODO: ADD IN FOR PROD
+                //_.delay($scope.setAppLoaded, 2300);
+                //
+                $scope.$apply(function() {
+                    $scope.anonymous_user = true;
+                    $scope.profile_link = "#login";
+                    $scope.welcome_message = "Login";
+                });
+            });
+
+    }();
+
+    $scope.setAppLoaded = function() {
+        $scope.$apply(function() {
+            $scope.app_loaded = true;
         });
+    };
 
-    var redrawUIAnon = function() {
-        $scope.profile_link = "#login";
-        $scope.welcome_message = "Login";
+    $scope.pushToDashboard = function(arg) {
+
     };
 
     $scope.logOut = function() {
-        $http
-            .get('http://localhost:3000/auth/logout')
-            .success(function(data, status, headers, config) {
-                notification('Successfully logged out!');
-            })
-            .error(function(data, status, headers, config) {
-                // TODO : BETTER ERROR HANDLING 
-                console.log('Something went wrong!');
+        apiService
+            .get('/auth/logout')
+            .then($scope.bootstrapDashboard)
+            .then(function() {
+                $location.path('#dashboard');
+            });
+    };
+
+    $scope.mainLogin = function(user) {
+        console.log('attempting login');
+        return apiService
+            .post('/auth/login', user)
+            .then(function() {
+                $location.path('#dashboard');
             });
     };
 });

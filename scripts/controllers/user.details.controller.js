@@ -9,7 +9,13 @@ SU.controller('userDetailsController', function($scope, apiService, allUsersFact
             .then(function(data) {
                 //REFRESH SCOPE
                 var user_to_remove = _.findWhere($scope.users, user);
-                $scope.users = _.without($scope.users, user_to_remove);
+
+                var index = _.findIndex($scope.users, function(item) {
+                    return item._id === user_to_remove._id
+                });
+                $scope.$apply(function() {
+                    $scope.users.splice(index, 1);
+                });
             })
             .caught(function() {
                 // TODO: HANDLE WHEN THE API ERRORS

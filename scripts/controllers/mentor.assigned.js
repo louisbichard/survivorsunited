@@ -1,15 +1,23 @@
 // TYPE:    controller
 // PARTIAL: mentor.html
-SU.controller('mentorController', function($scope, $http) {
+SU.controller('mentorController', function($scope, apiService) {
+    $scope.module = {
+        title: "My Mentor",
+        description: "Mentor contact details, description and instant message"
+    };
+
     $scope.getMentorData = function() {
-        return $http
-            .get('http://localhost:3000/user/assigned_mentor')
-            .success(function(data, status, headers, config) {
-                $scope.mentor = data.result;
+        return apiService
+            .get('/user/assigned_mentor', null, {
+                preventNotifications: true
             })
-            .error(function(data, status, headers, config) {
-                //TODO: IMPLEMENT ALERT FOR FAILED API
-                return false;
+            .then(function(result) {
+                $scope.$apply(function() {
+                    $scope.mentor = result;
+                });
+            })
+            .caught(function() {
+                //TODO: Prevent error here in some way
             });
     }();
 });

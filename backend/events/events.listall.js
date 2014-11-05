@@ -29,21 +29,6 @@ module.exports = function(req, res) {
         return collection.findAsync();
     };
 
-    var formatRecords = function(events) {
-        events = format_dates(events);
-        events = updateFieldsAttendingWatching(events);
-        return events;
-    };
-
-    var format_dates = function(events) {
-        return _.map(events, function(record) {
-            if (record.date_created) {
-                record.date_created = utility_date.unixToReadable(record.date_created);
-            }
-            return record;
-        });
-    };
-
     //UPDATE THE API RESPONSE WITH WHETHER THE USER IS ALREADY WATCHING OR ATTENDING AN EVENT
     var updateFieldsAttendingWatching = function(records) {
         return _.map(records, function(rec) {

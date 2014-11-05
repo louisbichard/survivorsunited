@@ -1,27 +1,51 @@
 <div class="panel panel-default">
     <div class="panel-body">
-        <h2>Your mentor</h2>
-        <h4>{{mentor.first_name}} {{mentor.last_name}}</h4>
+        <h1>{{module.title}}</h1>
         <hr>
-        <div class="row">
-            <div class="col-md-4 col-lg-4">
-                <div class="panel panel-default">
-                    <div class="panel-body">
-                        <form role="form">
-                            <img class="img-responsive" src="{{mentor.img}}">
-                        </form>
+        <h4>{{module.description}}</h4>
+    </div>
+</div>
+
+<div class="row">
+    <!-- MENTOR DESCRPTION AND CONTACT DETAILS -->
+    <div class="col-lg-6 col-md-6 col-lg-6">
+        <div class="panel panel-default hide" ng-class="{'show': mentor}">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-4 col-lg-4">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <form role="form">
+                                    <img class="img-responsive" src="{{mentor.img}}">
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-8 col-lg-8">
+                        <h4>{{mentor.first_name}} {{mentor.last_name}}</h4>
+                        <hr>
+                        <strong>Email: &nbsp;</strong>{{mentor.email}}</p>
+                        <strong>Biography:</strong>
+                        </p>
+                        <p>
+                            {{mentor.bio}}
+                        </p>
                     </div>
                 </div>
             </div>
-            <div class="col-md-8 col-lg-8">
-                <strong>Biography:</strong>
-                </p>
-                <p>
-                    {{mentor.bio}}
-                </p>
-                <strong>Email: &nbsp;</strong>{{mentor.email}}</p>
+        </div>
+    </div>
+    <div class="col-lg-6 col-md-6 col-lg-6">
+        <div class="panel panel-default hide" ng-class="{'show': mentor}">
+            <div class="panel-body">
+                <h3>Instant message module</h3>
             </div>
         </div>
     </div>
 </div>
+
+<div class="panel panel-default" ng-class="{'hide': mentor}">
+    <div class="panel-body">
+        <h1>You have no mentor assigned</h1>
+    </div>
 </div>

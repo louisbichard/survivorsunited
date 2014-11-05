@@ -1,27 +1,28 @@
 // TYPE: CONTROLLER
 // PARTIAL: 
 
-SU.controller('upcomingEventsController', function($scope, $http, $location) {
-    var api_route = APP.utilties.api_route;
+SU.controller('upcomingEventsController', function($scope, apiService, $location) {
 
     if ($location.$$path === '/watched_events') {
         $scope.title = "Watched";
-        get_eventsapi = api_route + "/events/watching/current";
+        get_eventsapi = "/events/watching/current";
     } else {
         $scope.title = "Upcoming";
-        get_eventsapi = api_route +  "/events/listall";
+        get_eventsapi = "/events/listall";
     }
 
-    $scope.test = "Controller is upcoming events";
+    $scope.module = {
+        title: $scope.title + 'events',
+        description: "Browser, watch or register for upcoming events"
+    };
 
     var get_events = function() {
-        return $http
-            .get(get_eventsapi)
-            .success(function(data, status, headers, config) {
-                $scope.events = data.result;
-            })
-            .error(function(data, status, headers, config) {
-                notification('Oh no!', 'Something went wrong when trying to fetch events!', 'error');
+        return apiService
+            .get(get_eventsapi, null, {preventNotifications: true})
+            .then(function(result) {
+                $scope.$apply(function() {
+                    $scope.events = result;
+                });
             });
     }();
 
@@ -30,16 +31,10 @@ SU.controller('upcomingEventsController', function($scope, $http, $location) {
 
         var endpoint = "/events/watchOrAttend";
 
-        return $http
-            .post(api_route + endpoint, {
+        return apiService
+            .post(endpoint, {
                 type: watchOrAttend,
                 id: event_id
-            })
-            .success(function(data, status, headers, config) {
-                REST_notification(data);
-            })
-            .error(function(data, status, headers, config) {
-                notification('Oh no!', 'Something went wrong when trying to fetch events!', 'error');
             });
     };
 
