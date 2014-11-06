@@ -19,6 +19,8 @@ module.exports = function(config) {
             './node_modules/karma-jasmine-async/src/jasmine.async.js',
             './scripts/bundle.js',
             './scripts/utilties.js',
+
+            // BOWER
             './bower_components/jquery/dist/jquery.min.js',
             './bower_components/bootstrap/dist/js/bootstrap.min.js',
             './bower_components/toastr/toastr.min.js',
@@ -28,8 +30,14 @@ module.exports = function(config) {
             './bower_components/angular-charts/dist/angular-charts.min.js',
             './bower_components/angular-ui-calendar/src/calendar.js',
             './bower_components/fullcalendar/fullcalendar.js',
+
+            // ANGULAR INITIALISE
             './scripts/app.js',
+
+            // CUSTOM LIBRARIES (TODO: ANGULARIFY)
             './scripts/notifications.js',
+
+            // CONTROLLERS
             './scripts/controllers/main.controller.js',
             './scripts/controllers/user.management.controller.js',
             './scripts/controllers/user.details.controller.js',
@@ -40,12 +48,21 @@ module.exports = function(config) {
             './scripts/controllers/event.add.controller.js',
             './scripts/controllers/events.usersWatchingEvent.js',
             './scripts/controllers/events.calendar.controller.js',
+
+            // ROUTES
             './scripts/angular.routes.js',
+            
+            // DIRECTIVES
             './scripts/directives/keypress.enter.directive.js',
+            
+            // SERVICES
             './scripts/services/date.service.js',
             './scripts/services/chart.service.js',
             './scripts/services/api.service.js',
+            './scripts/services/notify.service.js',
             './scripts/services/utilities.service.js',
+
+            //FACTORIES
             './scripts/factories/users.all.factory.js',
             './scripts/factories/isAuthenticated.factory.js',
             './scripts/factories/user.current.factory.js',

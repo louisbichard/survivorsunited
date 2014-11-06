@@ -71,6 +71,7 @@ module.exports = function(req, res) {
     };
 
     var extractWatchers = function(result) {
+            
         var find = Promise.promisifyAll(result);
         return find.toArrayAsync()
             .then(function(records) {

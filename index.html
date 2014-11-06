@@ -18,6 +18,7 @@
     <!-- ================CALENDAR================ -->
     <link rel="stylesheet" type="text/css" href="bower_components/fullcalendar/fullcalendar.css">
     <link rel="stylesheet" type="text/css" href="styles/loading.css">
+    <link rel="stylesheet" type="text/css" href="styles/utilities.css">
 
 
 </head>
@@ -104,8 +105,7 @@
                     </div>
                     <h4 class="text-center">{{welcome_message}}</h4>
 
-                    <h3>Main</h3>
-                    <hr>
+                    <br>
                     <h4>
                         <a href="#dashboard"><i class="fa fa-home"></i> Dashboard</a>
                     </h4>
@@ -127,9 +127,9 @@
                     <h4>
                         <a href="#watched_events"><i class="fa fa-eye"></i> Watched events</a> 
                     </h4>
-                    <h4>
+                    <!-- <h4>
                         <a href="#subscribed_events"><i class="fa fa-home"></i> Subscribed events</a> 
-                    </h4>
+                    </h4> -->
 
                     <h3>Admin</h3>
                     <hr>
@@ -212,6 +212,9 @@
     <script src="./scripts/services/date.service.js"></script>
     <script src="./scripts/services/api.service.js"></script>
     <script src="./scripts/services/utilities.service.js"></script>
+    <script src="./scripts/services/notify.service.js"></script>
+    <!-- ================ANGULAR FILTERS================ -->
+    <script src="./scripts/filters/internal.filter.js"></script>
     <!-- ================ANGULAR FACTORIES================ -->
     <script src="./scripts/factories/users.all.factory.js"></script>
     <script src="./scripts/factories/isAuthenticated.factory.js"></script>

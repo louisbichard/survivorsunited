@@ -2,6 +2,10 @@
 // PARTIAL: 
 
 SU.controller('addEventController', function($scope, $http, $location) {
+    $scope.module = {
+        title: "Create event",
+        description: "Setup custom events"
+    };
 
     $scope.addEvent = function() {
 

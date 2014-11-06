@@ -12,7 +12,7 @@ SU.controller('upcomingEventsController', function($scope, apiService, $location
     }
 
     $scope.module = {
-        title: $scope.title + 'events',
+        title: $scope.title + ' events',
         description: "Browser, watch or register for upcoming events"
     };
 

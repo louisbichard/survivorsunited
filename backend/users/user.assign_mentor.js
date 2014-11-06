@@ -23,12 +23,12 @@ module.exports = function(req, res) {
     var post_params = req.body;
 
     //VALIDATION FOR 
-    if (!post_params.mentor_id) {
-        respond.failure('No Mentor ID was sent');
+    if (!post_params.mentor_id || !post_params.user_id) {
+        respond.failure('No Mentor or user ID were found');
     }
 
     var mentor_id = post_params.mentor_id;
-    var user_id = req.user._id;
+    var user_id = post_params.user_id;
 
     try {
         mentor_id = database.getObjectID(mentor_id);

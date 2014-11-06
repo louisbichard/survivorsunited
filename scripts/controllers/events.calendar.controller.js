@@ -14,10 +14,16 @@ SU.controller('eventCalendarController', function($scope, apiService, dateServic
         }
     };
 
+    $scope.refreshEvents = function() {
+        $scope.getEvents()
+            .then(function() {
+                notification('Events refreshed!');
+            });
+    };
 
 
     $scope.getEvents = function() {
-        apiService
+        return apiService
             .get('/events/listall', null, {
                 preventNotifications: true
             })
@@ -37,6 +43,7 @@ SU.controller('eventCalendarController', function($scope, apiService, dateServic
 
                 // LOAD CALENDAR ONTO PAGE
                 $scope.calendar.fullCalendar('render');
+                return;
             });
     };
 

@@ -1,67 +1,102 @@
-SU.controller('userDetailsController', function($scope, apiService, allUsersFactory) {
+SU.controller('userDetailsController', function($scope, apiService, allUsersFactory, utilityService, notifyService) {
+
+    $scope.users = [];
+
+    $scope.module = {
+        title: "System users",
+        description: "Edit users personal details, assigned mentors, severity etc",
+    };
+
+    $scope.updated = {
+        '545a17fe979e5cea2aa2268e': {}
+    };
+
+    $scope.filters = [{
+        name: 'internal',
+        friendly: 'Internal Users',
+        checked: false
+    }, {
+        name: 'external',
+        friendly: 'External Users',
+        checked: false
+    }, {
+        name: 'no_assigned_mentor',
+        friendly: 'No assigned mentor',
+        checked: false
+    }, {
+        name: 'high_severity',
+        friendly: 'High severity users',
+        checked: false
+    }];
 
     $scope.removeUser = function(user) {
 
+        // TODO: COMPLETE AS DIRECTIVE
+        notifyService.question("Confirm deleting user?");
+
         return apiService
+
+        // CALL API
             .post('/user/delete', {
-                id: user._id
-            })
-            .then(function(data) {
-                //REFRESH SCOPE
-                var user_to_remove = _.findWhere($scope.users, user);
+            id: user._id
+        })
 
-                var index = _.findIndex($scope.users, function(item) {
-                    return item._id === user_to_remove._id
-                });
-                $scope.$apply(function() {
-                    $scope.users.splice(index, 1);
-                });
-            })
-            .caught(function() {
-                // TODO: HANDLE WHEN THE API ERRORS
+        // FIND USER ITEM FROM SCOPE
+        .then(function() {
+            return _.findWhere($scope.users, user);
+        })
+
+        // FIND INDEX OF USER
+        .then(function(user_to_remove) {
+            return _.findIndex($scope.users, function(item) {
+                return item._id === user_to_remove._id;
             });
+        })
+
+        // REMOVE FROM SCOPE
+        .then(function(index_to_remove) {
+            $scope.$apply(function() {
+                $scope.users.splice(index_to_remove, 1);
+            });
+        });
     };
 
-    $scope.updateContact = function(user) {
+    $scope.updatedContact = function(localScope) {
+        if (!localScope.user._id) {
+            throw new Error('localScope did not have all correct values to update contact in updatedContact');
+        }
 
 
-        //TODO: MAKE THIS WORK
-        /*var original_user = _.findWhere($scope.original_users, {_id: id});
-        object_differences(original_user, changed_user);*/
+        var user_id = localScope.user._id;
+        var changes = $scope.updated[user_id];
+        changes.user_id = changes._id;
+        changes = _.omit(changes, 'date_created');
 
-        changed_user = _.omit(user, ['$$hashKey', '_id', 'id']);
-        debugger;
-        //FIND ORIGINAL DETAILS OF USER
+        apiService.post('/user/update', changes)
+            .then(function() {
+                //IF SUCCESSFUL CLEAN UPDATES
 
-        return apiService
-            .post('/user/update', changed_user)
-            .then(function(data) {
-                //TODO: REFRESH USERS ON PAGE
-            })
-            .caught(function() {
-                // TODO: HANDLE WHEN THE API ERRORS
             });
     };
-
-    $scope.$watch('users', function() {
-        console.log('users have changed');
-    }, true);
 
     // AUTOMATICALLY INVOKED
     var refreshUsers = function() {
-        $scope.users = [];
-        allUsersFactory.then(function(users) {
-            var user_data = users.data.result.users;
 
-            //SETUP USERS FOR LIST
-            $scope.users = user_data;
+        allUsersFactory
 
-            //USELESS UNTIL UPDATE FUNCTION WORKS
-            $scope.original_users = user_data;
+        // GET RESULT DATA
+            .then(function(result) {
+            return result.data.result;
+        })
 
-            //SETUP USER RESULT COUNT
-            // TODO: DOESNT UPDATE WHEN YOU DELETE
-            $scope.user_count = users.data.result.count;
+        // ASSIGN RESULTS TO SCOPE VARIABLES
+        .then(function(result) {
+            $scope.users = result.users;
+            $scope.original_users = result.users;
+            $scope.mentors = result.users; // TODO: FILTER BY ROLE TYPE
+            _.each(result.users, function(user) {
+                $scope.updated[user._id] = user;
+            });
         });
     }();
 });

@@ -83,11 +83,11 @@ SU.service("chartService", function($http) {
 
     this.userSeverityGrade = function(users) {
 
-        if(!users || !_.isArray(users)) {
+        if (!users || !_.isArray(users)) {
             throw new Error('Must pass a parameter to userSeverityGrade function in chartService');
         }
 
-        return _.reduce(users, function(prev, user) {
+        var chart_data = _.reduce(users, function(prev, user) {
             if (user.severity_grade === "Low") {
                 prev[0].y[0] ++;
             }
@@ -109,5 +109,13 @@ SU.service("chartService", function($http) {
             "x": "High",
             "y": [0]
         }]);
+
+        // REMOVE ALL ZERO USERS
+        chart_data = _.filter(chart_data, function(severity_grade) {
+            return (severity_grade.y > 0);
+        });
+
+        return chart_data;
+
     };
 });

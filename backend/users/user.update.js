@@ -3,8 +3,8 @@
 var Promise = require('bluebird');
 var MongoClient = Promise.promisifyAll(require("mongodb")).MongoClient;
 var database = require('../utilities/database.js');
-var _ = require('bluebird');
 var log = require('../utilities/logger.js');
+var _ = require('lodash');
 
 module.exports = function(req, res) {
 
@@ -19,10 +19,14 @@ module.exports = function(req, res) {
 
     var post_params = req.body || {};
 
+    if(!post_params.user_id) {
+        respond.failure('No user ID passed');
+    }
+
     var user_id;
 
     try {
-        user_id = database.getObjectID(post_params.id || req.user._id || "");
+        user_id = database.getObjectID(post_params.user_id || req.user._id || "");
     } catch (e) {
         //SET USER_ID to 
         user_id = false;
@@ -39,6 +43,9 @@ module.exports = function(req, res) {
     }
 
     var prepareData = function(db) {
+
+        post_params = _.omit(post_params, ['id', '_id']);
+
         var data_to_insert = {};
 
         return {
