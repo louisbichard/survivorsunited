@@ -44,7 +44,7 @@ module.exports = function(req, res) {
 
     var prepareData = function(db) {
 
-        post_params = _.omit(post_params, ['id', '_id']);
+        post_params = _.omit(post_params, ['id', '_id', 'user_id']);
 
         var data_to_insert = {};
 

@@ -36,8 +36,6 @@ module.exports = function(req, res) {
     };
 
     var format_dates = function(users) {
-        console.log(users);
-
         return _.map(users, function(user) {
             if(user.date_created) {
                    user.date_created = utility_date.unixToReadable(user.date_created);

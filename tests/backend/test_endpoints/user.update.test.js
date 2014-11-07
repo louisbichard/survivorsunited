@@ -18,6 +18,7 @@ var _ = require('lodash');
 // TEST THAT IT OMITS _id WHEN PASSED IN
 // ALSO, MAKE SURE THAT THE ID MUST BE PASSED MORE SAFELY, OTHERWISE ITS GOING TO OVERWRITE THE CURRENT USER! (INDICATIVE OF BUGS :/)
 // TEST THAT IF SOMETHING ISNT SET, THAT IT IS THEN SET
+// REJECT THOSE WITHOUT DATA TO UPDATE
 
 /*//SETUP
 setup_db()
@@ -78,7 +79,7 @@ setup_db(
 
 //DESCRIBE
 .then(function() {
-    log.test.describe('Rejects requests with no passed data');
+    log.test.describe('Rejects requests with no user id');
 })
 
 //RUN
@@ -93,7 +94,7 @@ setup_db(
             .post(test_endpoint)
             .expect('success to be true', utilities.successIsFalse)
             .expect('Error message to be set', function(err, res, body) {
-                utilities.hasErrorMessage(err, res, body, 'No data passed for updating user');
+                utilities.hasErrorMessage(err, res, body, 'No user ID passed');
             })
             .expect(200)
             .next();
@@ -145,7 +146,8 @@ setup_db(
             .setHeader('Content-Type', 'application/json')
             .before('setAuth', utilities.setAuthCookie)
             .post(test_endpoint, {
-                something: "something"
+                something: "something",
+                "user_id": utilities.dummy_id.USER_ID
             })
             .expect('success to be true', utilities.successIsTrue)
             .expect('Error message to be set', function(err, res, body) {

@@ -2,7 +2,20 @@
 //------------------
 var colors = require('colors');
 var uuid = require('node-uuid');
-/*var sessions = require('./../auth/sessions.js');*/
+var _ = require('lodash');
+var log = require('../utilities/logger.js');
+
+var apiFile = function(req, res, next, location) {
+    if (!location || !_.isString(location)) {
+        throw new Error('location was not found, or incorrect type when passed to apiFile in backend routes');
+    }
+    return require(location)(req, res);
+};
+
+// TODO: REPLACE WITH LOG FUNCTION
+var colourful_output = function(api_name) {
+    console.log('API called: '.green + api_name.blue);
+};
 
 //API ENDPOINTS
 //=============
@@ -10,106 +23,29 @@ var uuid = require('node-uuid');
 module.exports = function(app) {
 
     //AUTHENTICATION
-    //==============
-    app.post('/auth/login', function(req, res) {
-        colourful_output('/auth/login');
-        return require('./../auth/auth.login.js')(req, res);
-    });
+    app.post('/auth/login', _.partialRight(apiFile, './../auth/auth.login.js'));
+    app.get('/auth/logout', _.partialRight(apiFile, './../auth/auth.logout.js'));
+    app.get('/auth/isauthenticated', _.partialRight(apiFile, './../auth/auth.isAuthenticated'));
 
-    app.get('/auth/logout', function(req, res) {
-        colourful_output('/auth/logout');
-        return require('./../auth/auth.logout.js')(req, res);
-    });
-
-    app.get('/auth/isauthenticated', function(req, res, next) {
-        colourful_output('/auth/isauthenticated');
-        var isAuth = require('./../auth/auth.isAuthenticated')(req, res);
-    });
-
-    //SESSION
-    //=======
-    app.get('/sessions/listall', function(req, res) {
-        colourful_output('/sessions/listall');
-        return require('./../sessions/sessions.listall.js')(req, res);
-    });
+    //SESSIONS
+    app.get('/sessions/listall', _.partialRight(apiFile, './../sessions/sessions.listall.js'));
 
     //USER
-    //====
-    app.get('/user/current', function(req, res) {
-        colourful_output('/user/current');
-        return require('./../users/user.current.js')(req, res);
-    });
-
-    app.get('/users/listall', function(req, res) {
-        colourful_output('/users/listall');
-        return require('./../users/users.listall.js')(req, res);
-    });
-
-    app.post('/user/update', function(req, res) {
-        colourful_output('/users/update');
-        return require('./../users/user.update.js')(req, res);
-    });
-
-    app.post('/user/add', function(req, res) {
-        colourful_output('/user/add');
-        require('../users/user.add.js')(req, res);
-    });
-
-    app.post('/user/delete', function(req, res) {
-        colourful_output('/user/delete');
-        require('../users/user.delete.js')(req, res);
-    });
+    app.get('/user/current', _.partialRight(apiFile, './../users/user.current.js'));
+    app.get('/users/listall', _.partialRight(apiFile, './../users/users.listall.js'));
+    app.post('/user/update', _.partialRight(apiFile, './../users/user.update.js'));
+    app.post('/user/add', _.partialRight(apiFile, '../users/user.add.js'));
+    app.post('/user/delete', _.partialRight(apiFile, '../users/user.delete.js'));
 
     //MENTOR
-    //======
-    app.get('/user/assigned_mentor', function(req, res) {
-        colourful_output('/user/assigned_mentor');
-        return require('./../users/user.assigned_mentor.js')(req, res);
-    });
-
-    app.post('/user/assign_mentor', function(req, res) {
-        colourful_output('/user/assign_mentor');
-        return require('./../users/user.assign_mentor.js')(req, res);
-    });
+    app.get('/user/assigned_mentor', _.partialRight(apiFile, './../users/user.assigned_mentor.js'));
+    app.post('/user/assign_mentor', _.partialRight(apiFile, './../users/user.assign_mentor.js'));
 
     //EVENTS
-    //======
-    app.get('/events/listall', function(req, res) {
-        colourful_output('/events/listall');
-        return require('./../events/events.listall.js')(req, res);
-    });
-
-    app.get('/events/listWatchersOrAttendees', function(req, res) {
-        colourful_output('/events/listwatchers');
-        return require('./../events/events.listWatchersOrAttendees.js')(req, res);
-    });
-
-    app.post('/events/add', function(req, res) {
-        colourful_output('/events/add');
-        return require('./../events/events.add.js')(req, res);
-    });
-
-    app.get('/events/watching/current', function(req, res) {
-        colourful_output('/events/watching/current');
-        return require('./../events/events.current.watching.js')(req, res);
-    });
-
-    app.post('/events/watchOrAttend', function(req, res) {
-        colourful_output('/events/watchOrAttend');
-        return require('./../events/events.current.watchOrAttend.js')(req, res);
-    });
-
-    app.post('/events/subscribe', function(req, res) {
-        colourful_output('/events/subscribe');
-        return require('./../events/events.current.subscribe.js')(req, res);
-    });
-
-};
-
-var call_api = function(){
-
-};
-
-var colourful_output = function(api_name) {
-    console.log('API called: '.green + api_name.blue);
+    app.get('/events/listall', _.partialRight(apiFile, './../events/events.listall.js'));
+    app.get('/events/listWatchersOrAttendees', _.partialRight(apiFile, './../events/events.listWatchersOrAttendees.js'));
+    app.post('/events/add', _.partialRight(apiFile, './../events/events.add.js'));
+    app.get('/events/watching/current', _.partialRight(apiFile, './../events/events.current.watching.js'));
+    app.post('/events/watchOrAttend', _.partialRight(apiFile, './../events/events.current.watchOrAttend.js'));
+    app.post('/events/subscribe', _.partialRight(apiFile, './../events.current.subscribe.js'));
 };
