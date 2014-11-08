@@ -3,6 +3,7 @@
 backend/data
 node_modules
 bower_components
+tests/coverage
 
 # OS generated files #
 ######################

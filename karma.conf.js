@@ -62,6 +62,11 @@ module.exports = function(config) {
             './scripts/services/notify.service.js',
             './scripts/services/utilities.service.js',
 
+            // FILTERS
+            './scripts/filters/internal.filter.js',
+            './scripts/filters/assignedMentor.filter.js',
+            './scripts/filters/severity.filter.js',
+
             //FACTORIES
             './scripts/factories/users.all.factory.js',
             './scripts/factories/isAuthenticated.factory.js',

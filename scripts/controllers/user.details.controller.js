@@ -1,38 +1,59 @@
 SU.controller('userDetailsController', function($scope, apiService, allUsersFactory, utilityService, notifyService) {
-
-    $scope.users = [];
-
     $scope.module = {
         title: "System users",
         description: "Edit users personal details, assigned mentors, severity etc",
     };
 
-    $scope.updated = {
-        '545a17fe979e5cea2aa2268e': {}
+    $scope.users = [];
+    $scope.updated = {};
+    $scope.filters = [];
+
+    $scope.clearFilter = function(notification) {
+        if (notification) {
+            notifyService.notify('Search filters cleared');
+        }
+
+        $scope.filters = [{
+            name: "internal",
+            value: "All"
+        }, {
+            name: "severity",
+            value: "All"
+        }, {
+            name: "assigned_mentor",
+            value: "All"
+        }, {
+            name: "sort",
+            value: "All"
+        }];
+
+        $scope.searchText = "";
     };
 
-    $scope.filters = [{
-        name: 'internal',
-        friendly: 'Internal Users',
-        checked: false
-    }, {
-        name: 'external',
-        friendly: 'External Users',
-        checked: false
-    }, {
-        name: 'no_assigned_mentor',
-        friendly: 'No assigned mentor',
-        checked: false
-    }, {
-        name: 'high_severity',
-        friendly: 'High severity users',
-        checked: false
-    }];
+    $scope.setFilter = function(name, value) {
+        //TODO test
+        if (!name || !value || !_.isString(name)) {
+            throw new Error('Incorrect parametrs passed to SetFilter');
+        }
+
+        var index =
+            _.chain($scope.filters)
+            .findIndex({
+                name: name
+            })
+            .value();
+
+        if (index === -1) {
+            throw new Error('Index for filter not found in user details controller');
+        }
+
+        $scope.filters[index].value = value;
+    };
 
     $scope.removeUser = function(user) {
 
         // TODO: COMPLETE AS DIRECTIVE
-        notifyService.question("Confirm deleting user?");
+        //notifyService.question("Confirm deleting user?");
 
         return apiService
 
@@ -66,21 +87,19 @@ SU.controller('userDetailsController', function($scope, apiService, allUsersFact
             throw new Error('localScope did not have all correct values to update contact in updatedContact');
         }
 
-
         var user_id = localScope.user._id;
         var changes = $scope.updated[user_id];
         changes.user_id = changes._id;
         changes = _.omit(changes, 'date_created');
 
-        apiService.post('/user/update', changes)
-            .then(function() {
-                //IF SUCCESSFUL CLEAN UPDATES
-
-            });
+        apiService.post('/user/update', changes);
     };
 
     // AUTOMATICALLY INVOKED
-    var refreshUsers = function() {
+    $scope.refreshUsers = function(notification) {
+        if (notification) {
+            notifyService.notify('Users refreshed');
+        }
 
         allUsersFactory
 
@@ -93,10 +112,19 @@ SU.controller('userDetailsController', function($scope, apiService, allUsersFact
         .then(function(result) {
             $scope.users = result.users;
             $scope.original_users = result.users;
-            $scope.mentors = result.users; // TODO: FILTER BY ROLE TYPE
+
+            // TODO: FILTER BY ROLE TYPE
+            $scope.mentors = _.filter(result.users, function(user){
+                return user.mentor;
+            });
+
             _.each(result.users, function(user) {
                 $scope.updated[user._id] = user;
             });
         });
-    }();
+    };
+
+    // LAUNCH INIT SCOPE FUNCTIONS
+    $scope.refreshUsers();
+    $scope.clearFilter();
 });

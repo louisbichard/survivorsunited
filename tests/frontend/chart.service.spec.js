@@ -164,9 +164,6 @@ describe('chartService', function() {
                 "x": "Low",
                 "y": [1]
             }, {
-                "x": "Medium",
-                "y": [0]
-            }, {
                 "x": "High",
                 "y": [1]
             }]);
@@ -178,14 +175,8 @@ describe('chartService', function() {
             }, {
                 "severity_grade": "Incorrect",
             }, {}])).toEqual([{
-                "x": "Low",
-                "y": [0]
-            }, {
                 "x": "Medium",
                 "y": [1]
-            }, {
-                "x": "High",
-                "y": [0]
             }]);
         });
     });

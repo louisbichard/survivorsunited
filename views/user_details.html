@@ -11,21 +11,57 @@
         <div class="panel panel-default">
             <div class="panel-body">
                 <div class="row">
-                    <div class="col-md-12 col-sm-12">
+                    <div class="col-md-8 col-sm-8">
                         <input ng-model="searchText" class="form-control" placeholder="Enter serch terms here">
                     </div>
+                    <div class="col-md-4 col-sm-4">
+                        <div class="pull-right">
+                            <button ng-click="refreshUsers(true)" type="button" class="btn btn-info">
+                                Refresh Users&nbsp;
+                                <i class="fa fa-refresh"></i>
+                            </button>
+                            <button ng-click="clearFilter(true)" type="button" class="btn btn-danger">
+                                Clear filters&nbsp;
+                                <i class="fa fa-remove"></i>
+                            </button>
+                        </div>
+                    </div>
                 </div>
+                <br>
                 <div class="row">
                     <div class="col-md-12 col-sm-12">
                         <div class="row">
-                            <div class="col-md-3 col-sm-3" ng-repeat="filter in filters">
-                                <div class="checkbox">
-                                    <label>
-                                        <input ng-checked="filters[$index].checked" ng-model="filters[$index].checked" type="checkbox">{{filter.friendly}}
-                                    </label>
+                            <div class="col-md-4 col-sm-4">
+                                <div class="btn-group">
+                                    <button type="button" ng-click="setFilter('internal', 'Internal')" class="btn btn-default">Internal</button>
+                                    <button type="button" ng-click="setFilter('internal', 'External')" class="btn btn-default">External</button>
+                                    <button ng-click="setFilter('internal', 'All')" type="button" class="btn btn-default">All</button>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-sm-4">
+                                <div class="btn-group">
+                                    <button ng-click="setFilter('severity', 'High')" type="button" class="btn btn-danger">
+                                        High
+                                    </button>
+                                    <button ng-click="setFilter('severity', 'Medium')" type="button" class="btn btn-warning">Medium
+                                    </button>
+                                    <button ng-click="setFilter('severity', 'Low')" type="button" class="btn btn-info">
+                                        Low
+                                    </button>
+                                    <button ng-click="setFilter('severity', 'All')" type="button" class="btn btn-default">
+                                        All
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-sm-4">
+                                <div class="btn-group">
+                                    <button ng-click="setFilter('assigned_mentor', 'yes')" type="button" class="btn btn-default">Assigned mentor</button>
+                                    <button ng-click="setFilter('assigned_mentor', 'no')" type="button" class="btn btn-default">No mentor</button>
+                                    <button ng-click="setFilter('assigned_mentor', 'All')" type="button" class="btn btn-default">All</button>
                                 </div>
                             </div>
                         </div>
+                        <br>
                     </div>
                 </div>
             </div>
@@ -35,7 +71,29 @@
 
 <div class="row">
     <div class="col-md-12 col-sm-12">
-        <div ng-repeat="user in users | internalFilter:filters | externalFilter:filters | filter:searchText ">
+        <!-- IF NO RESULTS FOUND -->
+        <div ng-hide="filteredResults.length">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <p>No results found :( please broaden your search criteria</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- RESULTS COUNT -->
+        <div ng-show="filteredResults.length" class="panel panel-default">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12">
+                            Total results: {{filteredResults.length}}
+
+                            <!-- Internal: {{filters[0].value}} -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        <div ng-repeat="user in filteredResults = (users | internalFilter:filters | severityFilter:filters | assignedMentorFilter:filters | filter:searchText) ">            
             <div class="row">
                 <div class="col-md-12 col-sm-12">
                     <div class="panel panel-thick-border" ng-class="{'panel-danger': user.severity_grade === 'High', 'panel-warning': user.severity_grade === 'Medium', 'panel-info': user.severity_grade === 'Low'}">
@@ -102,7 +160,7 @@
                                 <div class="col-md-6 col-sm-6">
                                     <p>
                                         <!-- TODO: READABLE NAME -->
-                                        <Strong>Currently assigned mentor:&nbsp;</strong>{{user.mentor}}
+                                        <Strong>Currently assigned mentor:&nbsp;</strong>
                                     </p>
 
                                     <!-- SELECT A MENTOR -->
