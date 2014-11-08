@@ -13,8 +13,6 @@ describe('assignedMentorFilter', function() {
         module('ui.calendar');
     });
 
-    console.log('WOOOOOOOOOO!');
-
     beforeEach(inject(function(_$filter_) {
         $filter = _$filter_;
         assignedMentorFilter = $filter('assignedMentorFilter');

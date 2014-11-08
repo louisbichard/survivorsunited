@@ -15,8 +15,12 @@ module.exports = function(config) {
 
         // list of files / patterns to load in the browser
         files: [
+
+            // UTILITIES 
             './tests/utilities/jasmineCustomMatchers.js',
+            './tests/utilities/unitTestUtilities.js',
             './node_modules/karma-jasmine-async/src/jasmine.async.js',
+
             './scripts/bundle.js',
             './scripts/utilties.js',
 

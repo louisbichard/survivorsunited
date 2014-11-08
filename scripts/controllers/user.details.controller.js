@@ -52,6 +52,10 @@ SU.controller('userDetailsController', function($scope, apiService, allUsersFact
 
     $scope.removeUser = function(user) {
 
+        if (!user || !user._id) {
+            throw new Error('user and user id must be passed to removeUser in userDetailsController');
+        }
+
         // TODO: COMPLETE AS DIRECTIVE
         //notifyService.question("Confirm deleting user?");
 
@@ -62,16 +66,9 @@ SU.controller('userDetailsController', function($scope, apiService, allUsersFact
             id: user._id
         })
 
-        // FIND USER ITEM FROM SCOPE
+        // FIND USER INDEX FROM SCOPE
         .then(function() {
-            return _.findWhere($scope.users, user);
-        })
-
-        // FIND INDEX OF USER
-        .then(function(user_to_remove) {
-            return _.findIndex($scope.users, function(item) {
-                return item._id === user_to_remove._id;
-            });
+            return _.findIndex($scope.users, user);
         })
 
         // REMOVE FROM SCOPE
@@ -91,7 +88,6 @@ SU.controller('userDetailsController', function($scope, apiService, allUsersFact
         var changes = $scope.updated[user_id];
         changes.user_id = changes._id;
         changes = _.omit(changes, 'date_created');
-
         apiService.post('/user/update', changes);
     };
 
@@ -114,7 +110,7 @@ SU.controller('userDetailsController', function($scope, apiService, allUsersFact
             $scope.original_users = result.users;
 
             // TODO: FILTER BY ROLE TYPE
-            $scope.mentors = _.filter(result.users, function(user){
+            $scope.mentors = _.filter(result.users, function(user) {
                 return user.mentor;
             });
 

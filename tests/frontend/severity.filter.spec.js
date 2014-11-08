@@ -65,6 +65,26 @@ describe('severityFilter', function() {
         });
     });
 
+    describe('returns empty array when requesting Low severity users when there are none', function() {
+        it('for severity users', function() {
+            expect(
+                    severityFilter([{
+                        severity_grade: "High"
+                    }, {
+                        severity_grade: "Low"
+                    }, {
+                        severity_grade: "Medium"
+                    }], [{
+                        name: "severity",
+                        value: "Medium"
+                    }])
+                )
+                .toEqual([{
+                    severity_grade: "Medium"
+                }]);
+        });
+    });
+
     describe('returns empty array when requesting low severity when there are none', function() {
         it('for severity users', function() {
             expect(
