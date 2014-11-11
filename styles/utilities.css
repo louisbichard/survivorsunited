@@ -1,5 +1,17 @@
-
+.codeCoverageIframe {
+	height: 400px;
+	width:100%;
+	border: 0px;
+}
 
 .panel-thick-border {
 	border-width: 5px;
 }
+
+/*#page-wrapper #sidebar-wrapper {
+	background: #DB70FF;
+}
+
+ul.sidebar .sidebar-main a, .sidebar-footer, ul.sidebar .sidebar-list a:hover, #page-wrapper:not(.active) ul.sidebar .sidebar-title.separator{
+	background: #99FFCC;
+}*/

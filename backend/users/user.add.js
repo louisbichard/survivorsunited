@@ -45,7 +45,7 @@ module.exports = function(req, res) {
             password: post_params.password,
             date_created: new Date().getTime(),
             mentor: false,
-            role: "basic",
+            role: "Basic",
             severity_grade: "Low"
         });
     };

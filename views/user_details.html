@@ -1,194 +1,200 @@
-<div class="panel panel-default">
-    <div class="panel-body">
-        <h1>{{module.title}}</h1>
-        <hr>
-        <h4>{{module.description}}</h4>
-    </div>
-</div>
-
 <div class="row">
-    <div class="col-md-12 col-sm-12">
-        <div class="panel panel-default">
-            <div class="panel-body">
-                <div class="row">
-                    <div class="col-md-8 col-sm-8">
-                        <input ng-model="searchText" class="form-control" placeholder="Enter serch terms here">
-                    </div>
-                    <div class="col-md-4 col-sm-4">
-                        <div class="pull-right">
-                            <button ng-click="refreshUsers(true)" type="button" class="btn btn-info">
-                                Refresh Users&nbsp;
-                                <i class="fa fa-refresh"></i>
-                            </button>
-                            <button ng-click="clearFilter(true)" type="button" class="btn btn-danger">
-                                Clear filters&nbsp;
-                                <i class="fa fa-remove"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                <br>
+    <div class="col-lg-5">
+        <div class="widget">
+            <div class="widget-header">
+                <i class="fa fa-filter"></i> Filters
+            </div>
+            <div class="widget-body full no-padding">
                 <div class="row">
                     <div class="col-md-12 col-sm-12">
+                        <br>
                         <div class="row">
-                            <div class="col-md-4 col-sm-4">
-                                <div class="btn-group">
-                                    <button type="button" ng-click="setFilter('internal', 'Internal')" class="btn btn-default">Internal</button>
-                                    <button type="button" ng-click="setFilter('internal', 'External')" class="btn btn-default">External</button>
-                                    <button ng-click="setFilter('internal', 'All')" type="button" class="btn btn-default">All</button>
+                            <div class="col-md-12 col-sm-12">
+                                <br>
+                                <!-- SEARCH -->
+                                <div class="row">
+                                    <div class="col-md-12 col-sm-12 text-center">
+                                        <input ng-model="searchText" class="form-control pull-right" placeholder="Search users...">
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-4 col-sm-4">
-                                <div class="btn-group">
-                                    <button ng-click="setFilter('severity', 'High')" type="button" class="btn btn-danger">
-                                        High
-                                    </button>
-                                    <button ng-click="setFilter('severity', 'Medium')" type="button" class="btn btn-warning">Medium
-                                    </button>
-                                    <button ng-click="setFilter('severity', 'Low')" type="button" class="btn btn-info">
-                                        Low
-                                    </button>
-                                    <button ng-click="setFilter('severity', 'All')" type="button" class="btn btn-default">
-                                        All
-                                    </button>
+
+                                <!-- INTERNAL/EXTERNAL FILTER -->
+                                <div class="row">
+                                    <div class="col-md-12 col-sm-12 text-center">
+                                        <div class="btn-group">
+                                            <button type="button" ng-click="setFilter('internal', 'Internal')" class="btn btn-sm btn-default">Internal</button>
+                                            <button type="button" ng-click="setFilter('internal', 'External')" class="btn btn-sm btn-default">External</button>
+                                            <button ng-click="setFilter('internal', 'All')" type="button" class="btn btn-sm btn-default">All</button>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-4 col-sm-4">
-                                <div class="btn-group">
-                                    <button ng-click="setFilter('assigned_mentor', 'yes')" type="button" class="btn btn-default">Assigned mentor</button>
-                                    <button ng-click="setFilter('assigned_mentor', 'no')" type="button" class="btn btn-default">No mentor</button>
-                                    <button ng-click="setFilter('assigned_mentor', 'All')" type="button" class="btn btn-default">All</button>
+
+                                <!-- ASSIGNED MENTOR FILTER -->
+                                <div class="row">
+                                    <div class="col-md-12 col-sm-12 text-center">
+                                        <div class="btn-group">
+                                            <button ng-click="setFilter('assigned_mentor', 'yes')" type="button" class="btn btn-sm btn-default">Assigned mentor</button>
+                                            <button ng-click="setFilter('assigned_mentor', 'no')" type="button" class="btn btn-sm btn-default">No mentor</button>
+                                            <button ng-click="setFilter('assigned_mentor', 'All')" type="button" class="btn btn-sm btn-default">All</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- SEVERITY FILTER -->
+                                <div class="row">
+                                    <div class="col-md-12 col-sm-12 text-center">
+                                        <div class="btn-group">
+                                            <button ng-click="setFilter('severity', 'High')" type="button" class="btn btn-sm btn-danger">
+                                                High
+                                            </button>
+                                            <button ng-click="setFilter('severity', 'Medium')" type="button" class="btn btn-sm btn-warning">Medium
+                                            </button>
+                                            <button ng-click="setFilter('severity', 'Low')" type="button" class="btn btn-sm btn-info">
+                                                Low
+                                            </button>
+                                            <button ng-click="setFilter('severity', 'All')" type="button" class="btn btn-sm btn-default">
+                                                All
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr>
+                                <!-- CLEAR AND RESET FILTERS -->
+                                <div class="row">
+                                    <div class="col-md-12 col-sm-12 text-center">
+                                        <button ng-click="refreshUsers(true)" type="button" class="btn btn-sm btn-info">
+                                            Refresh Users&nbsp;
+                                            <i class="fa fa-refresh"></i>
+                                        </button>
+                                        <button ng-click="clearFilter(true)" type="button" class="btn btn-sm btn-danger">
+                                            Clear filters&nbsp;
+                                            <i class="fa fa-remove"></i>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <br>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-
-<div class="row">
-    <div class="col-md-12 col-sm-12">
-        <!-- IF NO RESULTS FOUND -->
-        <div ng-hide="filteredResults.length">
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <p>No results found :( please broaden your search criteria</p>
-                </div>
+    <div class="col-lg-7">
+        <div class="widget">
+            <div class="widget-header">
+                <i class="fa fa-users"></i> Users
             </div>
-        </div>
-
-        <!-- RESULTS COUNT -->
-        <div ng-show="filteredResults.length" class="panel panel-default">
-                <div class="panel-body">
-                    <div class="row">
-                        <div class="col-md-12 col-sm-12">
+            <div class="widget-body full no-padding">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                        <br>
+                        <div ng-show="filteredResults.length">
                             Total results: {{filteredResults.length}}
-
-                            <!-- Internal: {{filters[0].value}} -->
                         </div>
-                    </div>
-                </div>
-            </div>
+                        <hr>
 
-        <div ng-repeat="user in filteredResults = (users | internalFilter:filters | severityFilter:filters | assignedMentorFilter:filters | filter:searchText) ">            
-            <div class="row">
-                <div class="col-md-12 col-sm-12">
-                    <div class="panel panel-thick-border" ng-class="{'panel-danger': user.severity_grade === 'High', 'panel-warning': user.severity_grade === 'Medium', 'panel-info': user.severity_grade === 'Low'}">
-                        <div class="panel-body panel-primary">
-                            <div class="row">
-                                <div class="col-md-12 col-sm-12">
-                                    <div class="row">
-                                        <div class="col-md-6 col-sm-6 col-md-offset-3 col-sm-offset-3">
-                                            <h3 class="text-center">
-                                                <strong>{{user.username}}&nbsp;</strong>
-                                            </h3>
+                        <div class="col-md-12 col-sm-12">
+
+                            <!-- IF NO RESULTS FOUND -->
+                            <div ng-hide="filteredResults.length">
+                                <p>No results found, please broaden your search criteria</p>
+                            </div>
+
+                            <div ng-repeat="user in filteredResults = (users | internalFilter:filters | severityFilter:filters | assignedMentorFilter:filters | filter:searchText) ">
+                                <div class="row">
+                                    <div class="col-md-12 col-sm-12">
+                                        <div class="panel panel-thick-border" ng-class="{'panel-danger': user.severity_grade === 'High', 'panel-warning': user.severity_grade === 'Medium', 'panel-info': user.severity_grade === 'Low'}">
+                                            <div class="panel-body panel-primary">
+                                                <div class="row">
+                                                    <div class="col-md-12 col-sm-12">
+                                                        <div class="row">
+                                                            <div class="col-md-12 col-sm-12">
+                                                                <h3 class="text-center">
+                                                                    <strong>{{user.username}}&nbsp;</strong>
+                                                                </h3>
+                                                                <p class="text-center">
+                                                                    <strong>ID:</strong>{{user._id}}
+                                                                </p>
+                                                                <p class="text-center">
+                                                                    {{user.date_created}}
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <hr>
+                                                <div class="row">
+                                                    <div class="col-md-6 col-sm-6">
+                                                        <label>Role</label>
+                                                        <select ng-model="updated[user._id].role" class="form-control">
+                                                            <option ng-selected="{{user.role === 'Basic'}}">Basic</option>
+                                                            <option ng-selected="{{user.role === 'Mentor'}}">Mentor</option>
+                                                            <option ng-selected="{{user.role === 'Admin'}}">Admin</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <hr>
                                             <div class="row">
                                                 <div class="col-md-6 col-sm-6">
-                                                    <p class="text-center">
-                                                        <strong>ID:</strong>{{user._id}}
-                                                    </p>
+                                                    <div class="form-group">
+                                                        <label>First name</label>
+                                                        <input ng-model="updated[user._id].first_name" class="form-control" value="{{user.first_name}}" placeholder="First name">
+                                                    </div>
                                                 </div>
                                                 <div class="col-md-6 col-sm-6">
-                                                    <p class="text-center">
-                                                        <strong>Created:&nbsp;</strong>{{user.date_created}}
+
+                                                    <!-- CHANGE SEVERITY GRADE -->
+                                                    <label>Severity</label>
+                                                    <select class="form-control" ng-model="updated[user._id].severity_grade">
+                                                        <option>Low</option>
+                                                        <option>Medium</option>
+                                                        <option>High</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6 col-sm-6">
+                                                    <label>Last name</label>
+                                                    <input ng-model="updated[user._id].last_name" class="form-control" value="{{user.last_name}}" placeholder="Last name">
+                                                </div>
+
+                                                <div class="col-md-6 col-sm-6">
+                                                    <p>
+                                                        <!-- TODO: READABLE NAME -->
+                                                        <Strong>Currently assigned mentor:&nbsp;</strong>
                                                     </p>
+
+                                                    <!-- SELECT A MENTOR -->
+                                                    <select class="form-control" ng-model="updated[user._id].mentor">
+                                                        <option value="{{mentor._id}}" ng-repeat="mentor in mentors">
+                                                            {{mentor.first_name}} {{mentor.last_name}}
+                                                        </option>
+                                                    </select>
+
+                                                </div>
+                                            </div>
+                                            <hr>
+                                            <div class="row">
+                                                <div class="col-md-12 col-sm-12 text-center">
+                                                    <div class="btn-group ">
+                                                        <button ng-click="removeUser(user)" type="button" class="btn btn-default btn-danger">
+                                                            Delete &nbsp;<i class="fa fa-trash"></i>
+                                                        </button>
+                                                        <button ng-click="updatedContact(this)" type="button" class="btn btn-default btn-success">
+                                                            Update &nbsp;<i class="fa fa-plus"></i>
+                                                        </button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <hr>
-                                    <div class="row">
-                                        <div class="col-md-6 col-sm-6">
-                                            <label>Role</label>
-                                            <select ng-model="updated[user._id].role" class="form-control">
-                                                <option ng-selected="{{user.role === 'Basic'}}">Basic</option>
-                                                <option ng-selected="{{user.role === 'Mentor'}}">Mentor</option>
-                                                <option ng-selected="{{user.role === 'Admin'}}">Admin</option>
-                                            </select>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col-md-6 col-sm-6">
-                                    <div class="form-group">
-                                        <label>First name</label>
-                                        <input ng-model="updated[user._id].first_name" class="form-control" value="{{user.first_name}}" placeholder="First name">
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-sm-6">
 
-                                    <!-- CHANGE SEVERITY GRADE -->
-                                    <label>Severity</label>
-                                    <select class="form-control" ng-model="updated[user._id].severity_grade">
-                                        <option>Low</option>
-                                        <option>Medium</option>
-                                        <option>High</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6 col-sm-6">
-                                    <label>Last name</label>
-                                    <input ng-model="updated[user._id].last_name" class="form-control" value="{{user.last_name}}" placeholder="Last name">
-                                </div>
-
-                                <div class="col-md-6 col-sm-6">
-                                    <p>
-                                        <!-- TODO: READABLE NAME -->
-                                        <Strong>Currently assigned mentor:&nbsp;</strong>
-                                    </p>
-
-                                    <!-- SELECT A MENTOR -->
-                                    <select class="form-control" ng-model="updated[user._id].mentor">
-                                        <option value="{{mentor._id}}" ng-repeat="mentor in mentors">
-                                            {{mentor.first_name}} {{mentor.last_name}}
-                                        </option>
-                                    </select>
-
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col-md-12 col-sm-12 text-center">
-                                    <div class="btn-group ">
-                                        <button ng-click="removeUser(user)" type="button" class="btn btn-default btn-danger">
-                                            Delete &nbsp;<i class="fa fa-trash"></i>
-                                        </button>
-                                        <button ng-click="updatedContact(this)" type="button" class="btn btn-default btn-success">
-                                            Update &nbsp;<i class="fa fa-plus"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>

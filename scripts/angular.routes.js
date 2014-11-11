@@ -1,54 +1,43 @@
 SU.config(function($routeProvider) {
     $routeProvider
 
-    //////////
-    // ROOT //
-    //////////
-
+    // ROOT
         .when('/', {
         templateUrl: '../views/home.html',
         controller: 'mainController'
     })
 
+    // DASHBOARD
     .when('/dashboard', {
-        templateUrl: '../views/home.html',
-        controller: 'mentorController'//TODO: CHANGE
+        templateUrl: '../views/dashboard.html',
+        controller: 'mentorController' //TODO: CHANGE
     })
 
     /////////////
     // ACCOUNT //
     /////////////
+
+    // MENTOR
     .when('/mentor', {
-            templateUrl: '../views/mentor.html',
-            controller: 'mentorController'
-        })
-        .when('/account', {
-            templateUrl: '../views/account.html',
-            controller: 'accountController'
-        })
-        .when('/user_management', {
-            templateUrl: '../views/user_management.html',
-            controller: 'userManagementController'
-        })
-        .when('/user_details', {
-            templateUrl: '../views/user_details.html',
-            controller: 'userDetailsController'
-        })
-        .when('/user_add', {
-            templateUrl: '../views/user_add.html',
-            controller: 'userAddController'
-        })
-        .when('/login', {
-            templateUrl: '../views/login.html',
-            controller: 'mainController'
-        })
+        templateUrl: '../views/mentor.html',
+        controller: 'mentorController'
+    })
 
+    // ACCOUNT
+    .when('/account', {
+        templateUrl: '../views/account.html',
+        controller: 'accountController'
+    })
 
+    // LOGIN
+    .when('/login', {
+        templateUrl: '../views/login.html',
+        controller: 'mainController'
+    })
 
-
-
-    // UTILTIES
-    // =======
+    //////////////
+    // UTILTIES //
+    //////////////
 
     //MAIN SEARCH PAGE
     .when('/search', {
@@ -62,55 +51,85 @@ SU.config(function($routeProvider) {
         controller: 'loginController'
     })
 
-
-
-
-    // EVENT ROUTES
-    // ============
-
-    //UPCOMING EVENTS PAGE
-    .when('/upcoming_events', {
-        templateUrl: '../views/events_watched_subscribed_upcoming.html',
-        controller: 'upcomingEventsController'
-    })
-
-    //USERS WATCHING AN EVENT
-    .when('/users_watching_event', {
-        templateUrl: '../views/users_watching_event.html',
-        controller: 'usersWatchingEventController'
-    })
-
-    //USERS CURRERNTLY WATCHED EVENTS
-    .when('/watched_events', {
-        templateUrl: '../views/events_watched_subscribed_upcoming.html',
-        controller: 'upcomingEventsController'
-    })
-
-
-    .when('/create_event', {
-            templateUrl: '../views/create_event.html',
-            controller: 'addEventController'
-        })
-        .when('/subscribed_events', {
-            templateUrl: '../views/events_watched_subscribed_upcoming.html',
-            controller: 'mainController'
-        })
-        .when('/events_calendar', {
-            templateUrl: '../views/events_calendar.html',
-            controller: 'eventCalendarController'
-        })
-
-
     // FORUM
-    // =====
     .when('/forum', {
         templateUrl: '../views/forum.html',
         controller: 'loginController'
     })
 
+    ////////////
+    // EVENTS //
+    ////////////
 
-    // OTHERWISE
-    // =========
+    //UPCOMING 
+    .when('/upcoming_events', {
+        templateUrl: '../views/events_watched_subscribed_upcoming.html',
+        controller: 'upcomingEventsController'
+    })
+
+    // WATCHING 
+    .when('/users_watching_event', {
+        templateUrl: '../views/users_watching_event.html',
+        controller: 'usersWatchingEventController'
+    })
+
+    // CURRERNTLY WATCHED
+    .when('/watched_events', {
+        templateUrl: '../views/events_watched_subscribed_upcoming.html',
+        controller: 'upcomingEventsController'
+    })
+
+    // CREATE EVENT
+    .when('/create_event', {
+        templateUrl: '../views/create_event.html',
+        controller: 'addEventController'
+    })
+
+    // SUBSCRIBED
+    .when('/subscribed_events', {
+        templateUrl: '../views/events_watched_subscribed_upcoming.html',
+        controller: 'mainController'
+    })
+
+    // CALENDAR
+    .when('/events_calendar', {
+        templateUrl: '../views/events_calendar.html',
+        controller: 'eventCalendarController'
+    })
+
+    ///////////
+    // ADMIN //
+    ///////////
+
+    // USER MANAGEMENT
+    .when('/statistics', {
+        templateUrl: '../views/statistics.html',
+        controller: 'userManagementController'
+    })
+
+    // USER DETAILS
+    .when('/user_details', {
+        templateUrl: '../views/user_details.html',
+        controller: 'userDetailsController'
+    })
+
+    // ADD USER
+    .when('/user_add', {
+        templateUrl: '../views/user_add.html',
+        controller: 'userAddController'
+    })
+
+
+    // DEVELOPER CONSOLE
+    .when('/developer_console', {
+        templateUrl: '../views/developer_console.html',
+        controller: 'developerConsoleController'
+    })
+
+    ///////////////
+    // DEFAULT //
+    ///////////////
+
     .otherwise({
         redirectTo: '/login'
     });

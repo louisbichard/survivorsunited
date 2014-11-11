@@ -11,7 +11,7 @@ SU.controller('userManagementController', function($scope, $http, allUsersFactor
         colors: ['#0bff14', '#fffb10', '#ff2b1d']
     };
     $scope.severity_chart_data = {};
- 
+
 
     // USERS WITHOUT MENTORS
     // =====================
@@ -23,6 +23,16 @@ SU.controller('userManagementController', function($scope, $http, allUsersFactor
             }
             return prev;
         }, 0);
+    };
+
+    // ABSTRACT OUT INTO SERVICE
+    $scope.countRole = function(role, users) {
+        if (!role || !users) {
+            throw new Error('No role or users passed to countrole function');
+        }
+        return _.filter(users, function(user) {
+            return user.role === role;
+        }).length;
     };
 
     // AUTOMATICALLY INVOKED
@@ -49,6 +59,12 @@ SU.controller('userManagementController', function($scope, $http, allUsersFactor
                 series: chartService.blankSeries(user_data.length)
             };
 
+            // COUNT ALL ROLES
+            $scope.roleCounts = {
+                admin: $scope.countRole('Admin', user_data),
+                mentor: $scope.countRole('Mentor', user_data),
+                basic: $scope.countRole('basic', user_data)
+            };
 
             //SETUP USERS WITHOUT MENTORS
             usersWithoutMentors(user_data);
