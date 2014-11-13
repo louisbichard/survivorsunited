@@ -18,6 +18,37 @@ describe('apiService', function() {
         $httpBackend = _$httpBackend_;
     }));
 
+    // GET FUNCTION
+    describe('Get function', function() {
+        it('Throws error when unsuccessful', function() {
+            expect(function() {
+                apiService.get();
+            }).toThrow();
+        });
+
+        it('Passes successfully', function() {
+            spyOn(apiService, 'callAPI');
+            apiService.get('/events/add');
+            expect(apiService.callAPI).toHaveBeenCalled();
+        });
+    });
+
+    // POST FUNCTION
+    describe('POST function', function() {
+        it('Throws error when unsuccessful', function() {
+            expect(function() {
+                apiService.post();
+            }).toThrow();
+        });
+
+        it('Passes successfully', function() {
+            spyOn(apiService, 'callAPI');
+            apiService.post('/events/add');
+            expect(apiService.callAPI).toHaveBeenCalled();
+        });
+    });
+
+
     /*it("successful notification sent", function() {
 
         $httpBackend.whenGET('http://localhost:3000/users/listall').respond({

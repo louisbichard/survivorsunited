@@ -10,7 +10,7 @@ SU.config(function($routeProvider) {
     // DASHBOARD
     .when('/dashboard', {
         templateUrl: '../views/dashboard.html',
-        controller: 'mentorController' //TODO: CHANGE
+        controller: 'dashboardController'
     })
 
     /////////////
@@ -42,19 +42,19 @@ SU.config(function($routeProvider) {
     //MAIN SEARCH PAGE
     .when('/search', {
         templateUrl: '../views/search.html',
-        controller: 'loginController'
+        controller: 'mainController'
     })
 
     //MAIN NOTIFICATIONS PAGE
     .when('/notifications', {
         templateUrl: '../views/notifications.html',
-        controller: 'loginController'
+        controller: 'mainController'
     })
 
     // FORUM
     .when('/forum', {
         templateUrl: '../views/forum.html',
-        controller: 'loginController'
+        controller: 'mainController'
     })
 
     ////////////
@@ -64,7 +64,7 @@ SU.config(function($routeProvider) {
     //UPCOMING 
     .when('/upcoming_events', {
         templateUrl: '../views/events_watched_subscribed_upcoming.html',
-        controller: 'upcomingEventsController'
+        controller: 'upcomingWatchedSubscribedEventsController'
     })
 
     // WATCHING 
@@ -76,7 +76,7 @@ SU.config(function($routeProvider) {
     // CURRERNTLY WATCHED
     .when('/watched_events', {
         templateUrl: '../views/events_watched_subscribed_upcoming.html',
-        controller: 'upcomingEventsController'
+        controller: 'upcomingWatchedSubscribedEventsController'
     })
 
     // CREATE EVENT

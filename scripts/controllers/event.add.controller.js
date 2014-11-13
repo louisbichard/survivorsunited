@@ -1,24 +1,27 @@
 // TYPE: CONTROLLER
 // PARTIAL: 
 
-SU.controller('addEventController', function($scope, $http, $location) {
-    $scope.module = {
-        title: "Create event",
-        description: "Setup custom events"
+SU.controller('addEventController', function($scope, apiService, utilityService) {
+
+    $scope.open = function($event) {
+        $event.preventDefault();
+        $event.stopPropagation();
+        var scope_prop = _.pick($event.target.attributes, 'data-opened')['data-opened'].value;
+        $scope[scope_prop] = true;
+    };
+
+    $scope.format = utilityService.date_format;
+
+    $scope.dateOptions = {
+        formatYear: 'yy',
+        startingDay: 1
     };
 
     $scope.addEvent = function() {
-
+        
         //TODO: VALIDATE THAT ALL DATA HAS BEEN ENTERED 
-        return $http
-            .post('http://localhost:3000/events/add', $scope.add_event)
-            .success(function(data, status, headers, config) {
-                REST_notification(data, 'Added event');
-            })
-            .error(function(data, status, headers, config) {
-                notification('Oh no!', 'Something went wrong when trying to fetch events!', 'error');
-            });
-
+        var new_event = utilityService.convertDatesToTimeStamps($scope.add_event, ['start, end']);
+        return apiService.post('/events/add', new_event);
     };
 
 });

@@ -1,6 +1,6 @@
 // TYPE:    controller
 // PARTIAL: account.html
-SU.controller('accountController', function($scope, currentUserFactory, $http, $timeout) {
+SU.controller('accountController', function($scope, apiService, $timeout) {
     var user_original = {};
 
     //user.severity_grade == 'high'
@@ -9,19 +9,17 @@ SU.controller('accountController', function($scope, currentUserFactory, $http, $
     };
 
     var assignUsersTo = function(users) {
-        var user_data = users.data.result;
-
-        $scope.user = user_data;
-        user_original = _.clone(user_data);
+        $scope.$apply(function(){
+            $scope.user = users;
+            user_original = _.clone(users);    
+        });
     };
 
-    currentUserFactory
-        .then(assignUsersTo);
+    apiService.get('/user/current').then(assignUsersTo);
 
     $scope.callUpdateAPI = function(update_data) {
         update_data = update_data || {};
-        return $http
-            .post('http://localhost:3000/user/update', update_data);
+        return apiService.post('/user/update', update_data);
     };
 
     $scope.$watch('user', function() {
@@ -39,12 +37,8 @@ SU.controller('accountController', function($scope, currentUserFactory, $http, $
     $scope.updateContact = function() {
 
         $scope.callUpdateAPI($scope.update_params)
-            .success(function(data, status, headers, config) {
+            .then(function(data, status, headers, config) {
                 notification('Profile fields updated');
-            })
-            .error(function(data, status, headers, config) {
-                //TODO: IMPLEMENT ALERT FOR FAILED API
-                return false;
             });
     };
 

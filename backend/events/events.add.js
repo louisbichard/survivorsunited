@@ -44,8 +44,8 @@ module.exports = function(req, res) {
         return collection.insertAsync({
             title: post_params.title,
             description: post_params.description,
-            start: new Date().getTime(),
-            end: new Date().getTime(),
+            start: post_params.end,
+            end: post_params.start,
             watching: watchers,
             attending: [],
             date_created: new Date().getTime(),

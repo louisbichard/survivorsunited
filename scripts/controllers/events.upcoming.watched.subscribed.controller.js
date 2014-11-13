@@ -1,7 +1,7 @@
 // TYPE: CONTROLLER
 // PARTIAL: 
 
-SU.controller('upcomingEventsController', function($scope, apiService, $location) {
+SU.controller('upcomingWatchedSubscribedEventsController', function($scope, apiService, $location) {
 
     if ($location.$$path === '/watched_events') {
         $scope.title = "Watched";
@@ -21,7 +21,12 @@ SU.controller('upcomingEventsController', function($scope, apiService, $location
             .get(get_eventsapi, null, {preventNotifications: true})
             .then(function(result) {
                 $scope.$apply(function() {
-                    $scope.events = result;
+                    $scope.events = _.map(result, function(event_item) {
+                        event_item.start = moment(event_item.start).format('do, MMMM, YYYY');
+                        event_item.end = moment(event_item.end).format('do, MMMM, YYYY');
+                        event_item.date_created = moment(event_item.date_created).format('do, MMMM, YYYY');
+                        return event_item;
+                    });
                 });
             });
     }();

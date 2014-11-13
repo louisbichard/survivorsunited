@@ -21,3 +21,7 @@ gulp.task('test-backend', function() {
 gulp.task('test-frontend', shell.task([
     "./node_modules/karma/bin/karma start"
 ]));
+
+gulp.task('browserify', shell.task([
+    "browserify scripts/main.js -o scripts/bundle.js"
+]));

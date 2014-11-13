@@ -1,4 +1,4 @@
-SU.controller('userAddController', function($scope, $http, allUsersFactory, apiService, chartService) {
+SU.controller('userAddController', function($scope, apiService) {
 
     $scope.add_user = function() {
         return apiService

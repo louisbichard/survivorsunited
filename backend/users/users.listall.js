@@ -28,20 +28,8 @@ module.exports = function(req, res) {
 
         return find.toArrayAsync()
             .then(function(users) {
-                return {
-                    users: format_dates(users),
-                    count: count
-                };
+                return users;
             });
-    };
-
-    var format_dates = function(users) {
-        return _.map(users, function(user) {
-            if(user.date_created) {
-                   user.date_created = utility_date.unixToReadable(user.date_created);
-            }
-            return user;
-        });
     };
 
     var send_result = function(vals) {

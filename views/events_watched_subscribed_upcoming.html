@@ -7,7 +7,7 @@
                 <input ng-if="events" ng-model="searchText" class="form-control pull-right" placeholder="search">
                 <div class="clearfix"></div>
             </div>
-            <!-- ADD LARGE CLASS FOR SCROLLABLE WIDGET --> 
+            <!-- ADD LARGE CLASS FOR SCROLLABLE WIDGET -->
 
             <div class="widget-body no-padding">
                 <br>
@@ -39,7 +39,10 @@
                                                             <!-- //TODO: FORMAT AS STRING -->
                                                         </p>
                                                         <p>
-                                                            <strong>Date:</strong>&nbsp; {{event.date}}
+                                                            <strong>Start:</strong>&nbsp; {{event.start}}
+                                                        </p>
+                                                        <p>
+                                                            <strong>End:</strong>&nbsp; {{event.end}}
                                                         </p>
                                                         <p>
                                                             <strong>Date created:</strong>&nbsp; {{event.date_created}}

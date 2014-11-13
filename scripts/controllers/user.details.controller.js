@@ -1,4 +1,4 @@
-SU.controller('userDetailsController', function($scope, apiService, allUsersFactory, utilityService, notifyService) {
+SU.controller('userDetailsController', function($scope, apiService, utilityService, notifyService) {
     $scope.module = {
         title: "System users",
         description: "Edit users personal details, assigned mentors, severity etc",
@@ -93,34 +93,36 @@ SU.controller('userDetailsController', function($scope, apiService, allUsersFact
 
     // AUTOMATICALLY INVOKED
     $scope.refreshUsers = function(notification) {
-        if (notification) {
-            notifyService.notify('Users refreshed');
-        }
-
-        allUsersFactory
+        apiService.get('/users/listall', null, {
+            preventNotifications: true
+        })
 
         // GET RESULT DATA
-            .then(function(result) {
-            return result.data.result;
+        .then(function(result) {
+            if (notification) notifyService.notify('Users refreshed');
+            return result;
         })
 
         // ASSIGN RESULTS TO SCOPE VARIABLES
         .then(function(result) {
-            $scope.users = result.users;
-            $scope.original_users = result.users;
+            $scope.$apply(function() {
+                $scope.users = result;
+                $scope.original_users = result;
 
-            // TODO: FILTER BY ROLE TYPE
-            $scope.mentors = _.filter(result.users, function(user) {
-                return user.mentor;
-            });
 
-            _.each(result.users, function(user) {
-                $scope.updated[user._id] = user;
+                // TODO: FILTER BY ROLE TYPE
+                $scope.mentors = _.filter(result, function(user) {
+                    return user.mentor;
+                });
+
+                _.each(result, function(user) {
+                    $scope.updated[user._id] = user;
+                });
             });
         });
     };
 
     // LAUNCH INIT SCOPE FUNCTIONS
-    $scope.refreshUsers();
     $scope.clearFilter();
+    $scope.refreshUsers();
 });

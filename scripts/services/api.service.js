@@ -1,4 +1,4 @@
-SU.service("apiService", function($http, utilityService) {
+SU.service("apiService", function($http, utilityService, notifyService) {
 
     /**
      * [callAPI description]
@@ -9,7 +9,7 @@ SU.service("apiService", function($http, utilityService) {
      * @param  {String} type    POST or GET
      * @return {[type]}         Result from api
      */
-    var callAPI = function(route, params, options, type) {
+    this.callAPI = function(route, params, options, type) {
         params = params || {};
         options = options || {};
 
@@ -20,7 +20,7 @@ SU.service("apiService", function($http, utilityService) {
                     if (data.success) {
                         // TODO:  MAKE THIS OPTIONAL
                         if (!options.preventNotifications) {
-                            notification('Success', data.result);
+                            notifyService.notify('Success', data.result);
                         }
                         return resolve(data.result);
                     } else {
@@ -31,12 +31,12 @@ SU.service("apiService", function($http, utilityService) {
                         // 3) OPTION FOR ERROR ON FAILURE
                         if (!data.error_message) {
                             if (!options.preventNotifications) {
-                                notification('Oh no', 'An unknown error occured', 'error');
+                                notifyService.notify('Oh no', 'An unknown error occured', 'error');
                             }
                             return reject(false);
                         } else {
                             if (!options.preventNotifications) {
-                                notification('Oh no', data.error_message, 'error');
+                                notifyService.notify('Oh no', data.error_message, 'error');
                             }
                             return reject(data.error_message);
                         }
@@ -45,7 +45,7 @@ SU.service("apiService", function($http, utilityService) {
 
             //TODO: IMPLEMENT
             .error(function(data, status, headers, config) {
-                notification('Something went wrong', 'A connection error occured, please try again', 'error');
+                notifyService.notify('Something went wrong', 'A connection error occured, please try again', 'error');
                 return reject('TODO MAKE BETTER');
             });
         });
@@ -57,7 +57,7 @@ SU.service("apiService", function($http, utilityService) {
         if (!route || !_.isString(route)) {
             throw new Error('No route specified to apiService in get function');
         }
-        return callAPI(route, params, options, 'get');
+        return this.callAPI(route, params, options, 'get');
     };
 
     this.post = function(route, params, options) {
@@ -65,6 +65,6 @@ SU.service("apiService", function($http, utilityService) {
             throw new Error('No route specified to apiService in post function');
         }
         // EXTEND TO INCLUDE POST PARAMS
-        return callAPI(route, params, options, 'post');
+        return this.callAPI(route, params, options, 'post');
     };
 });

@@ -1,4 +1,4 @@
-SU.controller('userManagementController', function($scope, $http, allUsersFactory, apiService, chartService) {
+SU.controller('userManagementController', function($scope, apiService, chartService) {
 
     $scope.signup_chart_config = {};
     $scope.signup_chart_data = {};
@@ -14,7 +14,7 @@ SU.controller('userManagementController', function($scope, $http, allUsersFactor
 
 
     // USERS WITHOUT MENTORS
-    // =====================
+    // ABSTRACT INTO SERVICE
 
     var usersWithoutMentors = function(users) {
         $scope.without_mentors = _.reduce(users, function(prev, user) {
@@ -38,36 +38,45 @@ SU.controller('userManagementController', function($scope, $http, allUsersFactor
     // AUTOMATICALLY INVOKED
     var refreshUsers = function() {
         $scope.users = [];
-        allUsersFactory.then(function(users) {
-            var user_data = users.data.result.users;
+        apiService.get('/users/listall').then(function(users) {
 
-            //SETUP USERS FOR LIST
-            $scope.users = user_data;
+            $scope.$apply(function() {
 
-            //SETUP USER RESULT COUNT
-            $scope.user_count = users.data.result.count;
+                //SETUP USERS FOR LIST
+                $scope.users = users;
+
+                //SETUP USER RESULT COUNT
+                $scope.user_count = users.length;
+                
+                // COUNT ALL ROLES
+                $scope.roleCounts = {
+                    admin: $scope.countRole('Admin', users),
+                    mentor: $scope.countRole('Mentor', users),
+                    basic: $scope.countRole('basic', users)
+                };
+
+                //SETUP USERS WITHOUT MENTORS
+                usersWithoutMentors(users);
+
+                //SETUP SEVERITY CHART
+                $scope.severity_chart_data = {
+                    data: chartService.userSeverityGrade(users),
+                    series: chartService.blankSeries(users.length)
+                };
+            });
+
 
             //SETUP CREATION DATE CHART
-            $scope.signup_chart_data = {
-                data: chartService.userCreationDates(user_data),
-                series: chartService.blankSeries(user_data.length)
-            };
 
-            //SETUP SEVERITY CHART
-            $scope.severity_chart_data = {
-                data: chartService.userSeverityGrade(user_data),
-                series: chartService.blankSeries(user_data.length)
-            };
+            /*            $scope.signup_chart_data = {
+                            data: chartService.userCreationDates(users),
+                            series: chartService.blankSeries(users.length)
+                        };*/
 
-            // COUNT ALL ROLES
-            $scope.roleCounts = {
-                admin: $scope.countRole('Admin', user_data),
-                mentor: $scope.countRole('Mentor', user_data),
-                basic: $scope.countRole('basic', user_data)
-            };
 
-            //SETUP USERS WITHOUT MENTORS
-            usersWithoutMentors(user_data);
+
+
+
         });
     }();
 });

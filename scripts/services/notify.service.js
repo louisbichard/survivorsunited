@@ -1,5 +1,5 @@
 SU.service("notifyService", function() {
-    var defaults = {
+    this.DEFAULTS = {
         "closeButton": false,
         "debug": false,
         "positionClass": "toast-bottom-right",
@@ -18,18 +18,19 @@ SU.service("notifyService", function() {
         var task;
         header = header || "";
         type = type || "success";
-        toastr.options = _.defaults(options || {}, defaults);
+        toastr.options = _.defaults(options || {}, this.DEFAULTS);
 
         var toastTypes = ['success', 'error', 'warning', 'info'];
-        if (type in toastTypes != -1) toastr[type](text, header);
+        if ($.inArray(type, toastTypes) != -1) toastr[type](text, header);
+        else throw new Error('toast type is not defined in notify function');
     };
 
-    this.question = function(message) {
+   /* this.question = function(message) {
         // SET DEFAULT WITH NO OVERRIDE
         message = message || "Are you sure?";
         toastr.options = _.defaults({
             timeOut: 10000
-        }, defaults);
+        }, this.DEFAULTS);
 
         toastr.info(
             [
@@ -42,5 +43,5 @@ SU.service("notifyService", function() {
                 "</div>"
             ]);
     };
-
+*/
 });

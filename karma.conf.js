@@ -34,6 +34,8 @@ module.exports = function(config) {
             './bower_components/angular-charts/dist/angular-charts.min.js',
             './bower_components/angular-ui-calendar/src/calendar.js',
             './bower_components/fullcalendar/fullcalendar.js',
+            './bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js',
+            './bower_components/angular-cookies/angular-cookies.min.js',
 
             // ANGULAR INITIALISE
             './scripts/app.js',
