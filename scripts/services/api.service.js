@@ -21,6 +21,9 @@ SU.service("apiService", function($http, utilityService, notifyService) {
     };
 
     this.post = function(route, params, options) {
+        params = params || {};
+        options = options || {};
+
         if (!route || !_.isString(route)) {
             throw new Error('No route specified to apiService in post function');
         }

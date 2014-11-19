@@ -31,7 +31,6 @@ describe('utilityService', function() {
         });
     });
 
-    // FUNCTION: OBJECT DIFFERENCES
     describe('objectDifferences', function() {
 
         it('throws errors if no params', function() {
@@ -50,6 +49,16 @@ describe('utilityService', function() {
             expect(function() {
                 utilityService.objectDifferences([], []);
             }).toThrow();
+
+        });
+
+        it('if they are the same they are ignored', function() {
+
+            expect(utilityService.objectDifferences({
+                something: "test"
+            }, {
+                something: "test",
+            })).toEqual({});
 
         });
 
@@ -78,7 +87,6 @@ describe('utilityService', function() {
         });
     });
 
-    // FUNCTION: OBJECT DIFFERENCES
     describe('convertDatesToTimeStamps', function() {
 
         it('throws errors if no params', function() {
@@ -86,18 +94,15 @@ describe('utilityService', function() {
         });
 
         it('throws errors if param passed as string', function() {
-
             expect(function() {
                 utilityService.convertDatesToTimeStamps("", "");
             }).toThrow();
-
         });
 
         it('throws errors if first params is as an array', function() {
             expect(function() {
                 utilityService.convertDatesToTimeStamps([]);
             }).toThrow();
-
         });
 
         it('notices differences between similar keys', function() {
