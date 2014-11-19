@@ -57,10 +57,10 @@ module.exports = function(config) {
 
             // ROUTES
             './scripts/angular.routes.js',
-            
+
             // DIRECTIVES
             './scripts/directives/keypress.enter.directive.js',
-            
+
             // SERVICES
             './scripts/services/date.service.js',
             './scripts/services/chart.service.js',
@@ -86,14 +86,14 @@ module.exports = function(config) {
         ],
 
 
-        // list of files to exclude
-        exclude: [],
+        exclude: [
+        ],
 
 
         // preprocess matching files before serving them to the browser
         // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
         preprocessors: {
-            'scripts/**/*.js': ['coverage']
+            'scripts/*[!bundle.js, !main.js]*/*.js': ['coverage']
         },
 
         // optionally, configure the reporter
