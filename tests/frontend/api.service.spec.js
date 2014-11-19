@@ -2,6 +2,13 @@ describe('apiService', function() {
 
     var scope;
     var apiService;
+    var notifyService;
+
+    // USED FOR SPYING ON BLUEBIRD METHODS TO SEE IF THEY HAVE BEEN CALLED
+    var fake_bluebird = {
+        'reject' = function() {},
+        'respond' = function() {}
+    };
 
     //INCLUDE APP
     beforeEach(module('SU'));
@@ -13,8 +20,9 @@ describe('apiService', function() {
         module('ui.calendar');
     });
 
-    beforeEach(inject(function(_apiService_, _$httpBackend_) {
+    beforeEach(inject(function(_apiService_, _$httpBackend_, _notifyService_) {
         apiService = _apiService_;
+        notifyService = _notifyService_;
         $httpBackend = _$httpBackend_;
     }));
 
@@ -49,92 +57,94 @@ describe('apiService', function() {
     });
 
 
-    /*it("successful notification sent", function() {
 
-        $httpBackend.whenGET('http://localhost:3000/users/listall').respond({
-            success: 'true'
-        }, {
-            result: {}
+    describe('handleSuccessfulResponse', function() {
+        it("throws error without any params", function() {
+            expect(function() {
+                apiService.handleSuccessfulResponse();
+            }).toThrow();
         });
+        it("when success true", function() {
+            spyOn(apiService, 'handleSuccessfulAPI');
+            apiService.handleSuccessfulResponse({
+                success: true
+            }, {}, {}, {}, {}, {}, {}, {});
+            expect(apiService.handleSuccessfulAPI).toHaveBeenCalled();
+        });
+        it("when success false", function() {
+            spyOn(apiService, 'handleFailedAPI');
+            apiService.handleSuccessfulResponse({
+                success: false
+            }, {}, {}, {}, {}, {}, {}, {});
+            expect(apiService.handleFailedAPI).toHaveBeenCalled();
+        });
+    });
 
-        apiService.get('/users/listall')
-            .then(function(data) {
-                expect(data.data.success).toBe('true');
+
+    describe('handleFailedAPI', function() {
+        it("throws error without any params", function() {
+            expect(function() {
+                apiService.handleFailedAPI();
+            }).toThrow();
+        });
+        it("when success false", function() {
+            spyOn(notifyService, 'error');
+            apiService.handleFailedAPI({}, function() {}, {});
+            expect(notifyService.error).toHaveBeenCalled();
+        });
+        it("when success false", function() {
+            spyOn(notifyService, 'error');
+            spyOn(fake_bluebird, 'reject');
+            apiService.handleFailedAPI({}, fake_bluebird.reject, {});
+            expect(notifyService.error).toHaveBeenCalled();
+            expect(reject).toHaveBeenCalled();
+        });
+    });
+
+    describe('handleSuccessfulAPI', function() {
+        it("throws error without any params", function() {
+            expect(function() {
+                apiService.handleFailedAPI();
+            }).toThrow();
+        });
+    });
+
+
+    /*
+        it("launches error and displays error message API response", function(done) {
+            new Promise(function(resolve, reject) {
+                    apiService.handleSuccessfulResponse({
+                        success: false,
+                        error_message: 'some string'
+                    }, null, null, null, resolve, reject, {});
+                })
+                .caught(function(data) {
+                    spyOn(notifyService, 'error');
+                    expect(notifyService.error).toHaveBeenCalled();
+                    done();
+                });
+        });*/
+
+
+    /*it("sends successful API response", function(done) {
+        new Promise(function(resolve, reject) {
+            apiService.handleSuccessfulResponse({
+                success: true,
+                result: {
+                    some_data: 'test'
+                }
+            }, null, null, null, resolve, reject, {});
+        }).then(function(data) {
+
+            expect(data).toEqual({
+                some_data: 'test'
             });
 
-        $httpBackend.flush();
-    });
+            done();
 
-    it("successful notification sent", function() {
-
-        $httpBackend.whenPOST('http://localhost:3000/users/add').respond({
-            success: 'true'
-        }, {
-            result: 'User added successfully!'
         });
-
-        apiService.post('/users/add')
-            .then(function(data) {
-                expect(data.data.success).toBe('true');
-            });
-
-        $httpBackend.flush();
-    });
-
-    it("errors for unsuccessful API errors without error message", function() {
-
-        $httpBackend.whenGET('http://localhost:3000/users/listall').respond({
-            success: 'false'
-        });
-
-        apiService.get('/users/listall')
-            .then(function(result) {
-                expect(result.data.success).toBe('false');
-            });
-
-        $httpBackend.flush();
-    });
-
-
-    it("errors for unsuccessful API errors without error message", function() {
-
-        expect(function() {
-            apiService.get();
-        }).toThrow();
-
-        expect(function() {
-            apiService.post();
-        }).toThrow();
-
-    });
-
-    it("errors for incorrect API route params", function() {
-
-        expect(function() {
-            apiService.get({});
-        }).toThrow();
-
-        expect(function() {
-            apiService.post({});
-        }).toThrow();
-
-    });
-
-    it("errors for incorrect API route params", function() {
-
-        expect(function() {
-            apiService.get([]);
-        }).toThrow();
-
-        expect(function() {
-            apiService.post([]);
-        }).toThrow();
 
     });
 */
-    afterEach(function() {
-        $httpBackend.verifyNoOutstandingExpectation();
-        $httpBackend.verifyNoOutstandingRequest();
-    });
 
 });

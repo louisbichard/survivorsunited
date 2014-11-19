@@ -1,53 +1,20 @@
 SU.service("apiService", function($http, utilityService, notifyService) {
+    var that = this;
 
-    /**
-     * [callAPI description]
-     * @param  {[type]} route   [description]
-     * @param  {[type]} params  [description]
-     * @param  {Object} options
-     *                          preventNotifications: {Boolean} prevents success notification
-     * @param  {String} type    POST or GET
-     * @return {[type]}         Result from api
-     */
     this.callAPI = function(route, params, options, type) {
         params = params || {};
         options = options || {};
 
-        //ABSTRACT OUT URL
+
         return new Promise(function(resolve, reject) {
+
             return $http[type](utilityService.api_route + route, params)
-                .success(function(data, status, headers, config) {
-                    if (data.success) {
-                        // TODO:  MAKE THIS OPTIONAL
-                        if (!options.preventNotifications) {
-                            notifyService.success('Success', data.result);
-                        }
-                        return resolve(data.result);
-                    } else {
-
-                        //TODO: 
-                        // 1) REPLACE WITH RELEVANT MESSAGE FOR REJECT
-                        // 2) CONSOLE LOG
-                        // 3) OPTION FOR ERROR ON FAILURE
-                        if (!data.error_message) {
-                            if (!options.preventNotifications) {
-                                notifyService.error('Oh no', 'An unknown error occured');
-                            }
-                            return reject(false);
-                        } else {
-                            if (!options.preventNotifications) {
-                                notifyService.error('Oh no', data.error_message);
-                            }
-                            return reject(data.error_message);
-                        }
-                    }
-                })
-
-            //TODO: IMPLEMENT
-            .error(function(data, status, headers, config) {
-                notifyService.error('Something went wrong', 'A connection error occured, please try again');
-                return reject('TODO MAKE BETTER');
-            });
+                .success(_.partialRight(that.handleSuccessfulResponse, resolve, reject, options))
+                .error(function(data, status, headers, config) {
+                    notifyService.error('Something went wrong', 'A connection error occured, please try again');
+                    throw new Error(data, status, headers, config);
+                    return reject('An unspecified error occurred');
+                });
         });
 
     };
@@ -57,7 +24,7 @@ SU.service("apiService", function($http, utilityService, notifyService) {
         if (!route || !_.isString(route)) {
             throw new Error('No route specified to apiService in get function');
         }
-        return this.callAPI(route, params, options, 'get');
+        return that.callAPI(route, params, options, 'get');
     };
 
     this.post = function(route, params, options) {
@@ -65,6 +32,46 @@ SU.service("apiService", function($http, utilityService, notifyService) {
             throw new Error('No route specified to apiService in post function');
         }
         // EXTEND TO INCLUDE POST PARAMS
-        return this.callAPI(route, params, options, 'post');
+        return that.callAPI(route, params, options, 'post');
     };
+
+    this.handleSuccessfulResponse = function(data, status, headers, config, resolve, reject, options) {
+        if (!data || !status || !headers || !config || !resolve || !reject || !options) {
+            throw new Error('Cannot handle API reponse without correct params');
+        }
+
+        // APIS RETURNED MIGHT BE SUCCESSFUL BUT INTERNALL FAIL, THIS IS HANDLED HERE
+        if (data.success) that.handleSuccessfulAPI(options, resolve, data);
+        else that.handleFailedAPI(options, reject, data);
+    };
+
+    this.handleFailedAPI = function(options, reject, data) {
+        if (!data || !reject || !options) {
+            throw new Error('Cannot handle failed API reponse without correct params');
+        }
+
+        // IF RETURNED API HAS NO ERROR MESSAGE
+        if (!data.error_message) {
+            if (!options.preventNotifications) notifyService.error('Oh no', 'An unknown error occured');
+            return reject(false);
+
+        // IF RETURNED API HAS ERROR MESSAGE
+        } else {
+            if (!options.preventNotifications) notifyService.error('Oh no', data.error_message);
+            return reject(data.error_message);
+        }
+    };
+
+    this.handleSuccessfulAPI = function(options, resolve, data) {
+        if (!data || !reject || !options) {
+            throw new Error('Cannot handle successful API reponse without correct params');
+        }
+
+        if (!options.preventNotifications) {
+            notifyService.success('Success', data.result);
+        }
+
+        return resolve(data.result);
+    };
+
 });
