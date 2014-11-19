@@ -1,5 +1,4 @@
-describe('userDetails controller', function() {
-
+describe('userManagement controller', function() {
     var scope;
     var chartService;
     var createController;
@@ -62,17 +61,17 @@ describe('userDetails controller', function() {
 
         it('doesnt notify if not required', function() {
             var controller = createController();
-            spyOn(notifyService, 'notify');
+            spyOn(notifyService, 'success');
             scope.clearFilter();
-            expect(notifyService.notify.calls.count()).toEqual(0);
+            expect(notifyService.success.calls.count()).toEqual(0);
         });
 
         it('notifies if required', function() {
             var controller = createController();
-            spyOn(notifyService, 'notify');
+            spyOn(notifyService, 'info');
             scope.clearFilter(true);
-            expect(notifyService.notify).toHaveBeenCalled();
-            expect(notifyService.notify).toHaveBeenCalledWith('Search filters cleared');
+            expect(notifyService.info).toHaveBeenCalled();
+            expect(notifyService.info).toHaveBeenCalledWith('Search filters cleared');
         });
     });
 
@@ -154,7 +153,7 @@ describe('userDetails controller', function() {
 
     // REFRESH USERS FILTER
     describe('refreshUsers function', function() {
-        it('doesnt notify if not required', function() {
+/*        it('doesnt notify if not required', function() {
             var controller = createController();
             spyOn(notifyService, 'notify');
             scope.refreshUsers();
@@ -167,6 +166,6 @@ describe('userDetails controller', function() {
             scope.refreshUsers(true);
             expect(notifyService.notify).toHaveBeenCalled();
             expect(notifyService.notify).toHaveBeenCalledWith('Users refreshed');
-        });
+        });*/
     });
 });

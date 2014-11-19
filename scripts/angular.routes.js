@@ -3,8 +3,8 @@ SU.config(function($routeProvider) {
 
     // ROOT
         .when('/', {
-        templateUrl: '../views/home.html',
-        controller: 'mainController'
+        templateUrl: '../views/dashboard.html',
+        controller: 'dashboardController'
     })
 
     // DASHBOARD
@@ -129,8 +129,12 @@ SU.config(function($routeProvider) {
     ///////////////
     // DEFAULT //
     ///////////////
+    
+    .when('/notfound', {
+        templateUrl: '../views/notfound.html'
+    })
 
     .otherwise({
-        redirectTo: '/login'
+        redirectTo: '/notfound'
     });
 });

@@ -38,12 +38,12 @@ describe('notifyService', function() {
     describe('calls', function() {
         it('success message', function() {
             spyOn(toastr, 'success');
-            notifyService.notify('Success!');
+            notifyService.success('Success!');
             expect(toastr.success).toHaveBeenCalled();
         });
         it('success message with no params', function() {
             spyOn(toastr, 'success');
-            notifyService.notify();
+            notifyService.success();
             expect(toastr.success).toHaveBeenCalled();
         });
     });
@@ -52,7 +52,7 @@ describe('notifyService', function() {
     describe('calls', function() {
         it('error message', function() {
             spyOn(toastr, 'error');
-            notifyService.notify('Success!', '', 'error');
+            notifyService.error('Success!');
             expect(toastr.error).toHaveBeenCalled();
         });
     });
@@ -61,7 +61,7 @@ describe('notifyService', function() {
     describe('calls', function() {
         it('info message', function() {
             spyOn(toastr, 'info');
-            notifyService.notify('Info!', '', 'info');
+            notifyService.info('Info!', '', 'info');
             expect(toastr.info).toHaveBeenCalled();
         });
     });
@@ -70,7 +70,7 @@ describe('notifyService', function() {
     describe('calls', function() {
         it('warning message', function() {
             spyOn(toastr, 'warning');
-            notifyService.notify('Warning!', '', 'warning');
+            notifyService.warning('Warning!', '', 'warning');
             expect(toastr.warning).toHaveBeenCalled();
         });
     });

@@ -46,7 +46,7 @@ module.exports = function(config) {
             // CONTROLLERS
             './scripts/controllers/main.controller.js',
             './scripts/controllers/user.management.controller.js',
-            './scripts/controllers/user.details.controller.js',
+            './scripts/controllers/user.user.statistics.controller.js',
             './scripts/controllers/user.account.controller.js',
             './scripts/controllers/user.add.controller.js',
             './scripts/controllers/mentor.assigned.js',

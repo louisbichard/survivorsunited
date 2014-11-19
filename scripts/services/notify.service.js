@@ -1,4 +1,6 @@
 SU.service("notifyService", function() {
+    var that = this; 
+
     this.DEFAULTS = {
         "closeButton": false,
         "debug": false,
@@ -14,18 +16,16 @@ SU.service("notifyService", function() {
         "hideMethod": "fadeOut"
     };
 
-    this.notify = function(header, text, type, options) {
-        var task;
-        header = header || "";
-        type = type || "success";
-        toastr.options = _.defaults(options || {}, this.DEFAULTS);
+    _.each(['success', 'error', 'info', 'warning'], function(type) {
+        that[type] = function(header, text, options) {
+            var task;
+            header = header || "";
+            toastr.options = _.defaults(options || {}, this.DEFAULTS);
+            toastr[type](text, header);
+        };
+    });
 
-        var toastTypes = ['success', 'error', 'warning', 'info'];
-        if ($.inArray(type, toastTypes) != -1) toastr[type](text, header);
-        else throw new Error('toast type is not defined in notify function');
-    };
-
-   /* this.question = function(message) {
+    /* this.question = function(message) {
         // SET DEFAULT WITH NO OVERRIDE
         message = message || "Are you sure?";
         toastr.options = _.defaults({

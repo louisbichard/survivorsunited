@@ -1,34 +1,32 @@
 // TYPE:    controller
 // PARTIAL: account.html
-SU.controller('accountController', function($scope, apiService, $timeout) {
-    var user_original = {};
+SU.controller('accountController', function($scope, apiService, $timeout, utilityService, notifyService) {
+    $scope.user_original = {};
 
-    //user.severity_grade == 'high'
-    $scope.severity = function() {
-        return true;
+    $scope.bootstrap = function() {
+        apiService.get('/user/current', null, {
+                preventNotifications: true
+            })
+            .then(function(users) {
+                $scope.$apply(function() {
+                    $scope.user = users;
+                    $scope.user_original = _.clone(users);
+                });
+            });
     };
 
-    var assignUsersTo = function(users) {
-        $scope.$apply(function(){
-            $scope.user = users;
-            user_original = _.clone(users);    
-        });
-    };
 
-    apiService.get('/user/current').then(assignUsersTo);
-
-    $scope.callUpdateAPI = function(update_data) {
-        update_data = update_data || {};
-        return apiService.post('/user/update', update_data);
-    };
-
+    // ENSURE THAT THE REVIEW PANEL IS KEPT UP TO DATE
     $scope.$watch('user', function() {
         var current_user = _.clone($scope.user || {});
-        var update_params = object_differences(user_original, current_user, {
-            ignore: ['_id', 'id']
-        });
+        if ($scope.user && $scope.user._id) {
+            current_user.user_id = $scope.user._id;
+        }
 
-        if (Object.keys(update_params).length !== 0) {
+        var update_params = utilityService.objectDifferences($scope.user_original, current_user);
+
+        // TODO: DESCRIBE
+        if (_.keys(update_params).length !== 0) {
             $scope.update_params = update_params;
         }
 
@@ -36,10 +34,25 @@ SU.controller('accountController', function($scope, apiService, $timeout) {
 
     $scope.updateContact = function() {
 
-        $scope.callUpdateAPI($scope.update_params)
-            .then(function(data, status, headers, config) {
-                notification('Profile fields updated');
-            });
+        // ENSURE THAT THEY HAVE ALTERED SOME FIELDS
+        if (_.keys($scope.update_params).length <= 1) {
+            notifyService.warning('You have not updated any fields');
+        }
+
+        // SUCCESSFULLY REGISTER UPDATE
+        else {
+                apiService.post('/user/update', $scope.update_params, {
+                    preventNotifications: true
+                })
+                .then(function() {
+                    $scope.$apply(function() {
+                        $scope.update_params = _.pick($scope.update_params, 'user_id');
+                    });
+                })
+                .then(_.partial(notifyService.success, 'Profile fields updated'));
+        }
     };
+
+    $scope.bootstrap();
 
 });

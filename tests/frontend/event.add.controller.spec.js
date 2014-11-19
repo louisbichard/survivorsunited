@@ -31,7 +31,6 @@ describe('userDetails controller', function() {
         };
     }));
 
-    // DEFAULT PARAMS
     describe('default params', function() {
         it('are setup', function() {
             var controller = createController();
@@ -40,7 +39,6 @@ describe('userDetails controller', function() {
         });
     });
 
-    // CLEAR FILTER
     describe('addEvent function', function() {
         it('converts the scope dates', function() {
             var controller = createController();

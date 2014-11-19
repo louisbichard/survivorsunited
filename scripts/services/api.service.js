@@ -20,7 +20,7 @@ SU.service("apiService", function($http, utilityService, notifyService) {
                     if (data.success) {
                         // TODO:  MAKE THIS OPTIONAL
                         if (!options.preventNotifications) {
-                            notifyService.notify('Success', data.result);
+                            notifyService.success('Success', data.result);
                         }
                         return resolve(data.result);
                     } else {
@@ -31,12 +31,12 @@ SU.service("apiService", function($http, utilityService, notifyService) {
                         // 3) OPTION FOR ERROR ON FAILURE
                         if (!data.error_message) {
                             if (!options.preventNotifications) {
-                                notifyService.notify('Oh no', 'An unknown error occured', 'error');
+                                notifyService.error('Oh no', 'An unknown error occured');
                             }
                             return reject(false);
                         } else {
                             if (!options.preventNotifications) {
-                                notifyService.notify('Oh no', data.error_message, 'error');
+                                notifyService.error('Oh no', data.error_message);
                             }
                             return reject(data.error_message);
                         }
@@ -45,7 +45,7 @@ SU.service("apiService", function($http, utilityService, notifyService) {
 
             //TODO: IMPLEMENT
             .error(function(data, status, headers, config) {
-                notifyService.notify('Something went wrong', 'A connection error occured, please try again', 'error');
+                notifyService.error('Something went wrong', 'A connection error occured, please try again');
                 return reject('TODO MAKE BETTER');
             });
         });

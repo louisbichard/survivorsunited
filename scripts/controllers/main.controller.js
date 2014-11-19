@@ -1,130 +1,51 @@
-SU.controller('mainController', function($scope, $http, apiService, $location, $cookieStore) {
+SU.controller('mainController', function($scope, apiService, $location) {
 
-
-    /**
-     * Sidebar Toggle & Cookie Control
-     *
-     */
-    $scope.toggle = true;
-
-    $scope.toggleSidebar = function() {
-        $scope.toggle = false;
-    };
-
-    /*var mobileView = 992;
-
-    $scope.getWidth = function() {
-        return window.innerWidth;
-    };
-
-    $scope.$watch($scope.getWidth, function(newValue, oldValue) {
-        if (newValue >= mobileView) {
-            if (angular.isDefined($cookieStore.get('toggle'))) {
-                if ($cookieStore.get('toggle') == false) {
-                    $scope.toggle = false;
-                } else {
-                    $scope.toggle = true;
-                }
-            } else {
-                $scope.toggle = true;
-            }
-        } else {
-            $scope.toggle = false;
-        }
-
+    // WATCH FOR NAV CHANGES AND SETUP SCOPE FOR LEFT PANEL TABBING HIGHLIGHTING
+    $scope.$on('$locationChangeSuccess', function() {
+        $scope.current_location = $location.path().split('/')[1];
     });
 
     $scope.toggleSidebar = function() {
         $scope.toggle = !$scope.toggle;
-
-        $cookieStore.put('toggle', $scope.toggle);
     };
 
-    window.onresize = function() {
-        $scope.$apply();
-    };*/
-
-
-
-
-
-
-
-    //TODO: REMOVE -> WAS USING WHEN IMPLEMENTING TEST FRAMEWORK
-    $scope.test = "test";
-
-    $scope.anonymous_user = false;
-
-    $scope.bootstrapDashboard = function() {
-
-        apiService.get('/user/current', null, {
-                preventNotifications: true
-            })
-            .then(function(result) {
-                var welcome_message;
-
-
-                welcome_message = "Welcome back! ";
-
-                if (result && result.first_name) {
-                    welcome_message += result.first_name;
-                } else if (result && result.username) {
-                    welcome_message += result.username;
-                }
-
-                $scope.$apply(function() {
-                    $scope.profile_link = "#account";
-                    $scope.welcome_message = welcome_message;
-                    $scope.anonymous_user = false;
-                });
-
-
-                $scope.setAppLoaded();
-
-                //TODO: ADD IN FOR PROD
-                //_.delay($scope.setAppLoaded, 2300);
-
-            })
-            .caught(function(err) {
-                $scope.setAppLoaded();
-
-                //TODO: ADD IN FOR PROD
-                //_.delay($scope.setAppLoaded, 2300);
-                //
-                $scope.$apply(function() {
-                    $scope.anonymous_user = true;
-                    $scope.profile_link = "#login";
-                    $scope.welcome_message = "Login";
-                });
-            });
-
-    }();
-
-    $scope.setAppLoaded = function() {
+    $scope.successfullLogout = function() {
         $scope.$apply(function() {
-            $scope.app_loaded = true;
+            // TODO: A FILTHY FILTHY HACK, THERE MUST BE SOME ANGULAR WAY OF DOING THIS
+            //$location.path('/login');
+            //window.location = 'http://' + window.location.host + '#/login';
+            $scope.anonymous_user = true;
         });
     };
 
-    $scope.pushToDashboard = function(arg) {
-
+    $scope.successfullLogin = function(result) {
+        $scope.$apply(function() {
+            // TODO: A FILTHY FILTHY HACK, THERE MUST BE SOME ANGULAR WAY OF DOING THIS
+            // $location.path('/dashboard');
+            //window.location = 'http://' + window.location.host + '#/dashboard';
+            $scope.anonymous_user = false;
+        });
     };
 
-    $scope.logOut = function() {
-        apiService
+    $scope.bootstrapDashboard = function() {
+        return apiService
+            .get('/user/current', null, {
+                preventNotifications: true
+            })
+            .then($scope.successfullLogin);
+    };
+
+    $scope.mainLogOut = function() {
+        return apiService
             .get('/auth/logout')
-            .then($scope.bootstrapDashboard)
-            .then(function() {
-                $location.path('#dashboard');
-            });
+            .then($scope.successfulLLogout);
     };
 
     $scope.mainLogin = function(user) {
-        console.log('attempting login');
         return apiService
             .post('/auth/login', user)
-            .then(function() {
-                $location.path('#dashboard');
-            });
+            .then($scope.successfullLogin);
     };
+
+    $scope.bootstrapDashboard();
 });

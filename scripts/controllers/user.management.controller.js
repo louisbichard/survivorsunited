@@ -1,82 +1,128 @@
-SU.controller('userManagementController', function($scope, apiService, chartService) {
-
-    $scope.signup_chart_config = {};
-    $scope.signup_chart_data = {};
-    $scope.severity_chart_config = {
-        "labels": true,
-        "legend": {
-            "display": true,
-            "position": "right"
-        },
-        colors: ['#0bff14', '#fffb10', '#ff2b1d']
-    };
-    $scope.severity_chart_data = {};
-
-
-    // USERS WITHOUT MENTORS
-    // ABSTRACT INTO SERVICE
-
-    var usersWithoutMentors = function(users) {
-        $scope.without_mentors = _.reduce(users, function(prev, user) {
-            if (!user.mentor) {
-                prev++;
-            }
-            return prev;
-        }, 0);
+SU.controller('userDetailsController', function($scope, apiService, utilityService, notifyService) {
+    $scope.module = {
+        title: "System users",
+        description: "Edit users personal details, assigned mentors, severity etc",
     };
 
-    // ABSTRACT OUT INTO SERVICE
-    $scope.countRole = function(role, users) {
-        if (!role || !users) {
-            throw new Error('No role or users passed to countrole function');
+    $scope.users = [];
+    $scope.updated = {};
+    $scope.filters = [];
+
+    $scope.clearFilter = function(notification) {
+        if (notification) {
+            notifyService.info('Search filters cleared');
         }
-        return _.filter(users, function(user) {
-            return user.role === role;
-        }).length;
+
+        $scope.filters = [{
+            name: "internal",
+            value: "All"
+        }, {
+            name: "severity",
+            value: "All"
+        }, {
+            name: "assigned_mentor",
+            value: "All"
+        }, {
+            name: "sort",
+            value: "All"
+        }];
+
+        $scope.searchText = "";
+    };
+
+    $scope.setFilter = function(name, value) {
+        //TODO test
+        if (!name || !value || !_.isString(name)) {
+            throw new Error('Incorrect parametrs passed to SetFilter');
+        }
+
+        var index =
+            _.chain($scope.filters)
+            .findIndex({
+                name: name
+            })
+            .value();
+
+        if (index === -1) {
+            throw new Error('Index for filter not found in user details controller');
+        }
+
+        $scope.filters[index].value = value;
+    };
+
+    $scope.removeUser = function(user) {
+
+        if (!user || !user._id) {
+            throw new Error('user and user id must be passed to removeUser in userDetailsController');
+        }
+
+        // TODO: COMPLETE AS DIRECTIVE
+        //notifyService.question("Confirm deleting user?");
+
+        return apiService
+
+        // CALL API
+            .post('/user/delete', {
+            id: user._id
+        })
+
+        // FIND USER INDEX FROM SCOPE
+        .then(function() {
+            return _.findIndex($scope.users, user);
+        })
+
+        // REMOVE FROM SCOPE
+        .then(function(index_to_remove) {
+            $scope.$apply(function() {
+                $scope.users.splice(index_to_remove, 1);
+            });
+        });
+    };
+
+    $scope.updatedContact = function(localScope) {
+        if (!localScope.user._id) {
+            throw new Error('localScope did not have all correct values to update contact in updatedContact');
+        }
+
+        var user_id = localScope.user._id;
+        var changes = $scope.updated[user_id];
+        changes.user_id = changes._id;
+        changes = _.omit(changes, 'date_created');
+        apiService.post('/user/update', changes);
     };
 
     // AUTOMATICALLY INVOKED
-    var refreshUsers = function() {
-        $scope.users = [];
-        apiService.get('/users/listall').then(function(users) {
+    $scope.refreshUsers = function(notification) {
+        apiService.get('/users/listall', null, {
+            preventNotifications: true
+        })
 
+        // GET RESULT DATA
+        .then(function(result) {
+            if (notification) notifyService.success('Users refreshed');
+            return result;
+        })
+
+        // ASSIGN RESULTS TO SCOPE VARIABLES
+        .then(function(result) {
             $scope.$apply(function() {
+                $scope.users = result;
+                $scope.original_users = result;
 
-                //SETUP USERS FOR LIST
-                $scope.users = users;
 
-                //SETUP USER RESULT COUNT
-                $scope.user_count = users.length;
-                
-                // COUNT ALL ROLES
-                $scope.roleCounts = {
-                    admin: $scope.countRole('Admin', users),
-                    mentor: $scope.countRole('Mentor', users),
-                    basic: $scope.countRole('basic', users)
-                };
+                // TODO: FILTER BY ROLE TYPE
+                $scope.mentors = _.filter(result, function(user) {
+                    return user.mentor;
+                });
 
-                //SETUP USERS WITHOUT MENTORS
-                usersWithoutMentors(users);
-
-                //SETUP SEVERITY CHART
-                $scope.severity_chart_data = {
-                    data: chartService.userSeverityGrade(users),
-                    series: chartService.blankSeries(users.length)
-                };
+                _.each(result, function(user) {
+                    $scope.updated[user._id] = user;
+                });
             });
-
-
-            //SETUP CREATION DATE CHART
-
-            /*            $scope.signup_chart_data = {
-                            data: chartService.userCreationDates(users),
-                            series: chartService.blankSeries(users.length)
-                        };*/
-
-
-
-
-
         });
-    }();
+    };
+
+    // LAUNCH INIT SCOPE FUNCTIONS
+    $scope.clearFilter();
+    $scope.refreshUsers();
 });

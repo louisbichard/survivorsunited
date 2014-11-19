@@ -1,10 +1,7 @@
 // TYPE:    controller
 // PARTIAL: mentor.html
+
 SU.controller('mentorController', function($scope, apiService) {
-    $scope.module = {
-        title: "My Mentor",
-        description: "Mentor contact details, description and instant message"
-    };
 
     $scope.getMentorData = function() {
         return apiService
@@ -15,9 +12,6 @@ SU.controller('mentorController', function($scope, apiService) {
                 $scope.$apply(function() {
                     $scope.mentor = result;
                 });
-            })
-            .caught(function() {
-                //TODO: Prevent error here in some way
             });
     }();
 });
