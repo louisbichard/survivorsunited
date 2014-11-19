@@ -28,7 +28,6 @@ module.exports = function(config) {
             './bower_components/jquery/dist/jquery.min.js',
             './bower_components/bootstrap/dist/js/bootstrap.min.js',
             './bower_components/toastr/toastr.min.js',
-            './bower_components/angular/angular.min.js',
             './bower_components/angular-route/angular-route.js',
             './bower_components/d3/d3.min.js',
             './bower_components/angular-charts/dist/angular-charts.min.js',

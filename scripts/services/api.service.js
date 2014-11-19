@@ -2,25 +2,18 @@ SU.service("apiService", function($http, utilityService, notifyService) {
     var that = this;
 
     this.callAPI = function(route, params, options, type) {
-        params = params || {};
-        options = options || {};
-
-
         return new Promise(function(resolve, reject) {
-
             return $http[type](utilityService.api_route + route, params)
                 .success(_.partialRight(that.handleSuccessfulResponse, resolve, reject, options))
-                .error(function(data, status, headers, config) {
-                    notifyService.error('Something went wrong', 'A connection error occured, please try again');
-                    throw new Error(data, status, headers, config);
-                    return reject('An unspecified error occurred');
-                });
+                .error(_.partialRight(that.handleFailedResponse, reject));
         });
-
     };
 
     //RETURN FACTORY API
     this.get = function(route, params, options) {
+        params = params || {};
+        options = options || {};
+
         if (!route || !_.isString(route)) {
             throw new Error('No route specified to apiService in get function');
         }
@@ -35,9 +28,17 @@ SU.service("apiService", function($http, utilityService, notifyService) {
         return that.callAPI(route, params, options, 'post');
     };
 
+    this.handleFailedResponse = function(data, status, headers, config, reject) {
+        if (!data || !status || !headers || !config || !reject) {
+            throw new Error('Cannot handle API failed reponse without correct params');
+        }
+        notifyService.error('Something went wrong', 'A connection error occured, please try again');
+        return reject('An unspecified error occurred');
+    };
+
     this.handleSuccessfulResponse = function(data, status, headers, config, resolve, reject, options) {
         if (!data || !status || !headers || !config || !resolve || !reject || !options) {
-            throw new Error('Cannot handle API reponse without correct params');
+            throw new Error('Cannot handle successful API reponse without correct params');
         }
 
         // APIS RETURNED MIGHT BE SUCCESSFUL BUT INTERNALL FAIL, THIS IS HANDLED HERE
@@ -55,7 +56,7 @@ SU.service("apiService", function($http, utilityService, notifyService) {
             if (!options.preventNotifications) notifyService.error('Oh no', 'An unknown error occured');
             return reject(false);
 
-        // IF RETURNED API HAS ERROR MESSAGE
+            // IF RETURNED API HAS ERROR MESSAGE
         } else {
             if (!options.preventNotifications) notifyService.error('Oh no', data.error_message);
             return reject(data.error_message);
@@ -63,12 +64,12 @@ SU.service("apiService", function($http, utilityService, notifyService) {
     };
 
     this.handleSuccessfulAPI = function(options, resolve, data) {
-        if (!data || !reject || !options) {
+        if (!data || !resolve || !options) {
             throw new Error('Cannot handle successful API reponse without correct params');
         }
 
         if (!options.preventNotifications) {
-            notifyService.success('Success', data.result);
+            notifyService.success('Success');
         }
 
         return resolve(data.result);
