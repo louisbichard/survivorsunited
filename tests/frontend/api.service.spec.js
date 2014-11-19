@@ -6,8 +6,8 @@ describe('apiService', function() {
 
     // USED FOR SPYING ON BLUEBIRD METHODS TO SEE IF THEY HAVE BEEN CALLED
     var fake_bluebird = {
-        'reject' = function() {},
-        'respond' = function() {}
+        'reject': function() {},
+        'respond': function() {}
     };
 
     //INCLUDE APP
@@ -87,17 +87,42 @@ describe('apiService', function() {
                 apiService.handleFailedAPI();
             }).toThrow();
         });
-        it("when success false", function() {
-            spyOn(notifyService, 'error');
-            apiService.handleFailedAPI({}, function() {}, {});
-            expect(notifyService.error).toHaveBeenCalled();
-        });
-        it("when success false", function() {
+        it("when no error message and notifications on as default", function() {
             spyOn(notifyService, 'error');
             spyOn(fake_bluebird, 'reject');
             apiService.handleFailedAPI({}, fake_bluebird.reject, {});
             expect(notifyService.error).toHaveBeenCalled();
-            expect(reject).toHaveBeenCalled();
+            expect(notifyService.error.calls.count()).toEqual(1);
+            expect(fake_bluebird.reject).toHaveBeenCalled();
+            expect(fake_bluebird.reject).toHaveBeenCalledWith(false);
+        });
+        it("when no error message and notifications false", function() {
+            spyOn(notifyService, 'error');
+            spyOn(fake_bluebird, 'reject');
+            apiService.handleFailedAPI({preventNotifications: true}, fake_bluebird.reject, {});
+            expect(notifyService.error.calls.count()).toEqual(0);
+            expect(fake_bluebird.reject).toHaveBeenCalled();
+            expect(fake_bluebird.reject).toHaveBeenCalledWith(false);
+        });
+        it("when error message and notifications on as default", function() {
+            spyOn(notifyService, 'error');
+            spyOn(fake_bluebird, 'reject');
+            apiService.handleFailedAPI({}, fake_bluebird.reject, {
+                error_message: 'something'
+            });
+            expect(notifyService.error).toHaveBeenCalled();
+            expect(notifyService.error.calls.count()).toEqual(1);
+            expect(fake_bluebird.reject).toHaveBeenCalled();
+            expect(fake_bluebird.reject).toHaveBeenCalledWith('something');
+        });
+        it("when error message and notifications off as default", function() {
+            spyOn(notifyService, 'error');
+            spyOn(fake_bluebird, 'reject');
+            apiService.handleFailedAPI({preventNotifications: true}, fake_bluebird.reject, {
+                error_message: 'something'
+            });
+            expect(notifyService.error.calls.count()).toEqual(0);
+            expect(fake_bluebird.reject).toHaveBeenCalled();
         });
     });
 
