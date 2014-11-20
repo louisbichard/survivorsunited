@@ -4,8 +4,56 @@
         <iframe class="codeCoverageIframe" src="tests/coverage/Chrome%2038.0.2125%20(Mac%20OS%20X%2010.10.1)/index.html"></iframe>
     </div>
     <div class="col-lg-12">
-        <h3>BACKEND ERROR LOG</h3>
+        <h3>Test outputs</h3>
+
+        <div class="widget">
+            <div class="widget-header">
+                <i class="fa fa-list"></i> REST endpoints
+            </div>
+            <div class="widget-body no-padding">
+                <br>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div ng-show="loading">
+                            LOADING!
+                        </div>
+                    </div>
+                </div>
+                <div class="row" ng-hide="loading">
+                    <div class="col-lg-4">
+                        <div class="widget">
+                            <div class="widget-body">
+                                <div class="widget-content pull-left">
+                                    <div class="title">{{backend_tests.total_endpoints}}</div>
+                                    <div class="comment">Endpoints tested</div>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="widget">
+                            <div class="widget-body">
+                                <div class="widget-content pull-left">
+                                    <div class="title">{{backend_tests.successful_tests}}</div>
+                                    <div class="comment">Total endpoints</div>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                    	<div class="widget">
+                            <div class="widget-body">
+                                <div class="widget-content pull-left">
+                                    <div class="title"> Pass: {{backend_tests.success}}</div>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
-
-

@@ -8,15 +8,23 @@ var fs = Promise.promisifyAll(require('fs'));
 var _ = require('lodash');
 
 
+var stats = {};
+
 var readDirectory = function(path) {
     return fs.readdirAsync(path);
 };
 
-var run_tests_sequentially = function(files) {
+var run_tests_sequentially = function(files, nolog) {
     files = _.without(files, '.DS_Store');
 
-    log.success('Beginning running: ' + files.length + ' tests');
-    log.success('On database: ' + process.env.DATABASE);
+    if (!nolog) {
+        log.success('Beginning running: ' + files.length + ' tests');
+        log.success('On database: ' + process.env.DATABASE);
+    }
+
+    // SET UP STATS VALUES
+    stats.total_endpoints = files.length;
+    stats.successful_tests = 0;
 
     return Promise.reduce(files, function(total_num_tests, file_path) {
         return execute.execAsync('node ' + './tests/backend/test_endpoints/' + file_path)
@@ -24,11 +32,14 @@ var run_tests_sequentially = function(files) {
 
                 // LOG OUT THE TEXT OF THE TEST
                 var text_output = result[0];
-                console.log(text_output);
+                if (!nolog) console.log(text_output);
 
                 // CALCULATE THE NUMBER OF TESTS
                 // ONLY WORKS FOR SINGLE INTEGERS
                 var index_of_honored = text_output.indexOf("honored");
+
+                if (index_of_honored > -1) stats.successful_tests++;
+
                 var num_of_tests_ran = parseInt(text_output[index_of_honored - 7], 10);
 
                 return total_num_tests + num_of_tests_ran;
@@ -54,16 +65,19 @@ var log_finale_to_console = function(result) {
     console.log(result[0]);
 };
 
+var return_stats = function() {
+    return stats;
+};
+
 module.exports = {
-    run: function() {
+    run: function(args) {
+        args = args || {};
         return readDirectory("./tests/backend/test_endpoints")
-            .then(run_tests_sequentially)
-            .then(function(result) {
-                log.test.complete(result);
-                return result;
-            })
+            .then(_.partialRight(run_tests_sequentially, args.nolog))
+            .then(log.test.complete)
             .then(run_finale_sequence)
             .then(log_finale_to_console)
+            .then(return_stats)
             .caught(function(err) {
                 log.promiseCaught('Error in running endpoints', err);
             });

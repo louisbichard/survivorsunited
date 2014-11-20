@@ -6,15 +6,11 @@ var _ = require('lodash');
 var log = require('../utilities/logger.js');
 
 var apiFile = function(req, res, next, location) {
+    log.general('Enpoint: ', location.blue);
     if (!location || !_.isString(location)) {
         throw new Error('location was not found, or incorrect type when passed to apiFile in backend routes');
     }
     return require(location)(req, res);
-};
-
-// TODO: REPLACE WITH LOG FUNCTION
-var colourful_output = function(api_name) {
-    console.log('API called: '.green + api_name.blue);
 };
 
 //API ENDPOINTS
@@ -48,4 +44,7 @@ module.exports = function(app) {
     app.get('/events/watching/current', _.partialRight(apiFile, './../events/events.current.watching.js'));
     app.post('/events/watchOrAttend', _.partialRight(apiFile, './../events/events.current.watchOrAttend.js'));
     app.post('/events/subscribe', _.partialRight(apiFile, './../events.current.subscribe.js'));
+
+    //ADMIN
+    app.get('/testresults', _.partialRight(apiFile, './../admin/test.results.js'));
 };

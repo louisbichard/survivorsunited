@@ -64,6 +64,7 @@ module.exports = function(req, res) {
     return MongoClient.connectAsync(database.connection)
         .then(find_data)
         .then(extract_events)
+        .then(updateFieldsAttendingWatching)
         .then(send_response)
         .caught(function(err) {
             respond.failure('Could not list events', err);

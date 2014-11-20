@@ -51,7 +51,7 @@ module.exports = function(config) {
             './scripts/controllers/mentor.assigned.js',
             './scripts/controllers/events.upcoming.watched.subscribed.controller.js',
             './scripts/controllers/event.add.controller.js',
-            './scripts/controllers/events.usersWatchingEvent.js',
+            './scripts/controllers/events.usersWatchingOrAttending.js',
             './scripts/controllers/events.calendar.controller.js',
 
             // ROUTES

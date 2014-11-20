@@ -23,8 +23,38 @@
                                     <div class="panel panel-default">
                                         <div class="panel-body">
                                             <div class="row">
-                                                <div class="col-md-12 col-lg-12">
+                                                <div class="col-md-4 col-lg-4">
                                                     <h3>{{event.title}}</h3>
+                                                </div>
+                                                <div class="col-md-8 col-lg-8">
+                                                    <div class="pull-right">
+                                                        <!-- ALLOW USER TO DELETE EVENTS -->
+                                                        <button type="button" ng-click="unWatchOrAttend(event._id, 'attending')" class="btn btn-sm btn-danger">
+                                                            Delete event &nbsp; (if owner)
+                                                            <i class="fa fa-trash"></i>
+                                                        </button>
+
+                                                        <!-- ATTENDING BUTTONS -->
+                                                        <button ng-show="event.user_is_attending" type="button" ng-click="unWatchOrAttend(event._id, 'attending')" class="btn btn-sm btn-danger">
+                                                            Remove attendance &nbsp;
+                                                            <i class="fa fa-trash"></i>
+                                                        </button>
+                                                        <button ng-hide="event.user_is_attending" type="button" ng-click="watchOrAttend(event._id, 'attending')" class="btn btn-sm btn-success">
+                                                            Attend &nbsp;
+                                                            <i class="fa fa-plus"></i>
+                                                        </button>
+
+                                                        <!-- WATCHING BUTTONS -->
+                                                        <button ng-show="event.user_is_watching" type="button" ng-click="unWatchOrAttend(event._id, 'watching')" class="btn btn-sm btn-danger">
+                                                            Remove watcher &nbsp;
+                                                            <i class="fa fa-trash"></i>
+                                                        </button>
+
+                                                        <button ng-hide="event.user_is_watching" type="button" ng-click="watchOrAttend(event._id, 'watching')" class="btn btn-sm btn-success">
+                                                            Watch &nbsp;
+                                                            <i class="fa fa-plus"></i>
+                                                        </button>
+                                                    </div>
                                                 </div>
                                                 <div class="col-md-6 col-lg-6">
                                                     <img class="img-responsive" src="../assets/img/img_placeholder.jpg" height="800" width="1280">
@@ -48,31 +78,15 @@
                                                             <strong>Date created:</strong>&nbsp; {{event.date_created}}
                                                         </p>
                                                         <p>
-                                                            <strong>Price:</strong>&nbsp; {{event.price}}
+                                                            <strong>Price:</strong>&nbsp; £{{event.price}}
                                                         </p>
                                                         <p>
-                                                            <strong>Current attendee's:</strong>&nbsp; <a href="#users_watching_event?id={{event._id}}&type=attending">current attendee's</a>
+                                                            <a href="#users_watching_event?id={{event._id}}&type=attending">Attendee's list</a> ||
+                                                            <a href="#users_watching_event?id={{event._id}}&type=watching">Watchers list</a>
                                                         </p>
-
-                                                        <!-- //TODO: IF USER IS ATTENDING ({{event.user_is_attending}}) ADD AN UNSUBSCRIBE BUTTON
- -->
-
-                                                        <button type="button" ng-click="watchOrAttend(event._id, 'attending')" class="btn btn-success">
-                                                            Attend &nbsp;
-                                                            <i class="fa fa-plus">
-                                            </i>
-                                                        </button>
-
                                                         <p>
-                                                            <strong>Current watchers's:</strong>&nbsp; <a href="#users_watching_event?id={{event._id}}&type=watching">current watchers</a>
+
                                                         </p>
-
-                                                        <button type="button" ng-click="watchOrAttend(event._id, 'watching')" class="btn btn-success">
-                                                            Watch &nbsp;
-                                                            <i class="fa fa-plus">
-                                            </i>
-                                                        </button>
-
                                                         <h4>Description</h4>
                                                         <p>{{event.description}}</p>
                                                     </div>
