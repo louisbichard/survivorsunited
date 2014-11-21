@@ -7,3 +7,8 @@
 .panel-thick-border {
 	border-width: 5px;
 }
+
+.page-content {
+	background-color: #f3f3f3;
+	height: 100%;
+}

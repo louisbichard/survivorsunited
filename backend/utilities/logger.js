@@ -39,6 +39,8 @@ module.exports = {
 
     promiseCaught: function(text, err) {
         console.log(text.white.bgRed, err, '\n');
+        var stack = new Error().stack;
+        this.debug(stack);
     },
     space: function() {
         console.log('\n');
@@ -53,7 +55,7 @@ module.exports = {
             console.log(text.cyan);
         },
         endpoint: function(text) {
-            text = '---------------' + text.blue +  '---------------';
+            text = '---------------' + text.blue + '---------------';
             console.log(text.blue);
         },
         hasTODO: function() {
@@ -63,9 +65,8 @@ module.exports = {
             text = "testing " + text;
             console.log(text.magenta);
         },
-        complete: function(num_tests) {
-            var text = "Testing complete! Completed: ";
-            console.log(text.green.underline, num_tests, '\n');
+        complete: function() {
+            console.log("Testing complete!".green.underline,'\n');
         }
     }
 };

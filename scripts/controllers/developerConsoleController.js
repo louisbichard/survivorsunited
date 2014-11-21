@@ -10,7 +10,9 @@ SU.controller('developerConsoleController', function($scope, apiService) {
     };
     $scope.loading = true;
 
-    apiService.get('/testresults')
+    apiService.get('/testresults', null, {
+        preventNotifications: true
+    })
         .then(function(result) {
             $scope.$apply(function() {
                 $scope.backend_tests = result;

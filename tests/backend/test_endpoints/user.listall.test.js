@@ -30,12 +30,7 @@ setup_db()
             .setHeader('Content-Type', 'application/json')
             .get('/users/listall')
             .expect(200)
-            .expect('Has array of users', function(err, res, body) {
-                utilities.hasResultProperty(err, res, body, 'users', 'object');
-            })
-            .expect('Has count of users', function(err, res, body) {
-                utilities.hasResultProperty(err, res, body, 'count', 'number', 0);
-            })
+            .expect('Has array of users', _.partialRight(utilities.hasAppropriateProperties))
             .export(module);
 
         _.delay(resolve, utilities.DELAY);

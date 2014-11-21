@@ -30,7 +30,7 @@ var getSubObjects = function(body, string) {
 module.exports = {
 
     // CONSTANTS
-    DELAY: 250,
+    DELAY: 500,
 
     //DEPRECATED, PLEASE REMOVE (DO NOT USE)
     hasAppropriateProperties: function(err, res, body) {

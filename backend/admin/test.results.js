@@ -19,6 +19,6 @@ module.exports = function(req, res) {
         result.success = (result.total_endpoints === result.successful_tests);
         return respond.success(result);
     }).caught(function(){
-        return respond.failuer('Back end tests failed');
+        return respond.failure('Back end tests failed');
     });
 };
