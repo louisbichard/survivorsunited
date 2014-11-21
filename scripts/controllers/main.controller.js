@@ -13,7 +13,6 @@ SU.controller('mainController', function($scope, apiService, $location) {
         $scope.$apply(function() {
             // TODO: A FILTHY FILTHY HACK, THERE MUST BE SOME ANGULAR WAY OF DOING THIS
             //$location.path('/login');
-            //window.location = 'http://' + window.location.host + '#/login';
             $scope.anonymous_user = true;
         });
     };
@@ -22,7 +21,6 @@ SU.controller('mainController', function($scope, apiService, $location) {
         $scope.$apply(function() {
             // TODO: A FILTHY FILTHY HACK, THERE MUST BE SOME ANGULAR WAY OF DOING THIS
             // $location.path('/dashboard');
-            //window.location = 'http://' + window.location.host + '#/dashboard';
             $scope.anonymous_user = false;
         });
     };

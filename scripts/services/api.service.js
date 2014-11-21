@@ -33,6 +33,7 @@ SU.service("apiService", function($http, utilityService, notifyService) {
 
     this.handleFailedResponse = function(data, status, headers, config, reject) {
         if (!data || !status || !headers || !config || !reject) {
+            notifyService.error('Unspecified error');
             throw new Error('Cannot handle API failed reponse without correct params');
         }
         notifyService.error('Something went wrong', 'A connection error occured, please try again');

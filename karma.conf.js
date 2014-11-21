@@ -22,7 +22,6 @@ module.exports = function(config) {
             './node_modules/karma-jasmine-async/src/jasmine.async.js',
 
             './scripts/bundle.js',
-            './scripts/utilties.js',
 
             // BOWER
             './bower_components/jquery/dist/jquery.min.js',
@@ -33,19 +32,17 @@ module.exports = function(config) {
             './bower_components/angular-charts/dist/angular-charts.min.js',
             './bower_components/angular-ui-calendar/src/calendar.js',
             './bower_components/fullcalendar/fullcalendar.js',
+            './bower_components/angular-loading-bar/src/loading-bar.js',
             './bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js',
             './bower_components/angular-cookies/angular-cookies.min.js',
 
             // ANGULAR INITIALISE
             './scripts/app.js',
 
-            // CUSTOM LIBRARIES (TODO: ANGULARIFY)
-            './scripts/notifications.js',
-
             // CONTROLLERS
             './scripts/controllers/main.controller.js',
             './scripts/controllers/user.management.controller.js',
-            './scripts/controllers/user.user.statistics.controller.js',
+            './scripts/controllers/user.statistics.controller.js',
             './scripts/controllers/user.account.controller.js',
             './scripts/controllers/user.add.controller.js',
             './scripts/controllers/mentor.assigned.js',
@@ -71,11 +68,6 @@ module.exports = function(config) {
             './scripts/filters/internal.filter.js',
             './scripts/filters/assignedMentor.filter.js',
             './scripts/filters/severity.filter.js',
-
-            //FACTORIES
-            './scripts/factories/users.all.factory.js',
-            './scripts/factories/isAuthenticated.factory.js',
-            './scripts/factories/user.current.factory.js',
 
             //MOCKING FOR ANGULAR
             './bower_components/angular-mocks/angular-mocks.js',

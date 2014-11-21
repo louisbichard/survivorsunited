@@ -6,11 +6,31 @@ var _ = require('lodash');
 var log = require('../utilities/logger.js');
 
 var apiFile = function(req, res, next, location) {
+    
+    var respond = require('../utilities/utilities.respond.js')({
+        req: req,
+        res: res,
+        file: __dirname + __filename
+    });
+
     log.general('Enpoint: ', location.blue);
     if (!location || !_.isString(location)) {
         throw new Error('location was not found, or incorrect type when passed to apiFile in backend routes');
     }
-    return require(location)(req, res);
+
+    // CALL API
+    try {
+        return require(location)(req, res);
+    } catch (err) {        
+        require('./log.server.error.js')(req, res, {
+            location: location,
+            anonymous: !req.user
+        }).then(function(){
+            respond.failure('Internal API failure');
+        }).caught(function(){
+            respond.failure('Internal API failure');
+        });
+    };
 };
 
 //API ENDPOINTS
@@ -46,5 +66,7 @@ module.exports = function(app) {
     app.post('/events/subscribe', _.partialRight(apiFile, './../events.current.subscribe.js'));
 
     //ADMIN
-    app.get('/testresults', _.partialRight(apiFile, './../admin/test.results.js'));
+    app.get('/testbackend', _.partialRight(apiFile, './../admin/test.backend.results.js'));
+    app.get('/testfrontend', _.partialRight(apiFile, './../admin/test.frontend.results.js'));
+    app.get('/backenderrors', _.partialRight(apiFile, './../admin/backend.error.log.js'));
 };

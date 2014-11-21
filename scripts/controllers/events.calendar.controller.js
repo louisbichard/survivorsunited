@@ -1,4 +1,4 @@
-SU.controller('eventCalendarController', function($scope, apiService, dateService) {
+SU.controller('eventCalendarController', function($scope, apiService, dateService, notifyService) {
 
     // SET EVENTS AS NONE ON LOAD TO PREVENT ERROR
     $scope.events = [];
@@ -17,7 +17,7 @@ SU.controller('eventCalendarController', function($scope, apiService, dateServic
     $scope.refreshEvents = function() {
         $scope.getEvents()
             .then(function() {
-                notification('Events refreshed!');
+                notifyService.success('Events refreshed!');
             });
     };
 

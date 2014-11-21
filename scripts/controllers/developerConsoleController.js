@@ -3,20 +3,42 @@
 
 SU.controller('developerConsoleController', function($scope, apiService) {
     $scope.controller = "remove this";
-    $scope.backend_tests = {
-        "successful_tests": 11,
-        "total_endpoints": 12,
-        "success": false
+    $scope.results = {
+        backend: {},
+        frontend: {}
     };
-    $scope.loading = true;
+    $scope.loading = {
+        frontend: false,
+        backend: false
+    };
 
-    apiService.get('/testresults', null, {
-        preventNotifications: true
-    })
-        .then(function(result) {
-            $scope.$apply(function() {
-                $scope.backend_tests = result;
-                $scope.loading = false;
+    $scope.frontend_tests = {};
+
+    $scope.runTest = function(type) {
+        $scope.loading[type] = true;
+        apiService.get('/test' + type, null, {
+                preventNotifications: true
+            })
+            .then(function(result) {
+                $scope.$apply(function() {
+                    $scope.results[type] = result;
+                    $scope.loading[type] = false;
+                });
             });
-        });
+    };
+
+    $scope.getErrors = function() {
+        apiService.get('/backenderrors', null, {
+                preventNotifications: true
+            })
+            .then(function(result) {
+                $scope.$apply(function() {
+                    $scope.error_list = result;
+                });
+            });
+    };
+
+    $scope.getErrors();
+
+
 });
