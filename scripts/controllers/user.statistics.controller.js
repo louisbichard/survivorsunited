@@ -38,7 +38,9 @@ SU.controller('userManagementController', function($scope, apiService, chartServ
     // AUTOMATICALLY INVOKED
     var refreshUsers = function() {
         $scope.users = [];
-        apiService.get('/users/listall').then(function(users) {
+        apiService.get('/users/listall', null, {
+            preventNotifications: true
+        }).then(function(users) {
 
             $scope.$apply(function() {
 

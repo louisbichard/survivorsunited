@@ -97,6 +97,12 @@ SU.config(function($routeProvider) {
         controller: 'eventCalendarController'
     })
 
+    // CALENDAR
+    .when('/events_by_location', {
+        templateUrl: '../views/events_by_location.html'
+        // TODO: ADD CONTROLLER
+    })
+
     ///////////
     // ADMIN //
     ///////////
@@ -118,7 +124,6 @@ SU.config(function($routeProvider) {
         templateUrl: '../views/user_add.html',
         controller: 'userAddController'
     })
-
 
     // DEVELOPER CONSOLE
     .when('/developer_console', {

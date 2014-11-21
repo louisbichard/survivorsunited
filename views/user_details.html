@@ -8,15 +8,15 @@
                     </div>
                     <!-- SEARCH BOX -->
                     <div class="col-md-4 col-sm-4 col-lg-4 text-center">
-                        <input ng-model="searchText" class="form-control" placeholder="Search users...">
+                        <input ng-model="searchText" class="form-control input-sm" placeholder="Search users...">
                     </div>
                     <!-- CLEAR AND RESET FILTERS -->
                     <div class="col-md-5 col-sm-5 col-lg-5 text-right">
-                        <button ng-click="refreshUsers(true)" type="button" class="btn btn-xs btn-info">
+                        <button ng-click="refreshUsers(true)" type="button" class="btn btn-sm btn-info">
                             Refresh Users&nbsp;
                             <i class="fa fa-refresh"></i>
                         </button>
-                        <button ng-click="clearFilter(true)" type="button" class="btn btn-xs btn-danger">
+                        <button ng-click="clearFilter(true)" type="button" class="btn btn-sm btn-danger">
                             Clear filters&nbsp;
                             <i class="fa fa-remove"></i>
                         </button>
@@ -30,32 +30,32 @@
                         <div class="row">
                             <div class="col-md-4 col-sm-4 col-lg-4">
                                 <div class="btn-group">
-                                    <button type="button" ng-click="setFilter('internal', 'Internal')" class="btn btn-xs btn-default">Internal</button>
-                                    <button type="button" ng-click="setFilter('internal', 'External')" class="btn btn-xs btn-default">External</button>
-                                    <button ng-click="setFilter('internal', 'All')" type="button" class="btn btn-xs btn-default">All</button>
+                                    <button type="button" ng-click="setFilter('internal', 'Internal')" class="btn btn-sm btn-default">Internal</button>
+                                    <button type="button" ng-click="setFilter('internal', 'External')" class="btn btn-sm btn-default">External</button>
+                                    <button ng-click="setFilter('internal', 'All')" type="button" class="btn btn-sm btn-default">All</button>
                                 </div>
                             </div>
                             <!-- ASSIGNED MENTOR FILTER -->
                             <div class="col-md-4 col-sm-4 col-lg-4 text-center">
                                 <div class="btn-group">
-                                    <button ng-click="setFilter('assigned_mentor', 'yes')" type="button" class="btn btn-xs btn-default">Assigned mentor</button>
-                                    <button ng-click="setFilter('assigned_mentor', 'no')" type="button" class="btn btn-xs btn-default">No mentor</button>
-                                    <button ng-click="setFilter('assigned_mentor', 'All')" type="button" class="btn btn-xs btn-default">All</button>
+                                    <button ng-click="setFilter('assigned_mentor', 'yes')" type="button" class="btn btn-sm btn-default">Assigned mentor</button>
+                                    <button ng-click="setFilter('assigned_mentor', 'no')" type="button" class="btn btn-sm btn-default">No mentor</button>
+                                    <button ng-click="setFilter('assigned_mentor', 'All')" type="button" class="btn btn-sm btn-default">All</button>
                                 </div>
                             </div>
 
                             <!-- SEVERITY FILTER -->
                             <div class="col-md-4 col-sm-4 col-lg-4 text-right">
                                 <div class="btn-group">
-                                    <button ng-click="setFilter('severity', 'High')" type="button" class="btn btn-xs btn-danger">
+                                    <button ng-click="setFilter('severity', 'High')" type="button" class="btn btn-sm btn-danger">
                                         High
                                     </button>
-                                    <button ng-click="setFilter('severity', 'Medium')" type="button" class="btn btn-xs btn-warning">Medium
+                                    <button ng-click="setFilter('severity', 'Medium')" type="button" class="btn btn-sm btn-warning">Medium
                                     </button>
-                                    <button ng-click="setFilter('severity', 'Low')" type="button" class="btn btn-xs btn-info">
+                                    <button ng-click="setFilter('severity', 'Low')" type="button" class="btn btn-sm btn-info">
                                         Low
                                     </button>
-                                    <button ng-click="setFilter('severity', 'All')" type="button" class="btn btn-xs btn-default">
+                                    <button ng-click="setFilter('severity', 'All')" type="button" class="btn btn-sm btn-default">
                                         All
                                     </button>
                                 </div>
@@ -81,20 +81,21 @@
                             </div>
 
                             <div ng-repeat="user in filteredResults = (users | internalFilter:filters | severityFilter:filters | assignedMentorFilter:filters | filter:searchText) ">
+                                <br>
                                 <div class="widget">
-                                    <div class="widget-header">
+                                    <div class="widget-header" ng-class="{'red': user.severity_grade === 'High', 'yellow': user.severity_grade === 'Medium', 'blue': user.severity_grade === 'Low'}">
                                         <div class="row">
-                                            <div class="col-md-8 col-sm-8 text-center">
-                                                <p class="text-center">
+                                            <div class="col-md-8 col-sm-8">
+                                                <p class="text-white">
                                                     <strong>{{user.username}}&nbsp;</strong> ({{user._id}}) {{user.date_created}}
                                                 </p>
                                             </div>
-                                            <div class="col-md-4 col-sm-4 text-center">
+                                            <div class="col-md-4 col-sm-4 text-right">
                                                 <div class="btn-group ">
-                                                    <button ng-click="removeUser(user)" type="button" class="btn btn-xs btn-danger">
+                                                    <button ng-click="removeUser(user)" type="button" class="btn btn-sm btn-danger">
                                                         Delete &nbsp;<i class="fa fa-trash"></i>
                                                     </button>
-                                                    <button ng-click="updatedContact(this)" type="button" class="btn btn-xs btn-success">
+                                                    <button ng-click="updatedContact(this)" type="button" class="btn btn-sm btn-success">
                                                         Update &nbsp;<i class="fa fa-plus"></i>
                                                     </button>
                                                 </div>
@@ -106,18 +107,16 @@
                                             <div class="col-md-6 col-sm-6">
                                                 <div class="form-group">
                                                     <label>First name</label>
-                                                    <input ng-model="updated[user._id].first_name" class="form-control" value="{{user.first_name}}" placeholder="First name">
+                                                    <input ng-model="updated[user._id].first_name" class="form-control input-sm" value="{{user.first_name}}" placeholder="First name">
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-6">
                                                 <label>Last name</label>
-                                                <input ng-model="updated[user._id].last_name" class="form-control" value="{{user.last_name}}" placeholder="Last name">
+                                                <input ng-model="updated[user._id].last_name" class="form-control input-sm" value="{{user.last_name}}" placeholder="Last name">
                                             </div>
                                             <div class="col-md-12 col-sm-12">
-                                                <!-- <div class="panel panel-thick-border" ng-class="{'panel-danger': user.severity_grade === 'High', 'panel-warning': user.severity_grade === 'Medium', 'panel-info': user.severity_grade === 'Low'}">
-                                                    <div class="panel-body panel-primary"> -->
                                                 <label>Role</label>
-                                                <select ng-model="updated[user._id].role" class="form-control">
+                                                <select ng-model="updated[user._id].role" class="form-control input-sm">
                                                     <option ng-selected="{{user.role === 'Basic'}}">Basic</option>
                                                     <option ng-selected="{{user.role === 'Mentor'}}">Mentor</option>
                                                     <option ng-selected="{{user.role === 'Admin'}}">Admin</option>
@@ -126,16 +125,19 @@
                                             <!-- CHANGE SEVERITY GRADE -->
                                             <div class="col-md-6 col-sm-6">
                                                 <label>Severity</label>
-                                                <select class="form-control" ng-model="updated[user._id].severity_grade">
+                                                <select class="form-control input-sm" ng-model="updated[user._id].severity_grade">
                                                     <option>Low</option>
                                                     <option>Medium</option>
                                                     <option>High</option>
                                                 </select>
                                             </div>
                                             <div class="col-md-6 col-sm-6">
-                                                <p><Strong>Currently assigned mentor:&nbsp;</strong><!-- TODO: READABLE NAME --></p>
+                                                <p>
+                                                    <Strong>Currently assigned mentor:&nbsp;</strong>
+                                                    <!-- TODO: READABLE NAME -->
+                                                </p>
                                                 <!-- SELECT A MENTOR -->
-                                                <select class="form-control" ng-model="updated[user._id].mentor">
+                                                <select class="form-control input-sm" ng-model="updated[user._id].mentor">
                                                     <option value="{{mentor._id}}" ng-repeat="mentor in mentors">
                                                         {{mentor.first_name}} {{mentor.last_name}}
                                                     </option>
@@ -150,3 +152,6 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+</div>
