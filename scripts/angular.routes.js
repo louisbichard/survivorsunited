@@ -100,7 +100,7 @@ SU.config(function($routeProvider) {
     // CALENDAR
     .when('/events_by_location', {
         templateUrl: '../views/events_by_location.html'
-        // TODO: ADD CONTROLLER
+            // TODO: ADD CONTROLLER
     })
 
     ///////////
@@ -110,7 +110,7 @@ SU.config(function($routeProvider) {
     // USER MANAGEMENT
     .when('/statistics', {
         templateUrl: '../views/statistics.html',
-        controller: 'userManagementController'
+        controller: 'statisticsController'
     })
 
     // USER DETAILS
@@ -134,7 +134,7 @@ SU.config(function($routeProvider) {
     ///////////////
     // DEFAULT //
     ///////////////
-    
+
     .when('/notfound', {
         templateUrl: '../views/notfound.html'
     })

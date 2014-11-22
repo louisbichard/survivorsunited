@@ -1,14 +1,9 @@
 <html ng-app="SU">
-
 <link rel="shortcut icon" href="./assets/survivorsunited.ico" />
 
-
 <head>
-
-
     <title>Survivors United Ltd.</title>
     <!-- STYLES -->
-
     <!-- ================BOOTSTRAP================ -->
     <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
     <!-- ================FONT AWESOME================ -->
@@ -24,11 +19,9 @@
     <link rel="stylesheet" type="text/css" href="styles/lib/animate.css">
 </head>
 
-
 <body ng-controller="mainController">
     <!-- NAVIGATION SIDEBAR -->
     <div id="page-wrapper" ng-class="{'active': !toggle}" ng-cloak>
-
         <!-- NAVIGATION TITLE -->
         <div id="sidebar-wrapper" class="animated bounceInLeft">
             <ul class="sidebar">
@@ -38,13 +31,10 @@
                         <span class="menu-icon glyphicon glyphicon-transfer"></span>
                     </a>
                 </li>
-
                 <!-- SEARCH -->
-
                 <!--                 <li class="sidebar-list">
                     <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Search">
                 </li> -->
-
                 <!-- HIDE ALL USABLE CONTENT AS ANON -->
                 <!-- MAIN -->
                 <li class="sidebar-title">
@@ -56,23 +46,18 @@
                 <li class="sidebar-list" ng-class="{'sidebar-selected': current_location === 'mentor'}">
                     <a href="#mentor">Mentor <span class="menu-icon fa fa-male"></span></a>
                 </li>
-
                 <li class="sidebar-list" ng-class="{'sidebar-selected': current_location === 'mentees'}">
                     <a href="#mentees">Mentees <span class="menu-icon fa fa-users"></span></a>
                 </li>
-
                 <li class="sidebar-list" ng-class="{'sidebar-selected': current_location === 'search'}">
                     <a href="#search">Search (beta) <span class="menu-icon fa fa-search"></span></a>
                 </li>
-
                 <li class="sidebar-list" ng-class="{'sidebar-selected': current_location === 'notifications'}">
                     <a href="#notifications">Noificatons (beta) <span class="menu-icon fa fa-bell-o"></span></a>
                 </li>
-
                 <li class="sidebar-list" ng-class="{'sidebar-selected': current_location === 'faq'}">
                     <a href="#faq">FAQ (beta) <span class="menu-icon fa fa-list"></span></a>
                 </li>
-
                 <!-- ACCOUNT -->
                 <li class="sidebar-title">
                     <span>ACCOUNT</span>
@@ -80,12 +65,10 @@
                 <li class="sidebar-list" ng-class="{'sidebar-selected': current_location === 'account'}">
                     <a href="#account">User account <span class="menu-icon fa fa-user"></span></a>
                 </li>
-
                 <!-- EVENTS -->
                 <li class="sidebar-title">
                     <span>EVENTS</span>
                 </li>
-
                 <li class="sidebar-list" ng-class="{'sidebar-selected': current_location === 'create_event'}">
                     <a href="#create_event">Create <span class="menu-icon fa fa-plus"></span></a>
                 </li>
@@ -98,11 +81,9 @@
                 <li class="sidebar-list" ng-class="{'sidebar-selected': current_location === 'watched_events'}">
                     <a href="#watched_events">Watched <span class="menu-icon fa fa-eye"></span></a>
                 </li>
-
                 <li class="sidebar-list" ng-class="{'sidebar-selected': current_location === 'events_by_location'}">
                     <a href="#events_by_location">By location (beta) <span class="menu-icon fa fa-map-marker"></span></a>
                 </li>
-
                 <!-- ADMIN -->
                 <li class="sidebar-title">
                     <span>ADMIN</span>
@@ -120,7 +101,6 @@
                     <a href="#developer_console">Developer console<span class="menu-icon fa fa-cogs"></span></a>
                 </li>
             </ul>
-
             <div class="sidebar-footer">
                 <div class="col-xs-4">
                     <a href="#logout" ng-click="mainLogOut()" target="_blank">
@@ -139,12 +119,9 @@
                 </div>
             </div>
         </div>
-
         <!-- End Sidebar -->
-
         <div id="content-wrapper">
             <div class="page-content">
-
                 <!-- Header Bar -->
                 <!-- 
                 <div class="row header">
@@ -166,9 +143,7 @@
                         </div>
                     </div>
                 </div> -->
-
                 <!-- End Header Bar -->
-
                 <!-- Main Content -->
                 <br>
                 <div class="row">
@@ -176,34 +151,21 @@
                         <div ng-view class="animated fadeIn"></div>
                     </div>
                 </div>
-
-
-
             </div>
             <!-- End Page Content -->
         </div>
         <!-- End Content Wrapper -->
     </div>
     <!-- End Page Wrapper -->
-
-
-
     <!-- End Main Content -->
-
-
-
 </body>
-
 <!-- SCRIPTS -->
-
-
 <!-- ================NPM INSTALLED PACKAGES============== -->
 <script src="./scripts/bundle.js"></script>
 <!-- ================TOASTR NOTIFICATIONS================ -->
 <script src="bower_components/toastr/toastr.min.js"></script>
 <!-- ================GOOGLE MAPS================ -->
 <script src="https://maps.googleapis.com/maps/api/js"></script>
-
 <!-- ================ANGULAR LIBRARIES================ -->
 <!-- TODO: MAKE THIS WORK -->
 <!-- 
@@ -235,6 +197,7 @@
 <script src="./scripts/directives/keypress.enter.directive.js"></script>
 <script src="./scripts/directives/spinner.directive.js"></script>
 <!-- ================ANGULAR SERVICES================ -->
+<script src="./scripts/services/user.data.service.js"></script>
 <script src="./scripts/services/chart.service.js"></script>
 <script src="./scripts/services/date.service.js"></script>
 <script src="./scripts/services/api.service.js"></script>

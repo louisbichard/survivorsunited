@@ -25,7 +25,7 @@ SU.service("chartService", function($http) {
     this.blankSeries = function(length) {
 
         // CREATE SERIES (JUST AN ARRAY OF EMPTY STRINGS)
-        if (!length) {
+        if (!_.isNumber(length)) {
             throw new Error('No length passed to blankSeries function in chartService');
         }
 
@@ -67,7 +67,8 @@ SU.service("chartService", function($http) {
                 var index = $.inArray(date_created, that.currentValues(prev));
                 if (index > -1) {
                     prev[index].y[0] ++;
-                } else {
+                }
+                else {
                     prev.push({
                         x: date_created,
                         y: [1]

@@ -63,13 +63,42 @@ describe('accountController', function() {
     });
 
     describe('userFieldChanged', function() {
-        it('runs', function() {
+        it('throws error', function() {
+            var controller = createController();
+            expect(function() {
+                    scope.userFieldChanged();
+                })
+                .toThrow();
+        });
+
+        it('runs with no _id', function() {
             var controller = createController();
             scope.user = {
-                _id: "asdasdas"
+                _id: undefined
+            };
+
+            scope.userFieldChanged();
+
+            expect(function() {
+                    scope.update_params();
+                })
+                .toBeDefined();
+        });
+
+        it('runs with _id', function() {
+            var controller = createController();
+            spyOn(utilityService, 'objectDifferences');
+            scope.user = {
+                _id: 'some id'
             };
             scope.userFieldChanged();
-            expect(apiService.get)
+
+            expect(function() {
+                    scope.update_params();
+                })
+                .toBeDefined();
+
+            expect(utilityService.objectDifferences)
                 .toHaveBeenCalled();
         });
     });

@@ -15,13 +15,12 @@ SU.controller('accountController', function($scope, apiService, $timeout, utilit
             });
     };
 
-
     // ENSURE THAT THE REVIEW PANEL IS KEPT UP TO DATE
     $scope.userFieldChanged = function() {
         var current_user = _.clone($scope.user || {});
 
         // PASS USER ID THROUGH
-        if(!$scope.user || !$scope.user._id) throw new Error('No user ID found to set update fields');
+        if (!$scope.user) throw new Error('No user ID found to set update fields');
         $scope.user_id = $scope.user._id || false;
 
         // SET UPDATE AS THE DIRTY PARAMETERS
@@ -36,7 +35,8 @@ SU.controller('accountController', function($scope, apiService, $timeout, utilit
         else $scope.update_params.user_id = $scope.user_id;
 
         // ENSURE THAT THEY HAVE ALTERED SOME FIELDS
-        if (_.keys($scope.update_params).length <= 1) {
+        if (_.keys($scope.update_params)
+            .length <= 1) {
             notifyService.warning('You have not updated any fields');
         }
 

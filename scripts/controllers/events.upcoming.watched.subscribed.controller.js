@@ -6,10 +6,12 @@ SU.controller('upcomingWatchedSubscribedEventsController', function($scope, apiS
     if ($location.$$path === '/watched_events') {
         $scope.title = "Watched";
         get_eventsapi = "/events/watching/current";
-    } else if ($location.$$path === '/upcoming_events') {
+    }
+    else if ($location.$$path === '/upcoming_events') {
         $scope.title = "Upcoming";
         get_eventsapi = "/events/listall";
-    } else {
+    }
+    else {
         //redirect
         throw new Error('url path incorrect');
     }
@@ -26,11 +28,7 @@ SU.controller('upcomingWatchedSubscribedEventsController', function($scope, apiS
 
     $scope.formatDates = function(result) {
         result = result || [];
-        $scope.$apply(function() {
-            $scope.events = _.map(result, function(event_item) {
-                return dateService.formatDates(event_item, ['start', 'end', 'date_created']);
-            });
-        });
+        $scope.events = dateService.formatDatesArray(result, ['start', 'end', 'date_created']);
     };
 
     //ADD USER AS WATCHING OR ATTENDING AN EVENT
@@ -73,6 +71,5 @@ SU.controller('upcomingWatchedSubscribedEventsController', function($scope, apiS
     };*/
 
     $scope.bootstrap();
-
 
 });

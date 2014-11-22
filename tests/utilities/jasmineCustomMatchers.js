@@ -8,5 +8,15 @@ var customMatchers = {
                 return result;
             }
         };
+    },
+    toBePromise: function(util, customEqualityTesters) {
+        return {
+            compare: function(actual, expected) {
+                var result = {};
+                // A LITTLE BIT OF A HACK, JUST CHECK IF THE OBJECT HAS THIS OBSCURE BLUEBIRD PROP, SHOULD BE OKAY.    
+                result.pass = _.isNumber(actual._bitField);
+                return result;
+            }
+        };
     }
 };

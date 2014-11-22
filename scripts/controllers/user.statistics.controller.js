@@ -1,4 +1,4 @@
-SU.controller('userManagementController', function($scope, apiService, chartService) {
+SU.controller('statisticsController', function($scope, apiService, chartService, dateService, userDataService) {
 
     $scope.signup_chart_config = {};
     $scope.signup_chart_data = {};
@@ -12,73 +12,54 @@ SU.controller('userManagementController', function($scope, apiService, chartServ
     };
     $scope.severity_chart_data = {};
 
-
-    // USERS WITHOUT MENTORS
-    // ABSTRACT INTO SERVICE
-
-    var usersWithoutMentors = function(users) {
-        $scope.without_mentors = _.reduce(users, function(prev, user) {
-            if (!user.mentor) {
-                prev++;
-            }
-            return prev;
-        }, 0);
+    $scope.setupUsers = function(users) {
+        $scope.users = dateService.formatDatesArray(users, ['date_created']);
     };
 
-    // ABSTRACT OUT INTO SERVICE
-    $scope.countRole = function(role, users) {
-        if (!role || !users) {
-            throw new Error('No role or users passed to countrole function');
-        }
-        return _.filter(users, function(user) {
-            return user.role === role;
-        }).length;
+    $scope.setupUserCount = function() {
+        $scope.user_count = $scope.users.length;
+    };
+
+    $scope.setupRoleCount = function() {
+        $scope.roleCounts = {
+            admin: userDataService.countRole('Admin', $scope.users),
+            mentor: userDataService.countRole('Mentor', $scope.users),
+            basic: userDataService.countRole('basic', $scope.users)
+        };
+    };
+
+    $scope.setupUsersWithoutMentors = function() {
+        $scope.without_mentors = userDataService.countMissingMentors($scope.users);
+    };
+
+    $scope.setupSeverityChart = function() {
+        $scope.severity_chart_data = {
+            data: chartService.userSeverityGrade($scope.users),
+            series: chartService.blankSeries($scope.users.length)
+        };
+    };
+
+    $scope.setupSignupChart = function() {
+        $scope.signup_chart_data = {
+            data: chartService.userCreationDates($scope.users),
+            series: chartService.blankSeries($scope.users.length)
+        };
+
     };
 
     // AUTOMATICALLY INVOKED
-    var refreshUsers = function() {
+    $scope.refreshUsers = function() {
         $scope.users = [];
         apiService.get('/users/listall', null, {
-            preventNotifications: true
-        }).then(function(users) {
+                preventNotifications: true
+            })
+            .then($scope.setupUsers)
+            .then($scope.setupUserCount)
+            .then($scope.setupRoleCount)
+            .then($scope.setupUsersWithoutMentors)
+            .then($scope.setupSeverityChart)
+            .then($scope.setupSignupChart);
+    };
 
-            $scope.$apply(function() {
-
-                //SETUP USERS FOR LIST
-                $scope.users = users;
-
-                //SETUP USER RESULT COUNT
-                $scope.user_count = users.length;
-                
-                // COUNT ALL ROLES
-                $scope.roleCounts = {
-                    admin: $scope.countRole('Admin', users),
-                    mentor: $scope.countRole('Mentor', users),
-                    basic: $scope.countRole('basic', users)
-                };
-
-                //SETUP USERS WITHOUT MENTORS
-                usersWithoutMentors(users);
-
-                //SETUP SEVERITY CHART
-                $scope.severity_chart_data = {
-                    data: chartService.userSeverityGrade(users),
-                    series: chartService.blankSeries(users.length)
-                };
-            });
-
-
-            //SETUP CREATION DATE CHART
-
-            /*            $scope.signup_chart_data = {
-                            data: chartService.userCreationDates(users),
-                            series: chartService.blankSeries(users.length)
-                        };*/
-
-
-
-
-
-        });
-    }();
+    $scope.refreshUsers();
 });

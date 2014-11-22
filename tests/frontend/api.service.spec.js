@@ -21,23 +21,33 @@ describe('apiService', function() {
     });
 
     beforeEach(inject(function(_apiService_, _$httpBackend_, _notifyService_) {
+        jasmine.addMatchers(customMatchers);
         apiService = _apiService_;
         notifyService = _notifyService_;
         $httpBackend = _$httpBackend_;
     }));
 
+    describe('callAPI', function() {
+        it('returns promise', function() {
+            expect(apiService.callAPI('/someroute', null, null, 'get'))
+                .toBePromise();
+        });
+    });
+
     // GET FUNCTION
     describe('Get function', function() {
         it('Throws error when unsuccessful', function() {
             expect(function() {
-                apiService.get();
-            }).toThrow();
+                    apiService.get();
+                })
+                .toThrow();
         });
 
         it('Passes successfully', function() {
             spyOn(apiService, 'callAPI');
             apiService.get('/events/add');
-            expect(apiService.callAPI).toHaveBeenCalled();
+            expect(apiService.callAPI)
+                .toHaveBeenCalled();
         });
     });
 
@@ -45,69 +55,81 @@ describe('apiService', function() {
     describe('POST function', function() {
         it('Throws error when unsuccessful', function() {
             expect(function() {
-                apiService.post();
-            }).toThrow();
+                    apiService.post();
+                })
+                .toThrow();
         });
 
         it('Passes successfully', function() {
             spyOn(apiService, 'callAPI');
             apiService.post('/events/add');
-            expect(apiService.callAPI).toHaveBeenCalled();
+            expect(apiService.callAPI)
+                .toHaveBeenCalled();
         });
     });
 
     describe('handleFailedResponse', function() {
         it("throws error without any params", function() {
             expect(function() {
-                apiService.handleFailedResponse();
-            }).toThrow();
+                    apiService.handleFailedResponse();
+                })
+                .toThrow();
         });
         it("when params are correct", function() {
             spyOn(notifyService, 'error');
             spyOn(fake_bluebird, 'reject');
             apiService.handleFailedResponse({}, {}, {}, {}, fake_bluebird.reject);
-            expect(notifyService.error).toHaveBeenCalled();
-            expect(fake_bluebird.reject).toHaveBeenCalled();
+            expect(notifyService.error)
+                .toHaveBeenCalled();
+            expect(fake_bluebird.reject)
+                .toHaveBeenCalled();
         });
     });
 
     describe('handleSuccessfulResponse', function() {
         it("throws error without any params", function() {
             expect(function() {
-                apiService.handleSuccessfulResponse();
-            }).toThrow();
+                    apiService.handleSuccessfulResponse();
+                })
+                .toThrow();
         });
         it("when success true", function() {
             spyOn(apiService, 'handleSuccessfulAPI');
             apiService.handleSuccessfulResponse({
                 success: true
             }, {}, {}, {}, {}, {}, {}, {});
-            expect(apiService.handleSuccessfulAPI).toHaveBeenCalled();
+            expect(apiService.handleSuccessfulAPI)
+                .toHaveBeenCalled();
         });
         it("when success false", function() {
             spyOn(apiService, 'handleFailedAPI');
             apiService.handleSuccessfulResponse({
                 success: false
             }, {}, {}, {}, {}, {}, {}, {});
-            expect(apiService.handleFailedAPI).toHaveBeenCalled();
+            expect(apiService.handleFailedAPI)
+                .toHaveBeenCalled();
         });
     });
-
 
     describe('handleFailedAPI', function() {
         it("throws error without any params", function() {
             expect(function() {
-                apiService.handleFailedAPI();
-            }).toThrow();
+                    apiService.handleFailedAPI();
+                })
+                .toThrow();
         });
         it("when no error message and notifications on as default", function() {
             spyOn(notifyService, 'error');
             spyOn(fake_bluebird, 'reject');
             apiService.handleFailedAPI({}, fake_bluebird.reject, {});
-            expect(notifyService.error).toHaveBeenCalled();
-            expect(notifyService.error.calls.count()).toEqual(1);
-            expect(fake_bluebird.reject).toHaveBeenCalled();
-            expect(fake_bluebird.reject).toHaveBeenCalledWith(false);
+            expect(notifyService.error)
+                .toHaveBeenCalled();
+            expect(notifyService.error.calls.count())
+                .toEqual(1);
+            expect(fake_bluebird.reject)
+                .toHaveBeenCalled();
+            expect(fake_bluebird.reject)
+                .toHaveBeenCalledWith(false);
         });
         it("when no error message and notifications false", function() {
             spyOn(notifyService, 'error');
@@ -115,9 +137,12 @@ describe('apiService', function() {
             apiService.handleFailedAPI({
                 preventNotifications: true
             }, fake_bluebird.reject, {});
-            expect(notifyService.error.calls.count()).toEqual(0);
-            expect(fake_bluebird.reject).toHaveBeenCalled();
-            expect(fake_bluebird.reject).toHaveBeenCalledWith(false);
+            expect(notifyService.error.calls.count())
+                .toEqual(0);
+            expect(fake_bluebird.reject)
+                .toHaveBeenCalled();
+            expect(fake_bluebird.reject)
+                .toHaveBeenCalledWith(false);
         });
         it("when error message and notifications on as default", function() {
             spyOn(notifyService, 'error');
@@ -125,10 +150,14 @@ describe('apiService', function() {
             apiService.handleFailedAPI({}, fake_bluebird.reject, {
                 error_message: 'something'
             });
-            expect(notifyService.error).toHaveBeenCalled();
-            expect(notifyService.error.calls.count()).toEqual(1);
-            expect(fake_bluebird.reject).toHaveBeenCalled();
-            expect(fake_bluebird.reject).toHaveBeenCalledWith('something');
+            expect(notifyService.error)
+                .toHaveBeenCalled();
+            expect(notifyService.error.calls.count())
+                .toEqual(1);
+            expect(fake_bluebird.reject)
+                .toHaveBeenCalled();
+            expect(fake_bluebird.reject)
+                .toHaveBeenCalledWith('something');
         });
         it("when error message and notifications off as default", function() {
             spyOn(notifyService, 'error');
@@ -138,16 +167,19 @@ describe('apiService', function() {
             }, fake_bluebird.reject, {
                 error_message: 'something'
             });
-            expect(notifyService.error.calls.count()).toEqual(0);
-            expect(fake_bluebird.reject).toHaveBeenCalled();
+            expect(notifyService.error.calls.count())
+                .toEqual(0);
+            expect(fake_bluebird.reject)
+                .toHaveBeenCalled();
         });
     });
 
     describe('handleSuccessfulAPI', function() {
         it("throws error without any params", function() {
             expect(function() {
-                apiService.handleSuccessfulAPI();
-            }).toThrow();
+                    apiService.handleSuccessfulAPI();
+                })
+                .toThrow();
         });
         it("runs successfully with notification", function() {
             spyOn(notifyService, 'success');
@@ -157,25 +189,33 @@ describe('apiService', function() {
                     something: "whatever"
                 }
             });
-            expect(notifyService.success).toHaveBeenCalled();
-            expect(fake_bluebird.resolve).toHaveBeenCalled();
-            expect(fake_bluebird.resolve).toHaveBeenCalledWith({
-                something: "whatever"
-            });
+            expect(notifyService.success)
+                .toHaveBeenCalled();
+            expect(fake_bluebird.resolve)
+                .toHaveBeenCalled();
+            expect(fake_bluebird.resolve)
+                .toHaveBeenCalledWith({
+                    something: "whatever"
+                });
         });
         it("runs successfully without notification", function() {
             spyOn(notifyService, 'success');
             spyOn(fake_bluebird, 'resolve');
-            apiService.handleSuccessfulAPI({preventNotifications: true}, fake_bluebird.resolve, {
+            apiService.handleSuccessfulAPI({
+                preventNotifications: true
+            }, fake_bluebird.resolve, {
                 result: {
                     something: "whatever"
                 }
             });
-            expect(notifyService.success.calls.count()).toEqual(0);
-            expect(fake_bluebird.resolve).toHaveBeenCalled();
-            expect(fake_bluebird.resolve).toHaveBeenCalledWith({
-                something: "whatever"
-            });
+            expect(notifyService.success.calls.count())
+                .toEqual(0);
+            expect(fake_bluebird.resolve)
+                .toHaveBeenCalled();
+            expect(fake_bluebird.resolve)
+                .toHaveBeenCalledWith({
+                    something: "whatever"
+                });
         });
     });
 
