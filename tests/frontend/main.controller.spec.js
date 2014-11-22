@@ -68,7 +68,7 @@ describe('main controller', function() {
             // ENSURE THAT IT'S SETUP CORRECTLY
             expect(scope.anonymous_user).toBeUndefined();
 
-            scope.successfullLogout();
+            scope.successfulLogout();
             expect(scope.anonymous_user).toBe(true);
         });
     });
@@ -78,7 +78,7 @@ describe('main controller', function() {
         it('are setup', function() {
             var controller = createController();
 
-            scope.successfullLogin();
+            scope.successfulLogin();
             expect(scope.anonymous_user).toBe(false);
         });
     });

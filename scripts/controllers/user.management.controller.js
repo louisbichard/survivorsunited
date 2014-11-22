@@ -50,40 +50,55 @@ SU.controller('userDetailsController', function($scope, apiService, utilityServi
         $scope.filters[index].value = value;
     };
 
+    $scope.spliceUser = function(users_index) {
+        if (!_.isNumber(users_index)) {
+            throw new Error('No user index found to remove');
+        }
+        $scope.$apply(function() {
+            $scope.users = $scope.users;
+            $scope.users.splice(users_index, 1);
+        });
+    };
+
+    $scope.removeUserFromScope = function(user) {
+        if (!user) {
+            throw new Error("No user found in removeUserFromScope");
+        }
+
+        var users_index = _.findIndex($scope.users, user);
+        $scope.users[users_index].removed = true;
+
+        // REMOVE USER FROM SCOPE AFTER DELAY
+        _.delay(_.partial($scope.spliceUser, users_index), 1000);
+    };
+
     $scope.removeUser = function(user) {
 
         if (!user || !user._id) {
             throw new Error('user and user id must be passed to removeUser in userDetailsController');
         }
 
-        // TODO: COMPLETE AS DIRECTIVE
-        //notifyService.question("Confirm deleting user?");
+        // TODO: ADD CONFIRMATION MESSAGE 
 
         return apiService
-
-        // CALL API
             .post('/user/delete', {
-            id: user._id
-        })
+                id: user._id
+            }, {
+                preventNotifications: true
+            })
 
-        // FIND USER INDEX FROM SCOPE
-        .then(function() {
-            return _.findIndex($scope.users, user);
-        })
+        // NOTIFY
+        .then(_.partial(notifyService.success, 'Removed user'))
 
         // REMOVE FROM SCOPE
-        .then(function(index_to_remove) {
-            $scope.$apply(function() {
-                $scope.users.splice(index_to_remove, 1);
-            });
-        });
+        .then(_.partial($scope.removeUserFromScope, user));
+
     };
 
     $scope.updatedContact = function(localScope) {
-        if (!localScope.user._id) {
+        if (!localScope || !localScope.user._id) {
             throw new Error('localScope did not have all correct values to update contact in updatedContact');
         }
-
         var user_id = localScope.user._id;
         var changes = $scope.updated[user_id];
         changes.user_id = changes._id;
@@ -91,35 +106,40 @@ SU.controller('userDetailsController', function($scope, apiService, utilityServi
         apiService.post('/user/update', changes);
     };
 
+    $scope.filterMentors = function(user) {
+        return user.mentor;
+    };
+
+    $scope.createUpdateObject = function(user) {
+        $scope.updated[user._id] = user;
+    };
+
+    $scope.setupScope = function(result) {
+        $scope.$apply(function() {
+            $scope.users = result;
+            $scope.original_users = result;
+
+            // TODO: FILTER BY ROLE TYPE
+            $scope.mentors = _.filter($scope.filterMentors);
+
+            // THIS TAKES ALL INCOMING USERS AND CREATES AN OBJECT BASED ON ID'S SO THAT  USERS
+            // CAN BE UPDATED INDEPEDENTLY
+            _.each(result, $scope.createUpdateObject);
+        });
+    };
+
+    $scope.refreshNotification = function(notification) {
+        if (notification) notifyService.success('Refreshed users');
+    };
+
     // AUTOMATICALLY INVOKED
     $scope.refreshUsers = function(notification) {
+
         apiService.get('/users/listall', null, {
-            preventNotifications: true
-        })
-
-        // GET RESULT DATA
-        .then(function(result) {
-            if (notification) notifyService.success('Users refreshed');
-            return result;
-        })
-
-        // ASSIGN RESULTS TO SCOPE VARIABLES
-        .then(function(result) {
-            $scope.$apply(function() {
-                $scope.users = result;
-                $scope.original_users = result;
-
-
-                // TODO: FILTER BY ROLE TYPE
-                $scope.mentors = _.filter(result, function(user) {
-                    return user.mentor;
-                });
-
-                _.each(result, function(user) {
-                    $scope.updated[user._id] = user;
-                });
-            });
-        });
+                preventNotifications: true
+            })
+            .then($scope.setupScope)
+            .then(_.partial($scope.refreshNotification, notification));
     };
 
     // LAUNCH INIT SCOPE FUNCTIONS

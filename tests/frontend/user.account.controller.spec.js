@@ -27,12 +27,14 @@ describe('accountController', function() {
         utilityService = _utilityService_;
 
         // MOCK A RETURNED PROMISE
-        spyOn(apiService, 'get').and.returnValue(new Promise(function(resolve) {
-            return resolve({});
-        }));
-        spyOn(apiService, 'post').and.returnValue(new Promise(function(resolve) {
-            return resolve();
-        }));
+        spyOn(apiService, 'get')
+            .and.returnValue(new Promise(function(resolve) {
+                return resolve({});
+            }));
+        spyOn(apiService, 'post')
+            .and.returnValue(new Promise(function(resolve) {
+                return resolve();
+            }));
 
         createController = function() {
             return $controller('accountController', {
@@ -44,25 +46,31 @@ describe('accountController', function() {
     describe('constants', function() {
         it('are setup', function() {
             var controller = createController();
-            expect(scope.user_original).toBeDefined();
+            expect(scope.user_original)
+                .toBeDefined();
         });
     });
 
     describe('bootstrap', function() {
         it('runs', function() {
             var controller = createController();
-            expect(scope.users).toBeUndefined();
+            expect(scope.users)
+                .toBeUndefined();
             scope.bootstrap();
-            expect(apiService.get).toHaveBeenCalled();
+            expect(apiService.get)
+                .toHaveBeenCalled();
         });
     });
 
     describe('userFieldChanged', function() {
         it('runs', function() {
             var controller = createController();
-            scope.user = {_id: "asdasdas"};
+            scope.user = {
+                _id: "asdasdas"
+            };
             scope.userFieldChanged();
-            expect(apiService.get).toHaveBeenCalled();
+            expect(apiService.get)
+                .toHaveBeenCalled();
         });
     });
 
@@ -70,8 +78,9 @@ describe('accountController', function() {
         it('calls error when no user_id', function() {
             var controller = createController();
             expect(function() {
-                scope.updateContact();
-            }).toThrow();
+                    scope.updateContact();
+                })
+                .toThrow();
         });
         it('calls warning when no updates found', function() {
             var controller = createController();
@@ -81,7 +90,8 @@ describe('accountController', function() {
             };
             scope.user_id = 'some value';
             scope.updateContact();
-            expect(notifyService.warning).toHaveBeenCalled();
+            expect(notifyService.warning)
+                .toHaveBeenCalled();
         });
         it('calls update when there are updates found', function() {
             var controller = createController();
@@ -92,7 +102,8 @@ describe('accountController', function() {
             };
             scope.user_id = 'some value';
             scope.updateContact();
-            expect(apiService.post).toHaveBeenCalled();
+            expect(apiService.post)
+                .toHaveBeenCalled();
         });
     });
 

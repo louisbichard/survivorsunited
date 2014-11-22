@@ -81,7 +81,7 @@ SU.config(function($routeProvider) {
 
     // CREATE EVENT
     .when('/create_event', {
-        templateUrl: '../views/create_event.html',
+        templateUrl: '../views/add_event.html',
         controller: 'addEventController'
     })
 

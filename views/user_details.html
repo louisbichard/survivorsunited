@@ -21,44 +21,35 @@
                             <i class="fa fa-remove"></i>
                         </button>
                     </div>
-
-
                 </div>
                 <div class="row">
                     <div class="col-md-12 col-sm-12">
-                        <!-- INTERNAL/EXTERNAL FILTER -->
-                        <div class="row">
-                            <div class="col-md-4 col-sm-4 col-lg-4">
-                                <div class="btn-group">
-                                    <button type="button" ng-click="setFilter('internal', 'Internal')" class="btn btn-sm btn-default">Internal</button>
-                                    <button type="button" ng-click="setFilter('internal', 'External')" class="btn btn-sm btn-default">External</button>
-                                    <button ng-click="setFilter('internal', 'All')" type="button" class="btn btn-sm btn-default">All</button>
-                                </div>
+                        <div class="btn-toolbar">
+                            <!-- INTERNAL/EXTERNAL FILTER -->
+                            <div class="btn-group text-center">
+                                <button type="button" ng-click="setFilter('internal', 'Internal')" class="btn btn-sm btn-default">Internal</button>
+                                <button type="button" ng-click="setFilter('internal', 'External')" class="btn btn-sm btn-default">External</button>
+                                <button ng-click="setFilter('internal', 'All')" type="button" class="btn btn-sm btn-default">All</button>
                             </div>
                             <!-- ASSIGNED MENTOR FILTER -->
-                            <div class="col-md-4 col-sm-4 col-lg-4 text-center">
-                                <div class="btn-group">
-                                    <button ng-click="setFilter('assigned_mentor', 'yes')" type="button" class="btn btn-sm btn-default">Assigned mentor</button>
-                                    <button ng-click="setFilter('assigned_mentor', 'no')" type="button" class="btn btn-sm btn-default">No mentor</button>
-                                    <button ng-click="setFilter('assigned_mentor', 'All')" type="button" class="btn btn-sm btn-default">All</button>
-                                </div>
+                            <div class="btn-group">
+                                <button ng-click="setFilter('assigned_mentor', 'yes')" type="button" class="btn btn-sm btn-default">Assigned mentor</button>
+                                <button ng-click="setFilter('assigned_mentor', 'no')" type="button" class="btn btn-sm btn-default">No mentor</button>
+                                <button ng-click="setFilter('assigned_mentor', 'All')" type="button" class="btn btn-sm btn-default">All</button>
                             </div>
-
                             <!-- SEVERITY FILTER -->
-                            <div class="col-md-4 col-sm-4 col-lg-4 text-right">
-                                <div class="btn-group">
-                                    <button ng-click="setFilter('severity', 'High')" type="button" class="btn btn-sm btn-danger">
-                                        High
-                                    </button>
-                                    <button ng-click="setFilter('severity', 'Medium')" type="button" class="btn btn-sm btn-warning">Medium
-                                    </button>
-                                    <button ng-click="setFilter('severity', 'Low')" type="button" class="btn btn-sm btn-info">
-                                        Low
-                                    </button>
-                                    <button ng-click="setFilter('severity', 'All')" type="button" class="btn btn-sm btn-default">
-                                        All
-                                    </button>
-                                </div>
+                            <div class="btn-group">
+                                <button ng-click="setFilter('severity', 'High')" type="button" class="btn btn-sm btn-danger">
+                                    High
+                                </button>
+                                <button ng-click="setFilter('severity', 'Medium')" type="button" class="btn btn-sm btn-warning">Medium
+                                </button>
+                                <button ng-click="setFilter('severity', 'Low')" type="button" class="btn btn-sm btn-info">
+                                    Low
+                                </button>
+                                <button ng-click="setFilter('severity', 'All')" type="button" class="btn btn-sm btn-default">
+                                    All
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -72,17 +63,14 @@
                             Total results: {{filteredResults.length}}
                         </div>
                         <hr>
-
                         <div class="col-md-12 col-sm-12">
-
                             <!-- IF NO RESULTS FOUND -->
                             <div ng-hide="filteredResults.length">
                                 <p>No results found, please broaden your search criteria</p>
                             </div>
-
                             <div ng-repeat="user in filteredResults = (users | internalFilter:filters | severityFilter:filters | assignedMentorFilter:filters | filter:searchText) ">
                                 <br>
-                                <div class="widget">
+                                <div class="widget animated" ng-class="{'fadeOut': user.removed}">
                                     <div class="widget-header" ng-class="{'red': user.severity_grade === 'High', 'yellow': user.severity_grade === 'Medium', 'blue': user.severity_grade === 'Low'}">
                                         <div class="row">
                                             <div class="col-md-8 col-sm-8">
@@ -142,7 +130,6 @@
                                                         {{mentor.first_name}} {{mentor.last_name}}
                                                     </option>
                                                 </select>
-
                                             </div>
                                         </div>
                                     </div>

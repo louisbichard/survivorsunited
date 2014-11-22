@@ -20,14 +20,22 @@ describe('userManagement controller', function() {
         notifyService = _notifyService_;
         scope = $rootScope.$new();
 
-
         apiService = _apiService_;
-        spyOn(apiService, "post").and.callFake(
-            function() {
-                new Promise(function(resolve, reject) {
-                    return resolve();
-                });
-            });
+
+        // MOCK A RETURNED PROMISE
+        spyOn(apiService, 'get')
+            .and.returnValue(new Promise(function(resolve) {
+                return resolve({});
+            }));
+        spyOn(apiService, 'post')
+            .and.returnValue(new Promise(function(resolve) {
+                return resolve();
+            }));
+
+        spyOn(notifyService, 'success')
+            .and.returnValue(new Promise(function(resolve) {
+                return resolve();
+            }));
 
         createController = function() {
             return $controller('userDetailsController', {
@@ -40,9 +48,12 @@ describe('userManagement controller', function() {
     describe('default params', function() {
         it('are setup', function() {
             var controller = createController();
-            expect(scope.users).toBeDefined();
-            expect(scope.updated).toBeDefined();
-            expect(scope.filters).toBeDefined();
+            expect(scope.users)
+                .toBeDefined();
+            expect(scope.updated)
+                .toBeDefined();
+            expect(scope.filters)
+                .toBeDefined();
         });
     });
 
@@ -52,43 +63,70 @@ describe('userManagement controller', function() {
             var controller = createController();
             scope.searchText = 'dummy search';
             scope.clearFilter();
-            expect(scope.filters[0].name).toBe('internal');
-            expect(scope.filters[1].name).toBe('severity');
-            expect(scope.filters[2].name).toBe('assigned_mentor');
-            expect(scope.filters[3].name).toBe('sort');
-            expect(scope.searchText).toBe('');
+            expect(scope.filters[0].name)
+                .toBe('internal');
+            expect(scope.filters[1].name)
+                .toBe('severity');
+            expect(scope.filters[2].name)
+                .toBe('assigned_mentor');
+            expect(scope.filters[3].name)
+                .toBe('sort');
+            expect(scope.searchText)
+                .toBe('');
         });
 
         it('doesnt notify if not required', function() {
             var controller = createController();
-            spyOn(notifyService, 'success');
             scope.clearFilter();
-            expect(notifyService.success.calls.count()).toEqual(0);
+            expect(notifyService.success.calls.count())
+                .toEqual(0);
         });
 
         it('notifies if required', function() {
             var controller = createController();
             spyOn(notifyService, 'info');
             scope.clearFilter(true);
-            expect(notifyService.info).toHaveBeenCalled();
-            expect(notifyService.info).toHaveBeenCalledWith('Search filters cleared');
+            expect(notifyService.info)
+                .toHaveBeenCalled();
+            expect(notifyService.info)
+                .toHaveBeenCalledWith('Search filters cleared');
         });
     });
-
 
     // UPDATED CONTACT 
     describe('updatedContact function', function() {
         it('throws error when localScope is incorrect', function() {
             var controller = createController();
             expect(function() {
-                scope.updatedContact();
-            }).toThrow();
+                    scope.updatedContact();
+                })
+                .toThrow();
 
             expect(function() {
-                scope.updatedContact({
-                    user: {}
-                });
-            }).toThrow();
+                    scope.updatedContact({
+                        user: {}
+                    });
+                })
+                .toThrow();
+        });
+    });
+
+    describe('refreshUsers', function() {
+        it('throws error when localScope is incorrect', function() {
+            var controller = createController();
+
+            scope.refreshUsers(true)
+            expect(function() {
+                    scope.updatedContact();
+                })
+                .toThrow();
+
+            expect(function() {
+                    scope.updatedContact({
+                        user: {}
+                    });
+                })
+                .toThrow();
         });
     });
 
@@ -97,8 +135,9 @@ describe('userManagement controller', function() {
         it('throws error with incorrect params', function() {
             var controller = createController();
             expect(function() {
-                scope.setFilter();
-            }).toThrow();
+                    scope.setFilter();
+                })
+                .toThrow();
         });
     });
 
@@ -106,66 +145,190 @@ describe('userManagement controller', function() {
         it('throws error with incorrectly indexed filter', function() {
             var controller = createController();
             expect(function() {
-                scope.setFilter('something_non_existant', 'High');
-            }).toThrow();
+                    scope.setFilter('something_non_existant', 'High');
+                })
+                .toThrow();
         });
     });
 
     describe('setFilter function', function() {
         it('sets value according to passed params', function() {
             var controller = createController();
-            expect(scope.filters[1].value).toEqual('All');
+            expect(scope.filters[1].value)
+                .toEqual('All');
             scope.setFilter('severity', 'High');
-            expect(scope.filters[1].value).toEqual('High');
+            expect(scope.filters[1].value)
+                .toEqual('High');
         });
     });
 
-    // REMOVE USER
     describe('removeUsers function', function() {
-
         it('throws if no user', function() {
             var controller = createController();
             expect(function() {
-                scope.removeUser();
-            }).toThrow();
+                    scope.removeUser();
+                })
+                .toThrow();
         });
-
 
         it('throws if no user id', function() {
+            expect(function() {
+                    scope.removeUser({
+                        _id: undefined
+                    });
+                })
+                .toThrow();
+        });
+
+        it('calls apiService', function() {
+            var controller = createController();
+            spyOn(scope, 'removeUserFromScope');
+            scope.removeUser({
+                _id: 'some id'
+            });
+            expect(apiService.post)
+                .toHaveBeenCalled();
+
+        });
+    });
+
+    describe('splice user', function() {
+        it('throws if no index specified', function() {
             var controller = createController();
             expect(function() {
-                scope.removeUser({_id: undefined});
-            }).toThrow();
+                    scope.spliceUser();
+                })
+                .toThrow();
         });
 
-        it('notifies if required', function() {
+        it('splices user when there are none', function() {
             var controller = createController();
-            // TODO: MAKE WORK
-/*            scope.removeUser({
-                _id: "fake_id"
+            scope.spliceUser(0);
+            expect(scope.users)
+                .toEqual([]);
+        });
+
+        it('splices user', function() {
+            var controller = createController();
+            scope.users = [{
+                something: "here"
+            }, {
+                something_else: "test"
+            }];
+            scope.spliceUser(0);
+            expect(scope.users)
+                .toEqual([{
+                    something_else: "test"
+                }]);
+        });
+
+    });
+
+    describe('refresh notification', function() {
+        it('launches with true', function() {
+            var controller = createController();
+            scope.refreshNotification(true);
+            expect(notifyService.success)
+                .toHaveBeenCalled();
+        });
+        it('launches with true', function() {
+            var controller = createController();
+            scope.refreshNotification();
+            expect(notifyService.success.calls.count())
+                .toEqual(0);
+        });
+    });
+
+    describe('removeUserFromScope', function() {
+        it('throws error with no user', function() {
+            var controller = createController();
+
+            expect(function() {
+                    scope.removeUserFromScope();
+                })
+                .toThrow();
+        });
+        it('launches with true', function() {
+            var controller = createController();
+
+            spyOn(scope, 'spliceUser');
+
+            scope.users = [{
+                id: "id"
+            }];
+
+            scope.removeUserFromScope({
+                id: "id"
             });
 
-            expect(apiService.post.calls.count()).toEqual(1);*/
+            expect(scope.users[0].removed)
+                .toBe(true);
 
         });
     });
 
-
-    // REFRESH USERS FILTER
-    describe('refreshUsers function', function() {
-/*        it('doesnt notify if not required', function() {
+    describe('updatedContact', function() {
+        it('throws', function() {
             var controller = createController();
-            spyOn(notifyService, 'notify');
-            scope.refreshUsers();
-            expect(notifyService.notify.calls.count()).toEqual(0);
+            expect(function() {
+                    scope.updatedContact();
+                })
+                .toThrow();
         });
-
-        it('notifies if required', function() {
+        it('throws with empty object', function() {
             var controller = createController();
-            spyOn(notifyService, 'notify');
-            scope.refreshUsers(true);
-            expect(notifyService.notify).toHaveBeenCalled();
-            expect(notifyService.notify).toHaveBeenCalledWith('Users refreshed');
-        });*/
+            expect(function() {
+                    scope.updatedContact({});
+                })
+                .toThrow();
+        });
+        it('launches with true', function() {
+            var controller = createController();
+            scope.updated = {
+                "id": 'sdfsdf'
+            };
+
+            scope.updatedContact({
+                user: {
+                    _id: 'id'
+                }
+            });
+            // TODO: TEST THAT IT APPLIES TO SCOPE ETC
+            expect(apiService.post)
+                .toHaveBeenCalled();
+        });
     });
+
+    describe('filterMentors', function() {
+        it('runs', function() {
+            var controller = createController();
+            expect(scope.filterMentors({
+                    mentor: 'a mentor',
+                    'name': 'something'
+                }))
+                .toBe("a mentor");
+        });
+    });
+
+    describe('createUpdateObject', function() {
+        it('runs', function() {
+            var controller = createController();
+
+            scope.updated = [{
+                'some_id': {}
+            }];
+
+            scope.createUpdateObject({
+                mentor: 'a mentor',
+                'name': 'something',
+                '_id': 'some_id'
+            });
+
+            expect(scope.updated)
+                .toEqual([{
+                    'some_id': {}
+                }]);
+        });
+    });
+
 });

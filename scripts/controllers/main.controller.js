@@ -32,7 +32,6 @@ SU.controller('mainController', function($scope, apiService, $location) {
     };
 
     $scope.mainLogOut = function() {
-        debugger;
         return apiService
             .get('/auth/logout', {
                 preventNotifications: true
