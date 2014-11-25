@@ -24,7 +24,7 @@ SU.controller('statisticsController', function($scope, apiService, chartService,
         $scope.roleCounts = {
             admin: userDataService.countRole('Admin', $scope.users),
             mentor: userDataService.countRole('Mentor', $scope.users),
-            basic: userDataService.countRole('basic', $scope.users)
+            basic: userDataService.countRole('Basic', $scope.users)
         };
     };
 

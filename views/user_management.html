@@ -71,7 +71,8 @@
                             <div ng-repeat="user in filteredResults = (users | internalFilter:filters | severityFilter:filters | assignedMentorFilter:filters | filter:searchText) ">
                                 <br>
                                 <div class="widget animated" ng-class="{'fadeOut': user.removed}">
-                                    <div class="widget-header" ng-class="{'red': user.severity_grade === 'High', 'yellow': user.severity_grade === 'Medium', 'blue': user.severity_grade === 'Low'}">
+                                    <div class="widget-header" ng-class="{'red': user.severity_grade === 'High' && user.role === 'Basic', 'yellow': user.severity_grade === 'Medium' && user.role === 'Basic', 'blue': user.severity_grade === 'Low' && user.role === 'Basic' }">
+                                        {{user.role}}
                                         <div class="row">
                                             <div class="col-md-8 col-sm-8">
                                                 <p class="text-white">
@@ -110,6 +111,8 @@
                                                     <option ng-selected="{{user.role === 'Admin'}}">Admin</option>
                                                 </select>
                                             </div>
+                                        </div>
+                                        <div class="row" ng-show="user.role === 'Basic'">
                                             <!-- CHANGE SEVERITY GRADE -->
                                             <div class="col-md-6 col-sm-6">
                                                 <label>Severity</label>
@@ -122,12 +125,11 @@
                                             <div class="col-md-6 col-sm-6">
                                                 <p>
                                                     <Strong>Currently assigned mentor:&nbsp;</strong>
-                                                    <!-- TODO: READABLE NAME -->
                                                 </p>
                                                 <!-- SELECT A MENTOR -->
                                                 <select class="form-control input-sm" ng-model="updated[user._id].mentor">
-                                                    <option value="{{mentor._id}}" ng-repeat="mentor in mentors">
-                                                        {{mentor.first_name}} {{mentor.last_name}}
+                                                    <option value="{{mentor._id}}" ng-repeat="mentor in mentors" ng-selected="updated[user._id].mentor === mentor._id">
+                                                        {{mentor.first_name}} {{mentor.last_name}} ({{mentor.username}})
                                                     </option>
                                                 </select>
                                             </div>

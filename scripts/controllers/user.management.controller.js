@@ -107,7 +107,7 @@ SU.controller('userDetailsController', function($scope, apiService, utilityServi
     };
 
     $scope.filterMentors = function(user) {
-        return user.mentor;
+        return user.role === "Mentor";
     };
 
     $scope.createUpdateObject = function(user) {
@@ -118,9 +118,7 @@ SU.controller('userDetailsController', function($scope, apiService, utilityServi
         $scope.$apply(function() {
             $scope.users = result;
             $scope.original_users = result;
-
-            // TODO: FILTER BY ROLE TYPE
-            $scope.mentors = _.filter($scope.filterMentors);
+            $scope.mentors = _.filter($scope.users, $scope.filterMentors);
 
             // THIS TAKES ALL INCOMING USERS AND CREATES AN OBJECT BASED ON ID'S SO THAT  USERS
             // CAN BE UPDATED INDEPEDENTLY

@@ -114,8 +114,8 @@ SU.config(function($routeProvider) {
     })
 
     // USER DETAILS
-    .when('/user_details', {
-        templateUrl: '../views/user_details.html',
+    .when('/user_management', {
+        templateUrl: '../views/user_management.html',
         controller: 'userDetailsController'
     })
 

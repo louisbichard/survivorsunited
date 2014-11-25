@@ -1,12 +1,12 @@
 // ENDPOINT /events/listall
 
-
 // TODO:
 // 1) TEST IT DOESNT FAIL IF THE USER ISNT AUTHENTICATED
 // 
 
 var Promise = require('bluebird');
-var MongoClient = Promise.promisifyAll(require("mongodb")).MongoClient;
+var MongoClient = Promise.promisifyAll(require("mongodb"))
+    .MongoClient;
 var database = require('../utilities/database.js');
 var log = require('../utilities/logger.js');
 var _ = require('lodash');
@@ -59,7 +59,6 @@ module.exports = function(req, res) {
     var send_response = function(vals) {
         respond.success(vals);
     };
-
 
     return MongoClient.connectAsync(database.connection)
         .then(find_data)

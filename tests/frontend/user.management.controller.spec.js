@@ -303,10 +303,10 @@ describe('userManagement controller', function() {
         it('runs', function() {
             var controller = createController();
             expect(scope.filterMentors({
-                    mentor: 'a mentor',
+                    role: 'Mentor',
                     'name': 'something'
                 }))
-                .toBe("a mentor");
+                .toBe(true);
         });
     });
 
