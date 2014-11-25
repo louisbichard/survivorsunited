@@ -7,7 +7,6 @@ var EVENT_ID = database.getObjectID("544a8c615161f3314349f1ab");
 var USER_ID = database.getObjectID("544b7656702a87d900b4392f");
 var FAKE = database.getObjectID("544ce6a966509b000046d959");
 
-
 /**
  * [getSubObjects description]
  * @param  {[type]} body   - an object of any depth
@@ -118,6 +117,7 @@ module.exports = {
     successIsTrue: function(err, res, body) {
         //FORMAT REQUEST BODY
         body = JSON.parse(body);
+        log.debug(body);
 
         // THROW ERROR IF REST ISN'T FALSE
         if (body.success !== true) {

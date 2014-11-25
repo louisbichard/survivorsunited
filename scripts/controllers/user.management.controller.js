@@ -119,6 +119,10 @@ SU.controller('userDetailsController', function($scope, apiService, utilityServi
             $scope.users = result;
             $scope.original_users = result;
             $scope.mentors = _.filter($scope.users, $scope.filterMentors);
+            $scope.mentors.unshift({
+                _id: false,
+                username: "Unassigned"
+            });
 
             // THIS TAKES ALL INCOMING USERS AND CREATES AN OBJECT BASED ON ID'S SO THAT  USERS
             // CAN BE UPDATED INDEPEDENTLY

@@ -1,4 +1,4 @@
-// ENDPOINT /user/listall
+// ENDPOINT /user/assigned_mentees
 
 var Promise = require('bluebird');
 var MongoClient = Promise.promisifyAll(require("mongodb"))
@@ -6,6 +6,7 @@ var MongoClient = Promise.promisifyAll(require("mongodb"))
 var database = require('../utilities/database.js');
 var utility_date = require('../utilities/utilities.dates.js');
 var _ = require('lodash');
+var log = require('../utilities/logger.js');
 
 module.exports = function(req, res) {
 
@@ -15,19 +16,26 @@ module.exports = function(req, res) {
         file: __dirname + __filename
     });
 
-    req.user = req.user || {};
+    respond.rejectAnon();
 
-    //VALIDATION: USER HAS NO MENTOR
-    if (!req.user && !req.user.mentor) {
-        respond.success(false);
+    //VALIDATION: NO USER ID
+    if (!req.user._id) {
+        respond.failure('No session found');
     }
 
+    //VALIDATION: NOT A MENTOR
+    if (!req.user && req.user.role !== "Mentor") {
+        respond.failure('Cannot have mentees when role is not mentor');
+    }
+
+    var user_id = req.user._id || "";
+    user_id = user_id.toString();
+
     var get_user_db = function(db) {
-        var mentor_id = req.user.mentor;
-        var oid = database.getObjectID(mentor_id);
         var collection = Promise.promisifyAll(db.collection('users'));
         return collection.findAsync({
-            _id: oid
+            // TO STRING IS REQUIRED TO CONVERT MONGO OBJECT ID BACK TO STRING
+            mentor: user_id
         });
     };
 
@@ -36,12 +44,14 @@ module.exports = function(req, res) {
         var find = Promise.promisifyAll(result);
 
         return find.toArrayAsync()
-            .then(function(mentor) {
-                //VALIDATION 
-                if (!mentor[0]) {
-                    respond.failure('Assigned mentor not found');
+            .then(function(mentees) {
+                log.debug('found these mentees', mentees);
+                log.debug('for this user', req.user);
+                //VALIDATION
+                if (!mentees[0]) {
+                    respond.success(false);
                 }
-                return mentor[0];
+                return mentees;
             });
     };
 

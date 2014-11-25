@@ -23,6 +23,12 @@ SU.config(function($routeProvider) {
         controller: 'mentorController'
     })
 
+    // MENTEES
+    .when('/mentees', {
+        templateUrl: '../views/mentees.html',
+        controller: 'menteesController'
+    })
+
     // ACCOUNT
     .when('/account', {
         templateUrl: '../views/account.html',

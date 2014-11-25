@@ -6,7 +6,7 @@ var _ = require('lodash');
 var log = require('../utilities/logger.js');
 
 var apiFile = function(req, res, next, location) {
-    
+
     var respond = require('../utilities/utilities.respond.js')({
         req: req,
         res: res,
@@ -21,16 +21,21 @@ var apiFile = function(req, res, next, location) {
     // CALL API
     try {
         return require(location)(req, res);
-    } catch (err) {        
+    }
+    catch (err) {
+        log.debug(err);
         require('./log.server.error.js')(req, res, {
-            location: location,
-            anonymous: !req.user
-        }).then(function(){
-            respond.failure('Internal API failure');
-        }).caught(function(){
-            respond.failure('Internal API failure');
-        });
-    };
+                location: location,
+                anonymous: !req.user,
+                err: JSON.stringify(err)
+            })
+            .then(function() {
+                respond.failure('Internal API failure');
+            })
+            .caught(function() {
+                respond.failure('Internal API failure');
+            });
+    }
 };
 
 //API ENDPOINTS
@@ -54,6 +59,7 @@ module.exports = function(app) {
     app.post('/user/delete', _.partialRight(apiFile, '../users/user.delete.js'));
 
     //MENTOR
+    app.get('/user/assigned_mentees', _.partialRight(apiFile, './../users/user.assigned_mentees.js'));
     app.get('/user/assigned_mentor', _.partialRight(apiFile, './../users/user.assigned_mentor.js'));
     app.post('/user/assign_mentor', _.partialRight(apiFile, './../users/user.assign_mentor.js'));
 
