@@ -18,7 +18,7 @@ SU.controller('upcomingWatchedSubscribedEventsController', function($scope, apiS
 
     $scope.deleteEvent = function(event_id) {
         // TODO: DELETE EVENT API GOES HERE
-        console.log('implement a delete function', event_id);
+        //console.log('implement a delete function', event_id);
     };
 
     $scope.bootstrap = function() {
@@ -36,7 +36,7 @@ SU.controller('upcomingWatchedSubscribedEventsController', function($scope, apiS
 
     $scope.unWatchOrAttend = function(event_id, watchOrAttend) {
         // TODO: IMPLEMENT AND ADD IN API
-        console.log('implement watch or attend', event_id, watchOrAttend);
+        //console.log('implement watch or attend', event_id, watchOrAttend);
     };
 
     //ADD USER AS WATCHING OR ATTENDING AN EVENT

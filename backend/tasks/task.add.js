@@ -23,32 +23,20 @@ module.exports = function(req, res) {
     var post_params = req.body;
     var watchers = [];
 
-    // ADD USER AS WATCHER IF FOUND
-    if (req.user && req.user._id) {
-        watchers.push(req.user._id);
-    }
-
     //VALIDATION: ENSURE VALUES ARE SET
-    _.each(['title', 'start', 'end', 'price', 'description'], function(field) {
+    _.each(['title', 'assignee', 'description'], function(field) {
         if (!post_params[field]) {
             respond.failure('No ' + field + ' field specified');
         }
     });
 
     var find_data = function(db) {
-
-        var collection = Promise.promisifyAll(db.collection('events'));
+        var collection = Promise.promisifyAll(db.collection('tasks'));
         return collection.insertAsync({
             title: post_params.title,
             description: post_params.description,
-            start: post_params.end,
-            end: post_params.start,
-            watching: watchers,
-            attending: [],
-            date_created: new Date()
-                .getTime(),
-            price: post_params.price,
-            created_by: req.user._id
+            status: "open",
+            assignee: post_params.assignee
         });
     };
 
@@ -60,7 +48,7 @@ module.exports = function(req, res) {
         .then(find_data)
         .then(send_response)
         .caught(function(err) {
-            respond.failure('Could not add event', err);
+            respond.failure('Could not add task', err);
         });
 
 };

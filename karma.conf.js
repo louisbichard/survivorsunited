@@ -38,6 +38,8 @@ module.exports = function(config) {
             './scripts/app.js',
 
             // CONTROLLERS
+            './scripts/controllers/dashboard.controller.js',
+            './scripts/controllers/task.task.add.controller.js',
             './scripts/controllers/main.controller.js',
             './scripts/controllers/user.management.controller.js',
             './scripts/controllers/user.statistics.controller.js',

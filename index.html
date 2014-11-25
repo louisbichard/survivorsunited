@@ -65,6 +65,16 @@
                 <li class="sidebar-list" ng-class="{'sidebar-selected': current_location === 'account'}">
                     <a href="#account">User account <span class="menu-icon fa fa-user"></span></a>
                 </li>
+                <!-- TASKS -->
+                <li class="sidebar-title">
+                    <span>TASKS</span>
+                </li>
+                <li class="sidebar-list" ng-class="{'sidebar-selected': current_location === 'add_task'}">
+                    <a href="#add_task">Create <span class="menu-icon fa fa-plus"></span></a>
+                </li>
+                <li class="sidebar-list" ng-class="{'sidebar-selected': current_location === 'task_management'}">
+                    <a href="#task_management">Task Management<span class="menu-icon fa fa-book"></span></a>
+                </li>
                 <!-- EVENTS -->
                 <li class="sidebar-title">
                     <span>EVENTS</span>
@@ -186,6 +196,8 @@
 <script src="./scripts/controllers/mentees.controller.js"></script>
 <!-- MENTOR -->
 <script src="./scripts/controllers/mentor.controller.js"></script>
+<!-- TASKS -->
+<script src="./scripts/controllers/task.add.controller.js"></script>
 <!-- EVENTS -->
 <script src="./scripts/controllers/events.upcoming.watched.subscribed.controller.js"></script>
 <script src="./scripts/controllers/event.add.controller.js"></script>

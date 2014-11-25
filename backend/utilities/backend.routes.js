@@ -58,6 +58,12 @@ module.exports = function(app) {
     app.post('/user/add', _.partialRight(apiFile, '../users/user.add.js'));
     app.post('/user/delete', _.partialRight(apiFile, '../users/user.delete.js'));
 
+    //TASKS
+    app.post('/task/add', _.partialRight(apiFile, './../tasks/task.add.js'));
+    app.get('/tasks/listall', _.partialRight(apiFile, './../tasks/tasks.listall.js'));
+    app.get('/tasks/assigned', _.partialRight(apiFile, './../tasks/tasks.assigned.js'));
+    app.post('/task/update', _.partialRight(apiFile, './../tasks/task.update.js'));
+
     //MENTOR
     app.get('/user/assigned_mentees', _.partialRight(apiFile, './../users/user.assigned_mentees.js'));
     app.get('/user/assigned_mentor', _.partialRight(apiFile, './../users/user.assigned_mentor.js'));

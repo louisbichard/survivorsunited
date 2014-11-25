@@ -64,6 +64,16 @@ SU.config(function($routeProvider) {
     })
 
     ////////////
+    // TASKS  //
+    ////////////
+
+    // CREATE EVENT
+    .when('/add_task', {
+        templateUrl: '../views/add_task.html',
+        controller: 'addTaskController'
+    })
+
+    ////////////
     // EVENTS //
     ////////////
 
