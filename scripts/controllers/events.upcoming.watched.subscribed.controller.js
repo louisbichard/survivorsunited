@@ -16,7 +16,10 @@ SU.controller('upcomingWatchedSubscribedEventsController', function($scope, apiS
         throw new Error('url path incorrect');
     }
 
-    //TODO: HANDLE IF THE URL IS NOT CORRECT
+    $scope.deleteEvent = function(event_id) {
+        // TODO: DELETE EVENT API GOES HERE
+        console.log('implement a delete function', event_id);
+    };
 
     $scope.bootstrap = function() {
         return apiService
@@ -29,6 +32,11 @@ SU.controller('upcomingWatchedSubscribedEventsController', function($scope, apiS
     $scope.formatDates = function(result) {
         result = result || [];
         $scope.events = dateService.formatDatesArray(result, ['start', 'end', 'date_created']);
+    };
+
+    $scope.unWatchOrAttend = function(event_id, watchOrAttend) {
+        // TODO: IMPLEMENT AND ADD IN API
+        console.log('implement watch or attend', event_id, watchOrAttend);
     };
 
     //ADD USER AS WATCHING OR ATTENDING AN EVENT

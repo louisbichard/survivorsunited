@@ -29,9 +29,14 @@ module.exports = function(req, res) {
         return collection.findAsync();
     };
 
+    var user_id = req.user._id.toString();
+
     //UPDATE THE API RESPONSE WITH WHETHER THE USER IS ALREADY WATCHING OR ATTENDING AN EVENT
     var updateFieldsAttendingWatching = function(records) {
         return _.map(records, function(rec) {
+
+            // IF ADMIN OR OWNER, THEY CAN DELETE
+            rec.can_delete = (user_id === rec.created_by.toString() || req.user.role === "Admin") ? true : false;
 
             //CONVERT ALL VALUES TO STRING
             rec.attending = _.map(rec.attending, function(val) {
@@ -42,8 +47,8 @@ module.exports = function(req, res) {
                 return val.toString();
             });
 
-            rec.user_is_attending = utility_general.inArray(rec.attending, req.user._id.toString());
-            rec.user_is_watching = utility_general.inArray(rec.watching, req.user._id.toString());
+            rec.user_is_attending = utility_general.inArray(rec.attending, user_id);
+            rec.user_is_watching = utility_general.inArray(rec.watching, user_id);
             return rec;
         });
     };

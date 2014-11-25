@@ -13,6 +13,11 @@ var APIeasy = require('api-easy');
 var suite = APIeasy.describe(test_endpoint);
 
 // SETUP
+// 
+log.test.hasTODO();
+// TEST THAT ATTENDING AND WATCHING PROPS ARE ADDED
+// TEST THAT CAN DELETE PROP IS ADDED FOR ADMINS AND EVENT CREATORS
+// TEST THAT DELETE PROP IS NOT PRESENT FOR OTHER USERS OF THE SYSTEM
 
 setup_db(
     [
@@ -46,7 +51,6 @@ setup_db(
 
     ]
 )
-
 
 // DESCRIBE
 .then(function() {

@@ -105,6 +105,22 @@ describe('upcomingWatchedSubscribedEventsController', function() {
         });
     });
 
+    describe('unWatchOrAttend', function() {
+        it('are setup', function() {
+            var controller = createWatcherController();
+            scope.unWatchOrAttend('id', 'watching');
+            // TODO: IMPLEMENT
+        });
+    });
+
+    describe('deleteEvent', function() {
+        it('are setup', function() {
+            var controller = createWatcherController();
+            scope.deleteEvent('id');
+            // TODO: IMPLEMENT
+        });
+    });
+
     describe('watchOrAttend', function() {
         it('to throw with no parameters', function() {
             var controller = createWatcherController();
