@@ -5,13 +5,14 @@ module.exports = {
         console.log(text.red);
     },
     general: function(text, data) {
-        console.log(text.blue, data, '\n');
+        console.log(text.blue, data);
     },
     success: function(text, data) {
         text = text.green;
         if (data) {
             console.log(text.underline, data);
-        } else {
+        }
+        else {
             console.log(text.underline);
         }
     },
@@ -23,7 +24,8 @@ module.exports = {
     debug: function(text, data) {
         if (!data) {
             console.log('Debugging'.bgBlue.white, text, '\n');
-        } else {
+        }
+        else {
             text = 'Debugging ('.white + text.white + ') '.white;
             console.log(text.bgBlue, data, '\n');
         }
@@ -39,7 +41,8 @@ module.exports = {
 
     promiseCaught: function(text, err) {
         console.log(text.white.bgRed, err, '\n');
-        var stack = new Error().stack;
+        var stack = new Error()
+            .stack;
         this.debug(stack);
     },
     space: function() {
@@ -66,7 +69,7 @@ module.exports = {
             console.log(text.magenta);
         },
         complete: function() {
-            console.log("Testing complete!".green.underline,'\n');
+            console.log("Testing complete!".green.underline, '\n');
         }
     }
 };

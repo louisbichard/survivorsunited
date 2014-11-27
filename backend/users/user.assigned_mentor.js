@@ -6,6 +6,7 @@ var MongoClient = Promise.promisifyAll(require("mongodb"))
 var database = require('../utilities/database.js');
 var utility_date = require('../utilities/utilities.dates.js');
 var _ = require('lodash');
+var log = require('../utilities/logger.js');
 
 module.exports = function(req, res) {
 
@@ -22,12 +23,19 @@ module.exports = function(req, res) {
         respond.success(false);
     }
 
+    var mentor_id = req.user.mentor;
+
+    try {
+        if (mentor_id) mentor_id = database.getObjectID(mentor_id);
+    }
+    catch (e) {
+        respond.failure('Mentor ID of incorrect format');
+    }
+
     var get_user_db = function(db) {
-        var mentor_id = req.user.mentor;
-        var oid = database.getObjectID(mentor_id);
         var collection = Promise.promisifyAll(db.collection('users'));
         return collection.findAsync({
-            _id: oid
+            _id: mentor_id
         });
     };
 
@@ -37,7 +45,7 @@ module.exports = function(req, res) {
 
         return find.toArrayAsync()
             .then(function(mentor) {
-                //VALIDATION 
+                //VALIDATION                
                 if (!mentor[0]) {
                     respond.failure('Assigned mentor not found');
                 }
