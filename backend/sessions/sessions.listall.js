@@ -1,8 +1,5 @@
-// ENDPOINT /sessions/listall
-
-var Promise = require('bluebird');
-var MongoClient = Promise.promisifyAll(require("mongodb")).MongoClient;
-var database = require('../utilities/database.js');
+var db = require('../utilities/database.js');
+var log = require('../utilities/logger.js');
 
 module.exports = function(req, res) {
 
@@ -12,36 +9,8 @@ module.exports = function(req, res) {
         file: __dirname + __filename
     });
 
-    var find_data = function(db) {
-
-        var collection = Promise.promisifyAll(db.collection('sessions'));
-        return Promise.props({
-            find: collection.findAsync(),
-            count: collection.countAsync()
-        });
-    };
-
-    var extract_sessions = function(result) {
-
-        var find = Promise.promisifyAll(result.find);
-        return find.toArrayAsync()
-            .then(function(records) {
-                return {
-                    count: result.count,
-                    result: records
-                };
-            });
-    };
-
-    var send_response = function(vals) {
-        respond.success(vals);
-    };
-
-
-    return MongoClient.connectAsync(database.connection)
-        .then(find_data)
-        .then(extract_sessions)
-        .then(send_response)
+    db.find('sessions', [{}])
+        .then(respond.success)
         .caught(function(err) {
             respond.failure('Could not list sessions', err);
         });
