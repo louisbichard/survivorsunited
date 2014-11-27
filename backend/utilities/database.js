@@ -1,6 +1,5 @@
 var mongo = require('mongodb');
-var database = 'test' || process.env.DATABASE;
-var respond = require('../utilities/utilities.respond.js');
+var database = process.env.DATABASE;
 var Promise = require('bluebird');
 var _ = require('lodash');
 var MongoClient = Promise.promisifyAll(require("mongodb"))
@@ -31,19 +30,16 @@ var mongo_commands = _.reduce(api_methods, function(commands, command) {
             });
     };
     return commands;
+
 }, {});
 
 var utilities = {
     connection: "mongodb://127.0.0.1:27017/" + database,
+    connect: function() {
+        return this.mongo.connectAsync(this.connection);
+    },
     getObjectID: function(id) {
         return new mongo.BSONPure.ObjectID(id);
-    },
-    formatData: function(result) {
-        var find = Promise.promisifyAll(result);
-        return find.toArrayAsync()
-            .then(function(tasks) {
-                return tasks;
-            });
     }
 };
 

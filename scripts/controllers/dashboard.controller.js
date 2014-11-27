@@ -1,5 +1,28 @@
 SU.controller('dashboardController', function($scope, apiService, notifyService) {
 
+    // INTRO JS 
+    // ABSTRACT OUT INTO SERVICE
+    $scope.IntroOptions = {
+        steps: [{
+            element: '#intro-dashboard',
+            intro: "This is the dashboard, here you will find pending tasks that you need to comlete and review previously completed tasks.",
+            position: 'right'
+        }, {
+            element: '#intro-mentor',
+            intro: "On the mentor page you can find contact details for your mentor and send them instant messages",
+            position: 'right'
+        }, {
+            element: '#intro-account',
+            intro: "On the account page you can edit your personal details",
+            position: 'right'
+        }],
+        showStepNumbers: false,
+        showBullets: true,
+        exitOnOverlayClick: true,
+        exitOnEsc: true,
+        doneLabel: 'Thanks'
+    };
+
     $scope.setupScope = function(tasks) {
         $scope.tasks = tasks;
         $scope.setupStatistics();
@@ -19,7 +42,9 @@ SU.controller('dashboardController', function($scope, apiService, notifyService)
     };
 
     $scope.bootstrap = function() {
-        apiService.get('/tasks/assigned')
+        apiService.get('/tasks/assigned', null, {
+                preventNotifications: true
+            })
             .then($scope.setupScope);
     };
 

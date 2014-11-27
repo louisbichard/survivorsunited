@@ -12,6 +12,9 @@ SU.controller('mentorController', function($scope, apiService) {
                 $scope.$apply(function() {
                     $scope.mentor = result;
                 });
+            })
+            .caught(function() {
+                // TODO: HANDLE ERRORING API
             });
     }();
 });

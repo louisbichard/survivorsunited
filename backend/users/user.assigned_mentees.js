@@ -45,8 +45,6 @@ module.exports = function(req, res) {
 
         return find.toArrayAsync()
             .then(function(mentees) {
-                log.debug('found these mentees', mentees);
-                log.debug('for this user', req.user);
                 //VALIDATION
                 if (!mentees[0]) {
                     respond.success(false);

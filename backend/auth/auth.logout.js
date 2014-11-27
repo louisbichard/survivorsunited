@@ -1,8 +1,5 @@
-// ENDPOINT /sessions/listall
-
 var Promise = require('bluebird');
-var MongoClient = Promise.promisifyAll(require("mongodb")).MongoClient;
-var database = require('../utilities/database.js');
+var db = require('../utilities/database.js');
 var log = require('../utilities/logger.js');
 
 module.exports = function(req, res) {
@@ -12,38 +9,27 @@ module.exports = function(req, res) {
         res: res,
         file: __dirname + __filename
     });
-    
-    if (!req.user) {
+
+    var insertIntoDB = function(db) {
+        var updateQuery = [{
+            user_id: db.getObjectID(req.user._id)
+        }, {
+            user_id: false
+        }];
+
+        return db.update('sessions', updateQuery);
+    };
+
+    // VALIDATE USERS SESSION
+    if (!req.user || !req.user._id) {
         respond.success('User is already logged out');
     }
 
-    var insertIntoDB = function(db) {
-        var collection = Promise.promisifyAll(db.collection('sessions'));
-
-        return collection.updateAsync({
-                user_id: database.getObjectID(req.user._id)
-            }, {
-                user_id: false
-            })
-            .then(function(result) {
-				
-				// VALIDATE
-				// Ensure a record is affected                
-                if(result[0] === 0) respond.failure('Could not find user to logout');
-
-                return result;
-            });
-    };
-
-    var respondRequest = function(id) {
-        respond.success('User successfully logged out');
-    };
-
-    return MongoClient.connectAsync(database.connection)
-        .then(insertIntoDB)
-        .then(respondRequest)
-        .caught(function(err) {
-            respond.generalFailure(err);
-        });
-
+    else {
+        return db.connect()
+            .then(insertIntoDB)
+            .then(_.partialRight(db.ensureDBRecords, respond))
+            .then(_.partialRight(respond.success, 'User successfully logged out'))
+            .caught(respond.generalFailure);
+    }
 };

@@ -19,7 +19,6 @@ module.exports = function(req, res) {
     respond.rejectAnon();
 
     var user_id = req.user._id.toString();
-    log.debug(user_id);
 
     var get_user_db = function(db) {
         var collection = Promise.promisifyAll(db.collection('tasks'));
