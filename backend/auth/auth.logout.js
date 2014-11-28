@@ -11,7 +11,6 @@ module.exports = function(req, res) {
         file: __dirname + __filename
     });
 
-    console.log('user details', req.user);
     if (!req.user) respond.success('User is already logged out');
 
     else {

@@ -1,18 +1,17 @@
-SU.controller('mainController', function($scope, apiService, $location) {
+SU.controller('mainController', function($scope, apiService, $location, notifyService) {
     // WATCH FOR NAV CHANGES AND SETUP SCOPE FOR LEFT PANEL TABBING HIGHLIGHTING
     $scope.$on('$locationChangeSuccess', function() {
-        $scope.current_location = $location.path().split('/')[1];
+        $scope.current_location = $location.path()
+            .split('/')[1];
     });
 
     $scope.toggleSidebar = function() {
         $scope.toggle = !$scope.toggle;
     };
 
-    $scope.successfulLogout = function() {
-        $scope.$apply(function() {
-            $location.path('/login');
-            $scope.anonymous_user = true;
-        });
+    $scope.routeToLogin = function() {
+
+        $location.path('login');
     };
 
     $scope.successfulLogin = function(result) {
@@ -28,7 +27,7 @@ SU.controller('mainController', function($scope, apiService, $location) {
                 preventNotifications: true
             })
             .then($scope.successfullLogin)
-            .caught(_.partial($location.path, 'login'));
+            .caught($scope.routeToLogin);
     };
 
     $scope.mainLogOut = function() {
@@ -36,9 +35,7 @@ SU.controller('mainController', function($scope, apiService, $location) {
             .get('/auth/logout', {
                 preventNotifications: true
             })
-            .then($scope.successfulLogout)
-            .caught(_.partial($location.path, 'login'));
-
+            .then($scope.routeToLogin);
     };
 
     $scope.mainLogin = function(user) {
@@ -46,7 +43,10 @@ SU.controller('mainController', function($scope, apiService, $location) {
             .post('/auth/login', user, {
                 preventNotifications: true
             })
-            .then($scope.successfulLogin);
+            .then($scope.successfulLogin)
+            .caught(function(something) {
+                notifyService.error(something);
+            });
     };
 
     $scope.bootstrapDashboard();

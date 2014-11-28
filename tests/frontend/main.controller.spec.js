@@ -26,12 +26,14 @@ describe('main controller', function() {
         utilityService = _utilityService_;
 
         // MOCK A RETURNED PROMISE
-        spyOn(apiService, 'get').and.returnValue(new Promise(function(resolve) {
-            return resolve();
-        }));
-        spyOn(apiService, 'post').and.returnValue(new Promise(function(resolve) {
-            return resolve();
-        }));
+        spyOn(apiService, 'get')
+            .and.returnValue(new Promise(function(resolve) {
+                return resolve();
+            }));
+        spyOn(apiService, 'post')
+            .and.returnValue(new Promise(function(resolve) {
+                return resolve();
+            }));
 
         createController = function() {
             return $controller('mainController', {
@@ -46,40 +48,32 @@ describe('main controller', function() {
             $location.path('/changed');
             $rootScope.$apply();
             $rootScope.$broadcast('$locationChangeSuccess', {});
-            expect(scope.current_location).toBe('changed');
+            expect(scope.current_location)
+                .toBe('changed');
         });
     });
 
     describe('toggles sidebar', function() {
         it('are setup', function() {
             var controller = createController();
-            expect(scope.toggle).toBeUndefined();
+            expect(scope.toggle)
+                .toBeUndefined();
             scope.toggleSidebar();
-            expect(scope.toggle).toBe(true);
+            expect(scope.toggle)
+                .toBe(true);
             scope.toggleSidebar();
-            expect(scope.toggle).toBe(false);
+            expect(scope.toggle)
+                .toBe(false);
         });
     });
-
-    describe('logs out', function() {
-        it('are setup', function() {
-            var controller = createController();
-
-            // ENSURE THAT IT'S SETUP CORRECTLY
-            expect(scope.anonymous_user).toBeUndefined();
-
-            scope.successfulLogout();
-            expect(scope.anonymous_user).toBe(true);
-        });
-    });
-
 
     describe('logs in', function() {
         it('are setup', function() {
             var controller = createController();
 
             scope.successfulLogin();
-            expect(scope.anonymous_user).toBe(false);
+            expect(scope.anonymous_user)
+                .toBe(false);
         });
     });
 
@@ -88,11 +82,8 @@ describe('main controller', function() {
             var controller = createController();
 
             scope.bootstrapDashboard();
-            expect(apiService.get).toHaveBeenCalled();
-
-            //TODO:
-            //spyOn(scope, 'successfullLogin');
-            //expect(scope.successfullLogin).toHaveBeenCalled();
+            expect(apiService.get)
+                .toHaveBeenCalled();
         });
     });
 
@@ -101,11 +92,8 @@ describe('main controller', function() {
             var controller = createController();
 
             scope.mainLogOut();
-            expect(apiService.get).toHaveBeenCalled();
-
-            //TODO:
-            //spyOn(scope, 'successfullLogin');
-            //expect(scope.successfullLogin).toHaveBeenCalled();
+            expect(apiService.get)
+                .toHaveBeenCalled();
         });
     });
 
@@ -114,11 +102,8 @@ describe('main controller', function() {
             var controller = createController();
 
             scope.mainLogin();
-            expect(apiService.get).toHaveBeenCalled();
-
-            //TODO:
-            //spyOn(scope, 'successfullLogin');
-            //expect(scope.successfullLogin).toHaveBeenCalled();
+            expect(apiService.get)
+                .toHaveBeenCalled();
         });
     });
 

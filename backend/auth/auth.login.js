@@ -17,8 +17,6 @@ module.exports = function(req, res) {
         file: __dirname + __filename
     });
 
-    console.log(req.user);
-
     post_params = req.body || {};
     var current_user;
 

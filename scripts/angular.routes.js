@@ -63,6 +63,11 @@ SU.config(function($routeProvider) {
         controller: 'mainController'
     })
 
+    // FORUM
+    .when('/credits', {
+        templateUrl: '../views/credits.html'
+    })
+
     ////////////
     // TASKS  //
     ////////////
