@@ -1,0 +1,62 @@
+@import 'core.scss';
+@import 'widget.scss';
+@import 'sidebar.scss';
+@import 'components.scss';
+.text-white {
+    color: $white;
+}
+.text-strikethrough {
+    text-decoration: line-through;
+}
+// COMPONENTS
+.fullscreen {
+    background: url("../../assets/img/scene_fade.jpg") no-repeat;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+    background-size: cover;
+}
+// IFRAMES
+.codeCoverageIframe {
+    height: 400px;
+    width: 100%;
+    border: 0px;
+}
+.page-content {
+    background-color: #f3f3f3;
+    height: 100%;
+    padding: 20px;
+}
+#page-wrapper {
+    padding-left: 70px;
+    height: 100%;
+}
+#sidebar-wrapper {
+    margin-left: -150px;
+    left: -30px;
+    width: 250px;
+    position: fixed;
+    height: 100%;
+}
+@media only screen and (min-width: 561px) {
+    #page-wrapper.active {
+        padding-left: 250px;
+    }
+}
+@media only screen and (max-width: 560px) {
+    #page-wrapper.active {
+        padding-left: 70px;
+    }
+}
+#page-wrapper.active #sidebar-wrapper {
+    left: 150px;
+}
+lead {
+    vertical-align: bottom;
+    font-size: 92px;
+    font-family: Roboto;
+    font-weight: 200;
+}

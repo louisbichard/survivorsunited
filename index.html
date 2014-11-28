@@ -3,7 +3,8 @@
 
 <head>
     <title>Survivors United Ltd.</title>
-    <!-- STYLES -->
+    <!-- ================FONTS=================== -->
+    <link href='http://fonts.googleapis.com/css?family=Roboto:500,100,300' rel='stylesheet' type='text/css'>
     <!-- ================BOOTSTRAP================ -->
     <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
     <!-- ================FONT AWESOME================ -->
@@ -17,8 +18,7 @@
     <!-- ================INTRO JS================ -->
     <link rel="stylesheet" type="text/css" href="bower_components/intro.js/themes/introjs-nassim.css">
     <!-- ================OTHER================ -->
-    <link rel="stylesheet" type="text/css" href="styles/utilities.css">
-    <link rel="stylesheet" type="text/css" href="styles/dashboard.css">
+    <link rel="stylesheet" type="text/css" href="styles/build/main.css">
     <link rel="stylesheet" type="text/css" href="styles/lib/animate.css">
 </head>
 
@@ -28,7 +28,7 @@
         <!-- NAVIGATION TITLE -->
         <div id="sidebar-wrapper" class="animated bounceInLeft">
             <ul class="sidebar">
-                <li class="sidebar-main">
+                <li class="sidebar-main ">
                     <a ng-click="toggleSidebar()">
                         Survivors United
                         <span class="menu-icon glyphicon glyphicon-transfer"></span>
@@ -40,78 +40,80 @@
                 </li> -->
                 <!-- HIDE ALL USABLE CONTENT AS ANON -->
                 <!-- MAIN -->
-                <li class="sidebar-title">
+                <li class="sidebar-title ">
                     <span class="">MAIN</span>
                 </li>
                 <li id="intro-dashboard" class="sidebar-list" ng-class="{'sidebar-selected': current_location === 'dashboard'}">
-                    <a href="#dashboard">Dashboard <span class="menu-icon fa fa-dashboard"></span></a>
+                    <a href="#dashboard">Dashboard <span class= menu-icon fa fa-dashboard">
+                        </span>
+                    </a>
                 </li>
                 <li id="intro-mentor" class="sidebar-list" ng-class="{'sidebar-selected': current_location === 'mentor'}">
-                    <a href="#mentor">Mentor <span class="menu-icon fa fa-male"></span></a>
+                    <a href="#mentor">Mentor <span class= menu-icon fa fa-male"></span></a>
                 </li>
                 <li class="sidebar-list" ng-class="{'sidebar-selected': current_location === 'mentees'}">
-                    <a href="#mentees">Mentees <span class="menu-icon fa fa-users"></span></a>
+                    <a href="#mentees">Mentees <span class= menu-icon fa fa-users"></span></a>
                 </li>
                 <li class="sidebar-list" ng-class="{'sidebar-selected': current_location === 'search'}">
-                    <a href="#search">Search (beta) <span class="menu-icon fa fa-search"></span></a>
+                    <a href="#search">Search (beta) <span class= menu-icon fa fa-search"></span></a>
                 </li>
                 <li class="sidebar-list" ng-class="{'sidebar-selected': current_location === 'notifications'}">
-                    <a href="#notifications">Noificatons (beta) <span class="menu-icon fa fa-bell-o"></span></a>
+                    <a href="#notifications">Noificatons (beta) <span class= menu-icon fa fa-bell-o"></span></a>
                 </li>
                 <li class="sidebar-list" ng-class="{'sidebar-selected': current_location === 'faq'}">
-                    <a href="#faq">FAQ (beta) <span class="menu-icon fa fa-list"></span></a>
+                    <a href="#faq">FAQ (beta) <span class= menu-icon fa fa-list"></span></a>
                 </li>
                 <!-- ACCOUNT -->
-                <li class="sidebar-title">
+                <li class="sidebar-title ">
                     <span>ACCOUNT</span>
                 </li>
                 <li id="intro-account" class="sidebar-list" ng-class="{'sidebar-selected': current_location === 'account'}">
-                    <a href="#account">User account <span class="menu-icon fa fa-user"></span></a>
+                    <a href="#account">User account <span class= menu-icon fa fa-user"></span></a>
                 </li>
                 <!-- TASKS -->
-                <li class="sidebar-title">
+                <li class="sidebar-title ">
                     <span>TASKS</span>
                 </li>
                 <li class="sidebar-list" ng-class="{'sidebar-selected': current_location === 'add_task'}">
-                    <a href="#add_task">Create <span class="menu-icon fa fa-plus"></span></a>
+                    <a href="#add_task">Create <span class= menu-icon fa fa-plus"></span></a>
                 </li>
                 <li class="sidebar-list" ng-class="{'sidebar-selected': current_location === 'task_management'}">
-                    <a href="#task_management">Task Management<span class="menu-icon fa fa-book"></span></a>
+                    <a href="#task_management">Task Management<span class= menu-icon fa fa-book"></span></a>
                 </li>
                 <!-- EVENTS -->
-                <li class="sidebar-title">
+                <li class="sidebar-title ">
                     <span>EVENTS</span>
                 </li>
                 <li class="sidebar-list" ng-class="{'sidebar-selected': current_location === 'create_event'}">
-                    <a href="#create_event">Create <span class="menu-icon fa fa-plus"></span></a>
+                    <a href="#create_event">Create <span class= menu-icon fa fa-plus"></span></a>
                 </li>
                 <li class="sidebar-list" ng-class="{'sidebar-selected': current_location === 'upcoming_events'}">
-                    <a href="#upcoming_events">Upcoming <span class="menu-icon fa fa-calendar"></span></a>
+                    <a href="#upcoming_events">Upcoming <span class= menu-icon fa fa-calendar"></span></a>
                 </li>
                 <li class="sidebar-list" ng-class="{'sidebar-selected': current_location === 'events_calendar'}">
-                    <a href="#events_calendar">Calendar <span class="menu-icon fa fa-calendar"></span></a>
+                    <a href="#events_calendar">Calendar <span class= menu-icon fa fa-calendar"></span></a>
                 </li>
                 <li class="sidebar-list" ng-class="{'sidebar-selected': current_location === 'watched_events'}">
-                    <a href="#watched_events">Watched <span class="menu-icon fa fa-eye"></span></a>
+                    <a href="#watched_events">Watched <span class= menu-icon fa fa-eye"></span></a>
                 </li>
                 <li class="sidebar-list" ng-class="{'sidebar-selected': current_location === 'events_by_location'}">
-                    <a href="#events_by_location">By location (beta) <span class="menu-icon fa fa-map-marker"></span></a>
+                    <a href="#events_by_location">By location (beta) <span class= menu-icon fa fa-map-marker"></span></a>
                 </li>
                 <!-- ADMIN -->
-                <li class="sidebar-title">
+                <li class="sidebar-title ">
                     <span>ADMIN</span>
                 </li>
                 <li class="sidebar-list" ng-class="{'sidebar-selected': current_location === 'user_add'}">
-                    <a href="#user_add">Add user<span class="menu-icon fa fa-plus"></span></a>
+                    <a href="#user_add">Add user<span class= menu-icon fa fa-plus"></span></a>
                 </li>
                 <li class="sidebar-list" ng-class="{'sidebar-selected': current_location === 'statistics'}">
-                    <a href="#statistics">Statistics<span class="menu-icon fa fa-area-chart"></span></a>
+                    <a href="#statistics">Statistics<span class= menu-icon fa fa-area-chart"></span></a>
                 </li>
                 <li class="sidebar-list" ng-class="{'sidebar-selected': current_location === 'user_management'}">
-                    <a href="#user_management">User management<span class="menu-icon fa fa-users"></span></a>
+                    <a href="#user_management">User management<span class= menu-icon fa fa-users"></span></a>
                 </li>
                 <li class="sidebar-list" ng-class="{'sidebar-selected': current_location === 'developer_console'}">
-                    <a href="#developer_console">Developer console<span class="menu-icon fa fa-cogs"></span></a>
+                    <a href="#developer_console">Developer console<span class= menu-icon fa fa-cogs"></span></a>
                 </li>
             </ul>
             <div class="sidebar-footer">
@@ -135,30 +137,6 @@
         <!-- End Sidebar -->
         <div id="content-wrapper">
             <div class="page-content">
-                <!-- Header Bar -->
-                <!-- 
-                <div class="row header">
-                    <div class="col-xs-12">
-                        <div class="user pull-right">
-                            <div class="item dropdown">
-                                <a href="#login" class="dropdown-toggle" ng-click="logOut()">
-                                    <i class="fa fa-sign-out"></i> 
-                                </a>
-                            </div>
-                        </div>
-                        <div class="meta">
-                            <div class="page">
-                                Dashboard
-                            </div>
-                            <div class="breadcrumb-links">
-                                Home / Dashboard
-                            </div>
-                        </div>
-                    </div>
-                </div> -->
-                <!-- End Header Bar -->
-                <!-- Main Content -->
-                <br>
                 <div class="row">
                     <div class="col-md-12">
                         <div ng-view class="animated fadeIn"></div>

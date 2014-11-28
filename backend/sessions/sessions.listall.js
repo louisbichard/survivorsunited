@@ -12,6 +12,7 @@ module.exports = function(req, res) {
     db.find('sessions', [{}])
         .then(respond.success)
         .caught(function(err) {
+            log.debug(err);
             respond.failure('Could not list sessions', err);
         });
 

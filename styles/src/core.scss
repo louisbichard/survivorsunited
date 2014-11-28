@@ -1,0 +1,67 @@
+$color-light: #9575CD;
+$color-medium: #673AB7;
+$color-dark: #512DA8;
+$color-accent: #4DD0E1;
+// TEXT COLOURS 
+$text-medium: #a2afb5;
+$text-dark: #000000;
+$white: #FFFFFF;
+$black: #000000;
+$shadow-mid: 0 2px 5px rgba(0, 0, 0, 0.16);
+$shadow-low: 0 1px 1px rgba(0, 0, 0, 0.05);
+// CORE VARIABLES
+.green {
+    background: #23ae89 !important;
+}
+.yellow {
+    color: black !important;
+    background: #fbfa9f !important;
+}
+.light-blue {
+    background: #a9e2fb !important;
+}
+.blue {
+    background: #2361ae !important;
+}
+.orange {
+    background: #d3a938 !important;
+}
+.red {
+    background: #ae2323 !important;
+}
+.background-medium {
+    color: $color-medium;
+}
+// FONTS
+p, h1, h2, h3, h4, h5, h6, body, div, span, a {
+    font-family: 'Roboto', sans-serif;
+}
+// MAIN
+h3 {
+    font-weight: 200;
+    color: $black;
+}
+p {
+    font-weight: 100;
+    padding: 20px;
+}
+a {
+    color: $color-accent;
+}
+body {
+    background-color: #f3f3f3;
+}
+// BOOTSTRAP OVERRIDES
+.form-control {
+    font-weight: 300;
+}
+html {
+    overflow-y: scroll;
+}
+.row {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+}
+.row > div {
+    margin-bottom: 15px;
+}

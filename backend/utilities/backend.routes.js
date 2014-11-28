@@ -14,7 +14,7 @@ var runEndpoint = function(req, res, next, location) {
     });
 
     // REMOVE THE LEADING SLASHES FROM THE LOCATION PATH FOR MORE READABLE API OUTPUT
-    log.general('EP: ', location.split('/')[3].blue);
+    log.general('EP: ', location.blue);
 
     if (!location || !_.isString(location)) {
         throw new Error('location was not found, or incorrect type when passed to(runEndpoint in backend routes');

@@ -105,7 +105,6 @@ module.exports = {
     },
 
     successIsFalse: function(err, res, body) {
-        // FORMAT REQUEST BODY
         body = JSON.parse(body);
 
         // THROW ERROR IF TEST ISN'T FALSE
@@ -115,9 +114,7 @@ module.exports = {
     },
 
     successIsTrue: function(err, res, body) {
-        //FORMAT REQUEST BODY
         body = JSON.parse(body);
-        log.debug(body);
 
         // THROW ERROR IF REST ISN'T FALSE
         if (body.success !== true) {
@@ -131,6 +128,11 @@ module.exports = {
         if (body.error_message !== message) {
             throw new Error('Error message is incorrect, expected: ' + message + ' but got: ' + body.error_message);
         }
+    },
+
+    resultMessageIs: function(err, res, body, message) {
+        body = JSON.parse(body);
+        if (body.result !== message) throw new Error('Expecting result message' + message + 'but got ' + body.result);
     },
 
     hasSuccessMessage: function(err, res, body, message) {

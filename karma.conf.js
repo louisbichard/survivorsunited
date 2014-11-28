@@ -33,13 +33,15 @@ module.exports = function(config) {
             './bower_components/angular-loading-bar/src/loading-bar.js',
             './bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js',
             './bower_components/angular-cookies/angular-cookies.min.js',
+            './bower_components/angular-intro.js/src/angular-intro.js',
+            './bower_components/intro.js/minified/intro.min.js',
 
             // ANGULAR INITIALISE
             './scripts/app.js',
 
             // CONTROLLERS
             './scripts/controllers/dashboard.controller.js',
-            './scripts/controllers/task.task.add.controller.js',
+            './scripts/controllers/task.add.controller.js',
             './scripts/controllers/main.controller.js',
             './scripts/controllers/user.management.controller.js',
             './scripts/controllers/user.statistics.controller.js',

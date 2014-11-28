@@ -1,0 +1,11 @@
+//BTNS
+.btn-accent {
+    color: $white;
+    background-color: $color-accent;
+}
+.btn-accent:hover {
+    color: $black;
+    opacity: 0.54;
+    box-shadow: $shadow-mid;
+    background-color: $color-accent;
+}

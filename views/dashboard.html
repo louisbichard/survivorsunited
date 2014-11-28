@@ -27,7 +27,7 @@
                                 <p> To help you make the most of this service, we've put together a quick tour of all the amazing features that Survivors United has to offer so you don't miss anything. </p>
                             </div>
                             <div class="col-lg-2">
-                                <a class="btn btn-primary btn-sm text-center" ng-click="startIntro();"> Take the tour </a>
+                                <a class="btn btn-sm btn-accent text-center" ng-click="startIntro();"> Take the tour </a>
                             </div>
                         </div>
                         <hr>
@@ -35,7 +35,11 @@
                             <div class="col-lg-12">
                                 <h3> Whats new</h3>
                                 <p> Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean lacinia bibendum nulla sed consectetur. </p>
-                                <hr>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-lg-12">
                                 <h3> Survivors United in the news </h3>
                                 <p> Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean lacinia bibendum nulla sed consectetur.</p>
                                 <a href="http://www.bbc.co.uk/news/uk-politics-26036279">Find out more</a>
@@ -52,7 +56,7 @@
                 <i class="fa fa-list"></i> Your mentor
                 <a class="pull-right" href="#mentor"> More details </a>
             </div>
-            <div class="widget-body no-padding">
+            <div class="widget-body large no-padding">
                 <div class="row">
                     <div class="col-lg-12">
                         <br>
@@ -65,54 +69,49 @@
 </div>
 <div class="row">
     <div class="col-lg-6">
-        <h3> Task statistics </h3>
-    </div>
-</div>
-<div class="row">
-    <div class="col-lg-3">
-        <div class="widget">
-            <div class="widget-body">
-                <div class="widget-icon green pull-left">
-                    <i class="fa fa-check"></i>
-                </div>
-                <div class="widget-content pull-left">
-                    <div class="title">{{complete_tasks}}</div>
-                    <div class="comment">Complete</div>
-                </div>
-                <div class="clearfix"></div>
-            </div>
-        </div>
-    </div>
-    <div class="col-lg-3">
-        <div class="widget">
-            <div class="widget-body">
-                <div class="widget-icon red pull-left">
-                    <i class="fa fa-clock-o"></i>
-                </div>
-                <div class="widget-content pull-left">
-                    <div class="title">{{pending_tasks}}</div>
-                    <div class="comment">Pending</div>
-                </div>
-                <div class="clearfix"></div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-lg-6">
         <div class="widget">
             <div class="widget-header">
                 <i class="fa fa-list"></i> What next?
             </div>
             <div class="widget-body large no-padding">
                 <br>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="widget shadow">
+                            <div class="widget-body">
+                                <div class="widget-icon green pull-left">
+                                    <i class="fa fa-check"></i>
+                                </div>
+                                <div class="widget-content pull-left">
+                                    <div class="title">{{complete_tasks}}</div>
+                                    <div class="comment">Complete</div>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="widget background-medium">
+                            <div class="widget-body">
+                                <div class="widget-icon red pull-left">
+                                    <i class="fa fa-clock-o"></i>
+                                </div>
+                                <div class="widget-content pull-left">
+                                    <div class="title">{{pending_tasks}}</div>
+                                    <div class="comment">Pending</div>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="row" ng-repeat="task in tasks">
                     <div class="col-md-12 col-lg-12">
                         <div class="panel panel-default">
                             <div class="panel-body">
                                 <div class="row">
                                     <div class="col-lg-12">
-                                        <h4 ng-class="{'text-strikethrough': task.status === 'closed'}">{{task.title}}</h4>
+                                        <h3 ng-class="{'text-strikethrough': task.status === 'closed'}">{{task.title}}</h3>
                                         <hr>
                                     </div>
                                 </div>
@@ -121,10 +120,10 @@
                                         <p>{{task.description}}</p>
                                     </div>
                                     <div class="col-md-6 col-lg-6">
-                                        <button type="button" class="btn btn-success" ng-click="updateTask(task._id, 'closed')" ng-show="task.status === 'open'">
+                                        <button type="button" class="btn btn-sm btn-success" ng-click="updateTask(task._id, 'closed')" ng-show="task.status === 'open'">
                                             <i class="fa fa-check"></i> Mark as complete
                                         </button>
-                                        <button type="button" class="btn btn-info" ng-click="updateTask(task._id, 'open')" ng-show="task.status === 'closed'">
+                                        <button type="button" class="btn btn-sm btn-info" ng-click="updateTask(task._id, 'open')" ng-show="task.status === 'closed'">
                                             <i class="fa fa-undo"></i> &nbsp; Mark as not complete
                                         </button>
                                     </div>

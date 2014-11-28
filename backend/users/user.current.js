@@ -1,6 +1,7 @@
 // ENDPOINT /auth/isAuthenticated
 var Promise = require('bluebird');
-var MongoClient = Promise.promisifyAll(require("mongodb")).MongoClient;
+var MongoClient = Promise.promisifyAll(require("mongodb"))
+    .MongoClient;
 var database = require('../utilities/database.js');
 
 module.exports = function(req, res) {
@@ -18,4 +19,3 @@ module.exports = function(req, res) {
     else respond.failure('user isn\'t authenticated');
 
 };
- 

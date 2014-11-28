@@ -12,6 +12,10 @@ var _ = require('lodash');
 var APIeasy = require('api-easy');
 var suite = APIeasy.describe(test_endpoint);
 
+var resolveTest = function(resolve) {
+    resolve();
+}
+
 // CLEAN
 setup_db([])
 
@@ -31,13 +35,9 @@ setup_db([])
             .post(test_endpoint)
             .expect(200)
             .expect('Success is false', utilities.successIsFalse)
-            .expect('Validates no username or password', function(err, res, body) {
-                utilities.hasErrorMessage(err, res, body, 'No username or password specified');
-            })
-            .next();
-
+            .expect('Validates no username or password', _.partialRight(utilities.resultMessageIs, 'No username or password specified'))
+            .next(module);
         _.delay(resolve, utilities.DELAY);
-
     });
 })
 
@@ -63,7 +63,7 @@ setup_db([])
             })
             .expect(200)
             .expect('Error message is as expected', function(err, res, body) {
-                utilities.hasErrorMessage(err, res, body, 'Password must be more than 5 characters');
+                utilities.resultMessageIs(err, res, body, 'Password must be more than 5 characters');
             })
             .expect('Success is true', utilities.successIsFalse)
             .next();
@@ -95,10 +95,9 @@ setup_db([])
             .expect(200)
             .expect('Success is true', utilities.successIsFalse)
             .expect('Error message is as expected', function(err, res, body) {
-                utilities.hasErrorMessage(err, res, body, 'No username or password specified');
+                utilities.resultMessageIs(err, res, body, 'No username or password specified');
             })
             .next();
-
         _.delay(resolve, utilities.DELAY);
 
     });
@@ -130,31 +129,30 @@ setup_db([])
 
 // RUN
 .then(function() {
-    return new Promise(function(resolve, reject) {
+        return new Promise(function(resolve, reject) {
 
-        suite.discuss('When authenticating')
-            .discuss('with username and password')
-            .use('localhost', 3000)
-            .setHeader('Content-Type', 'application/json')
-            .post(test_endpoint, {
-                username: "username",
-                password: "password"
-            })
-            .before('setAuth', utilities.setAuthCookie)
-            .expect(200)
-            .expect('Success is true', utilities.successIsTrue)
-            .expect('Success message is correct', function(err, res, body) {
-                utilities.hasSuccessMessage(err, res, body, 'User logged in successfully');
-            })
-            .export(module);
+            suite.discuss('When authenticating')
+                .discuss('with username and password')
+                .use('localhost', 3000)
+                .setHeader('Content-Type', 'application/json')
+                .post(test_endpoint, {
+                    username: "username",
+                    password: "password"
+                })
+                .before('setAuth', utilities.setAuthCookie)
+                .expect(200)
+                .expect('Success is true', utilities.successIsTrue)
+                .expect('Success message is correct', function(err, res, body) {
+                    utilities.hasSuccessMessage(err, res, body, 'User logged in successfully');
+                })
+                .export(module);
 
-        _.delay(resolve, utilities.DELAY);
+            _.delay(resolve, utilities.DELAY);
 
-    });
-})
-
-// EXIT
-.then(process.exit)
+        });
+    })
+    // EXIT
+    .then(process.exit)
 
 // CATCH ERRORS
 .caught(function(err) {
@@ -162,4 +160,4 @@ setup_db([])
 
     //EXIT REGARDLESS
     process.exit();
-});
+})

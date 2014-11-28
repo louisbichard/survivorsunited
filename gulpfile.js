@@ -25,3 +25,11 @@ gulp.task('test-frontend', shell.task([
 gulp.task('browserify', shell.task([
     "browserify scripts/main.js -o scripts/bundle.js"
 ]));
+
+gulp.task('styles', shell.task([
+    'sass ./styles/src/* ./styles/build/main.css'
+]));
+
+gulp.task('styles-watch', shell.task([
+    'sass --watch ./styles/src/main.scss:./styles/build/main.css'
+]));

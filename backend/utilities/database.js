@@ -9,7 +9,18 @@ if (!database) {
     throw new Error('Database environment variable is undefined!');
 }
 
-var api_methods = ['update', 'delete', 'find'];
+var api_methods = ['update', 'delete', 'find', 'insert'];
+
+var toArray = function(data) {
+    return data.toArrayAsync();
+};
+
+var callCollection = function(mongo, command, collection_name, query) {
+    var collection_connect = Promise.promisifyAll(mongo.collection(collection_name));
+    var method_name = command + 'Async';
+    var result = collection_connect[method_name].apply(collection_connect, query);
+    return (command === 'find') ? result.then(toArray) : result;
+};
 
 var mongo_commands = _.reduce(api_methods, function(commands, command) {
     commands[command] = function(collection_name, query) {
@@ -17,17 +28,7 @@ var mongo_commands = _.reduce(api_methods, function(commands, command) {
         if (!query) throw new Error('No query supplied to ' + command + ' command');
         if (!_.isArray(query)) throw new Error('Must provide query as an array');
         return MongoClient.connectAsync(utilities.connection)
-            .then(function(mongo) {
-                // TODO: REFACTOR
-                var collection_connect = Promise.promisifyAll(mongo.collection(collection_name));
-                var result = collection_connect[command + 'Async']({});
-                if (command === 'find') {
-                    result = result.then(function(data) {
-                        return data.toArrayAsync();
-                    });
-                }
-                return result;
-            });
+            .then(_.partialRight(callCollection, command, collection_name, query));
     };
     return commands;
 

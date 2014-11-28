@@ -1,0 +1,112 @@
+// SIDEBAR
+ul.sidebar {
+    position: absolute;
+    top: 0;
+    bottom: 45px;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    text-indent: 20px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    background-color: $color-dark;
+    li a {
+        color: #fff;
+        display: block;
+        float: left;
+        text-decoration: none;
+        width: 250px;
+    }
+    .sidebar-list.sidebar-selected a {
+        border-left: 5px solid $color-accent;
+        background-color: #f3f3f3;
+        color: $black;
+        box-shadow: $shadow-low;
+    }
+    .sidebar-list {
+        height: 40px;
+        background-color: $color-medium;
+        a {
+            text-indent: 50px;
+            font-size: 12px;
+            font-weight: 100;
+            color: $white;
+            line-height: 40px;
+        }
+        a:hover .menu-icon {
+            text-indent: 25px;
+            color: #000000;
+        }
+    }
+    .sidebar-list.sidebar-selected a {
+        text-indent: 44px;
+    }
+    .sidebar-title {
+        background-color: $color-medium;
+        font-size: 13px;
+        font-weight: 200;
+        color: $white;
+        height: 35px;
+        line-height: 40px;
+        text-transform: uppercase;
+    }
+    .sidebar-main {
+        height: 65px;
+        a {
+            font-size: 18px;
+            line-height: 60px;
+        }
+        .menu-icon {
+            float: right;
+            font-size: 18px;
+            padding-right: 28px;
+            line-height: 60px;
+        }
+    }
+    .sidebar-list .menu-icon {
+        float: right;
+        padding-right: 29px;
+        line-height: 40px;
+        width: 70px;
+    }
+}
+.sidebar-footer {
+    background-color: $color-dark;
+    position: absolute;
+    height: 40px;
+    bottom: 0;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    text-align: center;
+    div a {
+        color: #b2bfdc;
+        font-size: 12px;
+        line-height: 43px;
+    }
+    div a:hover {
+        color: #ffffff;
+        text-decoration: none;
+    }
+}
+#sidebar-wrapper {
+    background-color: $color-dark;
+}
+#page-wrapper:not(.active) ul.sidebar {
+    bottom: 0;
+}
+#page-wrapper:not(.active) ul.sidebar .sidebar-title {
+    display: none;
+}
+#page-wrapper:not(.active) ul.sidebar .sidebar-title.separator {
+    display: block;
+    height: 2px;
+    margin: 13px 0;
+}
+#page-wrapper:not(.active) ul.sidebar .sidebar-list a:hover span {
+    border-left: 3px solid #e99d1a;
+    text-indent: 22px;
+}
+#page-wrapper:not(.active) .sidebar-footer {
+    display: none;
+}
