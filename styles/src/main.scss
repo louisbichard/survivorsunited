@@ -10,7 +10,7 @@
 }
 // COMPONENTS
 .fullscreen {
-    background: url("../../assets/img/scene_fade.jpg") no-repeat;
+    background: $white; // url("../../assets/img/scene_fade.jpg") no-repeat;
     position: fixed;
     top: 0;
     right: 0;

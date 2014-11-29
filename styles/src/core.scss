@@ -7,7 +7,8 @@ $text-medium: #a2afb5;
 $text-dark: #000000;
 $white: #FFFFFF;
 $black: #000000;
-$shadow-mid: 0 2px 5px rgba(0, 0, 0, 0.16);
+$shadow-high: 0 2px 5px rgba(0, 0, 0, 0.16);
+$shadow-mid: 0 1px 2px rgba(0, 0, 0, 0.16);
 $shadow-low: 0 1px 1px rgba(0, 0, 0, 0.05);
 // CORE VARIABLES
 .green {
@@ -36,13 +37,33 @@ $shadow-low: 0 1px 1px rgba(0, 0, 0, 0.05);
 p, h1, h2, h3, h4, h5, h6, body, div, span, a {
     font-family: 'Roboto', sans-serif;
 }
-p.minimal-padding {
+.minimal-padding {
     padding: 5px;
+}
+// TEXT CLASSES
+.text-hint {
+    opacity: 0.26;
+}
+.text-subheading {
+    padding-top: 0px;
+}
+.text-secondary {
+    opacity: 0.54;
+}
+.text-white {
+    color: $white;
+}
+.text-accent {
+    color: $color-accent;
 }
 // MAIN
 h3 {
     font-weight: 200;
     color: $black;
+}
+h5 {
+    font-weight: 300;
+    padding: 3px;
 }
 p {
     font-weight: 100;
@@ -56,7 +77,22 @@ body {
 }
 // BOOTSTRAP OVERRIDES
 .form-control {
+    margin-bottom: 10px;
+    transition: none;
+    border-width: 1px;
+    border-top: none;
+    border-right: none;
+    border-left: none;
+    border-color: $text-medium;
+    background-color: transparent;
+    box-shadow: none;
+    border-radius: 0px;
     font-weight: 300;
+    padding-left: 3px;
+}
+.form-control:focus {
+    color: $color-accent;
+    box-shadow: none;
 }
 html {
     overflow-y: scroll;

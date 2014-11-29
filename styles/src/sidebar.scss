@@ -23,6 +23,13 @@ ul.sidebar {
         color: $black;
         box-shadow: $shadow-low;
     }
+    .sidebar-list.sidebar-search {
+        padding: 5px;
+        padding: {
+            left: 20px;
+            right: 20px;
+        }
+    }
     .sidebar-list {
         height: 40px;
         background-color: $color-medium;
@@ -33,13 +40,16 @@ ul.sidebar {
             color: $white;
             line-height: 40px;
         }
+        a:hover {
+            color: $color-accent;
+        }
         a:hover .menu-icon {
             text-indent: 25px;
-            color: #000000;
         }
     }
     .sidebar-list.sidebar-selected a {
         text-indent: 44px;
+        color: $black;
     }
     .sidebar-title {
         background-color: $color-medium;
@@ -64,6 +74,7 @@ ul.sidebar {
         }
     }
     .sidebar-list .menu-icon {
+        text-indent: 25px;
         float: right;
         padding-right: 29px;
         line-height: 40px;

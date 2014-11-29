@@ -23,12 +23,31 @@
 p, h1, h2, h3, h4, h5, h6, body, div, span, a {
   font-family: 'Roboto', sans-serif; }
 
-p.minimal-padding {
+.minimal-padding {
   padding: 5px; }
+
+.text-hint {
+  opacity: 0.26; }
+
+.text-subheading {
+  padding-top: 0px; }
+
+.text-secondary {
+  opacity: 0.54; }
+
+.text-white {
+  color: #FFFFFF; }
+
+.text-accent {
+  color: #4DD0E1; }
 
 h3 {
   font-weight: 200;
   color: #000000; }
+
+h5 {
+  font-weight: 300;
+  padding: 3px; }
 
 p {
   font-weight: 100;
@@ -41,7 +60,22 @@ body {
   background-color: #f3f3f3; }
 
 .form-control {
-  font-weight: 300; }
+  margin-bottom: 10px;
+  transition: none;
+  border-width: 1px;
+  border-top: none;
+  border-right: none;
+  border-left: none;
+  border-color: #a2afb5;
+  background-color: transparent;
+  box-shadow: none;
+  border-radius: 0px;
+  font-weight: 300;
+  padding-left: 3px; }
+
+.form-control:focus {
+  color: #4DD0E1;
+  box-shadow: none; }
 
 html {
   overflow-y: scroll; }
@@ -86,7 +120,7 @@ html {
     margin-bottom: 4px;
     font-weight: 200;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.16);
-    background-color: #673AB7;
+    background-color: #9575CD;
     padding: 10px 15px;
     line-height: 30px; }
   .widget .widget-header .pagination, .widget .widget .widget-footer .pagination {
@@ -99,6 +133,9 @@ html {
     padding: 20px; }
   .widget .widget-body.large {
     height: 350px;
+    overflow-y: auto; }
+  .widget .widget-body.full {
+    height: 90%;
     overflow-y: auto; }
   .widget .widget-body.medium {
     height: 250px;
@@ -129,6 +166,10 @@ ul.sidebar {
     background-color: #f3f3f3;
     color: #000000;
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05); }
+  ul.sidebar .sidebar-list.sidebar-search {
+    padding: 5px;
+    padding-left: 20px;
+    padding-right: 20px; }
   ul.sidebar .sidebar-list {
     height: 40px;
     background-color: #673AB7; }
@@ -138,11 +179,13 @@ ul.sidebar {
       font-weight: 100;
       color: #FFFFFF;
       line-height: 40px; }
+    ul.sidebar .sidebar-list a:hover {
+      color: #4DD0E1; }
     ul.sidebar .sidebar-list a:hover .menu-icon {
-      text-indent: 25px;
-      color: #000000; }
+      text-indent: 25px; }
   ul.sidebar .sidebar-list.sidebar-selected a {
-    text-indent: 44px; }
+    text-indent: 44px;
+    color: #000000; }
   ul.sidebar .sidebar-title {
     background-color: #673AB7;
     font-size: 13px;
@@ -162,6 +205,7 @@ ul.sidebar {
       padding-right: 28px;
       line-height: 60px; }
   ul.sidebar .sidebar-list .menu-icon {
+    text-indent: 25px;
     float: right;
     padding-right: 29px;
     line-height: 40px;
@@ -212,8 +256,18 @@ ul.sidebar {
 .btn-accent:hover {
   color: #000000;
   opacity: 0.54;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.16);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.16);
   background-color: #4DD0E1; }
+
+.top-panel {
+  background-color: #FFFFFF;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.16);
+  padding: 5px;
+  border-weight: 1px;
+  border-bottom: #4DD0E1;
+  border-top: none;
+  border-left: none;
+  border-right: none; }
 
 .text-white {
   color: #FFFFFF; }
@@ -222,7 +276,7 @@ ul.sidebar {
   text-decoration: line-through; }
 
 .fullscreen {
-  background: url("../../assets/img/scene_fade.jpg") no-repeat;
+  background: #FFFFFF;
   position: fixed;
   top: 0;
   right: 0;

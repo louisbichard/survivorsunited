@@ -9,3 +9,15 @@
     box-shadow: $shadow-mid;
     background-color: $color-accent;
 }
+.top-panel {
+    background-color: $white;
+    box-shadow: $shadow-mid;
+    padding: 5px;
+    border-weight: 1px;
+    border: {
+        bottom: $color-accent;
+        top: none;
+        left: none;
+        right: none;
+    }
+}

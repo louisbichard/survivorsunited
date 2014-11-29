@@ -9,7 +9,7 @@ SU.config(function($routeProvider) {
 
     // DASHBOARD
     .when('/dashboard', {
-        templateUrl: '../views/dashboard.html',
+        templateUrl: '../views/main/dashboard.html',
         controller: 'dashboardController'
     })
 
@@ -19,25 +19,25 @@ SU.config(function($routeProvider) {
 
     // MENTOR
     .when('/mentor', {
-        templateUrl: '../views/mentor.html',
+        templateUrl: '../views/main/mentor.html',
         controller: 'mentorController'
     })
 
     // MENTEES
     .when('/mentees', {
-        templateUrl: '../views/mentees.html',
+        templateUrl: '../views/main/mentees.html',
         controller: 'menteesController'
     })
 
     // ACCOUNT
     .when('/account', {
-        templateUrl: '../views/account.html',
+        templateUrl: '../views/account/account.html',
         controller: 'accountController'
     })
 
     // LOGIN
     .when('/login', {
-        templateUrl: '../views/login.html',
+        templateUrl: '../views/utilities/login.html',
         controller: 'mainController'
     })
 
@@ -47,25 +47,25 @@ SU.config(function($routeProvider) {
 
     //MAIN SEARCH PAGE
     .when('/search', {
-        templateUrl: '../views/search.html',
+        templateUrl: '../views/utilities/search.html',
         controller: 'mainController'
     })
 
     //MAIN NOTIFICATIONS PAGE
     .when('/notifications', {
-        templateUrl: '../views/notifications.html',
+        templateUrl: '../views/main/notifications.html',
         controller: 'mainController'
     })
 
     // FORUM
     .when('/forum', {
-        templateUrl: '../views/forum.html',
+        templateUrl: '../views/utilities/forum.html',
         controller: 'mainController'
     })
 
     // FORUM
     .when('/credits', {
-        templateUrl: '../views/credits.html'
+        templateUrl: '../views/utilities/credits.html'
     })
 
     ////////////
@@ -74,8 +74,14 @@ SU.config(function($routeProvider) {
 
     // CREATE EVENT
     .when('/add_task', {
-        templateUrl: '../views/add_task.html',
+        templateUrl: '../views/tasks/add_task.html',
         controller: 'addTaskController'
+    })
+
+    // CREATE EVENT
+    .when('/task_management', {
+        templateUrl: '../views/tasks/task_management.html',
+        controller: 'taskManagementController'
     })
 
     ////////////
@@ -84,43 +90,43 @@ SU.config(function($routeProvider) {
 
     //UPCOMING 
     .when('/upcoming_events', {
-        templateUrl: '../views/events_watched_subscribed_upcoming.html',
+        templateUrl: '../views/events/events_watched_subscribed_upcoming.html',
         controller: 'upcomingWatchedSubscribedEventsController'
     })
 
     // WATCHING 
     .when('/users_watching_event', {
-        templateUrl: '../views/users_watching_event.html',
+        templateUrl: '../views/events/users_watching_event.html',
         controller: 'usersWatchingEventController'
     })
 
     // CURRERNTLY WATCHED
     .when('/watched_events', {
-        templateUrl: '../views/events_watched_subscribed_upcoming.html',
+        templateUrl: '../views/events/events_watched_subscribed_upcoming.html',
         controller: 'upcomingWatchedSubscribedEventsController'
     })
 
     // CREATE EVENT
     .when('/create_event', {
-        templateUrl: '../views/add_event.html',
+        templateUrl: '../views/events/add_event.html',
         controller: 'addEventController'
     })
 
     // SUBSCRIBED
     .when('/subscribed_events', {
-        templateUrl: '../views/events_watched_subscribed_upcoming.html',
+        templateUrl: '../views/events/events_watched_subscribed_upcoming.html',
         controller: 'mainController'
     })
 
     // CALENDAR
     .when('/events_calendar', {
-        templateUrl: '../views/events_calendar.html',
+        templateUrl: '../views/events/events_calendar.html',
         controller: 'eventCalendarController'
     })
 
     // CALENDAR
     .when('/events_by_location', {
-        templateUrl: '../views/events_by_location.html'
+        templateUrl: '../views/events/events_by_location.html'
             // TODO: ADD CONTROLLER
     })
 
@@ -130,25 +136,25 @@ SU.config(function($routeProvider) {
 
     // USER MANAGEMENT
     .when('/statistics', {
-        templateUrl: '../views/statistics.html',
+        templateUrl: '../views/admin/statistics.html',
         controller: 'statisticsController'
     })
 
     // USER DETAILS
     .when('/user_management', {
-        templateUrl: '../views/user_management.html',
+        templateUrl: '../views/admin/user_management.html',
         controller: 'userDetailsController'
     })
 
     // ADD USER
     .when('/user_add', {
-        templateUrl: '../views/user_add.html',
+        templateUrl: '../views/admin/user_add.html',
         controller: 'userAddController'
     })
 
     // DEVELOPER CONSOLE
     .when('/developer_console', {
-        templateUrl: '../views/developer_console.html',
+        templateUrl: '../views/admin/developer_console.html',
         controller: 'developerConsoleController'
     })
 
@@ -157,7 +163,7 @@ SU.config(function($routeProvider) {
     ///////////////
 
     .when('/notfound', {
-        templateUrl: '../views/notfound.html'
+        templateUrl: '../views/utilities/notfound.html'
     })
 
     .otherwise({

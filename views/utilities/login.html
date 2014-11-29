@@ -1,0 +1,48 @@
+<div class="fullscreen text-center">
+    <br>
+    <div class="row">
+        <div class="col-md-12">
+            <lead> Survivors United </lead>
+            <h3> "You're in safe hands" </h3>
+            <hr>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4">
+            <label> Select Region </label>
+            <select class="form-control">
+                <option selected="selected">Bradford</option>
+            </select>
+            <br>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4 col-md-offset-1">
+            <h3> Login </h3>
+            <form role="form">
+                <div class="form-group">
+                    <input ng-model="user.username" class="form-control" placeholder="Email ">
+                </div>
+                <div class="form-group ">
+                    <input ng-model="user.password" type="password" class="form-control" placeholder="password ">
+                </div>
+                <button type="submit " ng-click="mainLogin(user) " class="btn btn-block btn-accent ">Submit</button>
+            </form>
+        </div>
+        <div class="col-md-4 col-md-offset-1">
+            <h3> Create an account </h3>
+            <form role="form">
+                <div class="form-group">
+                    <input class="form-control" placeholder="Email ">
+                </div>
+                <div class="form-group ">
+                    <input type="password" class="form-control" placeholder="password ">
+                </div>
+                <div class="form-group ">
+                    <input type="password" class="form-control" placeholder="confirm password ">
+                </div>
+                <button type="submit " ng-click="mainLogin(user) " class="btn btn-block btn-accent ">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>

@@ -36,7 +36,9 @@ module.exports = function(req, res) {
             title: post_params.title,
             description: post_params.description,
             status: "open",
-            assignee: post_params.assignee
+            assignee: post_params.assignee,
+            date_created: new Date()
+                .getTime()
         });
     };
 
