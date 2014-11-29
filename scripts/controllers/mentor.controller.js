@@ -1,7 +1,7 @@
 // TYPE:    controller
 // PARTIAL: mentor.html
 
-SU.controller('mentorController', function($scope, apiService) {
+SU.controller('mentorController', function($scope, apiService, notifyService) {
 
     $scope.getMentorData = function() {
         return apiService
@@ -13,8 +13,7 @@ SU.controller('mentorController', function($scope, apiService) {
                     $scope.mentor = result;
                 });
             })
-            .caught(function() {
-                // TODO: HANDLE ERRORING API
-            });
+            // TODO: HANDLE ERRORING API
+            .caught(notifyService.error);
     }();
 });

@@ -44,9 +44,7 @@ SU.controller('mainController', function($scope, apiService, $location, notifySe
                 preventNotifications: true
             })
             .then($scope.successfulLogin)
-            .caught(function(something) {
-                notifyService.error(something);
-            });
+            .caught(notifyService.error);
     };
 
     $scope.bootstrapDashboard();

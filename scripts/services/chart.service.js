@@ -119,4 +119,20 @@ SU.service("chartService", function($http) {
         return chart_data;
 
     };
+
+    this.formatErrors = function(result) {
+        return {
+            series: [],
+            data: _.chain(result)
+                .reduce(function(prev, val, key, orig) {
+                    prev.push({
+                        x: [key],
+                        y: [val],
+                        tooltip: key
+                    });
+                    return prev;
+                }, [])
+                .value()
+        };
+    };
 });

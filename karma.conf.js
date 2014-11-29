@@ -50,6 +50,7 @@ module.exports = function(config) {
             './scripts/controllers/mentor.controller.js',
             './scripts/controllers/mentees.controller.js',
             './scripts/controllers/events.upcoming.watched.subscribed.controller.js',
+            './scripts/controllers/developerConsoleController.js',
             './scripts/controllers/event.add.controller.js',
             './scripts/controllers/events.usersWatchingOrAttending.js',
             './scripts/controllers/events.calendar.controller.js',

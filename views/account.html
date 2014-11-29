@@ -1,13 +1,11 @@
 <div class="row">
     <div class="col-md-6 col-lg-6">
-
         <!-- ACCOUNT DETAILS -->
-
         <div class="widget">
             <div class="widget-header">
                 <i class="fa fa-list"></i> Account
             </div>
-            <div class="widget-body medium no-padding">
+            <div class="widget-body no-padding">
                 <br>
                 <div class="row">
                     <div class="col-lg-12">
@@ -28,13 +26,12 @@
             </div>
         </div>
         <br>
-
         <!-- PERSONAL DETAILS -->
         <div class="widget">
             <div class="widget-header">
                 <i class="fa fa-list"></i> Personal details
             </div>
-            <div class="widget-body medium no-padding">
+            <div class="widget-body no-padding">
                 <br>
                 <div class="row">
                     <div class="col-lg-12">
@@ -55,13 +52,12 @@
             </div>
         </div>
         <br>
-
         <!-- BIOGRAPHY -->
         <div class="widget">
             <div class="widget-header">
                 <i class="fa fa-book"></i> Biography
             </div>
-            <div class="widget-body small no-padding">
+            <div class="widget-body no-padding">
                 <br>
                 <div class="row">
                     <div class="col-lg-12">
@@ -71,10 +67,7 @@
             </div>
         </div>
     </div>
-
-
     <div class="col-md-6 col-lg-6">
-
         <div class="widget">
             <div class="widget-header">
                 <i class="fa fa-file-picture-o"></i> Biography
@@ -91,7 +84,6 @@
             </div>
         </div>
         <br>
-
         <!-- ADDRESS DETAILS -->
         <div class="widget">
             <div class="widget-header">
@@ -118,14 +110,12 @@
                                 <label>Postcode</label>
                                 <input value="{{user.address_postcode}}" ng-model="user.address_postcode" class="form-control" placeholder="Postcode" ng-change="userFieldChanged()">
                             </div>
-
                         </form>
                     </div>
                 </div>
             </div>
         </div>
         <br>
-
         <!-- REVIEW CHANGES -->
         <div>
             <div class="widget">
@@ -142,15 +132,13 @@
                 <div class="widget-body no-padding">
                     <br>
                     <div class="row">
-
                         <div class="col-lg-12">
                             <!-- IF NO CHANGES -->
                             <div ng-hide="update_params">
-                                <p>No changes yet made</p>
+                                <p class="minimal-padding">No changes yet made</p>
                             </div>
-
                             <!-- PREVIEW CHANGES -->
-                            <p ng-repeat="(key, val) in update_params">
+                            <p ng-repeat="(key, val) in update_params" class="minimal-padding">
                                 {{key}}: {{val}} &nbsp;
                                 <!-- TODO: MAKE WORK -->
                                 <!--- <i data-key="{{key}}" ng-click="discardUpdatedField(key)" class="fa fa-trash"></i> -->

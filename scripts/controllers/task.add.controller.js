@@ -4,7 +4,6 @@
 SU.controller('addTaskController', function($scope, apiService, utilityService, notifyService) {
 
     $scope.clearTask = function() {
-        console.log('clear tasks');
         $scope.add_task = {};
         notifyService.success('Cleared form');
     };
@@ -19,9 +18,14 @@ SU.controller('addTaskController', function($scope, apiService, utilityService, 
     };
 
     $scope.addTask = function() {
-        console.log('adding task');
-        //TODO: VALIDATE THAT ALL DATA HAS BEEN ENTERED 
-        return apiService.post('/task/add', $scope.add_task);
+        // PAYLOAD
+        var pl = $scope.add_task;
+        if (!pl || !pl.title || !pl.description || !pl.assignee) {
+            return notifyService.error('Required fields missing');
+        }
+        else {
+            return apiService.post('/task/add', $scope.add_task);
+        }
     };
 
     $scope.bootstrap();

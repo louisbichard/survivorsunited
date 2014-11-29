@@ -1,7 +1,7 @@
 <div class="row">
     <div class="col-lg-12">
         <h3>Code coverage</h3>
-        <iframe class="codeCoverageIframe" src="tests/coverage/Chrome%2038.0.2125%20(Mac%20OS%20X%2010.10.1)/index.html"></iframe>
+        <iframe class="codeCoverageIframe" src="tests/coverage/Chrome%2039.0.2171%20(Mac%20OS%20X%2010.10.1)/index.html"></iframe>
     </div>
 </div>
 <!-- BACK END TESTS -->
@@ -78,6 +78,32 @@
                                 <div class="clearfix"></div>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ERROR LOG GRAPHS -->
+<div class="row">
+    <div class="col-lg-12">
+        <div class="widget">
+            <div class="widget-header">
+                <i class="fa fa-list"></i> Error log
+            </div>
+            <div class="widget-body no-padding">
+                <div class="row text-center">
+                    <div class="col-md-6">
+                        <h3> Anonymous requests </h3>
+                        <div data-ac-chart="'bar'" data-ac-data="errors_by.anonymous" data-ac-config="chart_config" class="chart-full"></div>
+                    </div>
+                    <div class="col-md-6">
+                        <h3> Error result </h3>
+                        <div data-ac-chart="'bar'" data-ac-data="errors_by.err" data-ac-config="chart_config" class="chart-full"></div>
+                    </div>
+                    <div class="col-md-12">
+                        <h3> File location </h3>
+                        <div data-ac-chart="'bar'" data-ac-data="errors_by.location" data-ac-config="chart_config" class="chart-full"></div>
                     </div>
                 </div>
             </div>
