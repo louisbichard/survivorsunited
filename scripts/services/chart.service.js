@@ -120,7 +120,15 @@ SU.service("chartService", function($http) {
 
     };
 
+    /**
+     * [formatErrors takes an object of key names and numbers and outputs a graph representing these]
+     * @param  {Object} result - An object of key names and number values
+     * @return {[type]}        [description]
+     */
     this.formatErrors = function(result) {
+        if (!result || !_.isPlainObject(result)) {
+            throw new Error('Result object passed to format errors in chartService is incorrect');
+        }
         return {
             series: [],
             data: _.chain(result)
