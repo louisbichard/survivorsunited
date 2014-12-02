@@ -1,16 +1,25 @@
 SU.controller('mainController', function($scope, apiService, $location, notifyService) {
     // WATCH FOR NAV CHANGES AND SETUP SCOPE FOR LEFT PANEL TABBING HIGHLIGHTING
+    $scope.region = "Select region";
+
     $scope.$on('$locationChangeSuccess', function() {
         $scope.current_location = $location.path()
             .split('/')[1];
     });
+
+    $scope.search = function() {
+
+        $location.path('/search')
+            .search({
+                search: $scope.search_text
+            });
+    };
 
     $scope.toggleSidebar = function() {
         $scope.toggle = !$scope.toggle;
     };
 
     $scope.routeToLogin = function() {
-
         $location.path('login');
     };
 

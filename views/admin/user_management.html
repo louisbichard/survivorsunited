@@ -9,134 +9,124 @@
     <div class="col-lg-12">
         <div class="widget">
             <div class="widget-header">
-                <div class="row">
-                    <!-- SEARCH BOX -->
-                    <div class="col-md-12 col-sm-12 col-lg-12 text-center">
-                        <input ng-model="searchText" class="form-control input-sm" placeholder="Search users...">
+                <input ng-model="searchText" class="form-control input-sm" placeholder="Search users...">
+                <div class="btn-toolbar text">
+                    <!-- INTERNAL/EXTERNAL FILTER -->
+                    <div class="btn-group">
+                        <button type="button" ng-click="setFilter('internal', 'Internal')" class="btn btn-sm btn-accent">Internal</button>
+                        <button type="button" ng-click="setFilter('internal', 'External')" class="btn btn-sm btn-accent">External</button>
+                        <button ng-click="setFilter('internal', 'All')" type="button" class="btn btn-sm btn-accent">All</button>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12 col-sm-12">
-                        <div class="btn-toolbar">
-                            <!-- INTERNAL/EXTERNAL FILTER -->
-                            <div class="btn-group text-center">
-                                <button type="button" ng-click="setFilter('internal', 'Internal')" class="btn btn-sm btn-accent">Internal</button>
-                                <button type="button" ng-click="setFilter('internal', 'External')" class="btn btn-sm btn-accent">External</button>
-                                <button ng-click="setFilter('internal', 'All')" type="button" class="btn btn-sm btn-accent">All</button>
-                            </div>
-                            <!-- ASSIGNED MENTOR FILTER -->
-                            <div class="btn-group">
-                                <button ng-click="setFilter('assigned_mentor', 'yes')" type="button" class="btn btn-sm btn-accent">Assigned mentor</button>
-                                <button ng-click="setFilter('assigned_mentor', 'no')" type="button" class="btn btn-sm btn-accent">No mentor</button>
-                                <button ng-click="setFilter('assigned_mentor', 'All')" type="button" class="btn btn-sm btn-accent">All</button>
-                            </div>
-                            <!-- SEVERITY FILTER -->
-                            <div class="btn-group">
-                                <button ng-click="setFilter('severity', 'High')" type="button" class="btn btn-sm btn-danger">
-                                    High
-                                </button>
-                                <button ng-click="setFilter('severity', 'Medium')" type="button" class="btn btn-sm btn-warning">Medium
-                                </button>
-                                <button ng-click="setFilter('severity', 'Low')" type="button" class="btn btn-sm btn-info">
-                                    Low
-                                </button>
-                                <button ng-click="setFilter('severity', 'All')" type="button" class="btn btn-sm btn-accent">
-                                    All
-                                </button>
-                            </div>
-                            <div class="btn-group">
-                                <button ng-click="refreshUsers(true)" type="button" class="btn btn-sm btn-info">
-                                    Refresh Users&nbsp;
-                                    <i class="fa fa-refresh"></i>
-                                </button>
-                                <button ng-click="clearFilter(true)" type="button" class="btn btn-sm btn-danger">
-                                    Clear filters&nbsp;
-                                    <i class="fa fa-remove"></i>
-                                </button>
-                            </div>
-                        </div>
+                    <!-- ASSIGNED MENTOR FILTER -->
+                    <div class="btn-group">
+                        <button ng-click="setFilter('assigned_mentor', 'yes')" type="button" class="btn btn-sm btn-accent">Assigned mentor</button>
+                        <button ng-click="setFilter('assigned_mentor', 'no')" type="button" class="btn btn-sm btn-accent">No mentor</button>
+                        <button ng-click="setFilter('assigned_mentor', 'All')" type="button" class="btn btn-sm btn-dark">All</button>
+                    </div>
+                    <!-- SEVERITY FILTER -->
+                    <div class="btn-group">
+                        <button ng-click="setFilter('severity', 'High')" type="button" class="btn btn-sm btn-danger">
+                            High
+                        </button>
+                        <button ng-click="setFilter('severity', 'Medium')" type="button" class="btn btn-sm btn-warning">Medium
+                        </button>
+                        <button ng-click="setFilter('severity', 'Low')" type="button" class="btn btn-sm btn-info">
+                            Low
+                        </button>
+                        <button ng-click="setFilter('severity', 'All')" type="button" class="btn btn-sm btn-accent">
+                            All
+                        </button>
+                    </div>
+                    <div class="btn-group">
+                        <button ng-click="refreshUsers(true)" type="button" class="btn btn-sm btn-info">
+                            Refresh Users&nbsp;
+                            <i class="fa fa-refresh"></i>
+                        </button>
+                        <button ng-click="clearFilter(true)" type="button" class="btn btn-sm btn-danger">
+                            Clear filters&nbsp;
+                            <i class="fa fa-remove"></i>
+                        </button>
                     </div>
                 </div>
             </div>
             <div class="widget-body full no-padding">
-                <div class="row">
-                    <div class="col-md-12 col-sm-12">
-                        <br>
-                        <div ng-show="filteredResults.length">
-                            Total results: {{filteredResults.length}}
-                        </div>
-                        <hr>
-                        <div class="col-md-12 col-sm-12">
-                            <!-- IF NO RESULTS FOUND -->
-                            <div ng-hide="filteredResults.length">
-                                <p>No results found, please broaden your search criteria</p>
-                            </div>
-                            <div ng-repeat="user in filteredResults = (users | internalFilter:filters | severityFilter:filters | assignedMentorFilter:filters | filter:searchText) ">
-                                <br>
-                                <div class="widget animated" ng-class="{'fadeOut': user.removed}">
-                                    <div class="widget-header" ng-class="{'red': user.severity_grade === 'High' && user.role === 'Basic', 'yellow': user.severity_grade === 'Medium' && user.role === 'Basic', 'blue': user.severity_grade === 'Low' && user.role === 'Basic' }">
-                                        {{user.role}}
-                                        <div class="row">
-                                            <div class="col-md-8 col-sm-8">
-                                                <p class="text-white">
-                                                    <strong>{{user.username}}&nbsp;</strong> ({{user._id}}) {{user.date_created}}
-                                                </p>
-                                            </div>
-                                            <div class="col-md-4 col-sm-4 text-right">
-                                                <div class="btn-group ">
-                                                    <button ng-click="removeUser(user)" type="button" class="btn btn-sm btn-danger">
-                                                        Delete &nbsp;<i class="fa fa-trash"></i>
-                                                    </button>
-                                                    <button ng-click="updatedContact(this)" type="button" class="btn btn-sm btn-success">
-                                                        Update &nbsp;<i class="fa fa-plus"></i>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
+                <!-- IF NO RESULTS FOUND -->
+                <div ng-hide="filteredResults.length">
+                    <p>No results found, please broaden your search criteria</p>
+                </div>
+                <div ng-repeat="user in filteredResults = (users | internalFilter:filters | severityFilter:filters | assignedMentorFilter:filters | filter:searchText) ">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="animated" ng-class="{'fadeOut': user.removed}">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <h5 class="minimal-padding">
+                                <span ng-class="{'text-deep-orange': user.severity_grade === 'High' && user.role === 'Basic', 'text-yellow': user.severity_grade === 'Medium' && user.role === 'Basic', 'text-blue': user.severity_grade === 'Low' && user.role === 'Basic' }"><i class="fa fa-signal"></i>
+                                </span>
+                                {{user.first_name}} {{user.last_name}} ({{user.username}})&nbsp; 
+                                <span class="minimal-padding text-secondary">
+                                    Created: {{user.date_created}} || ID: {{user._id}}
+                                </span>
+                                <span class="pull-right">
+                                    <button ng-click="removeUser(user)" type="button" class="btn btn-sm btn-danger">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                </span>
+                                </h5>
                                     </div>
-                                    <div class="widget-body">
-                                        <div class="row">
-                                            <div class="col-md-6 col-sm-6">
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <accordion close-others="false">
+                                            <accordion-group heading="Basic details">
                                                 <div class="form-group">
                                                     <label>First name</label>
-                                                    <input ng-model="updated[user._id].first_name" class="form-control input-sm" value="{{user.first_name}}" placeholder="First name">
+                                                    <input ng-blur="updatedContact(this)" ng-model="updated[user._id].first_name" class="form-control input-sm" value="{{user.first_name}}" placeholder="First name">
                                                 </div>
-                                            </div>
-                                            <div class="col-md-6 col-sm-6">
                                                 <label>Last name</label>
-                                                <input ng-model="updated[user._id].last_name" class="form-control input-sm" value="{{user.last_name}}" placeholder="Last name">
-                                            </div>
-                                            <div class="col-md-12 col-sm-12">
+                                                <input ng-blur="updatedContact(this)" ng-model="updated[user._id].last_name" class="form-control input-sm" value="{{user.last_name}}" placeholder="Last name">
                                                 <label>Role</label>
-                                                <select ng-model="updated[user._id].role" class="form-control input-sm">
+                                                <select ng-blur="updatedContact(this)" ng-model="updated[user._id].role" class="form-control input-sm">
                                                     <option ng-selected="{{user.role === 'Basic'}}">Basic</option>
                                                     <option ng-selected="{{user.role === 'Mentor'}}">Mentor</option>
                                                     <option ng-selected="{{user.role === 'Admin'}}">Admin</option>
                                                 </select>
-                                            </div>
-                                        </div>
-                                        <div class="row" ng-show="user.role === 'Basic'">
-                                            <!-- CHANGE SEVERITY GRADE -->
-                                            <div class="col-md-6 col-sm-6">
-                                                <label>Severity</label>
-                                                <select class="form-control input-sm" ng-model="updated[user._id].severity_grade">
-                                                    <option>Low</option>
-                                                    <option>Medium</option>
-                                                    <option>High</option>
-                                                </select>
-                                            </div>
-                                            <div class="col-md-6 col-sm-6">
-                                                <p>
-                                                    <Strong>Currently assigned mentor:&nbsp;</strong>
-                                                </p>
-                                                <!-- SELECT A MENTOR -->
-                                                <select class="form-control input-sm" ng-model="updated[user._id].mentor">
-                                                    <option value="{{mentor._id}}" ng-repeat="mentor in mentors" ng-selected="updated[user._id].mentor === mentor._id">
-                                                        {{mentor.first_name}} {{mentor.last_name}} ({{mentor.username}})
-                                                    </option>
-                                                </select>
-                                            </div>
-                                        </div>
+                                            </accordion-group>
+                                            <accordion-group heading="Mentor / Severity">
+                                                <div ng-hide="user.role === 'Mentor'">
+                                                    <label>Severity</label>
+                                                    <select ng-blur="updatedContact(this)" class="form-control input-sm" ng-model="updated[user._id].severity_grade">
+                                                        <option>Low</option>
+                                                        <option>Medium</option>
+                                                        <option>High</option>
+                                                    </select>
+                                                    <label>Assigned mentor</label>
+                                                    <select ng-blur="updatedContact(this)" class="form-control input-sm" ng-model="updated[user._id].mentor">
+                                                        <option value="{{mentor._id}}" ng-repeat="mentor in mentors" ng-selected="updated[user._id].mentor === mentor._id">
+                                                            {{mentor.first_name}} {{mentor.last_name}} ({{mentor.username}})
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                            </accordion-group>
+                                        </accordion>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <accordion close-others="false">
+                                            <accordion-group heading="Contact">
+                                                <label>Street name</label>
+                                                <input ng-blur="updatedContact(this)" ng-model="updated[user._id].address_street" class="form-control input-sm" value="{{user.address_street}}" placeholder="Street name">
+                                                <label>Address line 1</label>
+                                                <input ng-blur="updatedContact(this)" ng-model="updated[user._id].address_line_1" class="form-control input-sm" value="{{user.address_line_1}}" placeholder="Address line 1">
+                                                <label>Address line 2</label>
+                                                <input ng-blur="updatedContact(this)" ng-model="updated[user._id].address_line_2" class="form-control input-sm" value="{{user.address_line_2}}" placeholder="Address line 1">
+                                                <label>Postcode</label>
+                                                <input ng-blur="updatedContact(this)" ng-model="updated[user._id].address_postcode" class="form-control input-sm" value="{{user.address_postcode}}" placeholder="Address line 1">
+                                            </accordion-group>
+                                            <accordion-group heading="Bio">
+                                                <label>Biography</label>
+                                                <textarea ng-blur="updatedContact(this)" ng-model="updated[user._id].bio" class="form-control input-sm" value="{{user.bio}}" placeholder="Tell us something about yourself">
+                                            </accordion-group>
+                                        </accordion>
                                     </div>
                                 </div>
                             </div>

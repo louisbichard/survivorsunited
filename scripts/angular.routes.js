@@ -3,7 +3,7 @@ SU.config(function($routeProvider) {
 
     // ROOT
         .when('/', {
-        templateUrl: '../views/dashboard.html',
+        templateUrl: '../views/main/dashboard.html',
         controller: 'dashboardController'
     })
 
@@ -48,13 +48,18 @@ SU.config(function($routeProvider) {
     //MAIN SEARCH PAGE
     .when('/search', {
         templateUrl: '../views/utilities/search.html',
-        controller: 'mainController'
+        controller: 'searchController'
+    })
+
+    // FAQ
+    .when('/faq', {
+        templateUrl: '../views/utilities/faq.html'
     })
 
     //MAIN NOTIFICATIONS PAGE
     .when('/notifications', {
         templateUrl: '../views/main/notifications.html',
-        controller: 'mainController'
+        controller: 'notificationController'
     })
 
     // FORUM

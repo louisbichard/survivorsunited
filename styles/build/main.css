@@ -26,6 +26,12 @@ p, h1, h2, h3, h4, h5, h6, body, div, span, a {
 .minimal-padding {
   padding: 5px; }
 
+.no-padding {
+  padding: 0px; }
+
+.no-margin {
+  margin: 0px; }
+
 .text-hint {
   opacity: 0.26; }
 
@@ -41,9 +47,27 @@ p, h1, h2, h3, h4, h5, h6, body, div, span, a {
 .text-accent {
   color: #4DD0E1; }
 
+.text-deep-orange {
+  color: #FF5722; }
+
+.text-yellow {
+  color: #FFEB3B; }
+
+.text-blue {
+  color: #a9e2fb; }
+
+.text-red {
+  color: #ae2323; }
+
+.background-dark {
+  background-color: #512DA8; }
+
 h3 {
   font-weight: 200;
   color: #000000; }
+
+a {
+  cursor: pointer; }
 
 h5 {
   font-weight: 300;
@@ -58,24 +82,6 @@ a {
 
 body {
   background-color: #f3f3f3; }
-
-.form-control {
-  margin-bottom: 10px;
-  transition: none;
-  border-width: 1px;
-  border-top: none;
-  border-right: none;
-  border-left: none;
-  border-color: #a2afb5;
-  background-color: transparent;
-  box-shadow: none;
-  border-radius: 0px;
-  font-weight: 300;
-  padding-left: 3px; }
-
-.form-control:focus {
-  color: #4DD0E1;
-  box-shadow: none; }
 
 html {
   overflow-y: scroll; }
@@ -131,6 +137,8 @@ html {
     color: #000000;
     background-color: #FFFFFF;
     padding: 20px; }
+  .widget .widget-body.no-padding {
+    padding: 0px; }
   .widget .widget-body.large {
     height: 350px;
     overflow-y: auto; }
@@ -249,11 +257,26 @@ ul.sidebar {
 #page-wrapper:not(.active) .sidebar-footer {
   display: none; }
 
-.btn-accent {
+.btn {
+  border-radius: 1px; }
+
+.btn-group .btn {
+  border-radius: 1px; }
+
+.btn.btn-accent {
   color: #FFFFFF;
   background-color: #4DD0E1; }
 
-.btn-accent:hover {
+.btn.btn-dark {
+  background-color: #512DA8; }
+
+.btn.btn-dark:hover {
+  color: #FFFFFF;
+  opacity: 0.54;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.16);
+  background-color: #4DD0E1; }
+
+.btn.btn-accent:hover {
   color: #000000;
   opacity: 0.54;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.16);
@@ -268,6 +291,99 @@ ul.sidebar {
   border-top: none;
   border-left: none;
   border-right: none; }
+
+textarea.form-control, input.form-control {
+  margin-bottom: 10px;
+  transition: none;
+  border-width: 1px;
+  border-top: none;
+  border-right: none;
+  border-left: none;
+  border-color: #a2afb5;
+  background-color: transparent;
+  box-shadow: none;
+  border-radius: 0px;
+  font-weight: 300;
+  padding-left: 3px; }
+
+.form-control:focus {
+  color: #4DD0E1;
+  box-shadow: none; }
+
+.input-group-btn:last-child > .btn, .input-group-btn:last-child > .btn-group {
+  padding: 7px; }
+
+.panel .panel-heading {
+  background-color: white; }
+
+.panel.panel-default.ng-isolate-scope {
+  border-radius: 0px; }
+
+.dropdown-menu {
+  background-color: #9575CD;
+  border-radius: 1px; }
+  .dropdown-menu table:focus {
+    color: red;
+    border: none; }
+  .dropdown-menu small, .dropdown-menu em {
+    color: #4DD0E1;
+    font-weight: 200;
+    font-size: 20px; }
+  .dropdown-menu .text-center {
+    background-color: #9575CD;
+    padding: 8px; }
+  .dropdown-menu th > .btn-default {
+    border: none;
+    color: white; }
+  .dropdown-menu .btn.btn-default {
+    font-size: 15px;
+    border: none;
+    font-weight: 200;
+    background-color: #9575CD;
+    color: #FFFFFF; }
+  .dropdown-menu .btn-default:hover {
+    background-color: #FFFFFF;
+    color: #000000;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05); }
+  .dropdown-menu .btn-info.active {
+    border-color: none;
+    background-color: #4DD0E1;
+    color: #FFFFFF;
+    box-shadow: none; }
+  .dropdown-menu strong {
+    font-weight: 200;
+    font-size: 25px; }
+  .dropdown-menu .text-muted {
+    color: #a2afb5; }
+
+.dropdown-menu {
+  color: red; }
+
+.calendar {
+  color: red; }
+  .calendar .fc-event.fc-event-hori {
+    background-color: #4DD0E1;
+    border-radius: 1px;
+    padding: 7px; }
+  .calendar span.fc-button {
+    background-image: none;
+    background-color: #9575CD;
+    color: #FFFFFF;
+    border-radius: 1px; }
+
+#map-canvas {
+  width: 104.5%;
+  height: 104%;
+  margin-left: -35px;
+  margin-bottom: -5px;
+  margin-right: -209px;
+  margin-top: -20px; }
+
+.rating-star:hover {
+  color: gold; }
+
+.gold {
+  color: gold; }
 
 .text-white {
   color: #FFFFFF; }

@@ -1,23 +1,14 @@
- <style>
-      #map-canvas {
-        width: 101.5%;
-        height: 100%;
-        margin-left: -14px;
-        margin-bottom: -5px;
-margin-right: -209px;
-margin-top: -20px;
-      }
-    </style>
-    <div id="map-canvas"></div>
- <script>
-      function initialize() {
-        var mapCanvas = document.getElementById('map-canvas');
-        var mapOptions = {
-          center: new google.maps.LatLng(52.764419, -1.234006),
-          zoom: 8,
-          mapTypeId: google.maps.MapTypeId.ROADMAP
-        }
-        var map = new google.maps.Map(mapCanvas, mapOptions)
-      }
-      initialize();
-    </script>
+<div id="map-canvas">
+</div>
+<script>
+function initialize() {
+    var mapCanvas = document.getElementById('map-canvas');
+    var mapOptions = {
+        center: new google.maps.LatLng(52.764419, -1.234006),
+        zoom: 8,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+    }
+    var map = new google.maps.Map(mapCanvas, mapOptions)
+}
+initialize();
+</script>

@@ -19,7 +19,7 @@ module.exports = function(req, res) {
     var watchers = [];
 
     //VALIDATION: ENSURE VALUES ARE SET
-    _.each(['task_id', 'status'], function(field) {
+    _.each(['task_id'], function(field) {
         if (!post_params[field]) {
             respond.failure('No ' + field + ' field specified');
         }
@@ -33,30 +33,33 @@ module.exports = function(req, res) {
         respond.failure('Task ID of incorrect format');
     }
 
-    var find_data = function(db) {
-        var collection = Promise.promisifyAll(db.collection('tasks'));
-        return collection.updateAsync({
-            _id: task_id
-        }, {
-            $set: {
-                status: post_params.status
-            }
-        });
-    };
-
     var send_response = function(result) {
         // IF NO FIELDS UPDATED
         if (result[0] === 0) {
-            respond.failure('Could not update task');
+            respond.failure('No fields were updated');
         }
         else {
             respond.success('Updated task');
         }
         return result;
     };
+    var query = {
+        '_id': database.getObjectID(post_params.task_id),
+    };
+    var options = {
+        $set: {}
+    };
+    var values_to_update = _.pick(post_params, 'status', 'rating');
 
-    return MongoClient.connectAsync(database.connection)
-        .then(find_data)
+    console.log('updating', values_to_update);
+
+    _.each(values_to_update, function(val, key) {
+        options.$set['assignees.' + req.user._id.toString() + '.' + key] = post_params[key];
+    });
+
+    console.log([query, options]);
+
+    return database.update('tasks', [query, options])
         .then(send_response)
         .caught(function(err) {
             respond.failure('Could not update task', err);

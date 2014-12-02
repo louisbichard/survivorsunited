@@ -24,33 +24,50 @@ module.exports = function(req, res) {
     var watchers = [];
 
     //VALIDATION: ENSURE VALUES ARE SET
-    _.each(['title', 'assignee', 'description'], function(field) {
-        if (!post_params[field]) {
-            respond.failure('No ' + field + ' field specified');
+    var missing_params = _.reduce(['title', 'assignees', 'description'], function(prev, field, index) {
+        if (!post_params[field]) prev.push(field);
+        return prev;
+    }, []);
+
+    // VALIDATE CORRECT FORMAT
+    var assignee_not_array = _.reduce(post_params, function(prev, val, key) {
+        if (key === 'assignees') {
+            try {
+                post_params.assignees = JSON.parse(val);
+            }
+            catch (e) {
+                prev = false;
+            }
         }
-    });
+        return prev;
+    }, true);
 
-    var find_data = function(db) {
-        var collection = Promise.promisifyAll(db.collection('tasks'));
-        return collection.insertAsync({
-            title: post_params.title,
-            description: post_params.description,
-            status: "open",
-            assignee: post_params.assignee,
-            date_created: new Date()
-                .getTime()
-        });
-    };
+    // VALIDATE
+    if (missing_params.length > 0) respond.failure(missing_params.join('/') + ' fields missing');
+    if (assignee_not_array) respond.failure('Assignees must be an array');
+    else {
+        // SETUP ASSIGNEES FIELD 
+        post_params.assignees = _.reduce(post_params.assignees, function(prev, curr) {
+            prev[curr] = {
+                status: 'open'
+            };
+            return prev;
+        }, {});
 
-    var send_response = function(vals) {
-        respond.success(vals);
-    };
-
-    return MongoClient.connectAsync(database.connection)
-        .then(find_data)
-        .then(send_response)
-        .caught(function(err) {
-            respond.failure('Could not add task', err);
-        });
+        // ADD TO DB
+        return database.insert('tasks', [{
+                title: post_params.title,
+                description: post_params.description,
+                assignees: post_params.assignees,
+                date_created: new Date()
+                    .getTime()
+            }, {
+                upsert: true
+            }])
+            .then(respond.success)
+            .caught(function(err) {
+                respond.failure('Could not add task', err);
+            });
+    }
 
 };

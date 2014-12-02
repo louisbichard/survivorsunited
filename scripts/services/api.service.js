@@ -9,6 +9,16 @@ SU.service("apiService", function($http, utilityService, notifyService) {
         });
     };
 
+    this.serialize = function(obj) {
+        var str = [];
+        // REFACTOR WHEN YOU TEST THIS BAD BOY
+        for (var p in obj)
+            if (obj.hasOwnProperty(p)) {
+                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+            }
+        return str.join("&");
+    };
+
     //RETURN FACTORY API
     this.get = function(route, params, options) {
         params = params || {};
@@ -17,7 +27,7 @@ SU.service("apiService", function($http, utilityService, notifyService) {
         if (!route || !_.isString(route)) {
             throw new Error('No route specified to apiService in get function');
         }
-        return that.callAPI(route, params, options, 'get');
+        return that.callAPI(route + '?' + that.serialize(params), null, options, 'get');
     };
 
     this.post = function(route, params, options) {
@@ -61,7 +71,8 @@ SU.service("apiService", function($http, utilityService, notifyService) {
             return reject(false);
 
             // IF RETURNED API HAS ERROR MESSAGE
-        } else {
+        }
+        else {
             if (!options.preventNotifications) notifyService.error('Oh no', data.error_message);
             return reject(data.error_message);
         }

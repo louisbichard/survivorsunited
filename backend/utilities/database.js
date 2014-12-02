@@ -24,7 +24,8 @@ var callCollection = function(mongo, command, collection_name, query) {
 
 var mongo_commands = _.reduce(api_methods, function(commands, command) {
     commands[command] = function(collection_name, query) {
-        if (!collection_name) throw new Error('No collection specifed to ' + command + ' command');
+        if (!collection_name) throw new Error('No collection specifed to ' + command);
+        if (!_.isString(collection_name)) throw new Error('Collection parameter is incorrect format in database query');
         if (!query) throw new Error('No query supplied to ' + command + ' command');
         if (!_.isArray(query)) throw new Error('Must provide query as an array');
         return MongoClient.connectAsync(utilities.connection)

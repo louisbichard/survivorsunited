@@ -81,4 +81,5 @@ module.exports = function(app) {
     app.get('/testbackend', _.partialRight(runEndpoint, './../admin/test.backend.results.js'));
     app.get('/testfrontend', _.partialRight(runEndpoint, './../admin/test.frontend.results.js'));
     app.get('/backenderrors', _.partialRight(runEndpoint, './../admin/backend.error.log.js'));
+    app.get('/codecomplexity', _.partialRight(runEndpoint, './../admin/codecomplexity.js'));
 };

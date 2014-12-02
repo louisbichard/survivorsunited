@@ -23,9 +23,8 @@ SU.controller('dashboardController', function($scope, apiService, notifyService)
         doneLabel: 'Thanks'
     };
 
-    $scope.setupScope = function(tasks) {
-        $scope.tasks = tasks;
-        $scope.setupStatistics();
+    $scope.setupScopeForTasks = function(prop, vals) {
+        $scope[prop] = vals;
     };
 
     $scope.setupStatistics = function() {
@@ -36,27 +35,28 @@ SU.controller('dashboardController', function($scope, apiService, notifyService)
     // TODO: ABSTRACT OUT IN TO SERVICE
     $scope.countStatus = function(tasks, status) {
         return _.filter(tasks, function(task) {
-                return task.status === status;
+                console.log(task.assignees, $scope.user._id);
+                return task.assignees[$scope.user._id].status === status;
             })
             .length;
     };
 
     $scope.bootstrap = function() {
-        apiService.get('/tasks/assigned', null, {
-                preventNotifications: true
+        Promise.props({
+                tasks: apiService.get('/tasks/listall', {
+                    user: 'current'
+                }, {
+                    preventNotifications: true
+                }),
+                user: apiService.get('/user/current', null, {
+                    preventNotifications: true
+                })
             })
-            .then($scope.setupScope);
-    };
-
-    $scope.updateScope = function(task_id, status) {
-        var index = _.findIndex($scope.tasks, {
-            _id: task_id
-        });
-        if (index < 0) {
-            throw new Error('Task ID passed was incorrect in updateScope');
-        }
-        $scope.tasks[index].status = status;
-        $scope.setupStatistics();
+            .then(function(result) {
+                $scope.setupScopeForTasks('tasks', result.tasks);
+                $scope.setupScopeForTasks('user', result.user);
+                $scope.setupStatistics();
+            });
     };
 
     $scope.updateTask = function(task_id, status) {
@@ -69,7 +69,7 @@ SU.controller('dashboardController', function($scope, apiService, notifyService)
             }, {
                 preventNotifications: true
             })
-            .then(_.partial($scope.updateScope, task_id, status))
+            .then($scope.bootstrap)
             .then(_.partial(notifyService.success, 'Updated task'));
     };
 

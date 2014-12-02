@@ -30,8 +30,10 @@
                             </i>  <span  ng-class="{'text-strikethrough': task.status === 'closed'}"> {{task.title}}  </span>
                         </h3>
                             <p class="minimal-padding text-subheading text-secondary">{{task.status}} &nbsp;&nbsp;&nbsp;&nbsp;||&nbsp;&nbsp;&nbsp;&nbsp; {{task._id}} &nbsp;&nbsp;&nbsp;&nbsp;||&nbsp;&nbsp;&nbsp;&nbsp; assignee: {{task.assignee}} &nbsp;&nbsp;&nbsp;&nbsp;||&nbsp;&nbsp;&nbsp;&nbsp; Created: {{task.date_created}}</p>
+                            <p class="minimal-padding">Assignees: {{task.assignees}} </p>
                             <p class="minimal-padding">{{task.description}} </p>
-                            <button type="button" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i> &nbsp; Delete</button>
+                            <button type="button" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i>
+                            </button>
                         </div>
                     </div>
                     <hr>

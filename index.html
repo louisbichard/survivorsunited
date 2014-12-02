@@ -35,7 +35,7 @@
                     </a>
                 </li>
                 <li class="sidebar-list sidebar-search">
-                    <input class="form-control" type="email" placeholder="Search ...">
+                    <input ng-enter="search()" ng-model="search_text" class="form-control" placeholder="Search ...">
                 </li>
                 <li class="sidebar-title ">
                     <span class="">MAIN</span>
@@ -55,7 +55,9 @@
                     <a href="#search">Search (beta) <span class="menu-icon fa fa-search"></span></a>
                 </li>
                 <li class="sidebar-list" ng-class="{'sidebar-selected': current_location === 'notifications'}">
-                    <a href="#notifications">Noificatons (beta) <span class="menu-icon fa fa-bell-o"></span></a>
+                    <a href="#notifications">Noificatons (beta)
+                    <span class="menu-icon fa fa-bell-o"></span>
+                    </a>
                 </li>
                 <li class="sidebar-list" ng-class="{'sidebar-selected': current_location === 'faq'}">
                     <a href="#faq">FAQ (beta) <span class="menu-icon fa fa-list"></span></a>
@@ -165,6 +167,7 @@
 <!-- MAIN -->
 <script src="./scripts/controllers/main.controller.js"></script>
 <script src="./scripts/controllers/dashboard.controller.js"></script>
+<script src="./scripts/controllers/notification.controller.js"></script>
 <!-- USER -->
 <script src="./scripts/controllers/user.management.controller.js"></script>
 <script src="./scripts/controllers/user.statistics.controller.js"></script>
@@ -184,6 +187,7 @@
 <script src="./scripts/controllers/events.calendar.controller.js"></script>
 <!-- ADMIN -->
 <script src="./scripts/controllers/developerConsoleController.js"></script>
+<script src="./scripts/controllers/search.controller.js"></script>
 <!-- ================ANGULAR ROUTES================ -->
 <script src="./scripts/angular.routes.js"></script>
 <!-- ================ANGULAR DIRECTIVES================ -->

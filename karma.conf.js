@@ -43,6 +43,7 @@ module.exports = function(config) {
             './scripts/controllers/dashboard.controller.js',
             './scripts/controllers/task.add.controller.js',
             './scripts/controllers/task.management.controller.js',
+            './scripts/controllers/notification.controller.js',
             './scripts/controllers/main.controller.js',
             './scripts/controllers/user.management.controller.js',
             './scripts/controllers/user.statistics.controller.js',

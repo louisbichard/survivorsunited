@@ -20,7 +20,7 @@ SU.controller('addTaskController', function($scope, apiService, utilityService, 
     $scope.addTask = function() {
         // PAYLOAD
         var pl = $scope.add_task;
-        if (!pl || !pl.title || !pl.description || !pl.assignee) {
+        if (!pl || !pl.title || !pl.description || !pl.assignees) {
             return notifyService.error('Required fields missing');
         }
         else {

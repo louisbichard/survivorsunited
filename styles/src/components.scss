@@ -1,9 +1,26 @@
 //BTNS
-.btn-accent {
+.btn {
+    border-radius: 1px;
+}
+.btn-group {
+    .btn {
+        border-radius: 1px;
+    }
+}
+.btn.btn-accent {
     color: $white;
     background-color: $color-accent;
 }
-.btn-accent:hover {
+.btn.btn-dark {
+    background-color: $color-dark;
+}
+.btn.btn-dark:hover {
+    color: $white;
+    opacity: 0.54;
+    box-shadow: $shadow-mid;
+    background-color: $color-accent;
+}
+.btn.btn-accent:hover {
     color: $black;
     opacity: 0.54;
     box-shadow: $shadow-mid;
@@ -20,4 +37,117 @@
         left: none;
         right: none;
     }
+}
+// BOOTSTRAP OVERRIDES
+textarea.form-control, input.form-control {
+    margin-bottom: 10px;
+    transition: none;
+    border-width: 1px;
+    border-top: none;
+    border-right: none;
+    border-left: none;
+    border-color: $text-medium;
+    background-color: transparent;
+    box-shadow: none;
+    border-radius: 0px;
+    font-weight: 300;
+    padding-left: 3px;
+}
+.form-control:focus {
+    color: $color-accent;
+    box-shadow: none;
+}
+.input-group-btn:last-child>.btn, .input-group-btn:last-child>.btn-group {
+    padding: 7px;
+}
+// ANGULAR BOOTSTRAP OVERRIDES
+.panel {
+    .panel-heading {
+        background-color: white;
+    }
+}
+.panel.panel-default.ng-isolate-scope {
+    border-radius: 0px;
+}
+// ANGULAR DATEPICKER
+.dropdown-menu {
+    table:focus {
+        color: red;
+        border: none;
+    }
+    small, em {
+        color: $color-accent;
+        font-weight: 200;
+        font-size: 20px;
+    }
+    background-color: $color-light;
+    .text-center {
+        background-color: $color-light;
+        padding: 8px;
+    }
+    border-radius: 1px;
+    th > .btn-default {
+        border: none;
+        color: white;
+    }
+    .btn.btn-default {
+        font-size: 15px;
+        border: none;
+        font-weight: 200;
+        background-color: $color-light;
+        color: $white;
+    }
+    .btn-default:hover {
+        background-color: $white;
+        color: $black;
+        box-shadow: $shadow-low;
+    }
+    .btn-info.active {
+        border-color: none;
+        background-color: $color-accent;
+        color: $white;
+        box-shadow: none;
+    }
+    strong {
+        font-weight: 200;
+        font-size: 25px;
+    }
+    .text-muted {
+        color: $text-medium;
+    }
+}
+// BOOTSTRAP UI DATEPICKER
+.dropdown-menu {
+    color: red;
+}
+// ANGULAR CALENDAR
+.calendar {
+    .fc-event.fc-event-hori {
+        background-color: $color-accent;
+        border-radius: 1px;
+        padding: 7px;
+    }
+    color: red;
+    span.fc-button {
+        background-image: none;
+        background-color: $color-light;
+        color: $white;
+        border-radius: 1px;
+    }
+}
+#map-canvas {
+    width: 104.5%;
+    height: 104%;
+    margin-left: -35px;
+    margin-bottom: -5px;
+    margin-right: -209px;
+    margin-top: -20px;
+}
+// RATINGS STARS
+// TODO: REPLACE GOLD WITH HASH
+.rating-star:hover {
+    color: gold;
+}
+.gold {
+    color: gold;
 }

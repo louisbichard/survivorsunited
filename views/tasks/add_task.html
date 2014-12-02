@@ -24,8 +24,8 @@
                         </div>
                         <div class="form-group">
                             <label>Assignee</label>
-                            <select class="form-control input-sm" ng-model="add_task.assignee">
-                                <option value="{{user._id}}" ng-repeat="user in users">
+                            <select multiple class="form-control input-sm" ng-model="add_task.assignees">
+                                <option ng-selected="user.username === 'unassigned'" value="{{user._id}}" ng-repeat="user in users">
                                     {{user.first_name}} {{user.last_name}} ({{user.username}})
                                 </option>
                             </select>

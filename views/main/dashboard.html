@@ -118,7 +118,7 @@
                             <div class="panel-body">
                                 <div class="row">
                                     <div class="col-lg-12">
-                                        <h3 ng-class="{'text-strikethrough': task.status === 'closed'}">{{task.title}}</h3>
+                                        <h3 ng-class="{'text-strikethrough': task.assignees[user._id].status === 'closed'}">{{task.title}}</h3>
                                         <hr>
                                     </div>
                                 </div>
@@ -127,10 +127,10 @@
                                         <p>{{task.description}}</p>
                                     </div>
                                     <div class="col-md-6 col-lg-6">
-                                        <button type="button" class="btn btn-sm btn-success" ng-click="updateTask(task._id, 'closed')" ng-show="task.status === 'open'">
+                                        <button type="button" class="btn btn-sm btn-success" ng-click="updateTask(task._id, 'closed')" ng-show="task.assignees[user._id].status === 'open'">
                                             <i class="fa fa-check"></i> Mark as complete
                                         </button>
-                                        <button type="button" class="btn btn-sm btn-info" ng-click="updateTask(task._id, 'open')" ng-show="task.status === 'closed'">
+                                        <button type="button" class="btn btn-sm btn-info" ng-click="updateTask(task._id, 'open')" ng-show="task.assignees[user._id].status === 'closed'">
                                             <i class="fa fa-undo"></i> &nbsp; Mark as not complete
                                         </button>
                                     </div>

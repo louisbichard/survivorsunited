@@ -41,6 +41,9 @@
         background-color: #FFFFFF;
         padding: 20px;
     }
+    .widget-body.no-padding {
+        padding: 0px;
+    }
     .widget-body.large {
         height: 350px;
         overflow-y: auto;

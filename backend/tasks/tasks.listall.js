@@ -6,6 +6,7 @@ var MongoClient = Promise.promisifyAll(require("mongodb"))
 var database = require('../utilities/database.js');
 var utility_date = require('../utilities/utilities.dates.js');
 var _ = require('lodash');
+var utilities_general = require('../utilities/utilities.general.js');
 
 module.exports = function(req, res) {
 
@@ -15,32 +16,25 @@ module.exports = function(req, res) {
         file: __dirname + __filename
     });
 
-    var get_user_db = function(db) {
-        var collection = Promise.promisifyAll(db.collection('tasks'));
-        return Promise.props({
-            find: collection.findAsync(),
-            count: collection.countAsync()
-        });
-    };
+    GET_params = utilities_general.GET_params(req);
+    var query = {};
 
-    var get_user_data = function(result) {
-        var count = result.count;
-        var find = Promise.promisifyAll(result.find);
+    if (GET_params.status) {
+        query['assignees.' + req.user._id.toString() + '.status'] = GET_params.status;
+    }
 
-        return find.toArrayAsync()
-            .then(function(tasks) {
-                return tasks;
-            });
-    };
+    if (GET_params.user === 'current') {
+        query['assignees.' + req.user._id.toString()] = {
+            $exists: true
+        };
+    }
 
-    var send_result = function(vals) {
-        respond.success(vals);
-    };
+    console.log(req.user._id);
+    console.log(query);
 
-    return MongoClient.connectAsync(database.connection)
-        .then(get_user_db)
-        .then(get_user_data)
-        .then(send_result)
+    // ESTABLISH QUERY
+    return database.find('tasks', [query])
+        .then(respond.success)
         .caught(function(err) {
             respond.failure('Could not list all tasks', err);
         });

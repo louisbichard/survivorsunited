@@ -1,7 +1,12 @@
-SU.controller('userDetailsController', function($scope, apiService, utilityService, notifyService) {
+SU.controller('userDetailsController', function($scope, apiService, utilityService, notifyService, dateService) {
     $scope.module = {
         title: "System users",
         description: "Edit users personal details, assigned mentors, severity etc",
+    };
+
+    $scope.addItem = function() {
+        var newItemNo = $scope.items.length + 1;
+        $scope.items.push('Item ' + newItemNo);
     };
 
     $scope.users = [];
@@ -140,6 +145,7 @@ SU.controller('userDetailsController', function($scope, apiService, utilityServi
         apiService.get('/users/listall', null, {
                 preventNotifications: true
             })
+            .then(_.partialRight(dateService.formatDatesArray, ['date_created']))
             .then($scope.setupScope)
             .then(_.partial($scope.refreshNotification, notification));
     };

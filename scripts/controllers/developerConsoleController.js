@@ -56,4 +56,9 @@ SU.controller('developerConsoleController', function($scope, apiService, chartSe
 
     $scope.error_data = $scope.getErrors();
 
+    /*apiService.get('/codecomplexity')
+        .then(function(result) {
+            $scope.complexity = result;
+        });*/
+
 });
