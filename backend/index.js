@@ -7,13 +7,6 @@ var http = require('http');
 //###REQUIRE EXPRESS
 var express = require('express');
 
-//###REQUIRE UTILTIES
-var colors = require('colors');
-
-//###REQUIRE PASSPORT
-var passport = require('passport');
-var passportLocal = require('passport-local');
-
 //###REQUIRE EXPRESS ADD ON'S
 var session = require('express-session');
 var cookieParser = require('cookie-parser');
@@ -43,7 +36,7 @@ require('./utilities/cookies.js')(app);
 require('./utilities/headers.js')(app);
 
 //##ROUTES
-require('./utilities/backend.routes.js')(app, passport);
+require('./utilities/backend.routes.js')(app, http);
 
 //##PORT SETUP
 app.listen(port);

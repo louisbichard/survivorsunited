@@ -58,5 +58,45 @@ describe('taskManagementController', function() {
         });
     });
 
+    describe('formulateStats', function() {
+        it('functions', function() {
+            var controller = createController();
+            expect(scope.formulateStats([{
+                '_id': 'task_id',
+                'assignees': {
+                    'some_id': {
+                        status: 'open',
+                        rating: {
+                            comment: 'I loved it',
+                            score: 4
+                        }
+                    }
+                }
+            }])).toEqual([{
+                _id: 'task_id',
+                assignees: {
+                    some_id: {
+                        status: 'open',
+                        rating: {
+                            comment: 'I loved it',
+                            score: 4
+                        }
+                    }
+                },
+                stats: {
+                    status: {
+                        open: 1
+                    },
+                    rating_comments: ['I loved it'],
+                    number_of_assignees: 1,
+                    average_rating: {
+                        val: 4,
+                        num: 1
+                    }
+                }
+            }]);
+        });
+    });
+
 
 });

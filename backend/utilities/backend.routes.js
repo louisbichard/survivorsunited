@@ -5,7 +5,7 @@ var uuid = require('node-uuid');
 var _ = require('lodash');
 var log = require('../utilities/logger.js');
 
-var runEndpoint = function(req, res, next, location) {
+var runEndpoint = function(req, res, next, location, http) {
 
     var respond = require('../utilities/utilities.respond.js')({
         req: req,
@@ -41,7 +41,7 @@ var runEndpoint = function(req, res, next, location) {
 };
 
 //API ENDPOINTS
-module.exports = function(app) {
+module.exports = function(app, http) {
 
     //AUTHENTICATION
     app.post('/auth/login', _.partialRight(runEndpoint, './../auth/auth.login.js'));
@@ -57,6 +57,9 @@ module.exports = function(app) {
     app.post('/user/update', _.partialRight(runEndpoint, './../users/user.update.js'));
     app.post('/user/add', _.partialRight(runEndpoint, '../users/user.add.js'));
     app.post('/user/delete', _.partialRight(runEndpoint, '../users/user.delete.js'));
+
+    //CHAT
+    app.get('/chat', _.partialRight(runEndpoint, './../chat/chat.js', http));
 
     //TASKS
     app.post('/task/add', _.partialRight(runEndpoint, './../tasks/task.add.js'));
