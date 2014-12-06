@@ -4,11 +4,6 @@ SU.controller('userDetailsController', function($scope, apiService, utilityServi
         description: "Edit users personal details, assigned mentors, severity etc",
     };
 
-    $scope.addItem = function() {
-        var newItemNo = $scope.items.length + 1;
-        $scope.items.push('Item ' + newItemNo);
-    };
-
     $scope.users = [];
     $scope.updated = {};
     $scope.filters = [];

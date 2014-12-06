@@ -42,6 +42,21 @@ describe('main controller', function() {
         };
     }));
 
+    describe('search', function() {
+        it('runs', function() {
+            var controller = createController();
+
+            spyOn($location, 'path')
+                .and.returnValue({
+                    search: function() {}
+                });
+            scope.runSearch();
+
+            expect($location.path)
+                .toHaveBeenCalled();
+        });
+    });
+
     describe('updates sidebar', function() {
         it('are setup', function() {
             var controller = createController();
@@ -106,5 +121,7 @@ describe('main controller', function() {
                 .toHaveBeenCalled();
         });
     });
+
+
 
 });

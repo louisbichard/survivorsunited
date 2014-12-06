@@ -61,7 +61,17 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <h5 class="minimal-padding">
-                                <span ng-class="{'text-deep-orange': user.severity_grade === 'High' && user.role === 'Basic', 'text-yellow': user.severity_grade === 'Medium' && user.role === 'Basic', 'text-blue': user.severity_grade === 'Low' && user.role === 'Basic' }"><i class="fa fa-signal"></i>
+                                <span  ng-class="{
+                                'text-deep-orange': user.severity_grade === 'High' && user.role === 'Basic', 
+                                'text-yellow': user.severity_grade === 'Medium' && user.role === 'Basic', 
+                                'text-blue': user.severity_grade === 'Low' && user.role === 'Basic'
+                                    }">
+                                <i class="fa" ng-class="{
+                                    'fa-signal': user.role === 'Basic',
+                                    'fa-user': user.role === 'Mentor',
+                                    'fa-key': user.role === 'Admin'
+                                }">
+                                </i>
                                 </span>
                                 {{user.first_name}} {{user.last_name}} ({{user.username}})&nbsp; 
                                 <span class="minimal-padding text-secondary">
@@ -92,21 +102,19 @@
                                                     <option ng-selected="{{user.role === 'Admin'}}">Admin</option>
                                                 </select>
                                             </accordion-group>
-                                            <accordion-group heading="Mentor / Severity">
-                                                <div ng-hide="user.role === 'Mentor'">
-                                                    <label>Severity</label>
-                                                    <select ng-blur="updatedContact(this)" class="form-control input-sm" ng-model="updated[user._id].severity_grade">
-                                                        <option>Low</option>
-                                                        <option>Medium</option>
-                                                        <option>High</option>
-                                                    </select>
-                                                    <label>Assigned mentor</label>
-                                                    <select ng-blur="updatedContact(this)" class="form-control input-sm" ng-model="updated[user._id].mentor">
-                                                        <option value="{{mentor._id}}" ng-repeat="mentor in mentors" ng-selected="updated[user._id].mentor === mentor._id">
-                                                            {{mentor.first_name}} {{mentor.last_name}} ({{mentor.username}})
-                                                        </option>
-                                                    </select>
-                                                </div>
+                                            <accordion-group heading="Mentor / Severity" ng-hide="user.role === 'Mentor' || user.role === 'Admin'">
+                                                <label>Severity</label>
+                                                <select ng-blur="updatedContact(this)" class="form-control input-sm" ng-model="updated[user._id].severity_grade">
+                                                    <option>Low</option>
+                                                    <option>Medium</option>
+                                                    <option>High</option>
+                                                </select>
+                                                <label>Assigned mentor</label>
+                                                <select ng-blur="updatedContact(this)" class="form-control input-sm" ng-model="updated[user._id].mentor">
+                                                    <option value="{{mentor._id}}" ng-repeat="mentor in mentors" ng-selected="updated[user._id].mentor === mentor._id">
+                                                        {{mentor.first_name}} {{mentor.last_name}} ({{mentor.username}})
+                                                    </option>
+                                                </select>
                                             </accordion-group>
                                         </accordion>
                                     </div>

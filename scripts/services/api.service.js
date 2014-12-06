@@ -10,12 +10,13 @@ SU.service("apiService", function($http, utilityService, notifyService) {
     };
 
     this.serialize = function(obj) {
+        if(!obj || !_.isPlainObject(obj)) {
+            throw new Error('Cannot serialize a non object in apiService');
+        }
         var str = [];
-        // REFACTOR WHEN YOU TEST THIS BAD BOY
-        for (var p in obj)
-            if (obj.hasOwnProperty(p)) {
-                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-            }
+        _.forIn(obj, function(val, key){
+            return str.push(encodeURIComponent(key) + "=" + encodeURIComponent(val));
+        });
         return str.join("&");
     };
 

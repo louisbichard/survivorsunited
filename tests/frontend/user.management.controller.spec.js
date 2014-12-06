@@ -4,6 +4,7 @@ describe('userManagement controller', function() {
     var createController;
     var notifyService;
     var apiService;
+    var dateService;
 
     //INCLUDE APP
     beforeEach(module('SU'));
@@ -15,10 +16,11 @@ describe('userManagement controller', function() {
         module('ui.calendar');
     });
 
-    beforeEach(inject(function($rootScope, $controller, _$location_, _notifyService_, _apiService_) {
+    beforeEach(inject(function($rootScope, $controller, _$location_, _notifyService_, _apiService_, _dateService_) {
         $location = _$location_;
         notifyService = _notifyService_;
         scope = $rootScope.$new();
+        dateService = _dateService_;
 
         apiService = _apiService_;
 
@@ -31,6 +33,8 @@ describe('userManagement controller', function() {
             .and.returnValue(new Promise(function(resolve) {
                 return resolve();
             }));
+
+        spyOn(dateService, 'formatDatesArray');
 
         spyOn(notifyService, 'success')
             .and.returnValue(new Promise(function(resolve) {

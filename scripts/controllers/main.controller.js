@@ -1,14 +1,15 @@
 SU.controller('mainController', function($scope, apiService, $location, notifyService) {
+
     // WATCH FOR NAV CHANGES AND SETUP SCOPE FOR LEFT PANEL TABBING HIGHLIGHTING
     $scope.region = "Select region";
 
+    // USED FOR THE ACTIVE TABS ON THE DASHBOARD
     $scope.$on('$locationChangeSuccess', function() {
         $scope.current_location = $location.path()
             .split('/')[1];
     });
 
-    $scope.search = function() {
-
+    $scope.runSearch = function() {
         $location.path('/search')
             .search({
                 search: $scope.search_text

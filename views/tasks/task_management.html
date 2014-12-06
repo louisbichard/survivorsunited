@@ -11,29 +11,36 @@
         <div class="widget">
             <div class="widget-header">
                 <input ng-model="searchText" class="text-white form-control" type="text" placeholder="search"></input>
-                <div class="btn-toolbar">
-                    <!-- OPEN/CLOSED FILTER -->
-                    <div class="btn-group text-center">
-                        <button type="button" ng-click="setFilter('openTask', 'open')" class="btn btn-sm btn-accent">Open</button>
-                        <button type="button" ng-click="setFilter('openTask', 'closed')" class="btn btn-sm btn-accent">Closed</button>
-                        <button ng-click="setFilter('openTask', 'none')" type="button" class="btn btn-sm btn-accent">All</button>
-                    </div>
-                </div>
             </div>
             <div class="widget-body full no-padding">
                 <br>
-                <div ng-repeat="task in tasks | openTaskFilter:filters | filter:searchText">
+                <div ng-repeat="task in tasks | filter:searchText">
                     <div class="row">
-                        <div class="col-lg-12">
+                        <div class="col-md-6">
                             <h3>
                                 <i class="fa" ng-class="{'fa-check-circle-o': task.status === 'closed' , 'fa-circle-o': task.status === 'open'}">
                             </i>  <span  ng-class="{'text-strikethrough': task.status === 'closed'}"> {{task.title}}  </span>
                         </h3>
-                            <p class="minimal-padding text-subheading text-secondary">{{task.status}} &nbsp;&nbsp;&nbsp;&nbsp;||&nbsp;&nbsp;&nbsp;&nbsp; {{task._id}} &nbsp;&nbsp;&nbsp;&nbsp;||&nbsp;&nbsp;&nbsp;&nbsp; assignee: {{task.assignee}} &nbsp;&nbsp;&nbsp;&nbsp;||&nbsp;&nbsp;&nbsp;&nbsp; Created: {{task.date_created}}</p>
-                            <p class="minimal-padding">Assignees: {{task.assignees}} </p>
-                            <p class="minimal-padding">{{task.description}} </p>
-                            <button type="button" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i>
+                            <p class="minimal-padding text-subheading text-secondary">{{task.date_created}}</p>
+                            <p class="minimal-padding"> Description: {{task.description}} </p>
+                        </div>
+                        <div class="col-md-6">
+                            <button type="button" class="pull-right btn btn-sm btn-danger"><i class="fa fa-trash"></i>
                             </button>
+                            <br>
+                            <br>
+                            <accordion close-others="false">
+                                <accordion-group heading="Rating Comments ({{task.stats.rating_comments.length}})">
+                                    <p class="minimal-padding" ng-repeat="comment in task.stats.rating_comments" class="minimal-padding"> {{$index + 1}}) {{comment}}</p>
+                                    <p class="minimal-padding" ng-hide="task.stats.rating_comments.length >= 1"> No comments have been left yet</p>
+                                </accordion-group>
+                                <accordion-group heading="Stats">
+                                    <p class="minimal-padding"> Average rating: {{task.stats.average_rating.val}} ({{task.stats.average_rating.num}} total)</p>
+                                    <p class="minimal-padding"> Number of current assignees: {{task.stats.number_of_assignees}}</p>
+                                    <p class="minimal-padding"> Percentage complete </p>
+                                    <percentagebar data="{complete: task.stats.status.closed, incomplete: task.stats.status.open}"></percentagebar>
+                                </accordion-group>
+                            </accordion>
                         </div>
                     </div>
                     <hr>

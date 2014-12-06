@@ -1,4 +1,4 @@
-SU.controller('dashboardController', function($scope, apiService, notifyService) {
+SU.controller('dashboardController', function($scope, apiService, notifyService, userDataService) {
 
     // INTRO JS 
     // ABSTRACT OUT INTO SERVICE
@@ -32,17 +32,17 @@ SU.controller('dashboardController', function($scope, apiService, notifyService)
         $scope.complete_tasks = $scope.countStatus($scope.tasks, 'closed');
     };
 
-    // TODO: ABSTRACT OUT IN TO SERVICE
     $scope.countStatus = function(tasks, status) {
-        return _.filter(tasks, function(task) {
-                console.log(task.assignees, $scope.user._id);
-                return task.assignees[$scope.user._id].status === status;
-            })
-            .length;
+        return userDataService.countStatus(tasks, status, $scope.user);
+    };
+
+    $scope.passScopeToSetup = function(results) {
+        $scope.setupScopeForTasks('user', results.user);
+        $scope.setupStatistics();
     };
 
     $scope.bootstrap = function() {
-        Promise.props({
+        return Promise.props({
                 tasks: apiService.get('/tasks/listall', {
                     user: 'current'
                 }, {
@@ -52,11 +52,7 @@ SU.controller('dashboardController', function($scope, apiService, notifyService)
                     preventNotifications: true
                 })
             })
-            .then(function(result) {
-                $scope.setupScopeForTasks('tasks', result.tasks);
-                $scope.setupScopeForTasks('user', result.user);
-                $scope.setupStatistics();
-            });
+            .then($scope.passScopeToSetup);
     };
 
     $scope.updateTask = function(task_id, status) {

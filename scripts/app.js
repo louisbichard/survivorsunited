@@ -1,5 +1,5 @@
 // create the module and name it survivorsUnited
-SU = angular.module('SU', ['ngRoute', 'angularCharts', 'ui.calendar', 'ngCookies', 'ui.bootstrap', 'angular-loading-bar', 'angular-intro']);
+SU = angular.module('SU', ['ngRoute', 'angularCharts', 'ui.calendar', 'ngCookies', 'ui.bootstrap', 'angular-loading-bar', 'angular-intro', 'angular-percentagebar']);
 
 SU.config(function($httpProvider) {
     $httpProvider.defaults.useXDomain = true;

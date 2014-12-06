@@ -1,8 +1,8 @@
 SU.controller('eventCalendarController', function($scope, apiService, dateService, notifyService, $compile) {
 
-    $scope.alertOnEventClick = function(date, jsEvent, view) {
+/*    $scope.alertOnEventClick = function(date, jsEvent, view) {
         console.log('take to event');
-    };
+    };*/
 
     // SET EVENTS AS NONE ON LOAD TO PREVENT ERROR
     $scope.events = [];

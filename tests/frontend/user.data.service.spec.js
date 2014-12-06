@@ -71,4 +71,24 @@ describe('userDataService', function() {
         });
     });
 
+    describe('countStatus', function() {
+        it('counts appropriately', function() {
+            expect(userDataService.countStatus([], 'open', {
+                    _id: 'something'
+                }))
+                .toBe(0);
+
+            expect(userDataService.countStatus([{
+                assignees: {
+                    something: {
+                        status: 'open'
+                    }
+                }
+            }], 'open', {
+                    _id: 'something'
+                }))
+                .toBe(1);
+        });
+    });
+
 });

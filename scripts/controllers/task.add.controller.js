@@ -8,13 +8,13 @@ SU.controller('addTaskController', function($scope, apiService, utilityService, 
         notifyService.success('Cleared form');
     };
 
-    $scope.assignToScope = function(users) {
+    $scope.assignUsersToScope = function(users) {
         $scope.users = users;
     };
 
     $scope.bootstrap = function() {
         apiService.get('/users/listall')
-            .then($scope.assignToScope);
+            .then($scope.assignUsersToScope);
     };
 
     $scope.addTask = function() {

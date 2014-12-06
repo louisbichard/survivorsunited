@@ -34,6 +34,29 @@ describe('apiService', function() {
         });
     });
 
+    describe('serialize', function() {
+        it('returns correct for regular values', function() {
+            expect(apiService.serialize({})).toBe("");
+            expect(apiService.serialize({
+                test: 'something'
+            })).toBe("test=something");
+        });
+        it('throws if not object', function() {
+            expect(function() {
+                apiService.serialize([]);
+            }).toThrow();
+
+            expect(function() {
+                apiService.serialize();
+            }).toThrow();
+
+            expect(function() {
+                apiService.serialize("");
+            }).toThrow();
+
+        });
+    });
+
     // GET FUNCTION
     describe('Get function', function() {
         it('Throws error when unsuccessful', function() {

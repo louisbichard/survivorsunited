@@ -27,6 +27,7 @@ module.exports = function(config) {
             './bower_components/toastr/toastr.min.js',
             './bower_components/angular-route/angular-route.js',
             './bower_components/d3/d3.min.js',
+            './bower_components/angular-percentagebar/percentagebar.js',
             './bower_components/angular-charts/dist/angular-charts.min.js',
             './bower_components/angular-ui-calendar/src/calendar.js',
             './bower_components/fullcalendar/fullcalendar.js',
@@ -62,6 +63,8 @@ module.exports = function(config) {
 
             // DIRECTIVES
             './scripts/directives/keypress.enter.directive.js',
+            './scripts/directives/spinner.directive.js',
+            './scripts/directives/percentagebar.directive.js',
 
             // SERVICES
             './scripts/services/user.data.service.js',

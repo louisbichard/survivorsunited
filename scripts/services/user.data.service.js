@@ -23,4 +23,13 @@ SU.service("userDataService", function($http) {
             })
             .length;
     };
+
+    this.countStatus = function(tasks, status, user) {
+        // TODO: SOME TYPE CHECKING
+
+        return _.filter(tasks, function(task) {
+                return task.assignees[user._id].status === status;
+            })
+            .length;
+    };
 });

@@ -67,13 +67,13 @@ describe('addTaskController', function() {
         });
     });
 
-    describe('assignToScope', function() {
+    describe('assignUsersToScope', function() {
         it('works', function() {
             var controller = createController();
             scope.add_task = {
                 title: 'something',
                 description: 'something else',
-                assignee: 'someone'
+                assignees: 'someone'
             };
             scope.addTask();
             expect(apiService.post)
@@ -103,7 +103,7 @@ describe('addTaskController', function() {
             scope.add_task = {
                 title: 'something',
                 description: 'something else',
-                assignee: 'someone'
+                assignees: 'someone'
             };
             scope.addTask();
             expect(apiService.post)
