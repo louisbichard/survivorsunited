@@ -49,7 +49,8 @@ module.exports = function(req, res) {
         // SETUP ASSIGNEES FIELD 
         post_params.assignees = _.reduce(post_params.assignees, function(prev, curr) {
             prev[curr] = {
-                status: 'open'
+                status: 'open',
+                rating: {}
             };
             return prev;
         }, {});

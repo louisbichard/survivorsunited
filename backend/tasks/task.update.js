@@ -51,13 +51,15 @@ module.exports = function(req, res) {
     };
     var values_to_update = _.pick(post_params, 'status', 'rating');
 
-    console.log('updating', values_to_update);
-
     _.each(values_to_update, function(val, key) {
+        // ADD TIME FOR STATUS CHANGES
+        if (key === 'status') {
+            options.$set['assignees.' + req.user._id.toString() + '.' + 'status_changed'] = new Date()
+                .getTime();
+        }
+
         options.$set['assignees.' + req.user._id.toString() + '.' + key] = post_params[key];
     });
-
-    console.log([query, options]);
 
     return database.update('tasks', [query, options])
         .then(send_response)
