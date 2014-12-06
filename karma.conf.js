@@ -20,6 +20,7 @@ module.exports = function(config) {
             './node_modules/karma-jasmine-async/src/jasmine.async.js',
 
             './scripts/bundle.js',
+            './scripts/longstacktaces.js',
 
             // BOWER
             './bower_components/jquery/dist/jquery.min.js',
@@ -69,6 +70,7 @@ module.exports = function(config) {
             // SERVICES
             './scripts/services/user.data.service.js',
             './scripts/services/date.service.js',
+            './scripts/services/task.data.service.js',
             './scripts/services/chart.service.js',
             './scripts/services/api.service.js',
             './scripts/services/notify.service.js',

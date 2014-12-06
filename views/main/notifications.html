@@ -53,7 +53,7 @@
                         <!-- USER HAS SUBMITTED RATING TO SERVER -->
                         <p ng-show="task.assignees[user._id].rating.score" class="minimal-padding text-center"> You rated the task: {{task.assignees[user._id].rating.score}}/4 </p>
                         <textarea ng-model="task.assignees[user._id].rating.comment" ng-keyUp="updateRating(task._id, 'comment',task.assignees[user._id].rating.comment )" class="form-control" placeholder="Additional comments" rows="4"></textarea>
-                        <button ng-click="setRating(ratings[task._id].rating, task._id)" class="pull-right btn btn-accent"> Submit </button>
+                        <button ng-click="setRating(ratings_to_update[task._id].rating, task._id)" class="pull-right btn btn-accent"> Submit </button>
                     </div>
                 </div>
             </div>

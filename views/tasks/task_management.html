@@ -23,21 +23,31 @@
                         </h3>
                             <p class="minimal-padding text-subheading text-secondary">{{task.date_created}}</p>
                             <p class="minimal-padding"> Description: {{task.description}} </p>
+
                         </div>
                         <div class="col-md-6">
                             <button type="button" class="pull-right btn btn-sm btn-danger"><i class="fa fa-trash"></i>
                             </button>
                             <br>
                             <br>
+
                             <accordion close-others="false">
+                                <accordion-group heading="Rating stats">
+                                    <p class="minimal-padding"> Average rating: <span class="pull-right">{{task.stats.average_rating.val}}</span>
+                                    </p>
+                                    <p class="minimal-padding"> Number of ratings: <span class="pull-right">{{task.stats.average_rating.num}}</span>
+                                    </p>
+                                </accordion-group>
                                 <accordion-group heading="Rating Comments ({{task.stats.rating_comments.length}})">
                                     <p class="minimal-padding" ng-repeat="comment in task.stats.rating_comments" class="minimal-padding"> {{$index + 1}}) {{comment}}</p>
                                     <p class="minimal-padding" ng-hide="task.stats.rating_comments.length >= 1"> No comments have been left yet</p>
                                 </accordion-group>
-                                <accordion-group heading="Stats">
-                                    <p class="minimal-padding"> Average rating: {{task.stats.average_rating.val}} ({{task.stats.average_rating.num}} total)</p>
-                                    <p class="minimal-padding"> Number of current assignees: {{task.stats.number_of_assignees}}</p>
-                                    <p class="minimal-padding"> Percentage complete </p>
+                                <accordion-group heading="Assignees stats">
+                                    <p class="minimal-padding"> Number of current assignees: <span class="pull-right">{{task.stats.number_of_assignees}}</span>
+                                    </p>
+                                </accordion-group>
+                                <accordion-group heading="Percentage completed">
+                                    <p class="minimal-padding text-center"> Percentage complete </p>
                                     <percentagebar data="{complete: task.stats.status.closed, incomplete: task.stats.status.open}"></percentagebar>
                                 </accordion-group>
                             </accordion>

@@ -37,6 +37,24 @@ SU.service("utilityService", function($http) {
     };
 
 
+    /**
+     * Takes an array and returns the average of the values and the total amounts 
+     * @param  {Array} arr - an array of numbers
+     * @return {Object} - val property is the average and num is the total in the array
+     */
+    this.average = function(arr) {
+        if(!arr || !_.isArray(arr)) {
+            throw new Error('Average function requires array in utilties service');
+        }
+        return {
+            val: _.reduce(arr, function(memo, num) {
+                return memo + num;
+            }, 0) / (arr.length === 0 ? 1 : arr.length),
+            num: arr.length
+        };
+    };
+
+
     //CONSTANTS
     this.api_route = "http://localhost:3000";
     this.date_format = 'dd-MMMM-yyyy';

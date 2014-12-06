@@ -138,4 +138,34 @@ describe('utilityService', function() {
 
     });
 
+    describe('average', function() {
+
+        it('throws errors if no params', function() {
+            expect(utilityService.average).toThrow();
+        });
+
+        it('throws errors if param passed as string', function() {
+            expect(function() {
+                utilityService.average("");
+            }).toThrow();
+        });
+
+        it('finds average', function() {
+            expect(utilityService.average([2,4,5,1])).toEqual({
+                val: 3,
+                num: 4
+            });
+            expect(utilityService.average([0])).toEqual({
+                val: 0,
+                num: 1
+            });
+            expect(utilityService.average([])).toEqual({
+                val: 0,
+                num: 0
+            });
+        });
+
+    });
+
+
 });
