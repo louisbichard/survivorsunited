@@ -27,8 +27,7 @@ module.exports = function(req, res) {
 
     try {
         if (mentor_id) mentor_id = database.getObjectID(mentor_id);
-    }
-    catch (e) {
+    } catch (e) {
         respond.failure('Mentor ID of incorrect format');
     }
 
@@ -47,7 +46,7 @@ module.exports = function(req, res) {
             .then(function(mentor) {
                 //VALIDATION                
                 if (!mentor[0]) {
-                    respond.failure('Assigned mentor not found');
+                    respond.success('Assigned mentor not found');
                 }
                 return mentor[0];
             });
