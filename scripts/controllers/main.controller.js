@@ -15,7 +15,8 @@ SU.controller('mainController', function($scope, apiService, $location, notifySe
     });
 
     $scope.createAccount = function() {
-        if ($scope.new_account.password === $scope.new_account.password_confirm) {
+        var account = $scope.new_account;
+        if (account.password && account.password_confirm && (account.password === account.password_confirm)) {
             apiService
                 .post('/user/add', $scope.new_account, {
                     preventNotifications: true

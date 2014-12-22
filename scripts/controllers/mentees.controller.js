@@ -10,18 +10,18 @@ SU.controller('menteesController', function($scope, apiService, dateService, not
         return mentee;
     };
 
-    socket.on('messages', function(data) {
-        console.log('recieved new message');
-        notifyService.success('recieved message');
-        $scope.$apply(function(){
-            $scope.chat.push(data);
-        });
-    });
+    /*
+        socket.on('messages', function(data) {
+            console.log('recieved new message');
+            notifyService.success('recieved message');
+            $scope.$apply(function(){
+                $scope.chat.push(data);
+            });
+        });*/
 
-    $scope.emitMessage = function() {
+    /*$scope.emitMessage = function() {
         apiService.get('/chat', $scope.message);
-    };
-
+    };*/
 
     $scope.getMenteeData = function() {
         return apiService

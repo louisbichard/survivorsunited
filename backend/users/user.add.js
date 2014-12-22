@@ -39,7 +39,6 @@ module.exports = function(req, res) {
 
     var add_record = function(insert_data) {
         var collection = Promise.promisifyAll(user_database.collection('users'));
-        log.debug(insert_data);
         return collection.insertAsync(insert_data);
     };
 
@@ -71,7 +70,6 @@ module.exports = function(req, res) {
                 respond.success("User " + post_params.username + ' added');
             })
             .caught(function(err) {
-                console.log(err);
                 respond.failure('Could not add user', 'Error adding record in database: (' + err + ')');
             });
     }

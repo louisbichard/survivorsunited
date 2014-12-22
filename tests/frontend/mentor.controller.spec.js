@@ -47,4 +47,29 @@ describe('mentorController', function() {
         });
     });
 
+    describe('assignPropToScope', function() {
+        it('assigns prop', function() {
+            var controller = createController();
+            expect(scope.mentor)
+                .toBe(undefined);
+            scope.assignPropToScope('mentor', {});
+
+            expect(scope.mentor)
+                .toEqual({});
+        });
+    });
+
+    describe('assignToScope', function() {
+        it('assigns prop', function() {
+            var controller = createController();
+
+            spyOn(scope, 'assignPropToScope');
+
+            scope.assignToScope({});
+
+            expect(scope.assignPropToScope)
+                .toHaveBeenCalled();
+        });
+    });
+
 });
