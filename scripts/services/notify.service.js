@@ -1,5 +1,5 @@
 SU.service("notifyService", function() {
-    var that = this; 
+    var that = this;
 
     this.DEFAULTS = {
         "closeButton": false,
@@ -16,6 +16,7 @@ SU.service("notifyService", function() {
         "hideMethod": "fadeOut"
     };
 
+    // TODO: MAKE THE ERRORS HANDLE OBJECTS OR ERROR MESSAGES CORRECTLY
     _.each(['success', 'error', 'info', 'warning'], function(type) {
         that[type] = function(header, text, options) {
             var task;
@@ -25,23 +26,4 @@ SU.service("notifyService", function() {
         };
     });
 
-    /* this.question = function(message) {
-        // SET DEFAULT WITH NO OVERRIDE
-        message = message || "Are you sure?";
-        toastr.options = _.defaults({
-            timeOut: 10000
-        }, this.DEFAULTS);
-
-        toastr.info(
-            [
-                "<p> ",
-                message,
-                " </p> ",
-                " <div class=\"btn-group\">",
-                "<button type = \"button\" class = \"btn btn-default btn-success\" >Yes </button>",
-                "<button type = \"button\" class = \"btn btn-default btn-danger\">No </button>",
-                "</div>"
-            ]);
-    };
-*/
 });

@@ -50,7 +50,6 @@ module.exports = function(config) {
             './scripts/controllers/user.management.controller.js',
             './scripts/controllers/user.statistics.controller.js',
             './scripts/controllers/user.account.controller.js',
-            './scripts/controllers/user.add.controller.js',
             './scripts/controllers/mentor.controller.js',
             './scripts/controllers/mentees.controller.js',
             './scripts/controllers/events.upcoming.watched.subscribed.controller.js',

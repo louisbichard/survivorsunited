@@ -102,9 +102,6 @@
                 <li class="sidebar-title ">
                     <span>ADMIN</span>
                 </li>
-                <li class="sidebar-list" ng-class="{'sidebar-selected': current_location === 'user_add'}">
-                    <a href="#user_add">Add user<span class="menu-icon fa fa-plus"></span></a>
-                </li>
                 <li class="sidebar-list" ng-class="{'sidebar-selected': current_location === 'statistics'}">
                     <a href="#statistics">Statistics<span class="menu-icon fa fa-area-chart"></span></a>
                 </li>
@@ -178,7 +175,6 @@ var socket = io.connect('survivorsunited.dev:3000');
 <script src="./scripts/controllers/user.management.controller.js"></script>
 <script src="./scripts/controllers/user.statistics.controller.js"></script>
 <script src="./scripts/controllers/user.account.controller.js"></script>
-<script src="./scripts/controllers/user.add.controller.js"></script>
 <!-- MENTEES -->
 <script src="./scripts/controllers/mentees.controller.js"></script>
 <!-- MENTOR -->

@@ -151,12 +151,6 @@ SU.config(function($routeProvider) {
         controller: 'userDetailsController'
     })
 
-    // ADD USER
-    .when('/user_add', {
-        templateUrl: '../views/admin/user_add.html',
-        controller: 'userAddController'
-    })
-
     // DEVELOPER CONSOLE
     .when('/developer_console', {
         templateUrl: '../views/admin/developer_console.html',
