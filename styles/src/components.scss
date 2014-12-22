@@ -40,7 +40,6 @@
 }
 // BOOTSTRAP OVERRIDES
 textarea.form-control, input.form-control {
-    margin-bottom: 10px;
     transition: none;
     border-width: 1px;
     border-top: none;
@@ -52,6 +51,10 @@ textarea.form-control, input.form-control {
     border-radius: 0px;
     font-weight: 300;
     padding-left: 3px;
+}
+.form-control {
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
 .form-control:focus {
     color: $color-accent;

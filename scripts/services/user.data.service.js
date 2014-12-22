@@ -2,6 +2,13 @@ SU.service("userDataService", function($http) {
 
     var that = this;
 
+    this.preferred_contact_methods = [
+        'Preferred Contact Method',
+        'Email',
+        'Phone',
+        'Post'
+    ];
+
     this.countMissingMentors = function(users) {
         if (!users || !_.isArray(users)) {
             throw new Error('Incorrect parameters passed to countMissingMentors in usersDataService');

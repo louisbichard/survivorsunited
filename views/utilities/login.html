@@ -66,12 +66,11 @@
                     </div>
                 </accordion-group>
                 <accordion-group heading="Contact">
+
                     <select class="form-control" ng-model="new_account.contact_method">
-                        <option selected="true">Preferred contact method</option>
-                        <option>Email</option>
-                        <option>Phone</option>
-                        <option>Text</option>
+                        <option class="disabled" ng-selected="method === 'Preferred Contact Method'" ng-repeat="method in preferred_contact_methods">{{method}}</option>
                     </select>
+
                     <div class="form-group ">
                         <input ng-model="new_account.phone" class="form-control" placeholder="Phone">
                     </div>

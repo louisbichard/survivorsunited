@@ -1,7 +1,9 @@
 // TYPE:    controller
 // PARTIAL: account.html
-SU.controller('accountController', function($scope, apiService, $timeout, utilityService, notifyService) {
+SU.controller('accountController', function($scope, apiService, utilityService, notifyService, userDataService) {
     $scope.user_original = {};
+
+    $scope.preferred_contact_methods = userDataService.preferred_contact_methods;
 
     $scope.bootstrap = function() {
         apiService.get('/user/current', null, {
@@ -25,6 +27,7 @@ SU.controller('accountController', function($scope, apiService, $timeout, utilit
 
         // SET UPDATE AS THE DIRTY PARAMETERS
         $scope.update_params = utilityService.objectDifferences($scope.user_original, current_user);
+        $scope.updateContact();
 
     };
 
@@ -50,7 +53,7 @@ SU.controller('accountController', function($scope, apiService, $timeout, utilit
                         $scope.update_params = _.pick($scope.update_params, 'user_id');
                     });
                 })
-                .then(_.partial(notifyService.success, 'Profile fields updated'));
+                .then(_.partial(notifyService.success, 'Profile updated'));
         }
     };
 
