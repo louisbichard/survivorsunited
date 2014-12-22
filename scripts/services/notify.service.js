@@ -16,25 +16,14 @@ SU.service("notifyService", function() {
         "hideMethod": "fadeOut"
     };
 
+    // TODO: MAKE THE ERRORS HANDLE OBJECTS OR ERROR MESSAGES CORRECTLY
     _.each(['success', 'error', 'info', 'warning'], function(type) {
         that[type] = function(header, text, options) {
             var task;
             header = header || "";
-            // ADD FALL BACKS FOR TEXT
-            text = that.formatText(text);
             toastr.options = _.defaults(options || {}, this.DEFAULTS);
             toastr[type](text, header);
         };
     });
-
-    that.formatText = function(text) {
-        // IF THE TEXT IS PASSED AS AN ONJECT, HANDLE APPROPRIATELY
-        if (_.isPlainObject(text)) {
-            text = text.error_message || "";
-        } else {
-            text = text;
-        }
-        return text;
-    };
 
 });
