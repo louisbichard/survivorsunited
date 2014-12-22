@@ -9,9 +9,11 @@ SU.controller('mentorController', function($scope, apiService, notifyService) {
                 preventNotifications: true
             })
             .then(function(result) {
-                $scope.$apply(function() {
-                    $scope.mentor = result;
-                });
+                if (_.isPlainObject(result)) {
+                    $scope.$apply(function() {
+                        $scope.mentor = result;
+                    });
+                }
             })
             // TODO: HANDLE ERRORING API
             .caught(notifyService.error);
