@@ -28,33 +28,26 @@ SU.controller('accountController', function($scope, apiService, utilityService, 
         // SET UPDATE AS THE DIRTY PARAMETERS
         $scope.update_params = utilityService.objectDifferences($scope.user_original, current_user);
         $scope.updateContact();
-
     };
 
     $scope.updateContact = function() {
 
         // ENSURE THAT THEY HAVE AN ID (REQUIRED FOR API CALL)
         if (!$scope.user_id) throw new Error('Could not establish the users ID');
-        else $scope.update_params.user_id = $scope.user_id;
-
-        // ENSURE THAT THEY HAVE ALTERED SOME FIELDS
-        if (_.keys($scope.update_params)
-            .length <= 1) {
-            notifyService.warning('You have not updated any fields');
-        }
-
-        // SUCCESSFULLY REGISTER UPDATE
         else {
-            apiService.post('/user/update', $scope.update_params, {
-                    preventNotifications: true
-                })
-                .then(function() {
-                    $scope.$apply(function() {
-                        $scope.update_params = _.pick($scope.update_params, 'user_id');
-                    });
-                })
-                .then(_.partial(notifyService.success, 'Profile updated'));
+            $scope.update_params.user_id = $scope.user_id;
         }
+
+        apiService.post('/user/update', $scope.update_params, {
+                preventNotifications: true
+            })
+            .then(function() {
+                $scope.$apply(function() {
+                    $scope.update_params = _.pick($scope.update_params, 'user_id');
+                });
+            })
+            .then(_.partial(notifyService.success, 'Profile updated'));
+
     };
 
     $scope.bootstrap();

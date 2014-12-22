@@ -38,6 +38,7 @@ SU.controller('dashboardController', function($scope, apiService, notifyService,
 
     $scope.passScopeToSetup = function(results) {
         $scope.setupScopeForTasks('user', results.user);
+        $scope.setupScopeForTasks('tasks', results.tasks);
         $scope.setupStatistics();
     };
 
