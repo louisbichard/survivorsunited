@@ -2,7 +2,6 @@
 
 //###REQUIRED LIBRARIES
 var port = process.env.PORT || 3000;
-var http = require('http');
 
 //###REQUIRE EXPRESS
 var express = require('express');
@@ -14,6 +13,8 @@ var bodyParser = require('body-parser');
 
 //###INITIALISE EXPRESS APP
 var app = express();
+var server = require('http').Server(app);
+var io = require('socket.io')(server);
 
 //###SETUP EXPRESS ADD ON'S
 app.use(cookieParser())
@@ -36,9 +37,10 @@ require('./utilities/cookies.js')(app);
 require('./utilities/headers.js')(app);
 
 //##ROUTES
-require('./utilities/backend.routes.js')(app, http);
+require('./utilities/backend.routes.js')(app, io);
 
 //##PORT SETUP
-app.listen(port);
+server.listen(port);
+
 console.log("-------- Server running at http://127.0.0.1:" + port + "/ --------");
 console.log("-------- Database: " + process.env.DATABASE + "  --------");

@@ -1,12 +1,7 @@
-// ENDPOINT /user/listall
+var db = require('../utilities/database.js');
+var utilities_general = require('../utilities/utilities.general.js');
 
-var Promise = require('bluebird');
-var MongoClient = Promise.promisifyAll(require("mongodb")).MongoClient;
-var database = require('../utilities/database.js');
-var utility_date = require('../utilities/utilities.dates.js');
-var _ = require('lodash');
-
-module.exports = function(req, res) {
+module.exports = function(req, res, io) {
 
     var respond = require('../utilities/utilities.respond.js')({
         req: req,
@@ -14,32 +9,26 @@ module.exports = function(req, res) {
         file: __dirname + __filename
     });
 
-    var get_user_db = function(db) {
-        var collection = Promise.promisifyAll(db.collection('users'));
-        return Promise.props({
-            find: collection.findAsync(),
-            count: collection.countAsync()
-        });
-    };
+    var GET_params = utilities_general.GET_params(req);
 
-    var get_user_data = function(result) {
-        var count = result.count;
-        var find = Promise.promisifyAll(result.find);
+    return db.insert('messages', [{
+            message: GET_params.message
+        }])
+        .then(function(result) {
+            console.log('inserted');
 
-        return find.toArrayAsync()
-            .then(function(users) {
-                return users;
+            return db.find('messages', [{}])            
+            .then(function(allmessages) {
+
+                console.log('found all messages');
+
+                io.emit('messages', {
+                    message: GET_params.message
+                });
+
+                return respond.success(allmessages);
             });
-    };
-
-    var send_result = function(vals) {
-        respond.success(vals);
-    };
-
-    return MongoClient.connectAsync(database.connection)
-        .then(get_user_db)
-        .then(get_user_data)
-        .then(send_result)
+        })
         .caught(function(err) {
             respond.failure('Could not list all users', err);
         });
