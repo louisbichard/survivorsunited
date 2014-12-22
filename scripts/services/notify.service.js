@@ -1,5 +1,5 @@
 SU.service("notifyService", function() {
-    var that = this; 
+    var that = this;
 
     this.DEFAULTS = {
         "closeButton": false,
@@ -20,28 +20,21 @@ SU.service("notifyService", function() {
         that[type] = function(header, text, options) {
             var task;
             header = header || "";
+            // ADD FALL BACKS FOR TEXT
+            text = that.formatText(text);
             toastr.options = _.defaults(options || {}, this.DEFAULTS);
             toastr[type](text, header);
         };
     });
 
-    /* this.question = function(message) {
-        // SET DEFAULT WITH NO OVERRIDE
-        message = message || "Are you sure?";
-        toastr.options = _.defaults({
-            timeOut: 10000
-        }, this.DEFAULTS);
-
-        toastr.info(
-            [
-                "<p> ",
-                message,
-                " </p> ",
-                " <div class=\"btn-group\">",
-                "<button type = \"button\" class = \"btn btn-default btn-success\" >Yes </button>",
-                "<button type = \"button\" class = \"btn btn-default btn-danger\">No </button>",
-                "</div>"
-            ]);
+    that.formatText = function(text) {
+        // IF THE TEXT IS PASSED AS AN ONJECT, HANDLE APPROPRIATELY
+        if (_.isPlainObject(text)) {
+            text = text.error_message || "";
+        } else {
+            text = text;
+        }
+        return text;
     };
-*/
+
 });

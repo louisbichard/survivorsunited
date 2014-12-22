@@ -3,11 +3,33 @@ SU.controller('mainController', function($scope, apiService, $location, notifySe
     // WATCH FOR NAV CHANGES AND SETUP SCOPE FOR LEFT PANEL TABBING HIGHLIGHTING
     $scope.region = "Select region";
 
+    // PREFERRED CONTACT MUST BE PRE POPULATED SO THAT IT CAN BE SET IN THE SELECT BOX
+    $scope.new_account = {
+        contact_method: 'Preferred contact method'
+    };
+
     // USED FOR THE ACTIVE TABS ON THE DASHBOARD
     $scope.$on('$locationChangeSuccess', function() {
         $scope.current_location = $location.path()
             .split('/')[1];
     });
+
+    $scope.accordion = {
+        close_others: false
+    };
+
+    $scope.createAccount = function() {
+        if ($scope.new_account.password === $scope.new_account.password_confirm) {
+            apiService
+                .post('/user/add', $scope.new_account)
+                .then(function() {
+                    console.log('created user');
+                })
+                .caught(notifyService.error);
+        } else {
+            notifyService.error('Passwords did not match');
+        }
+    };
 
     $scope.runSearch = function() {
         $location.path('/search')
