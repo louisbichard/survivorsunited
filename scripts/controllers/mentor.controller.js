@@ -16,9 +16,6 @@ SU.controller('mentorController', function($scope, apiService, notifyService) {
                 }
             })
             // TODO: HANDLE ERRORING API
-            .caught(function(err) {
-                debugger;
-                //notifyService.error
-            });
+            .caught(notifyService.error);
     }();
 });
