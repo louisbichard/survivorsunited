@@ -14,17 +14,13 @@ SU.controller('mainController', function($scope, apiService, $location, notifySe
             .split('/')[1];
     });
 
-    $scope.accordion = {
-        close_others: false
-    };
-
     $scope.createAccount = function() {
         if ($scope.new_account.password === $scope.new_account.password_confirm) {
             apiService
-                .post('/user/add', $scope.new_account)
-                .then(function() {
-                    console.log('created user');
+                .post('/user/add', $scope.new_account, {
+                    preventNotifications: true
                 })
+                .then(notifyService.success)
                 .caught(notifyService.error);
         } else {
             notifyService.error('Passwords did not match');
