@@ -14,7 +14,7 @@ module.exports = function(req, res) {
     if (!req.user) respond.success('User is already logged out');
 
     else {
-        return db.insert('sessions', [{
+        return db.update('sessions', [{
                 user_id: db.getObjectID(req.user._id)
             }, {
                 user_id: false
