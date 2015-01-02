@@ -67,8 +67,6 @@ SU.controller('mainController', function($scope, apiService, $location, notifySe
             .then($scope.routeToLogin);
     };
 
-    console.log('bootstrapping');
-
     $scope.mainLogin = function(user) {
         return apiService
             .post('/auth/login', user, {

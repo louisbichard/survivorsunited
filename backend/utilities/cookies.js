@@ -1,4 +1,3 @@
-var add_session = require('../sessions/sessions.add.js');
 var Promise = require('bluebird');
 var log = require('../utilities/logger.js');
 var database = require('../utilities/database.js');
