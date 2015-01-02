@@ -1,98 +1,106 @@
 0 info it worked if it ends with ok
-1 verbose cli [ 'node', '/usr/local/bin/npm', 'i', 'child-process' ]
+1 verbose cli [ 'node',
+1 verbose cli   '/usr/local/bin/npm',
+1 verbose cli   'install',
+1 verbose cli   'cookie-parse',
+1 verbose cli   '--save' ]
 2 info using npm@2.0.0
 3 info using node@v0.10.32
 4 verbose node symlink /usr/local/bin/node
 5 warn package.json survivorsunited@1.0.0 No repository field.
-6 warn package.json orchestrate@0.1.2 No repository field.
-7 verbose readDependencies using package.json deps
-8 verbose cache add [ 'child-process', null ]
-9 verbose cache add spec="child-process" args=["child-process",null]
-10 verbose parsed spec { raw: 'child-process',
-10 verbose parsed spec   scope: null,
-10 verbose parsed spec   name: 'child-process',
-10 verbose parsed spec   rawSpec: '',
-10 verbose parsed spec   spec: '*',
-10 verbose parsed spec   type: 'range' }
-11 verbose parsed spec { raw: 'child-process',
-11 verbose parsed spec   scope: null,
-11 verbose parsed spec   name: 'child-process',
-11 verbose parsed spec   rawSpec: '',
-11 verbose parsed spec   spec: '*',
-11 verbose parsed spec   type: 'range' }
-12 verbose addNamed [ 'child-process', '*' ]
-13 verbose addNamed [ null, '*' ]
-14 silly lockFile b19d2aa2-child-process child-process@*
-15 verbose lock child-process@* /Users/louisbichard/.npm/b19d2aa2-child-process.lock
-16 silly addNameRange { name: 'child-process', range: '*', hasData: false }
-17 verbose mapToRegistry name child-process
-18 verbose mapToRegistry uri https://registry.npmjs.org/child-process
-19 verbose request on initialization, where is /child-process
-20 verbose request after pass 1, where is /child-process
-21 verbose request url raw /child-process
-22 verbose request resolving registry [ 'https://registry.npmjs.org/', './child-process' ]
-23 verbose request after pass 2, where is https://registry.npmjs.org/child-process
-24 verbose request no auth needed
-25 info attempt registry request try #1 at 09:25:34
-26 verbose request id f628f98b205c4f8b
-27 http request GET https://registry.npmjs.org/child-process
-28 http 404 https://registry.npmjs.org/child-process
-29 verbose headers { date: 'Thu, 09 Oct 2014 08:25:34 GMT',
-29 verbose headers   server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
-29 verbose headers   'content-type': 'application/json',
-29 verbose headers   'cache-control': 'max-age=0',
-29 verbose headers   'content-length': '52',
-29 verbose headers   'accept-ranges': 'bytes',
-29 verbose headers   via: '1.1 varnish',
-29 verbose headers   age: '0',
-29 verbose headers   'x-served-by': 'cache-ams4135-AMS',
-29 verbose headers   'x-cache': 'MISS',
-29 verbose headers   'x-cache-hits': '0',
-29 verbose headers   'x-timer': 'S1412843134.710102,VS0,VE167',
-29 verbose headers   'keep-alive': 'timeout=10, max=50',
-29 verbose headers   connection: 'Keep-Alive' }
-30 silly registry.get cb [ 404,
-30 silly registry.get   { date: 'Thu, 09 Oct 2014 08:25:34 GMT',
-30 silly registry.get     server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
-30 silly registry.get     'content-type': 'application/json',
-30 silly registry.get     'cache-control': 'max-age=0',
-30 silly registry.get     'content-length': '52',
-30 silly registry.get     'accept-ranges': 'bytes',
-30 silly registry.get     via: '1.1 varnish',
-30 silly registry.get     age: '0',
-30 silly registry.get     'x-served-by': 'cache-ams4135-AMS',
-30 silly registry.get     'x-cache': 'MISS',
-30 silly registry.get     'x-cache-hits': '0',
-30 silly registry.get     'x-timer': 'S1412843134.710102,VS0,VE167',
-30 silly registry.get     'keep-alive': 'timeout=10, max=50',
-30 silly registry.get     connection: 'Keep-Alive' } ]
-31 silly lockFile b19d2aa2-child-process child-process@*
-32 silly lockFile b19d2aa2-child-process child-process@*
-33 verbose stack Error: 404 Not Found: child-process
-33 verbose stack     at RegClient.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:259:14)
-33 verbose stack     at Request._callback (/usr/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:198:65)
-33 verbose stack     at Request.self.callback (/usr/local/lib/node_modules/npm/node_modules/request/request.js:236:22)
-33 verbose stack     at Request.emit (events.js:98:17)
-33 verbose stack     at Request.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/request/request.js:1142:14)
-33 verbose stack     at Request.emit (events.js:117:20)
-33 verbose stack     at IncomingMessage.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/request/request.js:1096:12)
-33 verbose stack     at IncomingMessage.emit (events.js:117:20)
-33 verbose stack     at _stream_readable.js:943:16
-33 verbose stack     at process._tickCallback (node.js:419:13)
-34 verbose statusCode 404
-35 verbose pkgid child-process
-36 verbose cwd /Users/louisbichard/Documents/sites/survivorsunited/backend
-37 error Darwin 13.3.0
-38 error argv "node" "/usr/local/bin/npm" "i" "child-process"
-39 error node v0.10.32
-40 error npm  v2.0.0
-41 error code E404
-42 error 404 Not Found: child-process
-42 error 404
-42 error 404 'child-process' is not in the npm registry.
-42 error 404 You should bug the author to publish it (or use the name yourself!)
-42 error 404 It was specified as a dependency of 'survivorsunited'
-42 error 404
-42 error 404 Note that you can also install from a
-42 error 404 tarball, folder, http url, or git url.
-43 verbose exit [ 1, true ]
+6 warn package.json karma-chrome-launcher@0.1.7 No README data
+7 warn package.json karma-coverage@0.2.7 No README data
+8 warn package.json vows@0.7.0 No repository field.
+9 warn package.json assert@1.3.0 assert is also the name of a node core module.
+10 warn package.json url@0.10.2 url is also the name of a node core module.
+11 verbose readDependencies using package.json deps
+12 verbose cache add [ 'cookie-parse', null ]
+13 verbose cache add spec="cookie-parse" args=["cookie-parse",null]
+14 verbose parsed spec { raw: 'cookie-parse',
+14 verbose parsed spec   scope: null,
+14 verbose parsed spec   name: 'cookie-parse',
+14 verbose parsed spec   rawSpec: '',
+14 verbose parsed spec   spec: '*',
+14 verbose parsed spec   type: 'range' }
+15 verbose parsed spec { raw: 'cookie-parse',
+15 verbose parsed spec   scope: null,
+15 verbose parsed spec   name: 'cookie-parse',
+15 verbose parsed spec   rawSpec: '',
+15 verbose parsed spec   spec: '*',
+15 verbose parsed spec   type: 'range' }
+16 verbose addNamed [ 'cookie-parse', '*' ]
+17 verbose addNamed [ null, '*' ]
+18 silly lockFile 9e5758bb-cookie-parse cookie-parse@*
+19 verbose lock cookie-parse@* /Users/louisbichard/.npm/9e5758bb-cookie-parse.lock
+20 silly addNameRange { name: 'cookie-parse', range: '*', hasData: false }
+21 verbose mapToRegistry name cookie-parse
+22 verbose mapToRegistry uri https://registry.npmjs.org/cookie-parse
+23 verbose request on initialization, where is /cookie-parse
+24 verbose request after pass 1, where is /cookie-parse
+25 verbose request url raw /cookie-parse
+26 verbose request resolving registry [ 'https://registry.npmjs.org/', './cookie-parse' ]
+27 verbose request after pass 2, where is https://registry.npmjs.org/cookie-parse
+28 verbose request no auth needed
+29 info attempt registry request try #1 at 16:42:09
+30 verbose request id 04a254899ebf96a8
+31 http request GET https://registry.npmjs.org/cookie-parse
+32 http 404 https://registry.npmjs.org/cookie-parse
+33 verbose headers { date: 'Fri, 02 Jan 2015 16:42:10 GMT',
+33 verbose headers   server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+33 verbose headers   'content-type': 'application/json',
+33 verbose headers   'cache-control': 'max-age=0',
+33 verbose headers   'content-length': '52',
+33 verbose headers   'accept-ranges': 'bytes',
+33 verbose headers   via: '1.1 varnish',
+33 verbose headers   age: '0',
+33 verbose headers   'x-served-by': 'cache-lcy1132-LCY',
+33 verbose headers   'x-cache': 'MISS',
+33 verbose headers   'x-cache-hits': '0',
+33 verbose headers   'x-timer': 'S1420216929.841364,VS0,VE343',
+33 verbose headers   'keep-alive': 'timeout=10, max=50',
+33 verbose headers   connection: 'Keep-Alive' }
+34 silly registry.get cb [ 404,
+34 silly registry.get   { date: 'Fri, 02 Jan 2015 16:42:10 GMT',
+34 silly registry.get     server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+34 silly registry.get     'content-type': 'application/json',
+34 silly registry.get     'cache-control': 'max-age=0',
+34 silly registry.get     'content-length': '52',
+34 silly registry.get     'accept-ranges': 'bytes',
+34 silly registry.get     via: '1.1 varnish',
+34 silly registry.get     age: '0',
+34 silly registry.get     'x-served-by': 'cache-lcy1132-LCY',
+34 silly registry.get     'x-cache': 'MISS',
+34 silly registry.get     'x-cache-hits': '0',
+34 silly registry.get     'x-timer': 'S1420216929.841364,VS0,VE343',
+34 silly registry.get     'keep-alive': 'timeout=10, max=50',
+34 silly registry.get     connection: 'Keep-Alive' } ]
+35 silly lockFile 9e5758bb-cookie-parse cookie-parse@*
+36 silly lockFile 9e5758bb-cookie-parse cookie-parse@*
+37 verbose stack Error: 404 Not Found: cookie-parse
+37 verbose stack     at RegClient.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:259:14)
+37 verbose stack     at Request._callback (/usr/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:198:65)
+37 verbose stack     at Request.self.callback (/usr/local/lib/node_modules/npm/node_modules/request/request.js:236:22)
+37 verbose stack     at Request.emit (events.js:98:17)
+37 verbose stack     at Request.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/request/request.js:1142:14)
+37 verbose stack     at Request.emit (events.js:117:20)
+37 verbose stack     at IncomingMessage.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/request/request.js:1096:12)
+37 verbose stack     at IncomingMessage.emit (events.js:117:20)
+37 verbose stack     at _stream_readable.js:943:16
+37 verbose stack     at process._tickCallback (node.js:419:13)
+38 verbose statusCode 404
+39 verbose pkgid cookie-parse
+40 verbose cwd /Users/louisbichard/Documents/developments/survivorsunited/backend
+41 error Darwin 14.0.0
+42 error argv "node" "/usr/local/bin/npm" "install" "cookie-parse" "--save"
+43 error node v0.10.32
+44 error npm  v2.0.0
+45 error code E404
+46 error 404 Not Found: cookie-parse
+46 error 404
+46 error 404 'cookie-parse' is not in the npm registry.
+46 error 404 You should bug the author to publish it (or use the name yourself!)
+46 error 404 It was specified as a dependency of 'survivorsunited'
+46 error 404
+46 error 404 Note that you can also install from a
+46 error 404 tarball, folder, http url, or git url.
+47 verbose exit [ 1, true ]
