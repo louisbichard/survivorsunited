@@ -64,7 +64,6 @@ module.exports = function(config) {
             // DIRECTIVES
             './scripts/directives/keypress.enter.directive.js',
             './scripts/directives/spinner.directive.js',
-            './scripts/directives/percentagebar.directive.js',
 
             // SERVICES
             './scripts/services/user.data.service.js',
