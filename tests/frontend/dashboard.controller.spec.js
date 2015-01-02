@@ -48,42 +48,20 @@ describe('dashboardController', function() {
         };
     }));
 
-    describe('setupScopeForTasks', function() {
+    describe('passScopeToSetup', function() {
         it('functions', function() {
             var controller = createController();
-            var tasks = [{}];
-            spyOn(scope, 'setupStatistics');
-            scope.setupScopeForTasks('propertyname', tasks);
-            expect(scope['propertyname'])
-                .toEqual(tasks);
+            var results = {
+                user: [],
+                tasks: []
+            };
+
+            scope.passScopeToSetup(results);
+            expect(userDataService.countStatus.calls.count())
+                .toBe(2);
         });
     });
 
-    describe('setupStatistics', function() {
-        it('functions', function() {
-            var controller = createController();
-
-            spyOn(scope, 'countStatus');
-
-            scope.setupStatistics();
-
-            expect(scope.countStatus.calls.count()).toBe(2);
-
-            // COUNT THAT IT CALLS COUNT STATUS TWICE
-        });
-    });
-    describe('bootstrap', function() {
-        it('functions', function() {
-            var controller = createController();
-
-            scope.bootstrap();
-            spyOn(scope, 'passScopeToSetup');
-
-            expect(apiService.get)
-                .toHaveBeenCalled();
-
-        });
-    });
 
     describe('updateTask', function() {
         it('throws errors with incorrect parameters', function() {
