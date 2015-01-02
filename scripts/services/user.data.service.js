@@ -26,8 +26,9 @@ SU.service("userDataService", function($http) {
 
     this.countStatus = function(tasks, status, user) {
         // TODO: SOME TYPE CHECKING
-
         return _.filter(tasks, function(task) {
+                // ENSURE THAT RELEVANT PROPERTIES EXIST, TO PREVENT ERRORS
+                if (!task || !task.assignees || !task.assignees[user._id] || !task.assignees[user._id].status) return false;
                 return task.assignees[user._id].status === status;
             })
             .length;

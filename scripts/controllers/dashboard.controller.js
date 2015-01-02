@@ -23,22 +23,11 @@ SU.controller('dashboardController', function($scope, apiService, notifyService,
         doneLabel: 'Thanks'
     };
 
-    $scope.setupScopeForTasks = function(prop, vals) {
-        $scope[prop] = vals;
-    };
-
-    $scope.setupStatistics = function() {
-        $scope.pending_tasks = $scope.countStatus($scope.tasks, 'open');
-        $scope.complete_tasks = $scope.countStatus($scope.tasks, 'closed');
-    };
-
-    $scope.countStatus = function(tasks, status) {
-        return userDataService.countStatus(tasks, status, $scope.user);
-    };
-
     $scope.passScopeToSetup = function(results) {
-        $scope.setupScopeForTasks('user', results.user);
-        $scope.setupStatistics();
+        $scope.user = results.user;
+        $scope.tasks = results.tasks;
+        $scope.pending_tasks = userDataService.countStatus(results.tasks, 'open', $scope.user);
+        $scope.complete_tasks = userDataService.countStatus(results.tasks, 'closed', $scope.user);
     };
 
     $scope.bootstrap = function() {

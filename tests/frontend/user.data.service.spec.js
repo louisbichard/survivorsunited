@@ -79,12 +79,12 @@ describe('userDataService', function() {
                 .toBe(0);
 
             expect(userDataService.countStatus([{
-                assignees: {
-                    something: {
-                        status: 'open'
+                    assignees: {
+                        something: {
+                            status: 'open'
+                        }
                     }
-                }
-            }], 'open', {
+                }], 'open', {
                     _id: 'something'
                 }))
                 .toBe(1);
