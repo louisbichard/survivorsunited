@@ -1,4 +1,5 @@
 {
+<<<<<<< Updated upstream
     "name": "survivorsunited",
     "version": "0.0.0",
     "homepage": "https://github.com/louisbichard/survivorsunited",
@@ -32,3 +33,32 @@
         "jquery": ">=1.6"
     }
 }
+=======
+  "name": "survivorsunited",
+  "version": "0.0.0",
+  "homepage": "https://github.com/louisbichard/survivorsunited",
+  "authors": [
+    "louisjohnbichard <louisjohnbichard@gmail.com>"
+  ],
+  "dependencies": {
+    "angular-ui-calendar": "latest",
+    "angular-cookies": "~1.3.2",
+    "angular-intro.js": "~1.1.4",
+    "angular-mocks": "~1.3.8"
+  },
+  "main": "index.html",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "resolutions": {
+    "angular": "1.3.0",
+    "jquery": ">=1.6"
+  }
+}
+>>>>>>> Stashed changes
