@@ -40,7 +40,7 @@ SU.controller('mainController', function($scope, apiService, $location, notifySe
     };
 
     $scope.routeToLogin = function() {
-        $location.path('login');
+        $location.path('/login');
     };
 
     $scope.successfulLogin = function(result) {
@@ -55,17 +55,19 @@ SU.controller('mainController', function($scope, apiService, $location, notifySe
             .get('/user/current', null, {
                 preventNotifications: true
             })
-            .then($scope.successfullLogin)
+            .then($scope.successfulLogin)
             .caught($scope.routeToLogin);
     };
 
     $scope.mainLogOut = function() {
         return apiService
-            .get('/auth/logout', {
+            .get('/auth/logout', null, {
                 preventNotifications: true
             })
             .then($scope.routeToLogin);
     };
+
+    console.log('bootstrapping');
 
     $scope.mainLogin = function(user) {
         return apiService

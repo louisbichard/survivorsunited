@@ -49,7 +49,7 @@ module.exports = function(req, res) {
     };
 
     var checkSessionUpdatedCorrectly = function(result) {
-        if (result[1].n === 0) respond.failure('Login failed', 'Session not found');
+        if (result[1].n === 0) respond.failure('Login failed, session not found');
         else respond.success('User logged in successfully');
     };
 

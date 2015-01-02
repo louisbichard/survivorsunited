@@ -13,22 +13,10 @@ module.exports = function(req, res) {
         file: __dirname + __filename
     });
 
-    var insertIntoDB = function(db) {
-        var collection = Promise.promisifyAll(db.collection('sessions'));
-        return collection.insertAsync({
-            user_id: false
-        })
-            .then(function(result) {
-
-                // RETURN THE ID SET BY THE DB
-                return result[0]._id;
-            });
-    };
-
     var setCookie = function(id) {
 
         log.general('Setting session as', id);
-        
+
         //REMOVE ANY PREVIOUS COOKIES
         res.clearCookie('auth');
 
@@ -40,8 +28,14 @@ module.exports = function(req, res) {
 
     };
 
-    return MongoClient.connectAsync(database.connection)
+    return database.insert('sessions', [{
+            user_id: false
+        }])
         .then(insertIntoDB)
+        .then(function(result) {
+            // RETURN THE ID SET BY THE DB
+            return result[0]._id;
+        })
         .then(setCookie)
         .caught(function(err) {
             respond.generalFailure(err);

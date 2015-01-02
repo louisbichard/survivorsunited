@@ -135,7 +135,7 @@
             <div class="page-content">
                 <div class="row">
                     <div class="col-md-12">
-                        <div ng-view class="animated fadeIn"></div>
+                        <div ng-class="{'fadeIn': current_location !== 'login'}" ng-view class="animated"></div>
                     </div>
                 </div>
             </div>

@@ -10,11 +10,11 @@ SU.service("apiService", function($http, utilityService, notifyService) {
     };
 
     this.serialize = function(obj) {
-        if(!obj || !_.isPlainObject(obj)) {
+        if (!obj || !_.isPlainObject(obj)) {
             throw new Error('Cannot serialize a non object in apiService');
         }
         var str = [];
-        _.forIn(obj, function(val, key){
+        _.forIn(obj, function(val, key) {
             return str.push(encodeURIComponent(key) + "=" + encodeURIComponent(val));
         });
         return str.join("&");
@@ -72,8 +72,7 @@ SU.service("apiService", function($http, utilityService, notifyService) {
             return reject(false);
 
             // IF RETURNED API HAS ERROR MESSAGE
-        }
-        else {
+        } else {
             if (!options.preventNotifications) notifyService.error('Oh no', data.error_message);
             return reject(data.error_message);
         }
