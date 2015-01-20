@@ -10,10 +10,6 @@ SU.controller('menteesController', function($scope, apiService, dateService, not
         return mentee;
     };
 
-    $scope.storeMessage = function(id) {
-        console.log('message id', id);
-    };
-
     $scope.socketListen = function(ids) {
         // ids[0] is mentee
         // ids[1] is mentor

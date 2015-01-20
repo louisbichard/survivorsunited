@@ -204,42 +204,6 @@ describe('apiService', function() {
                 })
                 .toThrow();
         });
-        it("runs successfully with notification", function() {
-            spyOn(notifyService, 'success');
-            spyOn(fake_bluebird, 'resolve');
-            apiService.handleSuccessfulAPI({}, fake_bluebird.resolve, {
-                result: {
-                    something: "whatever"
-                }
-            });
-            expect(notifyService.success)
-                .toHaveBeenCalled();
-            expect(fake_bluebird.resolve)
-                .toHaveBeenCalled();
-            expect(fake_bluebird.resolve)
-                .toHaveBeenCalledWith({
-                    something: "whatever"
-                });
-        });
-        it("runs successfully without notification", function() {
-            spyOn(notifyService, 'success');
-            spyOn(fake_bluebird, 'resolve');
-            apiService.handleSuccessfulAPI({
-                preventNotifications: true
-            }, fake_bluebird.resolve, {
-                result: {
-                    something: "whatever"
-                }
-            });
-            expect(notifyService.success.calls.count())
-                .toEqual(0);
-            expect(fake_bluebird.resolve)
-                .toHaveBeenCalled();
-            expect(fake_bluebird.resolve)
-                .toHaveBeenCalledWith({
-                    something: "whatever"
-                });
-        });
     });
 
 });
