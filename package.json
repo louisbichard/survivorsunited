@@ -38,7 +38,8 @@
         "vows": "^0.7.0"
     },
     "scripts": {
-        "test": "./node_modules/karma/bin/karma  start --browsers Firefox --single-run"
+        "test": "./node_modules/karma/bin/karma  start --browsers Firefox --single-run",
+        "test dev": "./node_modules/karma/bin/karma  start --browsers Firefox --single-run"
     },
     "author": "Louis John Bichard",
     "license": "ISC"
