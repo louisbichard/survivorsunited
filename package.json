@@ -4,9 +4,10 @@
   "description": "Dashboard based website for survivors united",
   "main": "backend/apibroker.js",
   "dependencies": {
+    "bluebird": "^2.8.1",
     "colors": "^1.0.2",
     "express": "^4.9.5",
-    "passport": "^0.2.1"
+    "lodash": "^2.4.1"
   },
   "devDependencies": {
     "api-easy": "^0.3.8",
@@ -17,7 +18,6 @@
     "express": "^4.9.5",
     "express-session": "^1.8.2",
     "forever": "^0.11.1",
-    "frisby": "^0.8.3",
     "gulp": "^3.8.8",
     "gulp-shell": "^0.2.9",
     "karma": "^0.12.24",
@@ -27,15 +27,12 @@
     "moment": "^2.8.3",
     "mongodb": "^1.4.19",
     "mongoose": "^3.8.17",
-    "passport": "^0.2.1",
-    "socket.io": "^1.2.1",
-    "socket.io-client": "^1.2.1",
     "uniq": "^1.0.1",
     "url": "^0.10.1",
     "vows": "^0.7.0"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "./node_modules/karma/bin/karma start"
   },
   "author": "Louis John Bichard",
   "license": "ISC"
