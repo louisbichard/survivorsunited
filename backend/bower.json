@@ -1,0 +1,32 @@
+{
+  "name": "survivorsunited",
+  "main": "index.js",
+  "version": "0.0.0",
+  "homepage": "https://github.com/louisbichard/survivorsunited",
+  "authors": [
+    "louisjohnbichard <louisjohnbichard@gmail.com>"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "devDependencies": {
+    "angular-cookies": "~1.3.8",
+    "angular-percentagebar": "*",
+    "angular-intro.js": "~1.1.4"
+  },
+  "dependencies": {
+    "angular-cookies": "~1.3.8",
+    "angular-intro.js": "~1.1.4",
+    "angular-charts": "~0.2.7",
+    "ui-bootstrap": "~0.12.0",
+    "angular-loading-bar": "~0.6.0",
+    "angular-bootstrap": "~0.12.0",
+    "fullcalendar": "~2.2.5"
+  }
+}
