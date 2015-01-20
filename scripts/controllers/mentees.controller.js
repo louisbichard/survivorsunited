@@ -1,6 +1,3 @@
-// TYPE:    controller
-// PARTIAL: mentees.html
-
 SU.controller('menteesController', function($scope, apiService, dateService, notifyService) {
     $scope.chat = {};
     $scope.messages = {};
