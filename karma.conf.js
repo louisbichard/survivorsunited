@@ -19,8 +19,13 @@ module.exports = function(config) {
             './tests/utilities/unitTestUtilities.js',
             './node_modules/karma-jasmine-async/src/jasmine.async.js',
 
-            './scripts/bundle.js',
-            './scripts/longstacktaces.js',
+            "bower_components/lodash/dist/lodash.min.js",
+            "bower_components/moment/min/moment.min.js",
+            "bower_components/bluebird/js/browser/bluebird.min.js",
+            "bower_components/jquery/dist/jquery.min.js",
+            "bower_components/d3/d3.min.js",
+            "bower_components/angular/angular.min.js",
+            "bower_components/angular-route/angular-route.min.js",
 
             // BOWER
             './bower_components/bootstrap/dist/js/bootstrap.min.js',
