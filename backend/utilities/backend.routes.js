@@ -23,8 +23,7 @@ var runEndpoint = function(req, res, next, location, io) {
     // CALL API
     try {
         return require(location)(req, res, io);
-    }
-    catch (err) {
+    } catch (err) {
         log.debug(err);
         require('./log.server.error.js')(req, res, {
                 location: location,
@@ -59,7 +58,7 @@ module.exports = function(app, io) {
     app.post('/user/delete', _.partialRight(runEndpoint, '../users/user.delete.js'));
 
     //CHAT
-    app.get('/chat', _.partialRight(runEndpoint, './../chat/chat.js', io));
+    app.post('/chat', _.partialRight(runEndpoint, './../chat/chat.js', io));
 
     //TASKS
     app.post('/task/add', _.partialRight(runEndpoint, './../tasks/task.add.js'));

@@ -23,10 +23,8 @@ module.exports = function(config) {
             './scripts/longstacktaces.js',
 
             // BOWER
-            './bower_components/jquery/dist/jquery.min.js',
             './bower_components/bootstrap/dist/js/bootstrap.min.js',
             './bower_components/toastr/toastr.min.js',
-            './bower_components/angular-route/angular-route.js',
             './bower_components/d3/d3.min.js',
             './bower_components/angular-percentagebar/percentagebar.js',
             './bower_components/angular-charts/dist/angular-charts.min.js',
@@ -120,7 +118,7 @@ module.exports = function(config) {
 
         // start these browsers
         // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-        browsers: ['Chrome'],
+        browsers: ['Chrome', 'Firefox'],
 
         // Continuous Integration mode
         // if true, Karma captures browsers, runs the tests and exits

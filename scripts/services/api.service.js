@@ -83,10 +83,6 @@ SU.service("apiService", function($http, utilityService, notifyService) {
             throw new Error('Cannot handle successful API reponse without correct params');
         }
 
-        if (!options.preventNotifications) {
-            notifyService.success('Success');
-        }
-
         return resolve(data.result);
     };
 
