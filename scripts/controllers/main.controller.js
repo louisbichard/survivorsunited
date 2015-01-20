@@ -43,10 +43,17 @@ SU.controller('mainController', function($scope, apiService, $location, notifySe
         $location.path('/login');
     };
 
-    $scope.successfulLogin = function(result) {
+    $scope.successfulLogin = function(input) {
         $scope.$apply(function() {
             $location.path('/dashboard');
             $scope.anonymous_user = false;
+        });
+        return input;
+    };
+
+    $scope.bindUserToScope = function(user) {
+        $scope.$apply(function() {
+            $scope.user_details = user;
         });
     };
 
@@ -56,6 +63,7 @@ SU.controller('mainController', function($scope, apiService, $location, notifySe
                 preventNotifications: true
             })
             .then($scope.successfulLogin)
+            .then($scope.bindUserToScope)
             .caught($scope.routeToLogin);
     };
 
