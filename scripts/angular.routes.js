@@ -153,8 +153,7 @@ SU.config(function($routeProvider) {
 
     // DEVELOPER CONSOLE
     .when('/developer_console', {
-        templateUrl: '../views/admin/developer_console.html',
-        controller: 'developerConsoleController'
+        templateUrl: '../views/admin/developer_console.html'
     })
 
     ///////////////
