@@ -39,6 +39,14 @@
     }
 }
 // BOOTSTRAP OVERRIDES
+.input-group-addon {
+    background-color: #FFFFFF;
+    border-right-width: 0px;
+    border-top-width: 0px;
+    border-bottom-color: $text-medium;
+    border-radius: 0px;
+    border-left-color: #FFF;
+}
 textarea.form-control, input.form-control {
     margin-bottom: 10px;
     transition: none;

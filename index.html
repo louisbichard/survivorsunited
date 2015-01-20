@@ -29,8 +29,13 @@
         <div id="sidebar-wrapper" class="animated bounceInLeft">
             <ul class="sidebar">
                 <li class="sidebar-main">
-                    <a ng-click="toggleSidebar()">
-                        Survivors United
+                    <a href="{{user_details.escape_url}}" ng-click="toggleSidebar()">
+                        <span ng-if="user_details.site_name">
+                            {{user_details.site_name}}
+                            </span>
+                        <span ng-if="!user_details.site_name">
+                             Survivors United
+                            </span>
                         <span class="menu-icon glyphicon glyphicon-transfer"></span>
                     </a>
                 </li>
