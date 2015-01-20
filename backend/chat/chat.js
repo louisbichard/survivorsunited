@@ -9,28 +9,23 @@ module.exports = function(req, res, io) {
         file: __dirname + __filename
     });
 
-    var GET_params = utilities_general.GET_params(req);
+    var POST = req.body;
 
     return db.insert('messages', [{
-            message: GET_params.message
+            message: POST.message,
+            chat_id: POST.chat_id
         }])
         .then(function(result) {
-            console.log('inserted');
 
-            return db.find('messages', [{}])            
-            .then(function(allmessages) {
-
-                console.log('found all messages');
-
-                io.emit('messages', {
-                    message: GET_params.message
-                });
-
-                return respond.success(allmessages);
+            io.emit(POST.chat_id, {
+                message: POST.message
             });
+
+            return respond.success('Chat message');
+
         })
         .caught(function(err) {
-            respond.failure('Could not list all users', err);
+            respond.failure('Failed to log chat message', err);
         });
 
 };

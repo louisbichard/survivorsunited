@@ -54,18 +54,18 @@
             <div class="widget-header">
                 <p><i class="fa fa-envelope"></i> Instant message module</p>
             </div>
-            <div class="widget-body no-padding">
+            <div class="widget-body small no-padding">
                 <br>
                 <div class="row">
                     <div class="col-lg-12">
-                        <p>Message content</p>
-                        <input type="text" placeholder="send message" ng-model="message.message"></input>
-                        <a ng-click="emitMessage()"  class="btn btn-accent"> Send message </a>
-                        
-                        <p ng-repeat="chat_message in chat">{{chat_message}}</p>
+                        <p class="no-padding" ng-repeat="chat_message in chat[mentee._id]">{{chat_message}}</p>
+                        <input ng-model="messages[mentee._id]" ng-enter="emitMessage(mentee)" type="text" placeholder="send message"></input>
+                        <a ng-click="emitMessage(mentee, this)" class="btn btn-accent"> Send message </a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<h2> CHAT </h2> Chat goes here. {{chat}}
