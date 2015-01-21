@@ -125,8 +125,8 @@ SU.config(function($routeProvider) {
 
     // CALENDAR
     .when('/events_by_location', {
-        templateUrl: '../views/events/events_by_location.html'
-            // TODO: ADD CONTROLLER
+        templateUrl: '../views/events/events_by_location.html',
+        controller: 'eventsLocationController'
     })
 
     ///////////

@@ -19,6 +19,7 @@ module.exports = function(config) {
             './tests/utilities/unitTestUtilities.js',
             './node_modules/karma-jasmine-async/src/jasmine.async.js',
 
+
             "bower_components/lodash/dist/lodash.min.js",
             "bower_components/moment/min/moment.min.js",
             "bower_components/bluebird/js/browser/bluebird.min.js",
@@ -27,7 +28,11 @@ module.exports = function(config) {
             "bower_components/angular/angular.min.js",
             "bower_components/angular-route/angular-route.min.js",
 
+
+
             // BOWER
+            //"//maps.googleapis.com/maps/api/js?sensor=false",
+            "bower_components/angular-google-maps/dist/angular-google-maps.min.js",
             './bower_components/bootstrap/dist/js/bootstrap.min.js',
             './bower_components/toastr/toastr.min.js',
             './bower_components/d3/d3.min.js',
@@ -39,7 +44,6 @@ module.exports = function(config) {
             './bower_components/fullcalendar/fullcalendar.js',
             './bower_components/angular-loading-bar/src/loading-bar.js',
             './bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js',
-            './bower_components/angular-cookies/angular-cookies.min.js',
             './bower_components/angular-intro.js/src/angular-intro.js',
             './bower_components/intro.js/minified/intro.min.js',
 

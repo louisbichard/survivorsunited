@@ -402,6 +402,9 @@ input.valid {
 .fc-event.fc-event-hori.fc-event-start.fc-event-end {
   cursor: pointer; }
 
+.angular-google-map-container {
+  height: 96%; }
+
 .text-white {
   color: #FFFFFF; }
 

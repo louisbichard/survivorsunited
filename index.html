@@ -168,7 +168,10 @@ var socket = io.connect('survivorsunited.dev:3000');
 <!-- ================TOASTR NOTIFICATIONS================ -->
 <script src="bower_components/toastr/toastr.min.js"></script>
 <!-- ================GOOGLE MAPS================ -->
-<script src="https://maps.googleapis.com/maps/api/js"></script>
+<!-- MUST BE LOADED BEFORE THE BOWER COMPONENTS GOOGLE MAP -->
+<!-- TODO: LOAD THIS USING THE MORE FORMAL WAY (DETAILS ARE ON THEIR WEBSITE) -->
+<script src='//maps.googleapis.com/maps/api/js?sensor=false'></script>
+<script src='bower_components/angular-google-maps/dist/angular-google-maps.min.js'></script>
 <!-- ================ANGULAR CUSTOM================ -->
 <script src="./scripts/app.js"></script>
 <!-- ================ANGULAR CONTROLLERS================ -->
@@ -192,6 +195,7 @@ var socket = io.connect('survivorsunited.dev:3000');
 <script src="./scripts/controllers/event.add.controller.js"></script>
 <script src="./scripts/controllers/events.usersWatchingOrAttending.js"></script>
 <script src="./scripts/controllers/events.calendar.controller.js"></script>
+<script src="./scripts/controllers/events.location.controller.js"></script>
 <!-- ADMIN -->
 <script src="./scripts/controllers/search.controller.js"></script>
 <!-- ================ANGULAR ROUTES================ -->
