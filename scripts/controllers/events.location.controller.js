@@ -41,6 +41,7 @@ SU.controller('eventsLocationController', function($scope, apiService, utilitySe
         // CONSUME INTO SERVICE
         postcode = postcode.replace(/ /g, '');
 
+        // http://postcodes.io/docs
         return $http.jsonp('http://api.postcodes.io/postcodes/' + postcode + '?callback=JSON_CALLBACK')
             .success(function(data) {
                 return data;

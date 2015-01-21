@@ -3,9 +3,6 @@ SU.service("apiService", function($http, utilityService, notifyService) {
 
     this.callAPI = function(route, params, options, type) {
         return new Promise(function(resolve, reject) {
-            // IF NOT EXTERNAL, USE THE UTILITY DEFINED DOMAIN
-            if (options.external) utilityService.api_route = '';
-
             return $http[type](utilityService.api_route + route, params)
                 .success(_.partialRight(that.handleSuccessfulResponse, resolve, reject, options))
                 .error(_.partialRight(that.handleFailedResponse, reject));
