@@ -6,29 +6,19 @@ SU.controller('eventsLocationController', function($scope, apiService, utilitySe
             latitude: 53.41861187128951,
             longitude: -1.2568476197157605
         },
-        zoom: 15,
+        zoom: 15
+    };
 
-        marker: {
-            id: 2,
-            coords: {
-                latitude: 53.41861187128951,
-                longitude: -1.2568476197157605
-            }
-        }
-
+    $scope.updateScope = function(data) {
+        $scope.map.coords = {
+            latitude: data.data.result.latitude,
+            longitude: data.data.result.longitude
+        };
     };
 
     $scope.renderMap = function(postcode) {
         $scope.lookupPostcode(postcode)
-            .then(function(data) {
-
-                $scope.map.coords = {
-                    latitude: data.data.result.latitude,
-                    longitude: data.data.result.longitude
-                };
-
-                console.log('scope updated');
-            });
+            .then($scope.updateScope);
     };
 
     apiService.get('/events/listall')
@@ -38,7 +28,6 @@ SU.controller('eventsLocationController', function($scope, apiService, utilitySe
         });
 
     $scope.lookupPostcode = function(postcode) {
-        // CONSUME INTO SERVICE
         postcode = postcode.replace(/ /g, '');
 
         // http://postcodes.io/docs
@@ -47,6 +36,5 @@ SU.controller('eventsLocationController', function($scope, apiService, utilitySe
                 return data;
             });
     };
-
 
 });
