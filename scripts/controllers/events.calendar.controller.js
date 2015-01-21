@@ -1,14 +1,18 @@
-SU.controller('eventCalendarController', function($scope, apiService, dateService, notifyService, $compile) {
+SU.controller('eventCalendarController', function($scope, apiService, dateService, notifyService, $location) {
 
-/*    $scope.alertOnEventClick = function(date, jsEvent, view) {
-        console.log('take to event');
-    };*/
+    $scope.alertOnEventClick = function(date, jsEvent, view) {
+        $location.path('/upcoming_events')
+            .search({
+                search: date.title
+            });
+    };
 
     // SET EVENTS AS NONE ON LOAD TO PREVENT ERROR
     $scope.events = [];
 
     $scope.uiConfig = {
         calendar: {
+            dayClick: $scope.alertEventOnClick,
             header: {
                 left: '',
                 //left: 'month',   basicDay agendaWeek agendaDay',
@@ -19,6 +23,7 @@ SU.controller('eventCalendarController', function($scope, apiService, dateServic
         }
 
     };
+
 
     $scope.formatDates = function(event_item) {
         event_item = event_item || {};
