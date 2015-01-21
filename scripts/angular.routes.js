@@ -105,22 +105,10 @@ SU.config(function($routeProvider) {
         controller: 'usersWatchingEventController'
     })
 
-    // CURRERNTLY WATCHED
-    .when('/watched_events', {
-        templateUrl: '../views/events/events_watched_subscribed_upcoming.html',
-        controller: 'upcomingWatchedSubscribedEventsController'
-    })
-
     // CREATE EVENT
     .when('/create_event', {
         templateUrl: '../views/events/add_event.html',
         controller: 'addEventController'
-    })
-
-    // SUBSCRIBED
-    .when('/subscribed_events', {
-        templateUrl: '../views/events/events_watched_subscribed_upcoming.html',
-        controller: 'mainController'
     })
 
     // CALENDAR
