@@ -11,6 +11,7 @@ SU.controller('statisticsController', function($scope, apiService, chartService,
         colors: ['#0bff14', '#fffb10', '#ff2b1d']
     };
     $scope.severity_chart_data = {};
+    $scope.severity_chart_type = 'line';
 
     $scope.setupUsers = function(users) {
         $scope.users = dateService.formatDatesArray(users, ['date_created']);
