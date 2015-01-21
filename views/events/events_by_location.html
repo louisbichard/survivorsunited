@@ -1,14 +1,36 @@
-<div id="map-canvas">
-</div>
-<script>
-function initialize() {
-    var mapCanvas = document.getElementById('map-canvas');
-    var mapOptions = {
-        center: new google.maps.LatLng(52.764419, -1.234006),
-        zoom: 8,
-        mapTypeId: google.maps.MapTypeId.ROADMAP
-    }
-    var map = new google.maps.Map(mapCanvas, mapOptions)
+<!-- 
+
+TODO: REMOVE THESE STYLES
+
+-->
+<style>
+.angular-google-map-container {
+    height: 80%;
 }
-initialize();
-</script>
+</style>
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="widget large">
+            <div ng-repeat="event in events">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h4>{{event.title}} </h4>
+                        <p>{{event.description}} </p>
+                        <button class="btn pull-right btn-sm btn-accent" ng-click="renderMap(event.postcode)">
+                            <i class="fa fa-map-marker"></i>
+                        </button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <ui-gmap-google-map class="animated slideInLeft" center='map.coords' zoom='map.zoom'>
+            <ui-gmap-marker coords="map.coords" idkey="0">
+            </ui-gmap-marker>
+        </ui-gmap-google-map>
+
+    </div>
+</div>
