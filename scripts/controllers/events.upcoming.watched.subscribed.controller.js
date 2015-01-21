@@ -3,15 +3,15 @@
 
 SU.controller('upcomingWatchedSubscribedEventsController', function($scope, apiService, $location, dateService) {
 
+    $scope.searchText = $location.$$search.search || undefined;
+
     if ($location.$$path === '/watched_events') {
         $scope.title = "Watched";
         get_eventsapi = "/events/watching/current";
-    }
-    else if ($location.$$path === '/upcoming_events') {
+    } else if ($location.$$path === '/upcoming_events') {
         $scope.title = "Upcoming";
         get_eventsapi = "/events/listall";
-    }
-    else {
+    } else {
         //redirect
         throw new Error('url path incorrect');
     }

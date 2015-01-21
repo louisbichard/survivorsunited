@@ -99,6 +99,12 @@ SU.config(function($routeProvider) {
         controller: 'upcomingWatchedSubscribedEventsController'
     })
 
+    //UPCOMING 
+    .when('/upcoming_events/:event_url_search', {
+        templateUrl: '../views/events/events_watched_subscribed_upcoming.html',
+        controller: 'upcomingWatchedSubscribedEventsController'
+    })
+
     // WATCHING 
     .when('/users_watching_event', {
         templateUrl: '../views/events/users_watching_event.html',
