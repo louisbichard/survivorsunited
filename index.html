@@ -97,9 +97,6 @@
                 <li class="sidebar-list" ng-class="{'sidebar-selected': current_location === 'events_calendar'}">
                     <a href="#events_calendar">Calendar <span class="menu-icon fa fa-calendar"></span></a>
                 </li>
-                <li class="sidebar-list" ng-class="{'sidebar-selected': current_location === 'watched_events'}">
-                    <a href="#watched_events">Watched <span class="menu-icon fa fa-eye"></span></a>
-                </li>
                 <li class="sidebar-list" ng-class="{'sidebar-selected': current_location === 'events_by_location'}">
                     <a href="#events_by_location">By location (beta) <span class="menu-icon fa fa-map-marker"></span></a>
                 </li>
@@ -194,7 +191,6 @@ var socket = io.connect('survivorsunited.dev:3000');
 <script src="./scripts/controllers/events.usersWatchingOrAttending.js"></script>
 <script src="./scripts/controllers/events.calendar.controller.js"></script>
 <!-- ADMIN -->
-<script src="./scripts/controllers/developerConsoleController.js"></script>
 <script src="./scripts/controllers/search.controller.js"></script>
 <!-- ================ANGULAR ROUTES================ -->
 <script src="./scripts/angular.routes.js"></script>

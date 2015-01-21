@@ -11,8 +11,11 @@
         <div class="col-md-4 col-md-offset-4">
             <select class="form-control" ng-model="region">
                 <option selected="selected">Select region</option>
-                <option>Bradford</option>
                 <option>Leeds</option>
+                <option>Bradford</option>
+                <option>Sheffield</option>
+                <option>Doncaster</option>
+                <option>Hull</option>
             </select>
             <br>
         </div>
@@ -26,63 +29,79 @@
     <div class="row" ng-hide="region === 'Bradford'">
         <div class="col-md-4 col-md-offset-1">
             <h3> Login </h3>
-            <form role="form">
+            <form name="login" ng-submit="mainLogin(user)">
                 <div class="form-group">
-                    <input ng-model="user.username" class="form-control" placeholder="Email ">
+                    <input required ng-model="user.username" class="form-control" placeholder="Email ">
                 </div>
                 <div class="form-group ">
-                    <input ng-model="user.password" type="password" class="form-control" placeholder="password ">
+                    <input required ng-model="user.password" type="password" class="form-control" placeholder="password ">
                 </div>
-                <button type="submit " ng-click="mainLogin(user) " class="btn btn-block btn-accent ">Submit</button>
+                <button type="submit" class="btn btn-block btn-accent ">Submit</button>
             </form>
         </div>
 
         <div class="col-md-4 col-md-offset-1">
             <h3> Create account </h3>
-            <accordion>
-                <accordion-group heading="Username &amp; Password">
-                    <div class="form-group">
-                        <input ng-model="new_account.username" class="form-control" placeholder="Username">
-                    </div>
-                    <div class="form-group ">
-                        <input ng-model="new_account.password" type="password" class="form-control" placeholder="password ">
-                    </div>
-                    <div class="form-group ">
-                        <input ng-model="new_account.password_confirm" type="password" class="form-control" placeholder="confirm password ">
-                    </div>
-                </accordion-group>
-                <accordion-group heading="Address">
-                    <div class="form-group ">
-                        <input ng-model="new_account.address_postcode" class="form-control" placeholder="Street">
-                    </div>
-                    <div class="form-group">
-                        <input ng-model="new_account.address_line_1" class="form-control" placeholder="Address line 1">
-                    </div>
-                    <div class="form-group ">
-                        <input ng-model="new_account.address_line_2" class="form-control" placeholder="Address line 2">
-                    </div>
-                    <div class="form-group ">
-                        <input ng-model="new_account.address_street" class="form-control" placeholder="Postcode">
-                    </div>
-                </accordion-group>
-                <accordion-group heading="Contact">
-                    <select class="form-control" ng-model="new_account.contact_method">
-                        <option selected="true">Preferred contact method</option>
-                        <option>Email</option>
-                        <option>Phone</option>
-                        <option>Text</option>
-                    </select>
-                    <div class="form-group ">
-                        <input ng-model="new_account.phone" class="form-control" placeholder="Phone">
-                    </div>
-                    <div class="form-group">
-                        <input ng-model="new_account.address_postcode" class="form-control" placeholder="Email">
-                    </div>
-                </accordion-group>
-                <br>
-                <button type="submit " ng-click="createAccount() " class="btn btn-block btn-accent ">Submit</button>
-            </accordion>
-
+            <form name="form" ng-submit="createAccount()">
+                <accordion>
+                    <accordion-group heading="Username &amp; Password">
+                        <div class="form-group">
+                            <input ng-model="new_account.username" class="form-control" placeholder="Username" required>
+                        </div>
+                        <div class="form-group ">
+                            <input ng-model="new_account.password" type="password" class="form-control" placeholder="password" required>
+                        </div>
+                        <div class="form-group ">
+                            <input ng-model="new_account.password_confirm" type="password" class="form-control" placeholder="confirm password ">
+                        </div>
+                    </accordion-group>
+                    <accordion-group heading="Address">
+                        <div class="form-group ">
+                            <input ng-model="new_account.address_postcode" class="form-control" placeholder="Street">
+                        </div>
+                        <div class="form-group">
+                            <input ng-model="new_account.address_line_1" class="form-control" placeholder="Address line 1">
+                        </div>
+                        <div class="form-group ">
+                            <input ng-model="new_account.address_line_2" class="form-control" placeholder="Address line 2">
+                        </div>
+                        <div class="form-group ">
+                            <input ng-model="new_account.address_street" class="form-control" placeholder="Postcode">
+                        </div>
+                    </accordion-group>
+                    <accordion-group heading="Contact">
+                        <select class="form-control" ng-model="new_account.contact_method">
+                            <option selected="true">Preferred contact method</option>
+                            <option>Email</option>
+                            <option>Phone</option>
+                            <option>Text</option>
+                        </select>
+                        <div class="form-group ">
+                            <input ng-model="new_account.phone" class="form-control" placeholder="Phone">
+                        </div>
+                        <div class="form-group">
+                            <input ng-model="new_account.address_postcode" class="form-control" placeholder="Email">
+                        </div>
+                    </accordion-group>
+                    <br>
+                    <button type="submit" class="btn btn-block btn-accent ">Submit</button>
+                </accordion>
+            </form>
+        </div>
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <accordion>
+                    <accordion-group heading="Refer someone">
+                        <label>Survivor contact methods</label>
+                        <input type="text" class="form-control" placeholder="Email" required>
+                        <input type="text" class="form-control" placeholder="Phone" required>
+                        <textarea type="text" class="form-control" placeholder="Additional details" required></textarea>
+                        <p class="no-padding"> Add your own contact details, or any additional details, the more in detail you are, the better service we can provide </p>
+                        <button type="submit" class="btn btn-block btn-accent ">Submit</button>
+                    </accordion-group>
+                </accordion>
+                <p class="text-medium no-padding">Referrals are anonymous and mean that we will do XYZ</p>
+            </div>
         </div>
     </div>
 </div>

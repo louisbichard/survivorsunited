@@ -393,6 +393,12 @@ textarea.form-control, input.form-control {
 .gold {
   color: gold; }
 
+input.ng-invalid {
+  border-bottom-color: red; }
+
+input.valid {
+  border-bottom-color: red; }
+
 .text-white {
   color: #FFFFFF; }
 

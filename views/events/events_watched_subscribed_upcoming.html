@@ -22,35 +22,8 @@
                                     <div class="panel panel-default">
                                         <div class="panel-body">
                                             <div class="row">
-                                                <div class="col-md-4 col-lg-4">
+                                                <div class="col-md-6 col-lg-6">
                                                     <h3>{{event.title}}</h3>
-                                                </div>
-                                                <div class="col-md-8 col-lg-8">
-                                                    <div class="pull-right">
-                                                        <!-- ALLOW USER TO DELETE EVENTS -->
-                                                        <button type="button" ng-show="event.can_delete" ng-click="deleteEvent(event._id)" class="btn btn-sm btn-danger">
-                                                            Delete event &nbsp;
-                                                            <i class="fa fa-trash"></i>
-                                                        </button>
-                                                        <!-- ATTENDING BUTTONS -->
-                                                        <button ng-show="event.user_is_attending" type="button" ng-click="unWatchOrAttend(event._id, 'attending')" class="btn btn-sm btn-danger">
-                                                            Remove attendance &nbsp;
-                                                            <i class="fa fa-trash"></i>
-                                                        </button>
-                                                        <button ng-hide="event.user_is_attending" type="button" ng-click="watchOrAttend(event._id, 'attending')" class="btn btn-sm btn-success">
-                                                            Attend &nbsp;
-                                                            <i class="fa fa-plus"></i>
-                                                        </button>
-                                                        <!-- WATCHING BUTTONS -->
-                                                        <button ng-show="event.user_is_watching" type="button" ng-click="unWatchOrAttend(event._id, 'watching')" class="btn btn-sm btn-danger">
-                                                            Remove watcher &nbsp;
-                                                            <i class="fa fa-trash"></i>
-                                                        </button>
-                                                        <button ng-hide="event.user_is_watching" type="button" ng-click="watchOrAttend(event._id, 'watching')" class="btn btn-sm btn-success">
-                                                            Watch &nbsp;
-                                                            <i class="fa fa-plus"></i>
-                                                        </button>
-                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -85,6 +58,35 @@
                                                     </p>
                                                     <h4>Description</h4>
                                                     <p>{{event.description}}</p>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12 col-lg-12">
+                                                    <div class="text-center">
+                                                        <!-- ALLOW USER TO DELETE EVENTS -->
+                                                        <button type="button" ng-show="event.can_delete" ng-click="deleteEvent(event._id)" class="btn btn-sm btn-danger">
+                                                            Delete event &nbsp;
+                                                            <i class="fa fa-trash"></i>
+                                                        </button>
+                                                        <!-- ATTENDING BUTTONS -->
+                                                        <button ng-show="event.user_is_attending" type="button" ng-click="unWatchOrAttend(event._id, 'attending')" class="btn btn-sm btn-danger">
+                                                            Remove attendance &nbsp;
+                                                            <i class="fa fa-trash"></i>
+                                                        </button>
+                                                        <button ng-hide="event.user_is_attending" type="button" ng-click="watchOrAttend(event._id, 'attending')" class="btn btn-sm btn-success">
+                                                            Attend &nbsp;
+                                                            <i class="fa fa-plus"></i>
+                                                        </button>
+                                                        <!-- WATCHING BUTTONS -->
+                                                        <button ng-show="event.user_is_watching" type="button" ng-click="unWatchOrAttend(event._id, 'watching')" class="btn btn-sm btn-danger">
+                                                            Remove watcher &nbsp;
+                                                            <i class="fa fa-trash"></i>
+                                                        </button>
+                                                        <button ng-hide="event.user_is_watching" type="button" ng-click="watchOrAttend(event._id, 'watching')" class="btn btn-sm btn-success">
+                                                            Watch &nbsp;
+                                                            <i class="fa fa-plus"></i>
+                                                        </button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
