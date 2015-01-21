@@ -399,6 +399,9 @@ input.ng-invalid {
 input.valid {
   border-bottom-color: red; }
 
+.fc-event.fc-event-hori.fc-event-start.fc-event-end {
+  cursor: pointer; }
+
 .text-white {
   color: #FFFFFF; }
 
