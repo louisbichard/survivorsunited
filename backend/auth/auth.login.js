@@ -49,8 +49,11 @@ module.exports = function(req, res) {
     };
 
     var checkSessionUpdatedCorrectly = function(result) {
-        if (result[1].n === 0) respond.failure('Login failed, session not found');
-        else respond.success('User logged in successfully');
+        if (result[1].n === 0) {
+            console.log(result, 'result value');
+            res.clearCookie('auth');
+            respond.failure('Login failed, session not found');
+        } else respond.success('User logged in successfully');
     };
 
     //VALIDATION: Username and Password must be present

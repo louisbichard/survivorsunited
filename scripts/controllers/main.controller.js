@@ -57,11 +57,16 @@ SU.controller('mainController', function($scope, apiService, $location, notifySe
         });
     };
 
+    $scope.checkIfAnon = function() {
+        console.log('test');
+    };
+
     $scope.bootstrapDashboard = function() {
         return apiService
             .get('/user/current', null, {
                 preventNotifications: true
             })
+            .then($scope.checkIfAnon)
             .then($scope.successfulLogin)
             .then($scope.bindUserToScope)
             .caught($scope.routeToLogin);
