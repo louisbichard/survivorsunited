@@ -24,7 +24,9 @@ SU.controller('addEventController', function($scope, apiService, utilityService,
 
         //TODO: VALIDATE THAT ALL DATA HAS BEEN ENTERED 
         var new_event = utilityService.convertDatesToTimeStamps($scope.add_event, ['start, end']);
-        return apiService.post('/events/add', new_event);
+
+        return apiService.post('/events/add', new_event)
+            .then(_.partial(notifyService.success, 'event added'));
     };
 
 });

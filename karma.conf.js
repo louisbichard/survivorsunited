@@ -33,6 +33,8 @@ module.exports = function(config) {
             './bower_components/d3/d3.min.js',
             './bower_components/angular-percentagebar/percentagebar.js',
             './bower_components/angular-charts/dist/angular-charts.min.js',
+            "./bower_components/Chart.js/Chart.min.js",
+            "./bower_components/angular-chart.js/dist/angular-chart.js",
             './bower_components/angular-ui-calendar/src/calendar.js',
             './bower_components/fullcalendar/fullcalendar.js',
             './bower_components/angular-loading-bar/src/loading-bar.js',

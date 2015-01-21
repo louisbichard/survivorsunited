@@ -11,6 +11,7 @@ SU.controller('statisticsController', function($scope, apiService, chartService,
         colors: ['#0bff14', '#fffb10', '#ff2b1d']
     };
     $scope.severity_chart_data = {};
+    $scope.severity_chart_type = 'line';
 
     $scope.setupUsers = function(users) {
         $scope.users = dateService.formatDatesArray(users, ['date_created']);
@@ -27,6 +28,19 @@ SU.controller('statisticsController', function($scope, apiService, chartService,
             basic: userDataService.countRole('Basic', $scope.users)
         };
     };
+
+
+    // TODO: REMVOE AND SORT THESE OUT
+    $scope.labels = ['Nov 2014', 'December 2014', 'January 2015', 'February 2015', 'March 2015'];
+    $scope.series = ['Series A'];
+
+    $scope.data = [
+        [65, 59, 12, 100, 4]
+    ];
+
+    $scope.labels1 = ["High", "Medium", "Low"];
+    $scope.data1 = [30, 20, 10];
+
 
     $scope.setupUsersWithoutMentors = function() {
         $scope.without_mentors = userDataService.countMissingMentors($scope.users);

@@ -62,7 +62,6 @@ SU.controller('mainController', function($scope, apiService, $location, notifySe
             .get('/user/current', null, {
                 preventNotifications: true
             })
-            .then($scope.successfulLogin)
             .then($scope.bindUserToScope)
             .caught($scope.routeToLogin);
     };
