@@ -43,6 +43,7 @@ module.exports = function(req, res) {
             description: post_params.description,
             start: post_params.end,
             end: post_params.start,
+            postcode: post_params.postcode,
             watching: watchers,
             attending: [],
             date_created: new Date()
