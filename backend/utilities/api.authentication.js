@@ -10,10 +10,6 @@ module.exports = function(app) {
             file: __dirname + __filename
         });
 
-        console.log(req.originalUrl);
-        console.log(req.user);
-        console.log(url.pathname)
-
         var allowed_urls = [
             "/user/current",
             "/auth/login",
