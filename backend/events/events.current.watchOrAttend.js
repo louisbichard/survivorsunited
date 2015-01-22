@@ -14,9 +14,6 @@ module.exports = function(req, res) {
         file: __dirname + __filename
     });
 
-    // ONLY ALLOW AUTHENTICATED USERS
-    respond.rejectAnon();
-
     var POST_params = req.body;
     var event_id;
 
@@ -66,7 +63,6 @@ module.exports = function(req, res) {
 
         respond.success('You are now ' + type + ' the event');
     };
-
 
     return MongoClient.connectAsync(database.connection)
         .then(find_data)

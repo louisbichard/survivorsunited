@@ -13,8 +13,6 @@ module.exports = function(req, res) {
         file: __dirname + __filename
     });
 
-    respond.rejectAnon();
-
     var post_params = req.body;
     var watchers = [];
 
@@ -28,8 +26,7 @@ module.exports = function(req, res) {
     var task_id;
     try {
         task_id = database.getObjectID(post_params.task_id);
-    }
-    catch (err) {
+    } catch (err) {
         respond.failure('Task ID of incorrect format');
     }
 
@@ -37,8 +34,7 @@ module.exports = function(req, res) {
         // IF NO FIELDS UPDATED
         if (result[0] === 0) {
             respond.failure('No fields were updated');
-        }
-        else {
+        } else {
             respond.success('Updated task');
         }
         return result;

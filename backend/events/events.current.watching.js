@@ -12,8 +12,6 @@ module.exports = function(req, res) {
         file: __dirname + __filename
     });
 
-    respond.rejectAnon();
-
     //VALIDATE THAT USER ID EXISTS
     if (!req.user) {
         respond.failure('User is not authenticated');
@@ -48,7 +46,6 @@ module.exports = function(req, res) {
     var send_response = function(vals) {
         respond.success(vals);
     };
-
 
     return MongoClient.connectAsync(database.connection)
         .then(find_data)

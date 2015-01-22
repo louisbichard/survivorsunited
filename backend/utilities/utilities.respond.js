@@ -18,18 +18,11 @@ module.exports = function(args) {
     if (((typeof args.file) !== 'string')) throw new Error('Incorrect type for request passed to response utility');
 
     return {
-        rejectAnon: function() {
-            var message = 'User is not authenticated';
-
-            var construct_response = JSON.stringify({
+        notAuthenticated: function() {
+            return args.res.status(401).send({
                 success: false,
-                error_message: message
+                result: "Access denied for anonymous users, please login"
             });
-
-            // CHECK REQUEST OBJECT FOR USER CREDENTIALS
-            if (!args.req.user) {
-                args.res.end(construct_response);
-            }
         },
         success: function(message) {
             var construct_response = JSON.stringify({

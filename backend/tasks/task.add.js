@@ -18,8 +18,6 @@ module.exports = function(req, res) {
         file: __dirname + __filename
     });
 
-    respond.rejectAnon();
-
     var post_params = req.body;
     var watchers = [];
 
@@ -34,8 +32,7 @@ module.exports = function(req, res) {
         if (key === 'assignees') {
             try {
                 post_params.assignees = JSON.parse(val);
-            }
-            catch (e) {
+            } catch (e) {
                 prev = false;
             }
         }
