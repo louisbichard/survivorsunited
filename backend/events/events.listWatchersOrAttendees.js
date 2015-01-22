@@ -81,7 +81,7 @@ module.exports = function(req, res) {
                 });
             })
             .caught(function() {
-                // TODO
+                respond.failure('Could not fetch events');
             });
 
     }
