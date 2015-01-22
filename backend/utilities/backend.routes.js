@@ -57,6 +57,9 @@ module.exports = function(app, io) {
     app.post('/user/add', _.partialRight(runEndpoint, '../users/user.add.js'));
     app.post('/user/delete', _.partialRight(runEndpoint, '../users/user.delete.js'));
 
+    //SEARCH
+    app.get('/search', _.partialRight(runEndpoint, './../search/search.js'));
+
     //CHAT
     app.post('/chat', _.partialRight(runEndpoint, './../chat/chat.js', io));
 
