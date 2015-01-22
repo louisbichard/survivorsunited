@@ -13,51 +13,69 @@
 </div>
 
 
-<div class="row" ng-show="search_results">
-    <div class="col-md-12 col-lg-12">
-        <div class="panel panel-default">
-            <div class="panel-body">
-                <div class="row" ng-repeat="(search_area_name, search_area_results) in search_results" ng-hide="!search_area_results.length">
-                    </li>
+<div ng-show="search_results.users.length === 0 && search_results.tasks.length === 0 && search_results.events.length === 0">
+    <div class="col-md-12">
+        <div class="panel panel-default ">
+            <div class="panel-body ">
+                <div class="row">
                     <div class="col-md-12">
+                        <h3> Ooops, no results found </h3>
+                        <p>Please broaden your search</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row" ng-hide="search_results.users.length===0 && search_results.tasks.length===0 && search_results.events.length===0">
+    <div class=" col-md-12 col-lg-12 ">
+        <div class="panel panel-default ">
+            <div class="panel-body ">
+
+
+                <div class="row " ng-repeat="(search_area_name, search_area_results) in search_results " ng-hide="!search_area_results.length ">
+                    </li>
+                    <div class="col-md-12 ">
                         <h2>{{search_area_name}} ({{search_area_results.length}})</h2>
                         <hr>
 
                         <!-- EVENTS -->
-                        <div ng-if="search_area_name === 'events'">
-                            <div ng-repeat="search_record in search_area_results">
-                                <a ng-click="goToItem('/upcoming_events', search_record._id)"><h4>{{search_record.title}}</h4></a>
-                                <p class="no-padding"><strong>Description:</strong>{{search_record.description}}</p>
+                        <div ng-if="search_area_name==='events' ">
+                            <div ng-repeat="search_record in search_area_results ">
+                                <a ng-click="goToItem( '/upcoming_events', search_record._id) "><h4>{{search_record.title}}</h4></a>
+                                <p class="no-padding "><strong>Description:</strong>{{search_record.description}}</p>
                                 <br>
                             </div>
                         </div>
 
                         <!-- TASKS -->
-                        <div ng-if="search_area_name === 'tasks'">
-                            <div ng-repeat="search_record in search_area_results">
-                                <a ng-click="goToItem('/task_management/' + search_record._id)"><h4>{{search_record.title}}</h4></a>
+                        <div ng-if="search_area_name==='tasks' ">
+                            <div ng-repeat="search_record in search_area_results ">
+                                <a ng-click="goToItem( '/task_management/' + search_record._id) "><h4>{{search_record.title}}</h4></a>
 
-                                <p class="no-padding"><strong>Description:</strong>{{search_record.description}}</p>
+                                <p class="no-padding "><strong>Description:</strong>{{search_record.description}}</p>
 
-                                <p class="no-padding"><strong>Created:</strong>{{search_record.date_created}}</p>
+                                <p class="no-padding "><strong>Created:</strong>{{search_record.date_created}}</p>
                                 <br>
                             </div>
                         </div>
 
                         <!-- USERS -->
-                        <div ng-if="search_area_name === 'users'">
-                            <div ng-repeat="search_record in search_area_results">
-                                <a ng-click="goToItem('/user_management/'+ search_record._id)">
+                        <div ng-if="search_area_name==='users' ">
+                            <div ng-repeat="search_record in search_area_results ">
+                                <a ng-click="goToItem( '/user_management/'+ search_record._id) ">
                                     <h4>{{search_record.first_name}} {{search_record.last_name}} ({{search_record.username}}) </h4>
                                 </a>
 
-                                <p class="no-padding"><strong>Role:</strong>{{search_record.role}}</p>
+                                <p class="no-padding "><strong>Role:</strong>{{search_record.role}}</p>
 
-                                <p class="no-padding"><strong>Contact method:</strong>{{search_record.contact_method}}</p>
+                                <p class="no-padding "><strong>Contact method:</strong>{{search_record.contact_method}}</p>
 
-                                <p class="no-padding"><strong>Severity grade:</strong>{{search_record.severity_grade}}</p>
+                                <p class="no-padding "><strong>Severity grade:</strong>{{search_record.severity_grade}}</p>
 
-                                <p class="no-padding"><strong>Has mentor:</strong>{{search_record.mentor}}</p>
+                                <p class="no-padding "><strong>Has mentor:</strong>{{search_record.mentor}}</p>
                                 <br>
                             </div>
 

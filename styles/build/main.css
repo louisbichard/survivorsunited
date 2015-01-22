@@ -257,6 +257,9 @@ ul.sidebar {
 #page-wrapper:not(.active) .sidebar-footer {
   display: none; }
 
+input#searchBox {
+  color: #4DD0E1; }
+
 .btn {
   border-radius: 1px; }
 
