@@ -1,7 +1,7 @@
 // TYPE: CONTROLLER
 // PARTIAL: events_watched_subscribed_upcoming.html
 
-SU.controller('upcomingWatchedSubscribedEventsController', function($scope, apiService, $location, dateService) {
+SU.controller('upcomingWatchedSubscribedEventsController', function($scope, apiService, $location, dateService, notifyService) {
 
     $scope.searchText = $location.$$search.search || undefined;
 
@@ -35,8 +35,18 @@ SU.controller('upcomingWatchedSubscribedEventsController', function($scope, apiS
     };
 
     $scope.unWatchOrAttend = function(event_id, watchOrAttend) {
-        // TODO: IMPLEMENT AND ADD IN API
-        //console.log('implement watch or attend', event_id, watchOrAttend);
+        return apiService
+            .get('/events/removeWatchOrAttend', {
+                event_id: event_id,
+                type: watchOrAttend
+            })
+            .then(function(message) {
+                notifyService.success(message);
+                $scope.updateEvents(event_id, watchOrAttend, false);
+            })
+            .caught(function() {
+                notifyService.failure('Could not remove attendence, please try again');
+            });
     };
 
     //ADD USER AS WATCHING OR ATTENDING AN EVENT
@@ -55,7 +65,7 @@ SU.controller('upcomingWatchedSubscribedEventsController', function($scope, apiS
 
     // TAKES AN EVENT ID AND WATCHING AND ATTENDING AND SETS ITS VALUE
     $scope.updateEvents = function(event_id, watchOrAttend, value) {
-        if (!event_id || !_.isString(event_id) || !watchOrAttend || !_.isString(watchOrAttend) || !value || !_.isBoolean(value)) {
+        if (!event_id || !_.isString(event_id) || !watchOrAttend || !_.isString(watchOrAttend) || !_.isBoolean(value)) {
             throw new Error('Incorrect parameters passed to updateEvents in upcoming.watched.subscribed controller');
         }
 
