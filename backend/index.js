@@ -36,6 +36,9 @@ require('./utilities/cookies.js')(app);
 //##HEADER SETUP
 require('./utilities/headers.js')(app);
 
+//##COOKIE SETUP
+require('./utilities/params.js')(app);
+
 //##ROUTES
 require('./utilities/backend.routes.js')(app, io);
 

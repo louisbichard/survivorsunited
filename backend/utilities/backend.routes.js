@@ -78,6 +78,7 @@ module.exports = function(app, io) {
     app.get('/events/watching/current', _.partialRight(runEndpoint, './../events/events.current.watching.js'));
     app.post('/events/watchOrAttend', _.partialRight(runEndpoint, './../events/events.current.watchOrAttend.js'));
     app.post('/events/subscribe', _.partialRight(runEndpoint, './../events.current.subscribe.js'));
+    app.get('/events/removeWatchOrAttend', _.partialRight(runEndpoint, './../events/events.removeWatchOrAttend.js'));
 
     //ADMIN
     app.get('/testbackend', _.partialRight(runEndpoint, './../admin/test.backend.results.js'));

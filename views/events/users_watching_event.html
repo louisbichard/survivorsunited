@@ -2,15 +2,34 @@
     <div class="col-md-12 col-lg-12">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h4>Current {{type}} for event (TODO: NAME) ({{event_id}})</h4>
+                <h4>Users {{type}} "{{event_title}}" 
+                    <button class="btn btn-accent pull-right"> 
+                        Print&nbsp;
+                        <i class="fa fa-print"></i>
+                    </button>
+                </h4>
             </div>
             <div class="panel-body">
                 <div ng-if="error_message" class="alert alert-danger" role="alert">
-                	<h4> Something went wrong </h4>
-                	Could not fetch users, please try again
+                    <h4> Something went wrong </h4> Could not fetch users, please try again
                 </div>
                 <div ng-if="!error_message">
-                    <p ng-repeat="user in users">{{$index + 1}}) {{user.first_name}} {{user.last_name}}</p>
+                    <table id="user_table" class="table table-striped">
+                        <thead>
+                            <th>Number</th>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Severity</th>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="user in users">
+                                <td> {{$index + 1}} </td>
+                                <td> {{user._id}} </td>
+                                <td> {{user.first_name}} {{user.last_name}} </td>
+                                <td> {{user.severity_grade}} </td>
+                            </tr>
+                        </tbody>
+                    </table>
                     <h4>Total: {{users.length}}</h4>
                 </div>
             </div>
