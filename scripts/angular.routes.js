@@ -51,6 +51,12 @@ SU.config(function($routeProvider) {
         controller: 'searchController'
     })
 
+    //SEARCH WITH QUERY
+    .when('/search/:search_query', {
+        templateUrl: '../views/utilities/search.html',
+        controller: 'searchController'
+    })
+
     // FAQ
     .when('/faq', {
         templateUrl: '../views/utilities/faq.html'
@@ -85,6 +91,11 @@ SU.config(function($routeProvider) {
 
     // CREATE EVENT
     .when('/task_management', {
+        templateUrl: '../views/tasks/task_management.html',
+        controller: 'taskManagementController'
+    })
+
+    .when('/task_management/:url_search', {
         templateUrl: '../views/tasks/task_management.html',
         controller: 'taskManagementController'
     })
@@ -141,6 +152,11 @@ SU.config(function($routeProvider) {
 
     // USER DETAILS
     .when('/user_management', {
+        templateUrl: '../views/admin/user_management.html',
+        controller: 'userDetailsController'
+    })
+
+    .when('/user_management/:url_search', {
         templateUrl: '../views/admin/user_management.html',
         controller: 'userDetailsController'
     })

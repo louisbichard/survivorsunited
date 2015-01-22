@@ -1,4 +1,4 @@
-SU.controller('taskManagementController', function($scope, apiService, chartService, dateService, taskDataService, utilityService) {
+SU.controller('taskManagementController', function($scope, apiService, chartService, dateService, taskDataService, utilityService, $route) {
 
     $scope.bootstrap = function() {
         apiService.get('/tasks/listall', null, {
@@ -10,7 +10,6 @@ SU.controller('taskManagementController', function($scope, apiService, chartServ
                 $scope.tasks = result;
             });
     };
-
 
     $scope.formulateStats = function(tasks) {
         return _.map(tasks, function(task) {
@@ -27,6 +26,12 @@ SU.controller('taskManagementController', function($scope, apiService, chartServ
             return task;
         });
     };
+
+    var url_search = $route.current.params.url_search;
+
+    if (url_search) {
+        $scope.searchText = url_search;
+    }
 
     $scope.bootstrap();
 });
