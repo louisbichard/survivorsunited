@@ -16,8 +16,6 @@ module.exports = function(req, res) {
         file: __dirname + __filename
     });
 
-    respond.rejectAnon();
-
     //VALIDATION: NO USER ID
     if (!req.user._id) {
         respond.failure('No session found');

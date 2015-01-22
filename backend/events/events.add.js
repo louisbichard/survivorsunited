@@ -18,8 +18,6 @@ module.exports = function(req, res) {
         file: __dirname + __filename
     });
 
-    respond.rejectAnon();
-
     var post_params = req.body;
     var watchers = [];
 

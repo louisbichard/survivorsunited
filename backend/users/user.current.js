@@ -11,8 +11,6 @@ module.exports = function(req, res) {
         file: __dirname + __filename
     });
 
-    respond.rejectAnon();
-
     //TODO: ADD VALIDATION
     var current_user = req.user;
     if (current_user) respond.success(current_user);

@@ -36,8 +36,11 @@ require('./utilities/cookies.js')(app);
 //##HEADER SETUP
 require('./utilities/headers.js')(app);
 
-//##COOKIE SETUP
+//##SETUP OF PARAMETERS SUCH AS GET, POST ETC
 require('./utilities/params.js')(app);
+
+//##RESTRICT ANON ACCESS TO ALL APIS
+require('./utilities/api.authentication.js')(app);
 
 //##ROUTES
 require('./utilities/backend.routes.js')(app, io);

@@ -14,12 +14,9 @@ module.exports = function(req, res) {
         file: __dirname + __filename
     });
 
-    //VALIDATE THAT USER IS AUTHENTICATED
-    respond.rejectAnon();
-
     var post_params = req.body || {};
 
-    if(!post_params.user_id) {
+    if (!post_params.user_id) {
         respond.failure('No user ID passed');
     }
 
@@ -84,7 +81,6 @@ module.exports = function(req, res) {
         var changed_field_names = "Updated user details for: " + objectKeysToString(post_params);
         respond.success(changed_field_names);
     };
-
 
     return MongoClient.connectAsync(database.connection)
         .then(prepareData)
