@@ -3,7 +3,10 @@ SU.controller('usersWatchingEventController', function($scope, $routeParams, api
     $scope.type = $routeParams.type;
 
     $scope.getUsers = function() {
-        return apiService.get('/events/listWatchersOrAttendees?id=' + $scope.event_id + '&type=' + $scope.type, null, {
+        return apiService.get('/events/listWatchersOrAttendees', {
+                'id': $scope.event_id,
+                'type': $scope.type
+            }, {
                 preventNotifications: true
             })
             .then($scope.assignResultToUsers);

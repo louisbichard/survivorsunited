@@ -1,13 +1,11 @@
 // ENDPOINT /events/listall
 
-
 // TODO: ADD TESTS 
 // 
 // 1) DOES NOT ACCEPT INVALID EVENT TYPES (type)
 // 2) DOES NOT ACCEPT WHEN NO ID (id)
 // 3) EVENT NOT FOUND
 // 
-
 
 var Promise = require('bluebird');
 var MongoClient = Promise.promisifyAll(require("mongodb")).MongoClient;
@@ -25,6 +23,8 @@ module.exports = function(req, res) {
     });
 
     GET_params = utilities_general.GET_params(req);
+
+    console.log(GET_params);
 
     //GET event ID as passed as 'id'
     var event_id = GET_params.id;
@@ -71,7 +71,7 @@ module.exports = function(req, res) {
     };
 
     var extractWatchers = function(result) {
-            
+
         var find = Promise.promisifyAll(result);
         return find.toArrayAsync()
             .then(function(records) {
@@ -89,7 +89,6 @@ module.exports = function(req, res) {
                 return records;
             });
     };
-
 
     var getUsers = function(args) {
 
@@ -113,7 +112,6 @@ module.exports = function(req, res) {
     var send_response = function(vals) {
         respond.success(vals);
     };
-
 
     return getMongo()
         .then(findWatcherForEventID)
