@@ -17,10 +17,10 @@
     <div class="col-md-12 col-lg-12">
         <div class="panel panel-default">
             <div class="panel-body">
-                <div class="row" ng-repeat="(search_area_name, search_area_results) in search_results">
+                <div class="row" ng-repeat="(search_area_name, search_area_results) in search_results" ng-hide="!search_area_results.length">
                     </li>
                     <div class="col-md-12">
-                        <h2>{{search_area_name}}</h2>
+                        <h2>{{search_area_name}} ({{search_area_results.length}})</h2>
                         <hr>
 
                         <!-- EVENTS -->

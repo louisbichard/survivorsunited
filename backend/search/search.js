@@ -43,7 +43,7 @@ module.exports = function(req, res) {
             .then(respond.success)
             .caught(function(err) {
                 log.debug(err);
-                respond.failure('Could not list sessions', err);
+                respond.failure('Could not perform search', err);
             });
     }
 
