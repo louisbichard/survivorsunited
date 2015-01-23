@@ -31,19 +31,19 @@ app.use(cookieParser())
     }));
 
 //##COOKIE SETUP
-require('./utilities/cookies.js')(app);
+require('./middleware/cookies.js')(app);
 
 //##HEADER SETUP
-require('./utilities/headers.js')(app);
+require('./middleware/headers.js')(app);
 
 //##SETUP OF PARAMETERS SUCH AS GET, POST ETC
-require('./utilities/params.js')(app);
+require('./middleware/params.js')(app);
 
 //##RESTRICT ANON ACCESS TO ALL APIS
-require('./utilities/api.authentication.js')(app);
+require('./middleware/api.authentication.js')(app);
 
 //##ROUTES
-require('./utilities/backend.routes.js')(app, io);
+require('./middleware/backend.routes.js')(app, io);
 
 //##PORT SETUP
 server.listen(port);

@@ -1,10 +1,10 @@
-utilities_general = require('./utilities.general.js');
+utilities_general = require('../utilities/utilities.general.js');
 url = require('url');
 
 module.exports = function(app) {
 
     app.all('*', function(req, res, next) {
-        var respond = require('./utilities.respond.js')({
+        var respond = require('../utilities/utilities.respond.js')({
             req: req,
             res: res,
             file: __dirname + __filename
