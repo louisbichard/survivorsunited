@@ -55,6 +55,14 @@
                             <input ng-model="new_account.password_confirm" type="password" class="form-control" placeholder="confirm password ">
                         </div>
                     </accordion-group>
+                    <accordion-group heading="Personal details">
+                        <div class="form-group ">
+                            <input required ng-model="new_account.first_name" class="form-control" placeholder="First name">
+                        </div>
+                        <div class="form-group">
+                            <input required ng-model="new_account.last_name" class="form-control" placeholder="Last name">
+                        </div>
+                    </accordion-group>
                     <accordion-group heading="Address">
                         <div class="form-group ">
                             <input ng-model="new_account.address_postcode" class="form-control" placeholder="Street">
@@ -90,17 +98,19 @@
         </div>
         <div class="row">
             <div class="col-md-6 col-md-offset-3">
-                <accordion>
-                    <accordion-group heading="Refer someone">
-                        <label>Survivor contact methods</label>
-                        <input type="text" class="form-control" placeholder="Email" required>
-                        <input type="text" class="form-control" placeholder="Phone" required>
-                        <textarea type="text" class="form-control" placeholder="Additional details" required></textarea>
-                        <p class="no-padding"> Add your own contact details, or any additional details, the more in detail you are, the better service we can provide </p>
-                        <button type="submit" class="btn btn-block btn-accent ">Submit</button>
-                    </accordion-group>
-                </accordion>
-                <p class="text-medium no-padding">Referrals are anonymous and mean that we will do XYZ</p>
+                <form name="referral_form" ng-submit="submitReferral()">
+                    <accordion>
+                        <accordion-group heading="Refer someone">
+                            <label>Survivor contact methods</label>
+                            <input type="email" class="form-control" placeholder="Email" ng-model="referral.email" required>
+                            <input ng-model="referral.phone" type="phone" class="form-control" placeholder="Phone" required>
+                            <textarea ng-model="referral.details" type="text" class="form-control" placeholder="Additional details"></textarea>
+                            <p class="no-padding"> Add your own contact details, or any additional details, the more in detail you are, the better service we can provide </p>
+                            <button type="submit" class="btn btn-block btn-accent ">Submit</button>
+                        </accordion-group>
+                    </accordion>
+                    <p class="text-medium no-padding">Referrals are anonymous and mean that we will do XYZ</p>
+                </form>
             </div>
         </div>
     </div>

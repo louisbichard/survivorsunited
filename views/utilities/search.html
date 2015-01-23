@@ -29,12 +29,10 @@
     </div>
 </div>
 
-<div class="row" ng-hide="search_results.users.length===0 && search_results.tasks.length===0 && search_results.events.length===0">
+<div class="row" ng-hide="(search_results.users.length===0 && search_results.tasks.length===0 && search_results.events.length===0) || (!search_results)">
     <div class=" col-md-12 col-lg-12 ">
         <div class="panel panel-default ">
             <div class="panel-body ">
-
-
                 <div class="row " ng-repeat="(search_area_name, search_area_results) in search_results " ng-hide="!search_area_results.length ">
                     </li>
                     <div class="col-md-12 ">

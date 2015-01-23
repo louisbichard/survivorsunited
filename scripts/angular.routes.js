@@ -145,6 +145,12 @@ SU.config(function($routeProvider) {
     ///////////
 
     // USER MANAGEMENT
+    .when('/referrals', {
+        templateUrl: '../views/admin/referrals.html',
+        controller: 'referralsController'
+    })
+
+    // USER MANAGEMENT
     .when('/statistics', {
         templateUrl: '../views/admin/statistics.html',
         controller: 'statisticsController'

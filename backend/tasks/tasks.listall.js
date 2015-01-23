@@ -29,9 +29,6 @@ module.exports = function(req, res) {
         };
     }
 
-    console.log(req.user._id);
-    console.log(query);
-
     // ESTABLISH QUERY
     return database.find('tasks', [query])
         .then(respond.success)
