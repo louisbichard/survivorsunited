@@ -1,5 +1,7 @@
 SU.controller('mainController', function($scope, apiService, $location, notifyService) {
 
+    $scope.referral = {};
+
     // WATCH FOR NAV CHANGES AND SETUP SCOPE FOR LEFT PANEL TABBING HIGHLIGHTING
     $scope.region = "Select region";
 
@@ -13,6 +15,11 @@ SU.controller('mainController', function($scope, apiService, $location, notifySe
         $scope.current_location = $location.path()
             .split('/')[1];
     });
+
+    $scope.submitReferral = function() {
+        apiService.post('/referrals/insert', $scope.referral)
+            .then(_.partial(notifyService.success, 'Submitted referral'));
+    };
 
     $scope.createAccount = function() {
         var account = $scope.new_account;

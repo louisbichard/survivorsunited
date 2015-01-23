@@ -57,11 +57,11 @@ module.exports = function(app, io) {
     app.post('/user/add', _.partialRight(runEndpoint, '../users/user.add.js'));
     app.post('/user/delete', _.partialRight(runEndpoint, '../users/user.delete.js'));
 
-    //SEARCH
+    //REFERRAL
     app.post('/referrals/insert', _.partialRight(runEndpoint, './../referrals/referrals.insert.js'));
     app.get('/referrals/listall', _.partialRight(runEndpoint, './../referrals/referrals.listall.js'));
 
-    //REFERRALS
+    //SEARCH
     app.get('/search', _.partialRight(runEndpoint, './../search/search.js'));
 
     //CHAT

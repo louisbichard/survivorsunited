@@ -13,13 +13,17 @@ module.exports = function(app) {
         var allowed_urls = [
             "/user/current",
             "/auth/login",
-            "/user/add"
+            "/user/add",
+            "/user/current"
         ];
 
-        if (!req.user && !utilities_general.inArray(allowed_urls, req.originalUrl))
+        if (!req.user && !utilities_general.inArray(allowed_urls, req.originalUrl.replace(/[?]/g, '')))
         // IF ANON AND NOT AN ANON URL
         {
-            respond.notAuthenticated();
+            console.log(req.originalUrl);
+            // TODO: ADD IN THE RESPOND BACK AND REMOVE THE NEXT
+            next();
+            //respond.notAuthenticated();
         } else {
             next();
         }

@@ -1,0 +1,47 @@
+<div class="row">
+    <div class="col-md-12 col-lg-12">
+        <div class="top-panel">
+            <h5 class="text-secondary"> Admin &nbsp; > &nbsp;<span class="text-accent"> Referrals </span></h5>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="widget">
+            <div class="widget-header">
+                <input ng-model="searchText" class="form-control" placeholder="Search">
+                <button class="btn pull-right btn-accent">Open</button>
+                <button class="btn pull-right btn-accent">Closed</button>
+                <!-- Remove this -->
+                <br>
+            </div>
+            <div class="widget-body no-padding full">
+                <br>
+                <div class="row" ng-repeat="referee in referalls | filter:searchText | openReferrees:filters ">
+                    <div class="col-lg-12">
+                        <div class="widget">
+                            <div class="widget-body">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <p class="no-padding"> {{referee.date_added}} </p>
+                                        <p class="no-padding"> <strong>Details:</strong> {{referee.details}} </p>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <p class="no-padding"> <strong>Phone:</strong> {{referee.phone}} </p>
+                                        <p class="no-padding"> <strong>Email:</strong> {{referee.email}} </p>
+                                    </div>
+                                    <div class="col-md-4 text-center">
+                                        <p> Status </p>
+                                        <p class="no-padding"> <strong></strong>
+                                            <i ng-class="{'fa-circle-o': referee.is_open, 'fa-check-circle-o': !referee.is_open}" class="fa fa-2x "></i>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

@@ -98,17 +98,19 @@
         </div>
         <div class="row">
             <div class="col-md-6 col-md-offset-3">
-                <accordion>
-                    <accordion-group heading="Refer someone">
-                        <label>Survivor contact methods</label>
-                        <input type="text" class="form-control" placeholder="Email" required>
-                        <input type="text" class="form-control" placeholder="Phone" required>
-                        <textarea type="text" class="form-control" placeholder="Additional details" required></textarea>
-                        <p class="no-padding"> Add your own contact details, or any additional details, the more in detail you are, the better service we can provide </p>
-                        <button type="submit" class="btn btn-block btn-accent ">Submit</button>
-                    </accordion-group>
-                </accordion>
-                <p class="text-medium no-padding">Referrals are anonymous and mean that we will do XYZ</p>
+                <form name="referral_form" ng-submit="submitReferral()">
+                    <accordion>
+                        <accordion-group heading="Refer someone">
+                            <label>Survivor contact methods</label>
+                            <input type="email" class="form-control" placeholder="Email" ng-model="referral.email" required>
+                            <input ng-model="referral.phone" type="phone" class="form-control" placeholder="Phone" required>
+                            <textarea ng-model="referral.details" type="text" class="form-control" placeholder="Additional details"></textarea>
+                            <p class="no-padding"> Add your own contact details, or any additional details, the more in detail you are, the better service we can provide </p>
+                            <button type="submit" class="btn btn-block btn-accent ">Submit</button>
+                        </accordion-group>
+                    </accordion>
+                    <p class="text-medium no-padding">Referrals are anonymous and mean that we will do XYZ</p>
+                </form>
             </div>
         </div>
     </div>

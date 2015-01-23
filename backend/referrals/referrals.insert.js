@@ -9,9 +9,13 @@ module.exports = function(req, res) {
     });
 
     db.insert('referrals', [{
+            "first_name": req.body.first_name,
+            "last_name": req.body.last_name,
             "email": req.body.email,
             "phone": req.body.phone,
-            "details": req.body.details
+            "details": req.body.details,
+            "date_added": new Date().getTime(),
+            "is_open": true
         }])
         .then(respond.success)
         .caught(function(err) {

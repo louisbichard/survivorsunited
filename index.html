@@ -106,6 +106,9 @@
                 <li class="sidebar-title ">
                     <span>ADMIN</span>
                 </li>
+                <li class="sidebar-list" ng-class="{'sidebar-selected': current_location === 'referrals'}">
+                    <a href="#referrals">Referrals<span class="menu-icon fa fa-level-up"></span></a>
+                </li>
                 <li class="sidebar-list" ng-class="{'sidebar-selected': current_location === 'statistics'}">
                     <a href="#statistics">Statistics<span class="menu-icon fa fa-area-chart"></span></a>
                 </li>
@@ -176,6 +179,7 @@ var socket = io.connect('survivorsunited.dev:3000');
 <script src="./scripts/app.js"></script>
 <!-- ================ANGULAR CONTROLLERS================ -->
 <!-- MAIN -->
+<script src="./scripts/controllers/referrals.controller.js"></script>
 <script src="./scripts/controllers/main.controller.js"></script>
 <script src="./scripts/controllers/dashboard.controller.js"></script>
 <script src="./scripts/controllers/notification.controller.js"></script>
@@ -213,6 +217,7 @@ var socket = io.connect('survivorsunited.dev:3000');
 <script src="./scripts/services/notify.service.js"></script>
 <!-- ================ANGULAR FILTERS================ -->
 <script src="./scripts/filters/internal.filter.js"></script>
+<script src="./scripts/filters/openReferrees.filter.js"></script>
 <script src="./scripts/filters/severity.filter.js"></script>
 <script src="./scripts/filters/assignedMentor.filter.js"></script>
 <!-- ================ANGULAR PLUGINS================ -->
