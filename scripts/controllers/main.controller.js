@@ -29,10 +29,7 @@ SU.controller('mainController', function($scope, apiService, $location, notifySe
     };
 
     $scope.runSearch = function() {
-        $location.path('/search')
-            .search({
-                search: $scope.search_text
-            });
+        $location.path('/search/' + $scope.search_text);
     };
 
     $scope.toggleSidebar = function() {

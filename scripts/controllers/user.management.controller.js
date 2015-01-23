@@ -1,4 +1,4 @@
-SU.controller('userDetailsController', function($scope, apiService, utilityService, notifyService, dateService) {
+SU.controller('userDetailsController', function($scope, apiService, utilityService, notifyService, dateService, $route) {
     $scope.module = {
         title: "System users",
         description: "Edit users personal details, assigned mentors, severity etc",
@@ -8,6 +8,7 @@ SU.controller('userDetailsController', function($scope, apiService, utilityServi
     $scope.updated = {};
     $scope.filters = [];
 
+    // TODO: SHOULD BE IN SERVICE
     $scope.clearFilter = function(notification) {
         if (notification) {
             notifyService.info('Search filters cleared');
@@ -148,4 +149,10 @@ SU.controller('userDetailsController', function($scope, apiService, utilityServi
     // LAUNCH INIT SCOPE FUNCTIONS
     $scope.clearFilter();
     $scope.refreshUsers();
+
+    var url_search = $route.current.params.url_search;
+
+    if (url_search) {
+        $scope.searchText = url_search;
+    }
 });

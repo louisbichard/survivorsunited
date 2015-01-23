@@ -121,3 +121,6 @@ ul.sidebar {
 #page-wrapper:not(.active) .sidebar-footer {
     display: none;
 }
+input#searchBox {
+    color: $color-accent;
+}
