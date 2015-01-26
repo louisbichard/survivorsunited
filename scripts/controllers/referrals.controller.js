@@ -1,6 +1,13 @@
 SU.controller('referralsController', function($scope, apiService, notifyService, dateService) {
 
-    $scope.filters = {};
+    $scope.resetScope = function() {
+        $scope.filters = {};
+        notifyService.info('Cleared filters');
+    };
+
+    $scope.setFilter = function(prop, value) {
+        $scope.filters[prop] = value;
+    };
 
     apiService.get('/referrals/listall')
         .then(function(referrals) {
@@ -9,4 +16,6 @@ SU.controller('referralsController', function($scope, apiService, notifyService,
         .then(function(data) {
             $scope.referalls = data;
         });
+
+    $scope.filters = {};
 });
