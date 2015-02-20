@@ -9,13 +9,27 @@ SU.controller('referralsController', function($scope, apiService, notifyService,
         $scope.filters[prop] = value;
     };
 
-    apiService.get('/referrals/listall')
-        .then(function(referrals) {
-            return dateService.formatDatesArray(referrals, ['date_added']);
-        })
-        .then(function(data) {
-            $scope.referalls = data;
-        });
+    $scope.updateReferral = function(details) {
+        apiService.post('/referrals/update', {id: details._id, is_open: String(!details.is_open)})
+            .then(function(){
+                notifyService.success('Updated referral status');
+                $scope.init();
+            })
+            .caught(function(){
+                console.log('error thrown in updating referalls');
+            });
+    };
+
+    $scope.init = function() {
+        apiService.get('/referrals/listall')
+            .then(function(referrals) {
+                return dateService.formatDatesArray(referrals, ['date_added']);
+            })
+            .then(function(data) {
+                $scope.referalls = data;
+            });
+    };
 
     $scope.filters = {};
+    $scope.init();
 });

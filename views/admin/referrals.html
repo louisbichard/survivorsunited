@@ -35,9 +35,9 @@
                                         <p class="no-padding"> <strong>Email:</strong> {{referee.email}} </p>
                                     </div>
                                     <div class="col-md-4 text-center">
-                                        <p> Status </p>
+                                        <p> Referral dealt wtih </p>
                                         <p class="no-padding"> <strong></strong>
-                                            <i ng-class="{'fa-circle-o': referee.is_open, 'fa-check-circle-o': !referee.is_open}" class="fa fa-2x "></i>
+                                            <i ng-click="updateReferral(referee)" ng-class="{'fa-circle-o': referee.is_open, 'fa-check-circle-o': !referee.is_open}" class="fa fa-2x "></i>
                                         </p>
                                     </div>
                                 </div>
