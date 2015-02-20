@@ -11,14 +11,17 @@
         <div class="widget">
             <div class="widget-header">
                 <input ng-model="searchText" class="form-control" placeholder="Search">
-                <button class="btn pull-right btn-accent">Open</button>
-                <button class="btn pull-right btn-accent">Closed</button>
+                <button ng-click="setFilter('is_open', true)" class="btn pull-right btn-accent">Open</button>
+                <button ng-click="setFilter('is_open', false)" class="btn pull-right btn-accent">Closed</button>
+                <button ng-click="resetScope()" class="btn pull-right btn-accent">Clear filters</button>
                 <!-- Remove this -->
                 <br>
             </div>
             <div class="widget-body no-padding full">
                 <br>
-                <div class="row" ng-repeat="referee in referalls | filter:searchText | openReferrees:filters ">
+
+                <div class="row" ng-repeat="referee in referalls | filter:searchText | openReferrees:filters">
+
                     <div class="col-lg-12">
                         <div class="widget">
                             <div class="widget-body">
