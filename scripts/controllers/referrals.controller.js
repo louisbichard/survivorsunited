@@ -1,4 +1,13 @@
-SU.controller('referralsController', function($scope, apiService, notifyService, dateService) {
+SU.controller('referralsController', function($scope, apiService, notifyService, dateService, referralsService) {
+
+    $scope.filters = {};
+    $scope.config = {
+        velocity_value: 'minutes'
+    };
+
+    $scope.referral_stats = {
+        total: []
+    };
 
     $scope.resetScope = function() {
         $scope.filters = {};
@@ -9,13 +18,31 @@ SU.controller('referralsController', function($scope, apiService, notifyService,
         $scope.filters[prop] = value;
     };
 
-    apiService.get('/referrals/listall')
-        .then(function(referrals) {
-            return dateService.formatDatesArray(referrals, ['date_added']);
+    $scope.updateReferral = function(details) {
+        apiService.post('/referrals/update', {
+                id: details._id,
+                is_open: String(!details.is_open)
+            })
+            .then(_.partial($scope.init, true));
+    };
+
+    $scope.init = function(notify) {
+        Promise.props({
+            'stats': referralsService.get.stats($scope.config),
+            'all': referralsService.get.all()
         })
         .then(function(data) {
-            $scope.referalls = data;
+            $scope.referrals = data.all;
+            $scope.referral_stats = data.stats;
         });
 
-    $scope.filters = {};
+        if (notify) notifyService.success('Updated referral status');
+    };
+
+    $scope.$watch('config.velocity_value', function(){
+        $scope.init();
+    });
+
+
+    $scope.init();
 });

@@ -60,6 +60,7 @@ module.exports = function(app, io) {
     //REFERRAL
     app.post('/referrals/insert', _.partialRight(runEndpoint, './../referrals/referrals.insert.js'));
     app.get('/referrals/listall', _.partialRight(runEndpoint, './../referrals/referrals.listall.js'));
+    app.post('/referrals/update', _.partialRight(runEndpoint, './../referrals/referrals.update.js'));
 
     //SEARCH
     app.get('/search', _.partialRight(runEndpoint, './../search/search.js'));
