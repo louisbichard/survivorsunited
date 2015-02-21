@@ -14,6 +14,7 @@ module.exports = function(req, res) {
             "_id": req.body.id,
         }, {
             "$set": {
+                "last_updated": new Date().getTime(),
                 "is_open": (req.body.is_open === 'true' || req.body.is_open === 1),
             }
         }, ])

@@ -7,7 +7,28 @@
 </div>
 
 <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-4">
+        <div class="widget">
+            <div class="widget-header">
+                Statistics                
+            </div>
+            <div class="widget-body">
+                <p class="no-padding"><strong>Currently opened referrals:<strong> {{referral_stats.total[0]}} </p>
+                <hr> 
+                <h4 class="no-padding text-center"> Total </h4> 
+                <canvas class="chart chart-pie" data="referral_stats.total" labels="['Open', 'Closed']" legend="true"></canvas>
+                <hr> 
+                <h4 class="no-padding text-center"> Average velocity </h4>         
+                <select ng-model="config.velocity_value" class="form-control input-sm">
+                    <option ng-selected="{{config.velocity_value === 'minutes'}}">minutes</option>
+                    <option ng-selected="{{config.velocity_value === 'hours'}}">hours</option>
+                    <option ng-selected="{{config.velocity_value === 'days'}}">days</option>
+                </select>      
+                <p class="text-center"> {{referral_stats.velocity}}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8">
         <div class="widget">
             <div class="widget-header">
                 <input ng-model="searchText" class="form-control" placeholder="Search">
@@ -20,23 +41,20 @@
             <div class="widget-body no-padding full">
                 <br>
 
-                <div class="row" ng-repeat="referee in referalls | filter:searchText | openReferrees:filters">
+                <div class="row" ng-repeat="referee in referrals | filter:searchText | openReferrees:filters">
 
                     <div class="col-lg-12">
                         <div class="widget">
                             <div class="widget-body">
                                 <div class="row">
-                                    <div class="col-md-4">
+                                    <div class="col-md-6">
                                         <p class="no-padding"> {{referee.date_added}} </p>
                                         <p class="no-padding"> <strong>Details:</strong> {{referee.details}} </p>
-                                    </div>
-                                    <div class="col-md-4">
                                         <p class="no-padding"> <strong>Phone:</strong> {{referee.phone}} </p>
-                                        <p class="no-padding"> <strong>Email:</strong> {{referee.email}} </p>
+                                        <p class="no-padding"> <strong>Email:</strong> {{referee.email}} </p>        
                                     </div>
-                                    <div class="col-md-4 text-center">
-                                        <p> Referral dealt wtih </p>
-                                        <p class="no-padding"> <strong></strong>
+                                    <div class="col-md-6">
+                                        <p class="no-padding pull-right"> 
                                             <i ng-click="updateReferral(referee)" ng-class="{'fa-circle-o': referee.is_open, 'fa-check-circle-o': !referee.is_open}" class="fa fa-2x "></i>
                                         </p>
                                     </div>
@@ -48,3 +66,4 @@
             </div>
         </div>
     </div>
+</div>
