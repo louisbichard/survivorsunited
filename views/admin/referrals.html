@@ -13,10 +13,7 @@
                 Statistics                
             </div>
             <div class="widget-body">
-                <p class="no-padding"><strong>Currently opened referrals:<strong> {{referral_stats.total[0]}} </p>
-                <hr> 
-                <h4 class="no-padding text-center"> Total </h4> 
-                <canvas class="chart chart-pie" data="referral_stats.total" labels="['Open', 'Closed']" legend="true"></canvas>
+                <p class="no-padding text-center"><strong>Currently opened referrals:<strong> {{referral_stats.total[0]}} </p>
                 <hr> 
                 <h4 class="no-padding text-center"> Average velocity </h4>         
                 <select ng-model="config.velocity_value" class="form-control input-sm">
@@ -25,6 +22,12 @@
                     <option ng-selected="{{config.velocity_value === 'days'}}">days</option>
                 </select>      
                 <p class="text-center"> {{referral_stats.velocity}}</p>
+                <hr> 
+                <h4 class="no-padding text-center"> Total </h4> 
+                <canvas class="chart chart-pie" data="referral_stats.total" labels="['Open', 'Closed']" legend="true"></canvas>
+                <hr> 
+                <h4 class="no-padding text-center"> Referrals over time </h4>         
+                <canvas class="chart chart-line" data="referral_stats.time.values" labels="referral_stats.time.months"></canvas>
             </div>
         </div>
     </div>
@@ -32,31 +35,49 @@
         <div class="widget">
             <div class="widget-header">
                 <input ng-model="searchText" class="form-control" placeholder="Search">
-                <button ng-click="setFilter('is_open', true)" class="btn pull-right btn-accent">Open</button>
-                <button ng-click="setFilter('is_open', false)" class="btn pull-right btn-accent">Closed</button>
-                <button ng-click="resetScope()" class="btn pull-right btn-accent">Clear filters</button>
+                <button ng-click="resetScope()" class="btn pull-right btn-warning">Clear filters &nbsp;<i class="fa fa-trash"></i></button>
+                <button ng-click="setFilter('is_open', true)" class="btn pull-right btn-accent">
+                    Open
+                    <i  class="fa fa-circle-o"></i>
+                </button>
+                <button ng-click="setFilter('is_open', false)" class="btn pull-right btn-accent">
+                    Closed
+                    <i  class="fa fa-check-circle-o"></i>
+                </button>
+                
                 <!-- Remove this -->
                 <br>
             </div>
             <div class="widget-body no-padding full">
                 <br>
-
                 <div class="row" ng-repeat="referee in referrals | filter:searchText | openReferrees:filters">
-
                     <div class="col-lg-12">
                         <div class="widget">
                             <div class="widget-body">
                                 <div class="row">
-                                    <div class="col-md-6">
+                                    <div class="col-md-1">
+                                        <div class="col-md-12">
+                                            <a><i ng-click="updateReferral(referee)" ng-class="{'fa-circle-o': referee.is_open, 'fa-check-circle-o': !referee.is_open}" class="fa fa-2x pull-right"></i></a>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-7">
                                         <p class="no-padding"> {{referee.date_added}} </p>
+                                        <p class="no-padding"> 
+                                            <strong>Name:</strong> 
+                                            
+                                            <span ng-show="referee.first_name && referee.last_name"> {{referee.first_name}}, {{referee.last_name}} </span>
+                                            <span ng-show="!referee.first_name && !referee.last_name"> Anonymous </span>
+                                        </p>
                                         <p class="no-padding"> <strong>Details:</strong> {{referee.details}} </p>
                                         <p class="no-padding"> <strong>Phone:</strong> {{referee.phone}} </p>
-                                        <p class="no-padding"> <strong>Email:</strong> {{referee.email}} </p>        
+                                        <p class="no-padding"> <strong>Email:</strong> {{referee.email}} </p>
                                     </div>
-                                    <div class="col-md-6">
-                                        <p class="no-padding pull-right"> 
-                                            <i ng-click="updateReferral(referee)" ng-class="{'fa-circle-o': referee.is_open, 'fa-check-circle-o': !referee.is_open}" class="fa fa-2x "></i>
-                                        </p>
+                                    <div class="col-md-4">
+                                        <button class="pull-right btn btn-small btn-primary"> 
+                                            <i class="fa fa-user"></i>
+                                            &nbsp;
+                                            <i class="fa fa-plus"></i>
+                                        </button>                                            
                                     </div>
                                 </div>
                             </div>

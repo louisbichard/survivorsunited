@@ -18,13 +18,34 @@ SU.service("referralsService", function(apiService, dateService) {
                 var b = moment(curr.date_added);
                 return a.diff(b, time_unit);
             })
-            .reduce(function(prev, curr, orig, index){
+            .reduce(function(prev, curr, orig, index) {
                 return prev + curr;
             }, 0)
             .value();
-            
+
         return Math.round(total_velocity / results.length);
     };
+
+    var byTime = function(data) {
+        var referrals_by_month = _.chain(data)
+            .sortBy(function(curr){
+                return moment(curr.date_added).unix();
+            })
+            .countBy(function(curr) {
+                return moment(curr.date_added).format('MM/YYYY');
+            })
+            .value();
+
+        return {
+            'months': _.keys(referrals_by_month),
+            'values': [_.values(referrals_by_month)]
+        };
+
+    };
+
+
+ 
+
 
     this.get = {
         'all': function() {
@@ -37,7 +58,8 @@ SU.service("referralsService", function(apiService, dateService) {
             return apiService.get(referrals_route).then(function(data) {
                 return {
                     'total': totalByStatus(data),
-                    'velocity': velocity(data, config.velocity_value)
+                    'velocity': velocity(data, config.velocity_value),
+                    'time': byTime(data)
                 };
             });
 

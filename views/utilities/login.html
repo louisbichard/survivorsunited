@@ -102,6 +102,8 @@
                     <accordion>
                         <accordion-group heading="Refer someone">
                             <label>Survivor contact methods</label>
+                            <input ng-model="referral.first_name" type="text" class="form-control" placeholder="First name" required>
+                            <input ng-model="referral.last_name" type="text" class="form-control" placeholder="Last name" required>
                             <input type="email" class="form-control" placeholder="Email" ng-model="referral.email" required>
                             <input ng-model="referral.phone" type="phone" class="form-control" placeholder="Phone" required>
                             <textarea ng-model="referral.details" type="text" class="form-control" placeholder="Additional details"></textarea>
