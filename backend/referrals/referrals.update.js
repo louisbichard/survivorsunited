@@ -8,8 +8,6 @@ module.exports = function(req, res) {
         file: __dirname + __filename
     });
 
-    console.log(req.body);
-
     db.update('referrals', [{
             "_id": req.body.id,
         }, {
