@@ -40,12 +40,7 @@ SU.service("referralsService", function(apiService, dateService) {
             'months': _.keys(referrals_by_month),
             'values': [_.values(referrals_by_month)]
         };
-
     };
-
-
- 
-
 
     this.get = {
         'all': function() {
@@ -62,7 +57,6 @@ SU.service("referralsService", function(apiService, dateService) {
                     'time': byTime(data)
                 };
             });
-
         }
     };
 });
