@@ -1,20 +1,16 @@
 <div class="row">
-    <div class="col-md-12 col-lg-12">
-        <div class="panel panel-default">
-            <div class="panel-body">
-                <form name="search_form" ng-submit="runSearch()">
-                    <input required class="form-control" ng-model="search" type="text" placeholder="Search ...">
-                    <button class="btn btn-accent">Search</button>
-                </form>
-
-            </div>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <form name="search_form" ng-submit="runSearch()">
+                <input required class="form-control" ng-model="search" type="text" placeholder="Search ...">
+                <button class="btn btn-accent">Search</button>
+            </form>
         </div>
     </div>
 </div>
 
 
 <div ng-show="search_results.users.length === 0 && search_results.tasks.length === 0 && search_results.events.length === 0">
-    <div class="col-md-12">
         <div class="panel panel-default ">
             <div class="panel-body ">
                 <div class="row">
@@ -26,11 +22,9 @@
 
             </div>
         </div>
-    </div>
 </div>
 
 <div class="row" ng-hide="(search_results.users.length===0 && search_results.tasks.length===0 && search_results.events.length===0) || (!search_results)">
-    <div class=" col-md-12 col-lg-12 ">
         <div class="panel panel-default ">
             <div class="panel-body ">
                 <div class="row " ng-repeat="(search_area_name, search_area_results) in search_results " ng-hide="!search_area_results.length ">
@@ -83,5 +77,4 @@
                 </div>
             </div>
         </div>
-    </div>
 </div>

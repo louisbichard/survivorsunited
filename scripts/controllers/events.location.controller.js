@@ -1,4 +1,6 @@
-SU.controller('eventsLocationController', function($scope, apiService, utilityService, notifyService, $http) {
+SU.controller('eventsLocationController', function($scope, apiService, utilityService, notifyService, $http, $route) {
+
+    var event_id = $route.current.params.event_id;
 
     $scope.test = "Events location controller";
     $scope.map = {
@@ -24,7 +26,14 @@ SU.controller('eventsLocationController', function($scope, apiService, utilitySe
     apiService.get('/events/listall')
         .then(function(events) {
             // GET THE ONE'S WITH POSTCODES ONLY
-            $scope.events = _.filter(events, 'postcode');
+            $scope.events = _.chain(events)
+                .filter('postcode')
+                .filter(function(curr){
+                    // IF URL HAS EVENT ID PARAMETER FILTER BY THIS
+                    return event_id ? curr._id === event_id: true;
+                })
+                .value();
+
         });
 
     $scope.lookupPostcode = function(postcode) {
