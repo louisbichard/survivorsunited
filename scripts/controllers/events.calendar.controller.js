@@ -1,10 +1,12 @@
 SU.controller('eventCalendarController', function($scope, apiService, dateService, notifyService, $location) {
 
-    $scope.alertOnEventClick = function(date, jsEvent, view) {
-        $location.path('/upcoming_events')
-            .search({
-                search: date.title
-            });
+    var setupFilters = function() {
+        $scope.filters = {
+            user: {
+                watching: false,
+                subscribed: false
+            }
+        };
     };
 
     // SET EVENTS AS NONE ON LOAD TO PREVENT ERROR
@@ -22,6 +24,19 @@ SU.controller('eventCalendarController', function($scope, apiService, dateServic
             eventClick: $scope.alertOnEventClick
         }
 
+    };
+
+
+    $scope.clearFilters = function() {
+        setupFilters();
+        notifyService.success('Filters cleared');
+    };
+
+    $scope.alertOnEventClick = function(date, jsEvent, view) {
+        $location.path('/upcoming_events')
+            .search({
+                search: date.title
+            });
     };
 
 
@@ -53,7 +68,7 @@ SU.controller('eventCalendarController', function($scope, apiService, dateServic
         if (notification) notifyService.success('Events refreshed!');
     };
 
-    $scope.refreshEvents = function(notification) {
+    refreshEvents = function(notification) {
         return apiService
             .get('/events/listall', null, {
                 preventNotifications: true
@@ -65,6 +80,7 @@ SU.controller('eventCalendarController', function($scope, apiService, dateServic
     $scope.eventSources = [$scope.events];
 
     // BOOTSTRAP CONTROLLER
-    $scope.refreshEvents();
+    refreshEvents();
+    setupFilters();
 
 });

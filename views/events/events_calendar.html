@@ -1,10 +1,35 @@
 <div class="row">
     <div class="col-md-12 col-lg-12">
-        <div class="panel panel-default">
-            <div class="panel-body">
-                <button type="button" ng-click="refreshEvents(true)" class="btn btn-info">Refresh &nbsp;<i class="fa fa-refresh"></i>
+        <div class="top-panel">
+            <h5 class="text-secondary"> Events &nbsp; > &nbsp;<span class="text-accent"> Calendar </span></h5>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12 col-lg-12">
+        <div class="widget">
+            <div class="widget-header">
+                Filter
+                <button type="button" ng-click="refreshEvents(true)" class="pull-right btn btn-warning">Refresh &nbsp;<i class="fa fa-refresh"></i>
                 </button>
-                <div calendar="calendar" ui-calendar="uiConfig.calendar" class="span8 calendar" ng-model="eventSources"></div>
+                <button type="button" ng-click="clearFilters()" class="pull-right btn btn-danger">Clear filters &nbsp;<i class="fa fa-trash"></i>
+                </button>
+                <span class="pull-right"> 
+                	<strong> Subscribed </strong>
+                 <input ng-model="filters.user.subscribed" type="checkbox" ></input> &nbsp;
+	             </span>
+                <span class="pull-right"> 
+                	<strong> Watching </strong>
+                 <input ng-model="filters.user.watching" type="checkbox" ></input> &nbsp;
+	             </span>
+            </div>
+            <div class="widget-body">
+                <p class="no-padding pull-right">Total events: {{eventSources[0].length}} </p>
+                <div class="row">
+                    <div class="col-md-12 col-lg-12">
+                        <div calendar="calendar" ui-calendar="uiConfig.calendar" class="span8 calendar" ng-model="eventSources"></div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
