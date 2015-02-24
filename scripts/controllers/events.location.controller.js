@@ -2,7 +2,6 @@ SU.controller('eventsLocationController', function($scope, apiService, utilitySe
 
     var event_id = $route.current.params.event_id;
 
-    $scope.test = "Events location controller";
     $scope.map = {
         coords: {
             latitude: 53.41861187128951,
@@ -23,18 +22,20 @@ SU.controller('eventsLocationController', function($scope, apiService, utilitySe
             .then($scope.updateScope);
     };
 
-    apiService.get('/events/listall')
-        .then(function(events) {
-            // GET THE ONE'S WITH POSTCODES ONLY
-            $scope.events = _.chain(events)
-                .filter('postcode')
-                .filter(function(curr){
-                    // IF URL HAS EVENT ID PARAMETER FILTER BY THIS
-                    return event_id ? curr._id === event_id: true;
-                })
-                .value();
+    $scope.init = function() {
+        apiService.get('/events/listall')
+            .then(function(events) {
+                // GET THE ONE'S WITH POSTCODES ONLY
+                $scope.events = _.chain(events)
+                    .filter('postcode')
+                    .filter(function(curr) {
+                        // IF URL HAS EVENT ID PARAMETER FILTER BY THIS
+                        return event_id ? curr._id === event_id : true;
+                    })
+                    .value();
 
-        });
+            });
+    };
 
     $scope.lookupPostcode = function(postcode) {
         postcode = postcode.replace(/ /g, '');
@@ -45,5 +46,7 @@ SU.controller('eventsLocationController', function($scope, apiService, utilitySe
                 return data;
             });
     };
+
+    $scope.init();
 
 });
