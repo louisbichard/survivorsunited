@@ -140,6 +140,12 @@ SU.config(function($routeProvider) {
         controller: 'eventsLocationController'
     })
 
+        // CALENDAR
+    .when('/events_by_location/:event_id', {
+        templateUrl: '../views/events/events_by_location.html',
+        controller: 'eventsLocationController'
+    })
+
     ///////////
     // ADMIN //
     ///////////

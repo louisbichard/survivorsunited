@@ -53,7 +53,11 @@ SU.service("referralsService", function(apiService, dateService) {
             return apiService.get(referrals_route).then(function(data) {
                 return {
                     'total': totalByStatus(data),
-                    'velocity': velocity(data, config.velocity_value),
+                    'velocity': {
+                        'minutes': velocity(data, 'minutes'),
+                        'hours': velocity(data, 'hours'),
+                        'days': velocity(data, 'days')
+                    },
                     'time': byTime(data)
                 };
             });
