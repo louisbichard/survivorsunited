@@ -22,13 +22,25 @@
                             <label>Description</label>
                             <textarea ng-model="add_task.description" class="form-control input-sm" rows="3" placeholder="Tell us something about your event"></textarea>
                         </div>
-                        <div class="form-group">
-                            <label>Assignee</label>
-                            <select multiple class="form-control input-sm" ng-model="add_task.assignees">
-                                <option ng-selected="user.username === 'unassigned'" value="{{user._id}}" ng-repeat="user in users">
-                                    {{user.first_name}} {{user.last_name}} ({{user.username}})
-                                </option>
-                            </select>
+                        <div class="row">
+                            <div class="col-md-6 col-lg-6">
+                                <div class="form-group">
+                                    <label>Assignee</label>
+                                    <select multiple class="form-control input-sm" ng-model="add_task.assignees">
+                                        <option ng-selected="user.username === 'unassigned'" value="{{user._id}}" ng-repeat="user in users">
+                                            {{user.first_name}} {{user.last_name}} ({{user.username}})
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-6">
+                                <div class="form-group">
+                                    <label>Actions</label>
+                                    <select multiple ng-model="add_task.actions" class="form-control input-sm">
+                                        <option value="account_creation">Assign on account creation</option>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

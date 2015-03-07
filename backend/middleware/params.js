@@ -17,7 +17,22 @@ module.exports = function(app) {
                 'id': 'object_id',
                 'is_open': 'string'
             },
-        }
+        },
+        "/task/add": {
+            "post": {
+                'title': 'string',
+                'assignees': 'array',
+                'description': 'string',
+                'actions': 'array'
+            }
+        },
+        "/user/add": {
+            "post": {
+                'username': 'string',
+                'password': 'string'
+            }
+        },
+
     };
 
     app.all('*', function(req, res, next) {
