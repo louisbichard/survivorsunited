@@ -83,13 +83,11 @@ SU.config(function($routeProvider) {
     // TASKS  //
     ////////////
 
-    // CREATE EVENT
     .when('/add_task', {
         templateUrl: '../views/tasks/add_task.html',
         controller: 'addTaskController'
     })
 
-    // CREATE EVENT
     .when('/task_management', {
         templateUrl: '../views/tasks/task_management.html',
         controller: 'taskManagementController'
@@ -98,6 +96,11 @@ SU.config(function($routeProvider) {
     .when('/task_management/:url_search', {
         templateUrl: '../views/tasks/task_management.html',
         controller: 'taskManagementController'
+    })
+
+    .when('/task_allocation', {
+        templateUrl: '../views/tasks/task_allocation.html',
+        controller: 'taskManagementController' // TODO: UPDATE THIS
     })
 
     ////////////
@@ -140,7 +143,7 @@ SU.config(function($routeProvider) {
         controller: 'eventsLocationController'
     })
 
-        // CALENDAR
+    // CALENDAR
     .when('/events_by_location/:event_id', {
         templateUrl: '../views/events/events_by_location.html',
         controller: 'eventsLocationController'

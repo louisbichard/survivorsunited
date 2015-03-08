@@ -21,12 +21,6 @@ module.exports = function(req, res) {
     var post_params = req.body;
     var watchers = [];
 
-    //VALIDATION: ENSURE VALUES ARE SET
-    var missing_params = _.reduce(['title', 'assignees', 'description'], function(prev, field, index) {
-        if (!post_params[field]) prev.push(field);
-        return prev;
-    }, []);
-
     // VALIDATE CORRECT FORMAT
     var assignee_not_array = _.reduce(post_params, function(prev, val, key) {
         if (key === 'assignees') {
@@ -40,7 +34,6 @@ module.exports = function(req, res) {
     }, true);
 
     // VALIDATE
-    if (missing_params.length > 0) respond.failure(missing_params.join('/') + ' fields missing');
     if (assignee_not_array) respond.failure('Assignees must be an array');
     else {
         // SETUP ASSIGNEES FIELD 
@@ -57,6 +50,7 @@ module.exports = function(req, res) {
                 title: post_params.title,
                 description: post_params.description,
                 assignees: post_params.assignees,
+                actions: post_params.actions,
                 date_created: new Date()
                     .getTime()
             }, {

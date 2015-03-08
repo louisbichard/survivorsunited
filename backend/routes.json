@@ -1,0 +1,180 @@
+{
+    "/referrals/insert": {
+        "post": {
+            "file_path": "./../referrals/referrals.insert.js",
+            "parameters": {
+                "email": "string",
+                "phone": "string"
+            }
+        }
+    },
+    "/auth/login": {
+        "post": {
+            "file_path": "./../auth/auth.login.js"
+        }
+    },
+    "/auth/logout": {
+        "get": {
+            "file_path": "./../auth/auth.logout.js"
+        }
+    },
+    "/auth/isauthenticated": {
+        "get": {
+            "file_path": "./../auth/auth.isAuthenticated"
+        }
+    },
+    "/sessions/listall": {
+        "get": {
+            "file_path": "./../sessions/sessions.listall.js"
+        }
+    },
+    "/user/current": {
+        "get": {
+            "file_path": "./../users/user.current.js"
+        }
+    },
+    "/users/listall": {
+        "get": {
+            "file_path": "./../users/users.listall.js"
+        }
+    },
+    "/user/update": {
+        "post": {
+            "file_path": "./../users/user.update.js"
+        }
+    },
+    "/user/add": {
+        "post": {
+            "file_path": "../users/user.add.js",
+            "parameters": {
+                "username": "string",
+                "password": "string"
+            }
+        }
+    },
+    "/user/delete": {
+        "post": {
+            "file_path": "../users/user.delete.js"
+        }
+    },
+    "/referrals/listall": {
+        "get": {
+            "file_path": "./../referrals/referrals.listall.js"
+        }
+    },
+    "/referrals/update": {
+        "post": {
+            "file_path": "./../referrals/referrals.update.js",
+            "parameters": {
+                "id": "object_id",
+                "is_open": "string"
+            }
+        }
+    },
+    "/search": {
+        "get": {
+            "file_path": "./../search/search.js"
+        }
+    },
+    "/chat": {
+        "post": {
+            "file_path": "./../chat/chat.js"
+        }
+    },
+    "/task/add": {
+        "post": {
+            "file_path": "./../tasks/task.add.js",
+            "parameters": {
+                "title": "string",
+                "assignees": "array",
+                "description": "string",
+                "actions": "array"
+            }
+        }
+    },
+    "/tasks/listall": {
+        "get": {
+            "file_path": "./../tasks/tasks.listall.js"
+        }
+    },
+    "/tasks/assigned": {
+        "get": {
+            "file_path": "./../tasks/tasks.assigned.js"
+        }
+    },
+    "/task/update": {
+        "post": {
+            "file_path": "./../tasks/task.update.js"
+        }
+    },
+    "/user/assigned_mentees": {
+        "get": {
+            "file_path": "./../users/user.assigned_mentees.js"
+        }
+    },
+    "/user/assigned_mentor": {
+        "get": {
+            "file_path": "./../users/user.assigned_mentor.js"
+        }
+    },
+    "/user/assign_mentor": {
+        "post": {
+            "file_path": "./../users/user.assign_mentor.js"
+        }
+    },
+    "/events/listall": {
+        "get": {
+            "file_path": "./../events/events.listall.js"
+        }
+    },
+    "/events/listWatchersOrAttendees": {
+        "get": {
+            "file_path": "./../events/events.listWatchersOrAttendees.js"
+        }
+    },
+    "/events/add": {
+        "post": {
+            "file_path": "./../events/events.add.js"
+        }
+    },
+    "/events/watching/current": {
+        "get": {
+            "file_path": "./../events/events.current.watching.js"
+        }
+    },
+    "/events/watchOrAttend": {
+        "post": {
+            "file_path": "./../events/events.current.watchOrAttend.js"
+        }
+    },
+    "/events/subscribe": {
+        "post": {
+            "file_path": "./../events.current.subscribe.js"
+        }
+    },
+    "/events/removeWatchOrAttend": {
+        "get": {
+            "file_path": "./../events/events.removeWatchOrAttend.js"
+        }
+    },
+    "/testbackend": {
+        "get": {
+            "file_path": "./../admin/test.backend.results.js"
+        }
+    },
+    "/testfrontend": {
+        "get": {
+            "file_path": "./../admin/test.frontend.results.js"
+        }
+    },
+    "/backenderrors": {
+        "get": {
+            "file_path": "./../admin/backend.error.log.js"
+        }
+    },
+    "/codecomplexity": {
+        "get": {
+            "file_path": "./../admin/codecomplexity.js"
+        }
+    }
+}

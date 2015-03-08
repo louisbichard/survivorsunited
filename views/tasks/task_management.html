@@ -42,9 +42,26 @@
                                     <p class="minimal-padding" ng-repeat="comment in task.stats.rating_comments" class="minimal-padding"> {{$index + 1}}) {{comment}}</p>
                                     <p class="minimal-padding" ng-hide="task.stats.rating_comments.length >= 1"> No comments have been left yet</p>
                                 </accordion-group>
-                                <accordion-group heading="Assignees stats">
-                                    <p class="minimal-padding"> Number of current assignees: <span class="pull-right">{{task.stats.number_of_assignees}}</span>
-                                    </p>
+                                <accordion-group heading="Assigneee status' ({{task.stats.number_of_assignees}})">
+                                    <table class="table">
+                                        <thead>
+                                            <th class="text-center"> ID </th>
+                                            <th class="text-center"> Status </th>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="(id, user) in task.assignees">
+                                                <td class="text-secondary text-center"> {{id}} </td>
+                                                <td class="text-secondary text-center">
+                                                    <i class="fa" ng-class="
+                                                    {
+                                                       'fa-circle-o':  user.status === 'open',
+                                                       'fa-check-circle-o':  user.status === 'closed'
+                                                }
+                                                "> </i>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table </div>
                                 </accordion-group>
                                 <accordion-group heading="Percentage completed">
                                     <p class="minimal-padding text-center"> Percentage complete </p>
