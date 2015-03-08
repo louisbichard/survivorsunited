@@ -42,7 +42,6 @@ module.exports = function(req, res) {
                 respond.success("User " + post_params.username + ' added');
             })
             .caught(function(err) {
-                console.log('in falure', err);
                 respond.failure('Could not add user', 'Error adding record in database: (' + err + ')');
             });
     }
