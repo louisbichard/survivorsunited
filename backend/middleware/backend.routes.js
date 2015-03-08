@@ -43,12 +43,13 @@ var runEndpoint = function(req, res, next, location, io) {
 //API ENDPOINTS
 module.exports = function(app, io) {
 
+    // FETCH THE ROUTE DETAILS
     var routes = JSON.parse(fs.readFileSync('backend/routes.json', 'utf8'));
-    _.chain(routes)
+        
+        _.chain(routes)
         .keys()
         .each(function(key) {
-            if(routes[key].post) app.post(key, _.partialRight(runEndpoint, routes[key].post.file_path));
-            if(routes[key].get) app.get(key, _.partialRight(runEndpoint, routes[key].get.file_path));
-        })
-        .value();
+            if (routes[key].post) app.post(key, _.partialRight(runEndpoint, routes[key].post.file_path, io));
+            if (routes[key].get) app.get(key, _.partialRight(runEndpoint, routes[key].get.file_path, io));
+        });
 };

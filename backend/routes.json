@@ -124,57 +124,57 @@
     },
     "/events/listall": {
         "get": {
-            "file_path": "./../events/events.listall.js"    
-        }        
+            "file_path": "./../events/events.listall.js"
+        }
     },
     "/events/listWatchersOrAttendees": {
         "get": {
-            "file_path": "./../events/events.listWatchersOrAttendees.js"    
+            "file_path": "./../events/events.listWatchersOrAttendees.js"
         }
     },
     "/events/add": {
         "post": {
-            "file_path": "./../events/events.add.js"    
+            "file_path": "./../events/events.add.js"
         }
     },
     "/events/watching/current": {
         "get": {
-            "file_path": "./../events/events.current.watching.js"    
+            "file_path": "./../events/events.current.watching.js"
         }
     },
     "/events/watchOrAttend": {
         "post": {
-            "file_path": "./../events/events.current.watchOrAttend.js"    
+            "file_path": "./../events/events.current.watchOrAttend.js"
         }
     },
     "/events/subscribe": {
         "post": {
-            "file_path": "./../events.current.subscribe.js"    
+            "file_path": "./../events.current.subscribe.js"
         }
     },
     "/events/removeWatchOrAttend": {
         "get": {
-            "file_path": "./../events/events.removeWatchOrAttend.js"    
+            "file_path": "./../events/events.removeWatchOrAttend.js"
         }
     },
     "/testbackend": {
         "get": {
-            "file_path": "./../admin/test.backend.results.js"    
+            "file_path": "./../admin/test.backend.results.js"
         }
     },
     "/testfrontend": {
         "get": {
-            "file_path": "./../admin/test.frontend.results.js"    
+            "file_path": "./../admin/test.frontend.results.js"
         }
     },
     "/backenderrors": {
         "get": {
-            "file_path": "./../admin/backend.error.log.js"    
+            "file_path": "./../admin/backend.error.log.js"
         }
     },
     "/codecomplexity": {
         "get": {
-            "file_path": "./../admin/codecomplexity.js"    
+            "file_path": "./../admin/codecomplexity.js"
         }
     }
 }
