@@ -6,8 +6,7 @@ var fs = require('fs');
 var routes = JSON.parse(fs.readFileSync('backend/routes.json', 'utf8'));
 
 var validation_functions = {
-    "string_less_than_5": function(param){
-        console.log('in string_less_than_5', param);
+    "string_less_than_5": function(param) {
         return param.length >= 5;
     }
 };
@@ -38,22 +37,21 @@ module.exports = function(app) {
             var params = _.keys(routes[path].post.parameters);
 
             _.each(params, function(param) {
-                console.log('looping');
-                
+
                 // IF VALIDATION IS REQUIRED, RUN IT
                 var parameter_validation = routes[path].post.parameters[param].validation;
 
 
                 // RUN PARAMETER VALIDATION OVER THE TECHNOLOGY
-                if(parameter_validation) {
+                if (parameter_validation) {
                     var function_name = parameter_validation.function_name;
-                    var is_valid = validation_functions[function_name](req.body[param]);                    
+                    var is_valid = validation_functions[function_name](req.body[param]);
 
                     // TODO: ENSURE THAT ALL VALID ARGUMENTS ARE PROVIDED
-                    if(!is_valid) respond.failure(parameter_validation.fail_message);
+                    if (!is_valid) respond.failure(parameter_validation.fail_message);
                 }
 
-                if (!req.body[param]) {                
+                if (!req.body[param]) {
                     respond.failure('Missing ' + param + ' parameter in request');
                     errors_found = true;
                 }
