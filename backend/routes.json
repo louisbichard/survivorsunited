@@ -201,5 +201,11 @@
         "get": {
             "file_path": "./../admin/codecomplexity.js"
         }
+    },
+    "/email/test": {
+        "get": {
+            "file_path": "./../email/email.sendtest.js"
+        }
     }
+
 }
