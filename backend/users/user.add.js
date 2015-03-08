@@ -4,7 +4,7 @@
 // 
 // 1) ADD CHECK FOR SUCCESS MESSAGE
 
-var _ = require('lodash')
+var _ = require('lodash');
 var Promise = require('bluebird');
 var MongoClient = Promise.promisifyAll(require("mongodb")).MongoClient;
 var db = require('../utilities/database.js');

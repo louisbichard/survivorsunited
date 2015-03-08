@@ -2,48 +2,19 @@ var utilities_general = require('../utilities/utilities.general.js');
 var url = require('url');
 var _ = require('lodash');
 var db = require('../utilities/database.js');
+var fs = require('fs');
 
 module.exports = function(app) {
-
-    var required_params = {
-        "/referrals/insert": {
-            "post": {
-                'email': 'string',
-                'phone': 'string'
-            }
-        },
-        "/referrals/update": {
-            "post": {
-                'id': 'object_id',
-                'is_open': 'string'
-            },
-        },
-        "/task/add": {
-            "post": {
-                'title': 'string',
-                'assignees': 'array',
-                'description': 'string',
-                'actions': 'array'
-            }
-        },
-        "/user/add": {
-            "post": {
-                'username': 'string',
-                'password': 'string'
-            }
-        },
-
-    };
-
     app.all('*', function(req, res, next) {
-
-        var errors_found = false;
-
         var respond = require('../utilities/utilities.respond.js')({
             req: req,
             res: res,
             file: __dirname + __filename
         });
+
+        var routes = JSON.parse(fs.readFileSync('backend/routes.json', 'utf8'));
+
+        var errors_found = false;
 
         // EXTEND THE REQUEST OBJECT WITH THE GET PARAMS
         req.GET = utilities_general.GET_params(req);
@@ -54,9 +25,9 @@ module.exports = function(app) {
 
         // TODO: EXTEND FOR GET REQUESTS
 
-        if (required_params[path] && required_params[path].post) {
+        if (routes[path] && routes[path].post && routes[path].post.parameters) {
 
-            var params = _.keys(required_params[path].post);
+            var params = _.keys(routes[path].post.parameters);
 
             _.each(params, function(param) {
                 // ENSURE THAT PARAMETER EXISTS
@@ -70,7 +41,7 @@ module.exports = function(app) {
 
             // GET JUST THE OBJECT ID'S
             var object_ids =
-                _.chain(required_params[path].post)
+                _.chain(routes[path].post.parameters)
                 .reduce(function(prev, value, key) {
                     if (value === "object_id") prev.push(key);
                     return prev;
