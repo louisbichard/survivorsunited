@@ -20,30 +20,21 @@ module.exports = function(req, res) {
 
     var post_params = req.body;
 
-    //VALIDATION: Username and Password must be present
-    if (!post_params.username || !post_params.password) {
-        respond.failure("no username or password specified");
-    }
+    var data_to_insert = {
+        date_created: new Date().getTime(),
+        mentor: false,
+        role: "Basic",
+        severity_grade: "Low"
+    };
 
-    //VALIDATION; Password insufficient complexity
-    else if (post_params.password.length < 5) {
-        respond.failure("Password must be more than 5 characters");
-    } else {
+    return db.insert('users', [_.extend(data_to_insert, post_params)])
+        .then(function(result) {
+            var user_id = result._id;
+            return respond.success("User " + post_params.username + ' added');
+        })
+        .caught(function(err) {
+            respond.failure('Could not add user', 'Error adding record in database: (' + err + ')');
+        });
 
-        var data_to_insert = {
-            date_created: new Date().getTime(),
-            mentor: false,
-            role: "Basic",
-            severity_grade: "Low"
-        };
-
-        db.insert('users', [_.extend(data_to_insert, post_params)])
-            .then(function(result) {
-                respond.success("User " + post_params.username + ' added');
-            })
-            .caught(function(err) {
-                respond.failure('Could not add user', 'Error adding record in database: (' + err + ')');
-            });
-    }
 
 };

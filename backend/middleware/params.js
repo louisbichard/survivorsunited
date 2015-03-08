@@ -3,35 +3,57 @@ var url = require('url');
 var _ = require('lodash');
 var db = require('../utilities/database.js');
 var fs = require('fs');
+var routes = JSON.parse(fs.readFileSync('backend/routes.json', 'utf8'));
+
+var validation_functions = {
+    "string_less_than_5": function(param){
+        console.log('in string_less_than_5', param);
+        return param.length >= 5;
+    }
+};
+
+// EXTEND THE REQUEST OBJECT WITH THE GET PARAMS
+module.exports = function(app) {
+    app.all('*', function(req, res, next) {
+        req.GET = utilities_general.GET_params(req);
+        next();
+    });
+};
 
 module.exports = function(app) {
     app.all('*', function(req, res, next) {
+        var errors_found = false;
         var respond = require('../utilities/utilities.respond.js')({
             req: req,
             res: res,
             file: __dirname + __filename
         });
 
-        var routes = JSON.parse(fs.readFileSync('backend/routes.json', 'utf8'));
-
-        var errors_found = false;
-
-        // EXTEND THE REQUEST OBJECT WITH THE GET PARAMS
-        req.GET = utilities_general.GET_params(req);
-
-        // CHECK GET REQUESTS
         // TODO: MAYBE ADD A WARNING HERE IF THE REQUEST HAS NO SETUP
         var path = req.originalUrl;
 
         // TODO: EXTEND FOR GET REQUESTS
-
         if (routes[path] && routes[path].post && routes[path].post.parameters) {
 
             var params = _.keys(routes[path].post.parameters);
 
             _.each(params, function(param) {
-                // ENSURE THAT PARAMETER EXISTS
-                if (!req.body[param]) {
+                console.log('looping');
+                
+                // IF VALIDATION IS REQUIRED, RUN IT
+                var parameter_validation = routes[path].post.parameters[param].validation;
+
+
+                // RUN PARAMETER VALIDATION OVER THE TECHNOLOGY
+                if(parameter_validation) {
+                    var function_name = parameter_validation.function_name;
+                    var is_valid = validation_functions[function_name](req.body[param]);                    
+
+                    // TODO: ENSURE THAT ALL VALID ARGUMENTS ARE PROVIDED
+                    if(!is_valid) respond.failure(parameter_validation.fail_message);
+                }
+
+                if (!req.body[param]) {                
                     respond.failure('Missing ' + param + ' parameter in request');
                     errors_found = true;
                 }

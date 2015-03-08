@@ -3,8 +3,12 @@
         "post": {
             "file_path": "./../referrals/referrals.insert.js",
             "parameters": {
-                "email": "string",
-                "phone": "string"
+                "email": {
+                    "type": "string"
+                },
+                "phone": {
+                    "type": "string"
+                }
             }
         }
     },
@@ -47,8 +51,17 @@
         "post": {
             "file_path": "../users/user.add.js",
             "parameters": {
-                "username": "string",
-                "password": "string"
+                "username": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string",
+                    "validation": {
+                        "fail_message": "Password must be at least 5 characters long",
+                        "function_name": "string_less_than_5"
+                    }
+                }
+
             }
         }
     },
@@ -66,8 +79,12 @@
         "post": {
             "file_path": "./../referrals/referrals.update.js",
             "parameters": {
-                "id": "object_id",
-                "is_open": "string"
+                "id": {
+                    "type": "object_id"
+                },
+                "is_open": {
+                    "type": "string"
+                }
             }
         }
     },
@@ -85,10 +102,18 @@
         "post": {
             "file_path": "./../tasks/task.add.js",
             "parameters": {
-                "title": "string",
-                "assignees": "array",
-                "description": "string",
-                "actions": "array"
+                "title": {
+                    "type": "string"
+                },
+                "assignees": {
+                    "type": "array"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "actions": {
+                    "type": "array"
+                }
             }
         }
     },
