@@ -14,13 +14,6 @@ var validation_functions = {
 // EXTEND THE REQUEST OBJECT WITH THE GET PARAMS
 module.exports = function(app) {
     app.all('*', function(req, res, next) {
-        req.GET = utilities_general.GET_params(req);
-        next();
-    });
-};
-
-module.exports = function(app) {
-    app.all('*', function(req, res, next) {
         var errors_found = false;
         var respond = require('../utilities/utilities.respond.js')({
             req: req,

@@ -29,36 +29,30 @@ SU.controller('statisticsController', function($scope, apiService, chartService,
         };
     };
 
-
-    // TODO: REMVOE AND SORT THESE OUT
-    $scope.labels = ['Nov 2014', 'December 2014', 'January 2015', 'February 2015', 'March 2015'];
-    $scope.series = ['Series A'];
-
-    $scope.data = [
-        [65, 59, 12, 100, 4]
-    ];
-
-    $scope.labels1 = ["High", "Medium", "Low"];
-    $scope.data1 = [30, 20, 10];
-
-
     $scope.setupUsersWithoutMentors = function() {
         $scope.without_mentors = userDataService.countMissingMentors($scope.users);
     };
 
     $scope.setupSeverityChart = function() {
-        $scope.severity_chart_data = {
-            data: chartService.userSeverityGrade($scope.users),
-            series: chartService.blankSeries($scope.users.length)
+        $scope.severityUsers = {
+            "labels": ["Low", "Medium", "High"],
+            // TODO: FILTER OUT INTERNAL USERS
+            "data": _.reduce($scope.users, function(prev, curr) {
+                console.log(curr.severity_grade);
+                if (curr.severity_grade === "High") prev[2] ++;
+                if (curr.severity_grade === "Medium") prev[1] ++;
+                if (curr.severity_grade === "Low") prev[0] ++;
+                return prev;
+            }, [0, 0, 0]),
         };
     };
 
     $scope.setupSignupChart = function() {
-        $scope.signup_chart_data = {
-            data: chartService.userCreationDates($scope.users),
-            series: chartService.blankSeries($scope.users.length)
-        };
-
+        $scope.labels = ['Nov 2014', 'December 2014', 'January 2015', 'February 2015', 'March 2015'];
+        $scope.series = ['Series A'];
+        $scope.data = [
+            [65, 59, 12, 100, 4]
+        ];
     };
 
     // AUTOMATICALLY INVOKED

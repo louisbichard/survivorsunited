@@ -36,6 +36,9 @@ require('./middleware/cookies.js')(app);
 //##HEADER SETUP
 require('./middleware/headers.js')(app);
 
+//##ASSIGN GET REQUESTS TO THE REQ OBJECT
+require('./middleware/get_params.setup.js')(app);
+
 //##SETUP OF PARAMETERS SUCH AS GET, POST ETC
 require('./middleware/params.js')(app);
 
