@@ -103,6 +103,13 @@ SU.config(function($routeProvider) {
         controller: 'taskManagementController' // TODO: UPDATE THIS
     })
 
+
+    // PROCESSES
+    .when('/create_process', {
+        templateUrl: '../views/processes/create_process.html',
+        controller: 'createProcessController'
+    })
+
     ////////////
     // EVENTS //
     ////////////

@@ -78,6 +78,13 @@
                 </li>
                 <!-- TASKS -->
                 <li class="sidebar-title ">
+                    <span>Processes</span>
+                </li>
+                <li class="sidebar-list" ng-class="{'sidebar-selected': current_location === 'create_process'}">
+                    <a href="#create_process">Create <span class="menu-icon fa fa-plus"></span></a>
+                </li>
+                <!-- TASKS -->
+                <li class="sidebar-title ">
                     <span>TASKS</span>
                 </li>
                 <li class="sidebar-list" ng-class="{'sidebar-selected': current_location === 'add_task'}">
@@ -202,6 +209,7 @@ var socket = io.connect('survivorsunited.dev:3000');
 <script src="./scripts/controllers/event.add.controller.js"></script>
 <script src="./scripts/controllers/events.usersWatchingOrAttending.js"></script>
 <script src="./scripts/controllers/events.calendar.controller.js"></script>
+<script src="./scripts/controllers/process.create.controller.js"></script>
 <script src="./scripts/controllers/events.location.controller.js"></script>
 <!-- ADMIN -->
 <script src="./scripts/controllers/search.controller.js"></script>
@@ -210,6 +218,7 @@ var socket = io.connect('survivorsunited.dev:3000');
 <!-- ================ANGULAR DIRECTIVES================ -->
 <script src="./scripts/directives/keypress.enter.directive.js"></script>
 <script src="./scripts/directives/spinner.directive.js"></script>
+<script src="./scripts/directives/process.create.directive.js"></script>
 <!-- ================ANGULAR SERVICES================ -->
 <script src="./scripts/services/user.data.service.js"></script>
 <script src="./scripts/services/task.data.service.js"></script>
