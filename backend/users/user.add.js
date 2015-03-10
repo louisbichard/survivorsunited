@@ -1,14 +1,9 @@
-//ENDPOINT /user/add
-
-// TODO: ADD TESTS
-// 
-// 1) ADD CHECK FOR SUCCESS MESSAGE
-
 var _ = require('lodash');
 var Promise = require('bluebird');
 var MongoClient = Promise.promisifyAll(require("mongodb")).MongoClient;
 var db = require('../utilities/database.js');
 var log = require('../utilities/logger.js');
+var email = require('../utilities/utilities.email.js');
 
 module.exports = function(req, res) {
 
@@ -20,30 +15,34 @@ module.exports = function(req, res) {
 
     var post_params = req.body;
 
-    //VALIDATION: Username and Password must be present
-    if (!post_params.username || !post_params.password) {
-        respond.failure("no username or password specified");
-    }
+    var data_to_insert = {
+        date_created: new Date().getTime(),
+        mentor: false,
+        role: "Basic",
+        severity_grade: "Low"
+    };
 
-    //VALIDATION; Password insufficient complexity
-    else if (post_params.password.length < 5) {
-        respond.failure("Password must be more than 5 characters");
-    } else {
+    var send_confirmation_email = function(result) {
+        return email.sendEmail({
+            'subject': 'Welcome to Survivors United ' + result[0].username,
+            'template': 'backend/email/templates/welcome.html',
+            'to': ['contact@louisjohnbichard.co.uk'] // TODO: Send this to the email specified
+        });
+    };
 
-        var data_to_insert = {
-            date_created: new Date().getTime(),
-            mentor: false,
-            role: "Basic",
-            severity_grade: "Low"
-        };
+    return db.insert('users', [_.extend(data_to_insert, post_params)])
+        .then(function(result) {
+            // TODO: ASSIGN TASKS TO THIS ID
+            var user_id = result._id;
+            return result;
+        })
+        .then(send_confirmation_email)
+        .then(function() {
+            return respond.success("User " + post_params.username + ' added');
+        })
+        .caught(function(err) {
+            respond.failure('Could not add user', 'Error adding record in database: (' + err + ')');
+        });
 
-        db.insert('users', [_.extend(data_to_insert, post_params)])
-            .then(function(result) {
-                respond.success("User " + post_params.username + ' added');
-            })
-            .caught(function(err) {
-                respond.failure('Could not add user', 'Error adding record in database: (' + err + ')');
-            });
-    }
 
 };

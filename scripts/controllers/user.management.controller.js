@@ -9,24 +9,17 @@ SU.controller('userDetailsController', function($scope, apiService, utilityServi
     $scope.filters = [];
 
     // TODO: SHOULD BE IN SERVICE
-    $scope.clearFilter = function(notification) {
+    $scope.clearFilter = function(notification, config) {
         if (notification) {
             notifyService.info('Search filters cleared');
         }
 
-        $scope.filters = [{
-            name: "internal",
-            value: "All"
-        }, {
-            name: "severity",
-            value: "All"
-        }, {
-            name: "assigned_mentor",
-            value: "All"
-        }, {
-            name: "sort",
-            value: "All"
-        }];
+        $scope.filters = _.map(['internal', 'severity', 'assigned_mentor', 'sort'], function(filter_name) {
+            return {
+                name: filter_name,
+                value: config[filter_name] ? config[filter_name] : "All"
+            };
+        });
 
         $scope.searchText = "";
     };
@@ -147,7 +140,8 @@ SU.controller('userDetailsController', function($scope, apiService, utilityServi
     };
 
     // LAUNCH INIT SCOPE FUNCTIONS
-    $scope.clearFilter();
+    $scope.clearFilter(false, $route.current.params);
+
     $scope.refreshUsers();
 
     var url_search = $route.current.params.url_search;

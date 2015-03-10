@@ -171,7 +171,7 @@ SU.config(function($routeProvider) {
         controller: 'userDetailsController'
     })
 
-    .when('/user_management/:url_search', {
+    .when('/user_management/search/:url_search', {
         templateUrl: '../views/admin/user_management.html',
         controller: 'userDetailsController'
     })

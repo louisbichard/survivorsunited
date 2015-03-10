@@ -12,6 +12,9 @@ module.exports = function(req, res) {
 
     // MONGO QUERIES
     // 
+    // 
+    console.log('get request', req.GET);
+
     var queries = {
         // CASE INSENSITIVE QUERY
         substring: {
