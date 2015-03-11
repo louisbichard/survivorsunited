@@ -24,7 +24,7 @@
             <div class="widget-body">
                 <div class="row">
                     <div class="col-md-11">
-                    	<p class="no-padding"> Choose a process </p>
+                        <p class="no-padding"> Choose a process </p>
 
                         <select required class="form-control input-sm" ng-model="add_task.assignees">
                             <option>
@@ -36,10 +36,10 @@
                         </select>
                     </div>
                     <div class="col-md-1">
-                    	<br>
-                    	<button class="btn btn-sm btn-success">
-                    		Create new
-                    	</button>
+                        <br>
+                        <button class="btn btn-sm btn-success">
+                            Create new
+                        </button>
                     </div>
                 </div>
             </div>
@@ -50,7 +50,7 @@
 <div class="row">
     <div class="col-lg-12">
         <accordion close-others="false">
-            <accordion-group heading="Process details (Last updated: 25/03/2015)">
+            <accordion-group heading="Process details (Last updated: 25/03/2015)" is-open="true">
                 <div class="row">
                     <div class="col-md-6 col-lg-6">
                         <div class="form-group">
@@ -97,10 +97,80 @@
 
 <div class="row">
     <div class="col-lg-12">
+        <accordion close-others="false">
+            <accordion-group heading="Task details (Last updated: 25/03/2015)" is-open="true">
+                <!-- 
+            TODO: FOR SOME REASON THE OVERFLOW CLASS ISN'T BEING APPLIED AND THEREFORE IS INLINE,
+            TRY TO RESOLVE AND REMOVE
+             -->
+                <div class="overflow-scroll-x row" style="overflow-x: scroll">
+                    <div class="col-md-12 col-lg-12">
+                        <div class="form-group">
+                            <form name="new_task_form" ng-submit="addTaskToProcess()">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <th>id</th>
+                                        <th>name</th>
+                                        <th>description</th>
+                                        <th>content</th>
+                                        <th>dependencies</th>
+                                        <th>completed_by</th>
+                                        <th>actions</th>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="task in process.tasks">
+                                            <td>{{task.id}}</td>
+                                            <td>{{task.name}}</td>
+                                            <td>{{task.description}}</td>
+                                            <td>{{task.content}}</td>
+                                            <td>{{task.dependencies}}</td>
+                                            <td>{{task.completed_by}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <input placeholder="task id" class="form-control" required ng-model="new_task.id" type="text"> </input>
+                                            </td>
+                                            <td>
+                                                <input class="form-control" required ng-model="new_task.name" type="text"> </input>
+                                            </td>
+                                            <td>
+                                                <input class="form-control" required ng-model="new_task.description" type="text"> </input>
+                                            </td>
+                                            <td>
+                                                <input class="form-control" required ng-model="new_task.content" type="text"> </input>
+                                            </td>
+                                            <td>
+                                                <input class="form-control" required ng-model="new_task.dependencies" type="text"> </input>
+                                            </td>
+                                            <td>
+                                                <input class="form-control" required ng-model="new_task.completed_by" type="text"> </input>
+                                            </td>
+                                            <td>
+                                                <button class="pull-right btn btn-success">
+                                                    <i class="fa fa-plus"></i> Add new assignee
+                                                </button>
+                                            </td>
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </form>
+
+
+
+                        </div>
+                    </div>
+            </accordion-group>
+        </accordion>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
         <div class="widget">
             <div class="widget-body">
-                Process D3 MAP
-                <div d3-create-process ></div>
+                <div d3-create-process tasks="process.tasks"></div>
             </div>
         </div>
     </div>
