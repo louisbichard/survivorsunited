@@ -1,19 +1,31 @@
-SU.controller('createProcessController', function($scope, apiService, utilityService, notifyService) {
+SU.controller('createProcessController', function($scope, apiService, utilityService, notifyService, $modal) {
 
     $scope.test = "test_test process create controller";
 
     $scope.new_task = {};
 
-    $scope.addTaskToProcess = function() {
-        $scope.new_task.dependencies = JSON.parse($scope.new_task.dependencies);
-        $scope.process.tasks.push($scope.new_task);
-        $scope.new_task = {};
-        notifyService.success('Added task to process');
+    var updateDatabase = function(){
+        console.log('update database of process change');
     };
 
-    $scope.$on('updated_process_task', function(event, args) {
-        console.log('noticed that the scope has updated');
-    });
+    $scope.taskActions = {
+        addToProcess: function() {
+            $scope.new_task.dependencies = JSON.parse($scope.new_task.dependencies);
+            $scope.process.tasks.push($scope.new_task);
+            $scope.new_task = {};
+            notifyService.success('Added task to process');
+            updateDatabase();
+        },
+        editContent: function(index) {
+            console.log($scope.process.tasks[index].content, 'edit this');
+            updateDatabase();
+        },
+        deleteTask: function(idx){
+            $scope.process.tasks.splice(idx, 1);
+            updateDatabase();
+            notifyService.success('Removed task successfully');
+        }
+    };
 
     $scope.process = {
         "_id": "123 b2323b3b3b3b3332",

@@ -10,14 +10,27 @@ SU.directive('d3CreateProcess', function() {
                 .html('') // Reset the canvas so that it redraws on init command
                 .append('svg')
                 .attr("width", '100%')
-                .style('background-color', 'red')
-                .attr("height", '100%');
+                //.style('background-color', 'red')
+                .attr("height", '100%')
+                .on('click', function(d, i) {
+                      d3.event.stopPropagation();
+
+                    console.log('clicked chart area');
+                });
+
 
             var process_designer = {
                 "init": function() {
                     this.destroy.canvas();
                     this.drawNodes();
                     this.drawLines();
+                },
+                config: {
+                    task: {
+                        // WHEN CREATING A TASK, THIS IS WHERE IT WILL APPEAR, (I.E 50 PIXELS FROM THE TOP & LEFT)
+                        location_offset: 100,
+                        radius: 70
+                    }
                 },
                 updateTask: function(task_id, property, value) {
                     scope.tasks[task_id][property] = value;
@@ -35,7 +48,7 @@ SU.directive('d3CreateProcess', function() {
                 translateElement: function(element, coordinates) {
                     coordinates.x = coordinates.x || 0;
                     coordinates.y = coordinates.y || 0;
-                    return d3.select(element).attr("transform", "translate(" + coordinates.x +"," + coordinates.y + ")");
+                    return d3.select(element).attr("transform", "translate(" + coordinates.x + "," + coordinates.y + ")");
                 },
                 group: {
                     // NOTE: PASSING IN PROCESS DESIGNER LIKE THIS IS A LITTLE HACKY
@@ -44,18 +57,18 @@ SU.directive('d3CreateProcess', function() {
                             .attr('id', 'task-' + id)
                             .call(process_designer.handlers.drag.run());
                     },
-                    insertCircle: function(g, inc) {
+                    insertCircle: function(g) {
                         return g.insert("circle")
-                            .attr("cx", 50 + inc)
-                            .attr("cy", 50 + inc)
-                            .attr("r", 50)
+                            .attr("cx", process_designer.config.task.location_offset)
+                            .attr("cy", process_designer.config.task.location_offset)
+                            .attr("r", process_designer.config.task.radius)
                             .style("fill", "purple");
                     },
-                    addLabel: function(g, inc, text) {
+                    addLabel: function(g, text) {
                         return g.append('text')
                             .style("fill", "white")
-                            .attr("dx", 50 + inc)
-                            .attr("dy", 50 + inc)
+                            .attr("dx", process_designer.config.task.location_offset)
+                            .attr("dy", process_designer.config.task.location_offset)
                             .attr("text-anchor", "middle")
                             .text(function(d) {
                                 return text;
@@ -65,17 +78,13 @@ SU.directive('d3CreateProcess', function() {
                 handlers: {
                     drag: {
                         moveElementToMouseLocation: function(element, coordinates) {
-
-                            var x_coordinate = coordinates ? coordinates.x : d3.event.x;
-                            var y_coordinate = coordinates ? coordinates.y : d3.event.y;
-
                             return d3.select(element)
                                 .attr("transform",
                                     "translate(" +
                                     // ADD CORDINATES OF THE CIRCLE INSIDE THE G(GROUP) ELEMENT
-                                    (x_coordinate - element.children[0].attributes.cx.value) +
+                                    (d3.event.x - element.children[0].attributes.cx.value) +
                                     "," +
-                                    (y_coordinate - element.children[0].attributes.cy.value) +
+                                    (d3.event.y - element.children[0].attributes.cy.value) +
                                     ")"
                                 );
                         },
@@ -84,7 +93,7 @@ SU.directive('d3CreateProcess', function() {
                             var drag_handler = this;
 
                             return d3.behavior.drag().on('dragstart', function() {
-                                    d3.select(this.children[0]).style('fill', 'yellow');
+                                    d3.select(this.children[0]).style('fill', 'lightpurple');
                                 })
                                 .on('drag', function() {
                                     process_designer.destroy.all_lines();
@@ -109,14 +118,11 @@ SU.directive('d3CreateProcess', function() {
                     }
                 },
                 getGroupNodeLocation: function(group) {
-                    var circle = group[0][0].children[0];
-                    var circle_x = circle.cx.baseVal.value;
-                    var circle_y = circle.cy.baseVal.value;
                     var g_x = d3.transform(group.attr("transform")).translate[0];
                     var g_y = d3.transform(group.attr("transform")).translate[1];
                     return {
-                        y: circle_y + g_y,
-                        x: circle_x + g_x
+                        y: g_y + process_designer.config.task.location_offset,
+                        x: g_x + process_designer.config.task.location_offset
                     };
                 },
                 drawLines: function() {
@@ -129,7 +135,8 @@ SU.directive('d3CreateProcess', function() {
                             var end = process_designer.getGroupNodeLocation(node);
 
                             // Draw line between dependent nodes
-                            canvas.append("line")
+                            canvas
+                                .insert("line", ":first-child")
                                 .classed('dependency-line', true)
                                 .style("stroke", "black")
                                 .style("stroke-width", "5")
@@ -142,18 +149,12 @@ SU.directive('d3CreateProcess', function() {
                 },
                 drawNodes: function() {
                     var process_designer = this;
-                    // USED TO SPREAD OUT THE NODES
-                    var inc = 0;
-
                     // CREATE A GROUP WITH A CIRCLE AND LABEL
                     _.each(scope.tasks, function(curr) {
                         var g = process_designer.group.create(process_designer, curr.id);
                         process_designer.translateElement(g[0][0], curr.coordinates || {});
-                        process_designer.group.insertCircle(g, inc);
-                        process_designer.group.addLabel(g, inc, curr.id);
-
-                        // SPREAD OUT THE NODES ON LOAD
-                        //inc = inc + 150;
+                        process_designer.group.insertCircle(g);
+                        process_designer.group.addLabel(g, curr.name);
                     });
                 }
             };
