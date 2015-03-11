@@ -11,6 +11,10 @@ SU.controller('createProcessController', function($scope, apiService, utilitySer
         notifyService.success('Added task to process');
     };
 
+    $scope.$on('updated_process_task', function(event, args) {
+        console.log('noticed that the scope has updated');
+    });
+
     $scope.process = {
         "_id": "123 b2323b3b3b3b3332",
         "name": "some process name",

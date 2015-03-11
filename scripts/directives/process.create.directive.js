@@ -4,7 +4,7 @@ SU.directive('d3CreateProcess', function() {
         scope: {
             tasks: '=',
         },
-        link: function(scope, element, attrs, $window) {
+        link: function(scope, element, attrs, $window, $rootScope) {
 
             var canvas = d3.select(element[0])
                 .html('') // Reset the canvas so that it redraws on init command
@@ -19,6 +19,11 @@ SU.directive('d3CreateProcess', function() {
                     this.drawNodes();
                     this.drawLines();
                 },
+                updateTask: function(task_id, property, value) {
+                    scope.tasks[task_id][property] = value;
+                    // TODO: REMOVE ME
+                    console.log('updated task id', task_id);
+                },
                 destroy: {
                     canvas: function() {
                         return canvas.html('');
@@ -26,6 +31,11 @@ SU.directive('d3CreateProcess', function() {
                     all_lines: function() {
                         return canvas.selectAll('.dependency-line').remove();
                     }
+                },
+                translateElement: function(element, coordinates) {
+                    coordinates.x = coordinates.x || 0;
+                    coordinates.y = coordinates.y || 0;
+                    return d3.select(element).attr("transform", "translate(" + coordinates.x +"," + coordinates.y + ")");
                 },
                 group: {
                     // NOTE: PASSING IN PROCESS DESIGNER LIKE THIS IS A LITTLE HACKY
@@ -54,14 +64,18 @@ SU.directive('d3CreateProcess', function() {
                 },
                 handlers: {
                     drag: {
-                        moveElementToMouseLocation: function(element) {
+                        moveElementToMouseLocation: function(element, coordinates) {
+
+                            var x_coordinate = coordinates ? coordinates.x : d3.event.x;
+                            var y_coordinate = coordinates ? coordinates.y : d3.event.y;
+
                             return d3.select(element)
                                 .attr("transform",
                                     "translate(" +
                                     // ADD CORDINATES OF THE CIRCLE INSIDE THE G(GROUP) ELEMENT
-                                    (d3.event.x - element.children[0].attributes.cx.value) +
+                                    (x_coordinate - element.children[0].attributes.cx.value) +
                                     "," +
-                                    (d3.event.y - element.children[0].attributes.cy.value) +
+                                    (y_coordinate - element.children[0].attributes.cy.value) +
                                     ")"
                                 );
                         },
@@ -81,11 +95,12 @@ SU.directive('d3CreateProcess', function() {
 
                                     // TODO: ADD MODULAR CONFIGURATION OF THIS TASK PREFIX
                                     var id = this.id.split('task-')[1]; // remove task prefix
-                                    var scope_index = _.findIndex(scope.tasks, {'id': id});
+                                    var scope_index = _.findIndex(scope.tasks, {
+                                        'id': id
+                                    });
                                     var coordinates = process_designer.getGroupNodeLocation(d3.select(this));
-                                    scope.tasks[scope_index].coordinates = coordinates;
-                                    scope.tasks = _.clone(scope.tasks);
-                                    
+                                    process_designer.updateTask(scope_index, 'coordinates', coordinates);
+
                                 })
                                 .on('dragend', function() {
                                     d3.select(this.children[0]).style('fill', 'purple');
@@ -133,11 +148,12 @@ SU.directive('d3CreateProcess', function() {
                     // CREATE A GROUP WITH A CIRCLE AND LABEL
                     _.each(scope.tasks, function(curr) {
                         var g = process_designer.group.create(process_designer, curr.id);
+                        process_designer.translateElement(g[0][0], curr.coordinates || {});
                         process_designer.group.insertCircle(g, inc);
                         process_designer.group.addLabel(g, inc, curr.id);
 
                         // SPREAD OUT THE NODES ON LOAD
-                        inc = inc + 150;
+                        //inc = inc + 150;
                     });
                 }
             };
