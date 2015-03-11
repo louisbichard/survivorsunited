@@ -5,6 +5,7 @@ SU.controller('createProcessController', function($scope, apiService, utilitySer
     $scope.new_task = {};
 
     $scope.addTaskToProcess = function() {
+        $scope.new_task.dependencies = JSON.parse($scope.new_task.dependencies);
         $scope.process.tasks.push($scope.new_task);
         $scope.new_task = {};
         notifyService.success('Added task to process');
@@ -34,7 +35,21 @@ SU.controller('createProcessController', function($scope, apiService, utilitySer
             "name": "Some task name",
             "description": "test",
             "content": "<p> Some html </p>",
-            "dependencies": [],
+            "dependencies": [
+                "some_id2"
+            ],
+            "completed_by": [
+                "user_id",
+                "user_id"
+            ]
+        }, {
+            "id": "some_id3",
+            "name": "Some task name",
+            "description": "test",
+            "content": "<p> Some html </p>",
+            "dependencies": [
+                "some_id1"
+            ],
             "completed_by": [
                 "user_id",
                 "user_id"
