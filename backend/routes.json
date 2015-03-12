@@ -206,6 +206,66 @@
         "get": {
             "file_path": "./../email/email.sendtest.js"
         }
+    },
+    "/process/create": {
+        "post": {
+            "file_path": "./../process/create/process.create.js",
+            "parameters": {
+                "name": {
+                    "type": "string"
+                },
+                "published": {
+                    "type": "boolean"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "tasks": {
+                    "type": "array"
+                },
+                "assignees": {
+                    "type": "array"
+                }
+            }
+        }
+    },
+    "/process/read/all": {
+        "get": {
+            "file_path": "./../process/read/process.read.all.js",
+            "parameters": {}
+        }
+    },
+    "/process/read/getallids": {
+        "get": {
+            "file_path": "./../process/read/process.read.getallids.js",
+            "parameters": {
+                "id": {
+                    "type": "string"
+                }
+            }
+        }
+    },
+    "/process/read/get_by_id": {
+        "get": {
+            "file_path": "./../process/read/process.read.get_by_id.js",
+            "parameters": {
+                "id": {
+                    "type": "object_id"
+                }
+            }
+        }
+    },
+    "/process/update/publish": {
+        "post": {
+            "file_path": "./../process/update/process.publish.js",
+            "parameters": {
+                "id": {
+                    "type": "object_id"
+                },
+                "published" : {
+                    "type": "boolean"
+                }
+            }
+        }
     }
-
 }

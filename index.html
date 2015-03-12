@@ -80,8 +80,8 @@
                 <li class="sidebar-title ">
                     <span>Processes</span>
                 </li>
-                <li class="sidebar-list" ng-class="{'sidebar-selected': current_location === 'create_process'}">
-                    <a href="#create_process">Create <span class="menu-icon fa fa-plus"></span></a>
+                <li class="sidebar-list" ng-class="{'sidebar-selected': current_location === 'process_manager'}">
+                    <a href="#process_manager">Console <span class="menu-icon fa fa-dashboard"></span></a>
                 </li>
                 <!-- TASKS -->
                 <li class="sidebar-title ">
@@ -209,7 +209,8 @@ var socket = io.connect('survivorsunited.dev:3000');
 <script src="./scripts/controllers/event.add.controller.js"></script>
 <script src="./scripts/controllers/events.usersWatchingOrAttending.js"></script>
 <script src="./scripts/controllers/events.calendar.controller.js"></script>
-<script src="./scripts/controllers/process.create.controller.js"></script>
+<script src="./scripts/controllers/process.manager.controller.js"></script>
+<script src="./scripts/controllers/process.task.editor.controller.js"></script>
 <script src="./scripts/controllers/events.location.controller.js"></script>
 <!-- ADMIN -->
 <script src="./scripts/controllers/search.controller.js"></script>

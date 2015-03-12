@@ -105,9 +105,19 @@ SU.config(function($routeProvider) {
 
 
     // PROCESSES
-    .when('/create_process', {
-        templateUrl: '../views/processes/create_process.html',
-        controller: 'createProcessController'
+    .when('/process_manager', {
+        templateUrl: '../views/processes/process_manager.html',
+        controller: 'processManagerController'
+    })
+
+    .when('/process_manager/:process_id', {
+        templateUrl: '../views/processes/process_manager.html',
+        controller: 'processManagerController'
+    })
+
+    .when('/task_editor/:process_id/:task_id', {
+        templateUrl: '../views/processes/task_editor.html',
+        controller: 'taskEditorController'
     })
 
     ////////////

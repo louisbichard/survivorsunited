@@ -22,9 +22,58 @@ module.exports = function(app) {
         });
 
         // TODO: MAYBE ADD A WARNING HERE IF THE REQUEST HAS NO SETUP
-        var path = req.originalUrl;
+        // SPLIT AND IGNORE GET PARAMETERS IF REQUIRED
+        var path = req.originalUrl.split("?")[0];
 
-        // TODO: EXTEND FOR GET REQUESTS
+        var params_module = {
+            // SEPARATE OUT INTO POST REQUESTS
+            convertBooleanValues: function(boolean_values) {
+                return _.each(boolean_values, function(key) {
+                    var bool = req.body[key];
+                    if (bool === "0" || bool === "1" || bool === 0 || bool === 1 || bool === true || bool === false) {
+                        req.body[key] = Number(req.body[key]);
+                    } else {
+                        respond.failure('Expected boolean value for parameter ' + "'" + key + "'");
+                        errors_found = true;
+                    }
+                });
+
+            },
+            updateObjectIDs: {
+                get: function(parameters) {
+                    return _.each(parameters, function(key) {
+                        var id = req.GET[key];
+                        try {
+                            req.GET[key] = db.getObjectID(id);
+                        } catch (e) {
+                            respond.failure('Incorrect ID passed');
+                            errors_found = true;
+                        }
+                    });
+                },
+                post: function(parameters) {
+                    return _.each(parameters, function(key) {
+                        var id = req.body[key];
+                        try {
+                            req.body[key] = db.getObjectID(id);
+                        } catch (e) {
+                            respond.failure('Incorrect ID passed');
+                            errors_found = true;
+                        }
+                    });
+                }
+            },
+            getObjectIDs: function(property_name, params_object) {
+                var test = _.chain(params_object)
+                    .reduce(function(prev, value, key) {
+                        if (value.type === property_name) prev.push(key);
+                        return prev;
+                    }, [])
+                    .value();
+                return test;
+            }
+        };
+
         if (routes[path] && routes[path].post && routes[path].post.parameters) {
 
             var params = _.keys(routes[path].post.parameters);
@@ -33,7 +82,6 @@ module.exports = function(app) {
 
                 // IF VALIDATION IS REQUIRED, RUN IT
                 var parameter_validation = routes[path].post.parameters[param].validation;
-
 
                 // RUN PARAMETER VALIDATION OVER THE TECHNOLOGY
                 if (parameter_validation) {
@@ -44,7 +92,8 @@ module.exports = function(app) {
                     if (!is_valid) respond.failure(parameter_validation.fail_message);
                 }
 
-                if (!req.body[param]) {
+                // NOTE: CHECK IF UNDEFINED AS 0 OR FALSE IS ALLOWED
+                if (req.body[param] === undefined) {
                     respond.failure('Missing ' + param + ' parameter in request');
                     errors_found = true;
                 }
@@ -53,25 +102,17 @@ module.exports = function(app) {
             });
 
             // GET JUST THE OBJECT ID'S
-            var object_ids =
-                _.chain(routes[path].post.parameters)
-                .reduce(function(prev, value, key) {
-                    if (value === "object_id") prev.push(key);
-                    return prev;
-                }, [])
-                .value();
+            var object_ids = params_module.getObjectIDs("object_id", routes[path].post.parameters);
+            params_module.updateObjectIDs.post(object_ids);
 
-            // CONVERT ALL OBJECT ID'S WHERE NECESSARY
-            _.each(object_ids, function(key) {
-                var id = req.body[key];
-                try {
-                    req.body[key] = db.getObjectID(id);
-                } catch (e) {
-                    respond.failure('Incorrect ID passed');
-                    errors_found = true;
-                }
-            });
+            var booleans = params_module.getObjectIDs("boolean", routes[path].post.parameters);
 
+            params_module.convertBooleanValues(booleans);
+
+
+        } else if (routes[path] && routes[path].get && routes[path].get.parameters) {
+            var object_ids = params_module.getObjectIDs("object_id", routes[path].get.parameters);
+            params_module.updateObjectIDs.get(object_ids);
         }
 
         if (!errors_found) next();
