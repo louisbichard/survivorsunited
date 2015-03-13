@@ -23,41 +23,15 @@ SU.controller('dashboardController', function($scope, apiService, notifyService,
         doneLabel: 'Thanks'
     };
 
-    $scope.passScopeToSetup = function(results) {
-        $scope.user = results.user;
-        $scope.tasks = results.tasks;
-        $scope.pending_tasks = userDataService.countStatus(results.tasks, 'open', $scope.user);
-        $scope.complete_tasks = userDataService.countStatus(results.tasks, 'closed', $scope.user);
-    };
+    apiService.get('/process/assigned_to_me')
+        .then(function(result) {
+            $scope.processes = result;
+        });
 
-    $scope.bootstrap = function() {
-        return Promise.props({
-                tasks: apiService.get('/tasks/listall', {
-                    user: 'current'
-                }, {
-                    preventNotifications: true
-                }),
-                user: apiService.get('/user/current', null, {
-                    preventNotifications: true
-                })
-            })
-            .then($scope.passScopeToSetup);
-    };
-
-    $scope.updateTask = function(task_id, status) {
-        if (!task_id || !status) {
-            throw new Error('No task ID or status found in update task function');
+    $scope.processActions = {
+        markAsComplete: function(){
+            console.log('mark task as complete');
         }
-        apiService.post('/task/update', {
-                task_id: task_id,
-                status: status
-            }, {
-                preventNotifications: true
-            })
-            .then($scope.bootstrap)
-            .then(_.partial(notifyService.success, 'Updated task'));
     };
-
-    $scope.bootstrap();
 
 });

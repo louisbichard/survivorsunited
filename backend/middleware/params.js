@@ -3,7 +3,7 @@ var url = require('url');
 var _ = require('lodash');
 var db = require('../utilities/database.js');
 var fs = require('fs');
-var routes = JSON.parse(fs.readFileSync('backend/routes.json', 'utf8'));
+
 
 var validation_functions = {
     "string_less_than_5": function(param) {
@@ -14,108 +14,111 @@ var validation_functions = {
 // EXTEND THE REQUEST OBJECT WITH THE GET PARAMS
 module.exports = function(app) {
     app.all('*', function(req, res, next) {
-        var errors_found = false;
         var respond = require('../utilities/utilities.respond.js')({
             req: req,
             res: res,
             file: __dirname + __filename
         });
 
-        // TODO: MAYBE ADD A WARNING HERE IF THE REQUEST HAS NO SETUP
-        // SPLIT AND IGNORE GET PARAMETERS IF REQUIRED
-        var path = req.originalUrl.split("?")[0];
-
         var params_module = {
-            // SEPARATE OUT INTO POST REQUESTS
-            convertBooleanValues: function(boolean_values) {
-                return _.each(boolean_values, function(key) {
-                    var bool = req.body[key];
-                    if (bool === "0" || bool === "1" || bool === 0 || bool === 1 || bool === true || bool === false) {
-                        req.body[key] = Number(req.body[key]);
-                    } else {
-                        respond.failure('Expected boolean value for parameter ' + "'" + key + "'");
-                        errors_found = true;
+            init: function() {
+                this.checkAllRequiredParametersArePresent();
+                this.checkAgainstDefinedTypes();
+            },
+            checkAgainstDefinedTypes: function() {
+                var passed_parameters = this.apiParameters();
+                var expected_params = this.getExpectedParameters.raw();
+                _.each(expected_params, function(value, key) {
+
+                    // BEGIN TO TYPE CHECK WHERE NECESSARY
+                    switch (value.type) {
+                        case "object_id":
+                            var object_id;
+                            try {
+                                object_id = db.getObjectID(passed_parameters[key]);
+                            } catch (e) {
+                                respond.failure('Incorrect ID passed');
+                            }
+
+                            params_module.updateRequestParameter(key, object_id);
+
+                            break;
+                        case "array":
+
+                            /*try {
+                                passed_parameters[key] = JSON.parse(passed_parameters[key]);
+                            } catch(e) {
+                                respond.failure('Expected an array for ' + key + ' parameter but it was incorrectly formatted');
+                            }*/
+
+                            /*if (!passed_parameters[key].isArray) {
+                                respond.failure('Expected ' + key + ' paramater to be an array');
+                            }*/
+
+                            break;
+                        case "boolean":
+                            var is_valid = _.reduce(["0", "1", 0, 1, true, false], function(prev, comparator) {
+                                if (passed_parameters[key] === comparator) return true;
+                                return prev;
+                            }, false);
+
+                            if (!is_valid) respond.failure('Invalid Boolean value for ' + key + ' parameter passed');
+                            else params_module.updateRequestParameter(key, Number(passed_parameters[key]));
+                            break;
+                    }
+
+                });
+            },
+            method: req.method.toLowerCase(),
+            getExpectedParameters: {
+                raw: function() {
+                    var curr_route_definition = params_module.route_definitions.current();
+                    return curr_route_definition[params_module.method].parameters;
+                },
+                keys: function() {
+                    return _.keys(this.raw());
+                }
+            },
+            apiParameters: function() {
+                return (this.method === "get") ? req.GET : req.body;
+            },
+            updateRequestParameter: function(property, value) {
+                if (this.method === "get") {
+                    req.GET[property] = value;
+                } else {
+                    req.body[property] = value;
+                }
+            },
+            checkAllRequiredParametersArePresent: function() {
+                var passed_parameters = this.apiParameters();
+                _.each(this.getExpectedParameters.keys(), function(expected_param) {
+                    // IF THE EXPECTED PARAM IS NOT IN THE REQUESTED PAYLOAD
+                    if (passed_parameters[expected_param] === undefined) {
+                        respond.failure('No ' + expected_param + ' parameter found but it is required');
                     }
                 });
 
             },
-            updateObjectIDs: {
-                get: function(parameters) {
-                    return _.each(parameters, function(key) {
-                        var id = req.GET[key];
-                        try {
-                            req.GET[key] = db.getObjectID(id);
-                        } catch (e) {
-                            respond.failure('Incorrect ID passed');
-                            errors_found = true;
-                        }
-                    });
-                },
-                post: function(parameters) {
-                    return _.each(parameters, function(key) {
-                        var id = req.body[key];
-                        try {
-                            req.body[key] = db.getObjectID(id);
-                        } catch (e) {
-                            respond.failure('Incorrect ID passed');
-                            errors_found = true;
-                        }
-                    });
-                }
+            error_found: function() {
+                respond.failure(' Some random error occurred ');
             },
-            getObjectIDs: function(property_name, params_object) {
-                var test = _.chain(params_object)
-                    .reduce(function(prev, value, key) {
-                        if (value.type === property_name) prev.push(key);
-                        return prev;
-                    }, [])
-                    .value();
-                return test;
+            has_error: false,
+            path: req.originalUrl.split("?")[0],
+            route_definitions: {
+                all: JSON.parse(fs.readFileSync('backend/routes.json', 'utf8')),
+                current: function() {
+                    return params_module.route_definitions.all[params_module.path];
+                }
             }
+
+
         };
 
-        if (routes[path] && routes[path].post && routes[path].post.parameters) {
-
-            var params = _.keys(routes[path].post.parameters);
-
-            _.each(params, function(param) {
-
-                // IF VALIDATION IS REQUIRED, RUN IT
-                var parameter_validation = routes[path].post.parameters[param].validation;
-
-                // RUN PARAMETER VALIDATION OVER THE TECHNOLOGY
-                if (parameter_validation) {
-                    var function_name = parameter_validation.function_name;
-                    var is_valid = validation_functions[function_name](req.body[param]);
-
-                    // TODO: ENSURE THAT ALL VALID ARGUMENTS ARE PROVIDED
-                    if (!is_valid) respond.failure(parameter_validation.fail_message);
-                }
-
-                // NOTE: CHECK IF UNDEFINED AS 0 OR FALSE IS ALLOWED
-                if (req.body[param] === undefined) {
-                    respond.failure('Missing ' + param + ' parameter in request');
-                    errors_found = true;
-                }
-                // TODO: ENSURE THAT PARAMETER IS OF THE CORRECT TYPE
-                // CONVERT BOOLEANS IF NECESSARY
-            });
-
-            // GET JUST THE OBJECT ID'S
-            var object_ids = params_module.getObjectIDs("object_id", routes[path].post.parameters);
-            params_module.updateObjectIDs.post(object_ids);
-
-            var booleans = params_module.getObjectIDs("boolean", routes[path].post.parameters);
-
-            params_module.convertBooleanValues(booleans);
-
-
-        } else if (routes[path] && routes[path].get && routes[path].get.parameters) {
-            var object_ids = params_module.getObjectIDs("object_id", routes[path].get.parameters);
-            params_module.updateObjectIDs.get(object_ids);
+        if (params_module.method === "get" || params_module.method === "post") {
+            params_module.init();
         }
 
-        if (!errors_found) next();
+        next();
 
     });
 };

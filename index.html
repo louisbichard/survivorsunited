@@ -21,6 +21,7 @@
     <!-- ================OTHER================ -->
     <link rel="stylesheet" type="text/css" href="styles/build/main.css">
     <link rel="stylesheet" type="text/css" href="styles/lib/animate.css">
+    <link rel='stylesheet' href='/bower_components/textAngular/src/textAngular.css'>
 
 </head>
 
@@ -76,25 +77,12 @@
                 <li id="intro-account" class="sidebar-list" ng-class="{'sidebar-selected': current_location === 'account'}">
                     <a href="#account">User account <span class="menu-icon fa fa-user"></span></a>
                 </li>
-                <!-- TASKS -->
+                <!-- PROCESSES -->
                 <li class="sidebar-title ">
                     <span>Processes</span>
                 </li>
-                <li class="sidebar-list" ng-class="{'sidebar-selected': current_location === 'process_manager'}">
-                    <a href="#process_manager">Console <span class="menu-icon fa fa-dashboard"></span></a>
-                </li>
-                <!-- TASKS -->
-                <li class="sidebar-title ">
-                    <span>TASKS</span>
-                </li>
-                <li class="sidebar-list" ng-class="{'sidebar-selected': current_location === 'add_task'}">
-                    <a href="#add_task">Create <span class="menu-icon fa fa-plus"></span></a>
-                </li>
-                <li class="sidebar-list" ng-class="{'sidebar-selected': current_location === 'task_management'}">
-                    <a href="#task_management">Task Management<span class="menu-icon fa fa-book"></span></a>
-                </li>
-                <li class="sidebar-list" ng-class="{'sidebar-selected': current_location === 'task_allocation'}">
-                    <a href="#task_allocation">Task Allocation<span class="menu-icon fa fa-book"></span></a>
+                <li class="sidebar-list" ng-class="{'sidebar-selected': current_location === 'process_manager' || current_location === 'select_process'}">
+                    <a href="#select_process">Edit <span class="menu-icon fa fa-pencil"></span></a>
                 </li>
                 <!-- EVENTS -->
                 <li class="sidebar-title ">
@@ -201,9 +189,6 @@ var socket = io.connect('survivorsunited.dev:3000');
 <script src="./scripts/controllers/mentees.controller.js"></script>
 <!-- MENTOR -->
 <script src="./scripts/controllers/mentor.controller.js"></script>
-<!-- TASKS -->
-<script src="./scripts/controllers/task.add.controller.js"></script>
-<script src="./scripts/controllers/task.management.controller.js"></script>
 <!-- EVENTS -->
 <script src="./scripts/controllers/events.upcoming.watched.subscribed.controller.js"></script>
 <script src="./scripts/controllers/event.add.controller.js"></script>
@@ -211,6 +196,8 @@ var socket = io.connect('survivorsunited.dev:3000');
 <script src="./scripts/controllers/events.calendar.controller.js"></script>
 <script src="./scripts/controllers/process.manager.controller.js"></script>
 <script src="./scripts/controllers/process.task.editor.controller.js"></script>
+<script src="./scripts/controllers/process.select.controller.js"></script>
+<script src="./scripts/controllers/process.task.complete.controller.js"></script>
 <script src="./scripts/controllers/events.location.controller.js"></script>
 <!-- ADMIN -->
 <script src="./scripts/controllers/search.controller.js"></script>
@@ -222,7 +209,6 @@ var socket = io.connect('survivorsunited.dev:3000');
 <script src="./scripts/directives/process.create.directive.js"></script>
 <!-- ================ANGULAR SERVICES================ -->
 <script src="./scripts/services/user.data.service.js"></script>
-<script src="./scripts/services/task.data.service.js"></script>
 <script src="./scripts/services/chart.service.js"></script>
 <script src="./scripts/services/date.service.js"></script>
 <script src="./scripts/services/referrals.service.js"></script>
@@ -235,6 +221,7 @@ var socket = io.connect('survivorsunited.dev:3000');
 <script src="./scripts/filters/severity.filter.js"></script>
 <script src="./scripts/filters/assignedMentor.filter.js"></script>
 <!-- ================ANGULAR PLUGINS================ -->
+<script src='./node_modules/angular-uuid/angular-uuid.js' type='text/javascript'></script>
 <script src='./bower_components/angular-percentagebar/percentagebar.js' type='text/javascript'></script>
 <script src='./bower_components/angular-intro.js/src/angular-intro.js' type='text/javascript'></script>
 <script src='./bower_components/intro.js/minified/intro.min.js' type='text/javascript'></script>
@@ -246,6 +233,10 @@ var socket = io.connect('survivorsunited.dev:3000');
 <script src='./bower_components/angular-loading-bar/build/loading-bar.js' type='text/javascript'></script>
 <script type="text/javascript" src="bower_components/angular-ui-calendar/src/calendar.js"></script>
 <script type="text/javascript" src="bower_components/fullcalendar/fullcalendar.js"></script>
+<script src='/bower_components/textAngular/dist/textAngular-rangy.min.js'></script>
+<script src='/bower_components/textAngular/dist/textAngular-sanitize.min.js'></script>
+<script src='/bower_components/textAngular/dist/textAngular.min.js'></script>
+
 </body>
 
 </html>

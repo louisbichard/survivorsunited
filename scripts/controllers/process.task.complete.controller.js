@@ -1,7 +1,7 @@
-SU.controller('taskEditorController', function($scope, apiService, utilityService, notifyService, $route) {
+SU.controller('completeTaskController', function($scope, apiService, utilityService, notifyService, $route) {
     $scope.config = $route.current.params;
 
-    var task_editor = {
+    var task_complete = {
         init: function() {
             this.getTasksForGivenProcess();
         },
@@ -25,25 +25,7 @@ SU.controller('taskEditorController', function($scope, apiService, utilityServic
         }
     };
 
-    $scope.saveContent = function() {
-        console.log('save content');
-
-        var payload = {
-            task_id: $scope.config.task_id,
-            process_id: $scope.config.process_id,
-            content: $scope.content
-        };
-
-        apiService.post('/process/task/update/content', payload)
-            .then(function() {
-                notifyService.success('Updated task content');
-            })
-            .caught(function() {
-                console.log('save contnet updates');
-            });
-    };
-
-    console.log('in file');
-    task_editor.init();
+    
+    task_complete.init();
 
 });

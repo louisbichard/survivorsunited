@@ -1,24 +1,54 @@
-<div class="row">
-	<div class="col-md-12">
-		<div class="widget">
-			<div class="widget-header">
-				Edit task
-			</div>
-			<div class="widget-body">
-				<p class="no-padding"> 
-					<strong>
-						Process ID: 
-					</strong>
-					{{config.process_id}}
-				</p>
-				<p class="no-padding"> 
-					<strong>
-						Task ID: 
-					</strong>
-					{{config.task_id}}
-				</p>
-			</div>
-		</div>
-	</div>
-</div> 
 
+// TODO: Back to process link here 
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="widget">
+            <div class="widget-header">
+                Task details
+            </div>
+            <div class="widget-body">
+                <p class="no-padding">
+                    <strong>
+						Process ID: 
+					</strong> {{config.process_id}}
+                </p>
+                <p class="no-padding">
+                    <strong>
+						Task ID: 
+					</strong> {{config.task_id}}
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="widget">
+            <div class="widget-header">
+                Edit task
+            </div>
+            <div class="widget-body">
+                <div text-angular ng-model="content"></div>
+                <br>
+                <button ng-click="saveContent()" class="btn btn-success btn-sm">
+                    <i class="fa fa-save">&nbsp; Save</i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="widget">
+            <div class="widget-header">
+                Edit task
+            </div>
+            <div class="widget-body">
+                TODO: Add a base this task off another bit here
+            </div>
+        </div>
+    </div>
+</div>

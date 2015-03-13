@@ -79,35 +79,15 @@ SU.config(function($routeProvider) {
         templateUrl: '../views/utilities/credits.html'
     })
 
-    ////////////
-    // TASKS  //
-    ////////////
-
-    .when('/add_task', {
-        templateUrl: '../views/tasks/add_task.html',
-        controller: 'addTaskController'
-    })
-
-    .when('/task_management', {
-        templateUrl: '../views/tasks/task_management.html',
-        controller: 'taskManagementController'
-    })
-
-    .when('/task_management/:url_search', {
-        templateUrl: '../views/tasks/task_management.html',
-        controller: 'taskManagementController'
-    })
-
-    .when('/task_allocation', {
-        templateUrl: '../views/tasks/task_allocation.html',
-        controller: 'taskManagementController' // TODO: UPDATE THIS
-    })
-
-
     // PROCESSES
-    .when('/process_manager', {
-        templateUrl: '../views/processes/process_manager.html',
-        controller: 'processManagerController'
+    .when('/complete_task/:process_id/:task_id', {
+        templateUrl: '../views/processes/complete_task.html',
+        controller: 'completeTaskController'
+    })
+
+    .when('/select_process', {
+        templateUrl: '../views/processes/select_process.html',
+        controller: 'selectProcessController'
     })
 
     .when('/process_manager/:process_id', {

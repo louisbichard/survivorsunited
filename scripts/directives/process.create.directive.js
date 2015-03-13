@@ -168,7 +168,6 @@ SU.directive('d3CreateProcess', function() {
 
             scope.$watch('tasks', function() {
                 process_designer.init();
-                console.log('init because tasks reset');
             }, true);
 
         }

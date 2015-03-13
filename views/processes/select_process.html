@@ -1,0 +1,25 @@
+
+<div class="row">
+    <div class="col-md-12 col-lg-12">
+        <div class="top-panel">
+            <h5 class="text-secondary"> Processes &nbsp; > &nbsp;<span class="text-accent"> Select </span></h5>
+        </div>
+    </div>
+</div>
+
+<div ng-show="!selected_process">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="widget">
+                <div class="widget-body">
+                    <p> Please select a process to begin </p>
+                    <select ng-change="actions.redirectToProcess()" required class="form-control input-sm" ng-model="selected_process">
+                        <option ng-selected="{{selected_process}}" value="{{process._id}}" ng-repeat="process in all_process_details">
+                            {{process.name}} ({{process._id}})
+                        </option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

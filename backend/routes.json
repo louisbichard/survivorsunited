@@ -238,11 +238,7 @@
     "/process/read/getallids": {
         "get": {
             "file_path": "./../process/read/process.read.getallids.js",
-            "parameters": {
-                "id": {
-                    "type": "string"
-                }
-            }
+            "parameters": {}
         }
     },
     "/process/read/get_by_id": {
@@ -262,9 +258,78 @@
                 "id": {
                     "type": "object_id"
                 },
-                "published" : {
+                "published": {
                     "type": "boolean"
                 }
+            }
+        }
+    },
+    "/process/task/update/content": {
+        "post": {
+            "file_path": "./../process/update/task.content.update.js",
+            "parameters": {
+                "task_id": {
+                    "type": "string"
+                },
+                "process_id": {
+                    "type": "object_id"
+                },
+                "content": {
+                    "type": "string"
+                }
+            }
+        }
+    },
+    "/process/read/getalltasks": {
+        "get": {
+            "file_path": "./../process/read/process.read.getalltasks.js",
+            "parameters": {
+                "id": {
+                    "type": "object_id"
+                }
+            }
+        }
+    },
+    "/process/update/updatealltasks": {
+        "post": {
+            "file_path": "./../process/update/task.updateall.js",
+            "parameters": {
+                "id": {
+                    "type": "object_id"
+                },
+                "tasks": {
+                    "type": "array"
+                }
+            }
+        }
+    },
+    "/process/update/name_and_description": {
+        "post": {
+            "file_path": "./../process/update/process.update.name_and_description.js",
+            "parameters": {
+                "id": {
+                    "type": "object_id"
+                }
+            }
+        }
+    },
+    "/process/update/assignees": {
+        "post": {
+            "file_path": "./../process/update/process.update.assignees.js",
+            "parameters": {
+                "id": {
+                    "type": "object_id"
+                },
+                "assignees": {
+                    "type": "array"
+                }
+            }
+        }
+    }, 
+    "/process/assigned_to_me": {
+        "get": {
+            "file_path": "./../process/read/process.assigned_to_me.js",
+            "parameters": {
             }
         }
     }
