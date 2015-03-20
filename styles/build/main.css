@@ -1,3 +1,11 @@
+.invisible {
+  visibility: hidden; }
+
+div .overflow-scroll-x {
+  overflow-x: scroll; }
+div .overflow-scroll-y {
+  overflow-y: scroll; }
+
 .green {
   background: #23ae89 !important; }
 
@@ -242,9 +250,6 @@ ul.sidebar {
 #page-wrapper:not(.active) ul.sidebar {
   bottom: 0; }
 
-#page-wrapper:not(.active) ul.sidebar .sidebar-title {
-  display: none; }
-
 #page-wrapper:not(.active) ul.sidebar .sidebar-title.separator {
   display: block;
   height: 2px;
@@ -260,6 +265,7 @@ ul.sidebar {
 input#searchBox {
   color: #4DD0E1; }
 
+/* Animate sidebar moving/ removing */
 .btn {
   border-radius: 1px; }
 

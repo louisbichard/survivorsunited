@@ -26,7 +26,7 @@ var runEndpoint = function(req, res, next, location, io) {
         return require(location)(req, res, io);
     } catch (err) {
         log.debug(err);
-        require('./log.server.error.js')(req, res, {
+        require('../utilities/log.server.error.js')(req, res, {
                 location: location,
                 anonymous: !req.user,
                 err: JSON.stringify(err)

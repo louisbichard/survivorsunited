@@ -73,7 +73,8 @@ module.exports = function(app) {
             getExpectedParameters: {
                 raw: function() {
                     var curr_route_definition = params_module.route_definitions.current();
-                    return curr_route_definition[params_module.method].parameters;
+                    var curr_params = curr_route_definition[params_module.method].parameters;
+                    return curr_params ? curr_params : {};
                 },
                 keys: function() {
                     return _.keys(this.raw());
@@ -114,7 +115,9 @@ module.exports = function(app) {
 
         };
 
-        if (params_module.method === "get" || params_module.method === "post") {
+        var is_ico = params_module.path === "/favicon.ico";
+        
+        if ( (params_module.method === "get" || params_module.method === "post") && !is_ico) {
             params_module.init();
         }
 

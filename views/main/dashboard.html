@@ -39,32 +39,27 @@
                         <div class="col-lg-12">
                             <table class="table table-striped">
                                 <thead>
+                                    <th class="text-center">Complete</th>
                                     <th class="text-center">Name</th>
                                     <th class="text-center">Description</th>
-                                    <th class="text-center">Completed</th>
-                                    <th class="text-center">Pre-requisites</th>
                                     <th class="text-center">Content</th>
-                                    <th class="text-center">Status</th>
                                 </thead>
                                 <tbody>
-                                    <tr ng-repeat="task in process.tasks">
+                                    <tr ng-repeat="task in process.tasks" ng-show="task.incomplete_tasks.length === 0">
+                                        <td class="text-center">
+                                            <a ng-click="processActions.markAsComplete(process._id, task.id, task.completed_by_current_user)">
+                                                <i ng-click="processActions.markAsComplete()" ng-class="{'fa-circle-o': !task.completed_by_current_user, 'fa-check-circle-o': task.completed_by_current_user}" class="fa fa-2x"></i>
+                                            </a>
+                                        </td>
                                         <td class="text-center">
                                             <span tooltip-placement="right" tooltip="{{task.id}}">{{task.name}} </span>
                                         </td>
                                         <td class="text-center">{{task.description}}</td>
-                                        <td class="text-center">{{task.completed_by}}</td>
-                                        <td class="text-center">{{task.dependencies}}</td>
                                         <td class="text-center">
-                                            <a href="#complete_task/{{process._id}}/{{task.id}}">
+                                            <a href="#complete_task/{{process._id}}/{{task.id}}" ng-show="!task.completed_by_current_user">
                                                 <button class="btn btn-primary">
-                                                    View task details
-
+                                                    Begin task
                                                 </button>
-                                            </a>
-                                        </td>
-                                        <td class="text-center">
-                                            <a>
-                                                <i ng-click="processActions.markAsComplete()" ng-class="{'fa-circle-o': !process.published, 'fa-check-circle-o': process.published}" class="fa fa-2x"></i>
                                             </a>
                                         </td>
                                     </tr>

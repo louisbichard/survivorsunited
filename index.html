@@ -29,7 +29,7 @@
     <!-- NAVIGATION SIDEBAR -->
     <div id="page-wrapper" ng-class="{'active': !toggle}" ng-cloak>
         <!-- NAVIGATION TITLE -->
-        <div id="sidebar-wrapper" class="animated bounceInLeft">
+        <div id="sidebar-wrapper" class="animated bounceInLeft" ng-mouseenter="sidebar.toggle(false)">
             <ul class="sidebar">
                 <li class="sidebar-main">
                     <a href="{{user_details.escape_url}}" ng-click="toggleSidebar()">
@@ -39,88 +39,34 @@
                         <span ng-if="!user_details.site_name">
                              Survivors United
                             </span>
-                        <span class="menu-icon glyphicon glyphicon-transfer"></span>
-                    </a>
-                </li>
-                <li class="sidebar-list sidebar-search">
-                    <input id="searchBox" ng-enter="runSearch()" ng-model="search_text" class="form-control" placeholder="Search ...">
-                </li>
-                <li class="sidebar-title ">
-                    <span class="">MAIN</span>
-                </li>
-                <li id="intro-dashboard" class="sidebar-list" ng-class="{'sidebar-selected': current_location === 'dashboard'}">
-                    <a href="#dashboard">Dashboard <span class="menu-icon fa fa-dashboard">
+                        <span class="menu-icon" ng-hide="!toggle">
+                            SU
                         </span>
                     </a>
                 </li>
-                <li id="intro-mentor" class="sidebar-list" ng-class="{'sidebar-selected': current_location === 'mentor'}">
-                    <a href="#mentor">Mentor <span class="menu-icon fa fa-male"></span></a>
+                
+                <li class="sidebar-list sidebar-search">
+                    <input id="searchBox" ng-enter="runSearch()" ng-model="search_text" class="form-control" placeholder="Search ...">
                 </li>
-                <li class="sidebar-list" ng-class="{'sidebar-selected': current_location === 'mentees'}">
-                    <a href="#mentees">Mentees <span class="menu-icon fa fa-users"></span></a>
-                </li>
-                <li class="sidebar-list" ng-class="{'sidebar-selected': current_location === 'search'}">
-                    <a href="#search">Search <span class="menu-icon fa fa-search"></span></a>
-                </li>
-                <li class="sidebar-list" ng-class="{'sidebar-selected': current_location === 'notifications'}">
-                    <a href="#notifications">Noificatons
-                    <span class="menu-icon fa fa-bell-o"></span>
-                    </a>
-                </li>
-                <li class="sidebar-list" ng-class="{'sidebar-selected': current_location === 'faq'}">
-                    <a href="#faq">FAQ <span class="menu-icon fa fa-list"></span></a>
-                </li>
-                <!-- ACCOUNT -->
-                <li class="sidebar-title ">
-                    <span>ACCOUNT</span>
-                </li>
-                <li id="intro-account" class="sidebar-list" ng-class="{'sidebar-selected': current_location === 'account'}">
-                    <a href="#account">User account <span class="menu-icon fa fa-user"></span></a>
-                </li>
-                <!-- PROCESSES -->
-                <li class="sidebar-title ">
-                    <span>Processes</span>
-                </li>
-                <li class="sidebar-list" ng-class="{'sidebar-selected': current_location === 'process_manager' || current_location === 'select_process'}">
-                    <a href="#select_process">Edit <span class="menu-icon fa fa-pencil"></span></a>
-                </li>
-                <!-- EVENTS -->
-                <li class="sidebar-title ">
-                    <span>EVENTS</span>
-                </li>
-                <li class="sidebar-list" ng-class="{'sidebar-selected': current_location === 'create_event'}">
-                    <a href="#create_event">Create <span class="menu-icon fa fa-plus"></span></a>
-                </li>
-                <li class="sidebar-list" ng-class="{'sidebar-selected': current_location === 'upcoming_events'}">
-                    <a href="#upcoming_events">Upcoming <span class="menu-icon fa fa-calendar"></span></a>
-                </li>
-                <li class="sidebar-list" ng-class="{'sidebar-selected': current_location === 'events_calendar'}">
-                    <a href="#events_calendar">Calendar <span class="menu-icon fa fa-calendar"></span></a>
-                </li>
-                <li class="sidebar-list" ng-class="{'sidebar-selected': current_location === 'events_by_location'}">
-                    <a href="#events_by_location">By location <span class="menu-icon fa fa-map-marker"></span></a>
-                </li>
-                <!-- ADMIN -->
-                <li class="sidebar-title ">
-                    <span>ADMIN</span>
-                </li>
-                <li class="sidebar-list" ng-class="{'sidebar-selected': current_location === 'referrals'}">
-                    <a href="#referrals">Referrals<span class="menu-icon fa fa-level-up"></span></a>
-                </li>
-                <li class="sidebar-list" ng-class="{'sidebar-selected': current_location === 'statistics'}">
-                    <a href="#statistics">Statistics<span class="menu-icon fa fa-area-chart"></span></a>
-                </li>
-                <li class="sidebar-list" ng-class="{'sidebar-selected': current_location === 'user_management'}">
-                    <a href="#user_management">User management<span class="menu-icon fa fa-users"></span></a>
-                </li>
-                <li class="sidebar-list" ng-class="{'sidebar-selected': current_location === 'developer_console'}">
-                    <a href="#developer_console">Developer console<span class="menu-icon fa fa-cogs"></span></a>
-                </li>
+
+                <span ng-repeat="nav_values in navigation_routes">                    
+                    <li class="sidebar-title ">
+                        <span class="">{{nav_values.group_title}}</span>                        
+                    </li>
+                    <li class="sidebar-list" ng-class="{'sidebar-selected': current_location === nav_link.route}" ng-repeat="nav_link in nav_values.sub_routes" ng-show="canViewNavLink(nav_link.allowed_roles, user_details.role)">
+                        <a href="#{{nav_link.route}}">
+                            <span class="menu-icon fa fa-{{nav_link.icon}}"></span>
+                            {{nav_link.label}}                            
+                        </a>
+                    </li>
+                </span>
+
             </ul>
             <div class="sidebar-footer">
                 <div class="col-xs-4">
                     <a href="#logout" ng-click="mainLogOut()">
-                    Logout
+                    Logout 
+                    <i class="fa fa-sign-out"></i>
                   </a>
                 </div>
                 <div class="col-xs-4">
@@ -129,14 +75,14 @@
                       </a>
                 </div>
                 <div class="col-xs-4">
-                    <a href="#">
-                        Support
+                    <a href="#faq">
+                        FAQ
                       </a>
                 </div>
             </div>
         </div>
         <!-- End Sidebar -->
-        <div id="content-wrapper">
+        <div id="content-wrapper" ng-mouseenter="sidebar.toggle(true)">
             <div class="page-content">
                 <div class="row">
                     <div class="col-md-12">
@@ -166,6 +112,7 @@ var socket = io.connect('survivorsunited.dev:3000');
 <script src="bower_components/d3/d3.min.js"></script>
 <script src="bower_components/angular/angular.min.js"></script>
 <script src="bower_components/angular-route/angular-route.min.js"></script>
+<script src="bower_components/angular-scroll-glue/src/scrollglue.js"></script>
 <!-- ================TOASTR NOTIFICATIONS================ -->
 <script src="bower_components/toastr/toastr.min.js"></script>
 <!-- ================GOOGLE MAPS================ -->
@@ -215,6 +162,7 @@ var socket = io.connect('survivorsunited.dev:3000');
 <script src="./scripts/services/api.service.js"></script>
 <script src="./scripts/services/utilities.service.js"></script>
 <script src="./scripts/services/notify.service.js"></script>
+<script src="./scripts/services/navigation.routes.service.js"></script>
 <!-- ================ANGULAR FILTERS================ -->
 <script src="./scripts/filters/internal.filter.js"></script>
 <script src="./scripts/filters/openReferrees.filter.js"></script>

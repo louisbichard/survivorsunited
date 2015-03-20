@@ -1,6 +1,13 @@
-SU.controller('mainController', function($scope, apiService, $location, notifyService) {
+SU.controller('mainController', function($scope, apiService, $location, notifyService, navigationRoutesService) {
+
+    $scope.navigation_routes = navigationRoutesService.routes;
 
     $scope.referral = {};
+
+    $scope.canViewNavLink = function(allowed_roles, role) {
+        //return true;
+        return allowed_roles.indexOf(role) > -1;
+    };
 
     // WATCH FOR NAV CHANGES AND SETUP SCOPE FOR LEFT PANEL TABBING HIGHLIGHTING
     $scope.region = "Select region";
@@ -35,12 +42,15 @@ SU.controller('mainController', function($scope, apiService, $location, notifySe
         }
     };
 
-    $scope.runSearch = function() {
-        $location.path('/search/' + $scope.search_text);
+    /* Remove if you don't want to animate the sidebar */
+    $scope.sidebar = {
+        toggle: function(show_sidebar) {
+            //$scope.toggle = show_sidebar;
+        }
     };
 
-    $scope.toggleSidebar = function() {
-        $scope.toggle = !$scope.toggle;
+    $scope.runSearch = function() {
+        $location.path('/search/' + $scope.search_text);
     };
 
     $scope.routeToLogin = function() {

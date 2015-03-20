@@ -107,7 +107,7 @@ ul.sidebar {
     bottom: 0;
 }
 #page-wrapper:not(.active) ul.sidebar .sidebar-title {
-    display: none;
+    
 }
 #page-wrapper:not(.active) ul.sidebar .sidebar-title.separator {
     display: block;
@@ -124,3 +124,4 @@ ul.sidebar {
 input#searchBox {
     color: $color-accent;
 }
+/* Animate sidebar moving/ removing */

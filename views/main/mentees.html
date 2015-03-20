@@ -22,26 +22,26 @@
     </div>
 </div>
 <div class="row" ng-repeat="mentee in mentees">
-    <div class="col-lg-8">
+    <div class="col-lg-6">
         <div class="widget">
             <div class="widget-header" ng-class="{'red': mentee.severity_grade === 'High', 'yellow': mentee.severity_grade === 'Medium', 'blue': mentee.severity_grade === 'Low' }">
-                <p class="text-white"><i class="fa fa-user"></i>{{mentee.username}}({{mentee._id}})</p>
+                {{mentee.username}}({{mentee._id}})
             </div>
-            <div class="widget-body small no-padding">
+            <div class="widget-body large no-padding">
                 <br>
                 <div class="row">
                     <div class="col-lg-12">
-                        <p>
+                        <p class="no-padding">
                             First name: &nbsp; {{mentee.first_name}}
                         </p>
-                        <p>
+                        <p class="no-padding">
                             Last name: &nbsp; {{mentee.last_name}}
                         </p>
                         <hr>
-                        <p>
+                        <p class="no-padding">
                             Created: &nbsp; {{mentee.date_created}}
                         </p>
-                        <p>
+                        <p class="no-padding">
                             severity_grade: &nbsp; {{mentee.severity_grade}}
                         </p>
                     </div>
@@ -49,18 +49,25 @@
             </div>
         </div>
     </div>
-    <div class="col-lg-4">
+    <div class="col-lg-6">
         <div class="widget">
             <div class="widget-header">
-                <p><i class="fa fa-envelope"></i> Instant message module</p>
+                <i class="fa fa-envelope"></i> Instant message module
             </div>
-            <div class="widget-body small no-padding">
+            <div class="widget-body large no-padding"  scroll-glue>
                 <br>
                 <div class="row">
                     <div class="col-lg-12">
-                        <p class="no-padding" ng-repeat="chat_message in chat[mentee._id]">{{chat_message}}</p>
-                        <input ng-model="messages[mentee._id]" ng-enter="emitMessage(mentee)" type="text" placeholder="send message"></input>
-                        <a ng-click="emitMessage(mentee, this)" class="btn btn-accent"> Send message </a>
+                        {{getMessages(mentee._id)}}
+                        <p class="no-padding" ng-repeat="message in mentee.messages">
+                            <span ng-repeat="(user_id, message_content) in message">
+                                <strong>{{getUserNameFromID(user_id)}}: </strong>
+                                {{message_content}}
+                            </span>
+
+                        </p>
+                        <input ng-model="current_message" ng-enter="emitMessage(mentee._id)" type="text" placeholder="send message"></input>
+                        <a ng-click="emitMessage(mentee._id)" class="btn btn-accent"> Send message </a>
                     </div>
                 </div>
             </div>

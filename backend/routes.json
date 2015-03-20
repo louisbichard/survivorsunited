@@ -93,43 +93,23 @@
             "file_path": "./../search/search.js"
         }
     },
-    "/chat": {
+    "/chat/send_message": {
         "post": {
-            "file_path": "./../chat/chat.js"
-        }
-    },
-    "/task/add": {
-        "post": {
-            "file_path": "./../tasks/task.add.js",
+            "file_path": "./../chat/update/chat.send.js",
             "parameters": {
-                "title": {
-                    "type": "string"
-                },
-                "assignees": {
-                    "type": "array"
-                },
-                "description": {
-                    "type": "string"
-                },
-                "actions": {
-                    "type": "array"
-                }
+                "sender": "string",
+                "reciever": "string",
+                "message": "string"
             }
         }
     },
-    "/tasks/listall": {
+    "/chat/get_messages": {
         "get": {
-            "file_path": "./../tasks/tasks.listall.js"
-        }
-    },
-    "/tasks/assigned": {
-        "get": {
-            "file_path": "./../tasks/tasks.assigned.js"
-        }
-    },
-    "/task/update": {
-        "post": {
-            "file_path": "./../tasks/task.update.js"
+            "file_path": "./../chat/read/chat.read.js",
+            "parameters": {
+                "sender": "string",
+                "reciever": "string"
+            }
         }
     },
     "/user/assigned_mentees": {
@@ -325,11 +305,26 @@
                 }
             }
         }
-    }, 
+    },
     "/process/assigned_to_me": {
         "get": {
             "file_path": "./../process/read/process.assigned_to_me.js",
+            "parameters": {}
+        }
+    },
+    "/process/update/task/completed_status": {
+        "post": {
+            "file_path": "./../process/update/task.update.completed_status.js",
             "parameters": {
+                "process_id": {
+                    "type": "object_id"
+                },
+                "task_id": {
+                    "type": "string"
+                },
+                "is_complete": {
+                    "type": "boolean"
+                }
             }
         }
     }
