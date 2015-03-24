@@ -1,9 +1,14 @@
-SU.controller('selectProcessController', function($scope, apiService, $location) {
+SU.controller('selectProcessController', function($scope, apiService, $location, notifyService) {
 
     $scope.actions = {
         redirectToProcess: function() {
             $location.path('/process_manager/' + $scope.selected_process);
         }
+    };
+
+    $scope.createProcess = function(){
+        console.log('Create process');
+        notifyService.success('todo make this work');
     };
 
     var select_module = {

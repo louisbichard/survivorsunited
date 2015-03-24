@@ -1,4 +1,3 @@
-
 <div class="row">
     <div class="col-md-12 col-lg-12">
         <div class="top-panel">
@@ -6,18 +5,53 @@
         </div>
     </div>
 </div>
-
 <div ng-show="!selected_process">
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-6">
             <div class="widget">
+                <div class="widget-header">
+                    Select process
+                </div>
                 <div class="widget-body">
-                    <p> Please select a process to begin </p>
                     <select ng-change="actions.redirectToProcess()" required class="form-control input-sm" ng-model="selected_process">
                         <option ng-selected="{{selected_process}}" value="{{process._id}}" ng-repeat="process in all_process_details">
                             {{process.name}} ({{process._id}})
                         </option>
                     </select>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="widget">
+                <div class="widget-header">
+                    Create process
+                </div>
+                <div class="widget-body">
+                    <form name="create_process_form" ng-submit="createProcess()">
+                        <div class="row">
+                            <div class="col-md-12">
+                                {{new_process}}
+                                <label for="">Name</label>
+                                <input ng-model="new_process.name" class="form-control" type="text"></input>
+                                <label for="">Description</label>
+                                <textarea class="form-control" ng-model="new_process.description" type="text"></textarea>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <button type="submit" class="form-control btn btn-primary">
+                                    <i class="fa fa-save"></i>
+                                    <i class="fa fa-pencil"></i> Save & Edit
+                                </button>
+                            </div>
+                            <div class="col-md-6">
+                                <button type="submit" class="form-control btn btn-success">
+                                    <i class="fa fa-save"></i> Save
+                                </button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
