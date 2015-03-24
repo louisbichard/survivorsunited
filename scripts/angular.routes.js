@@ -19,8 +19,8 @@ SU.config(function($routeProvider) {
 
     // MENTOR
     .when('/mentor', {
-        templateUrl: '../views/main/mentor.html',
-        controller: 'mentorController'
+        templateUrl: '../views/main/mentees.html',
+        controller: 'menteesController'
     })
 
     // MENTEES

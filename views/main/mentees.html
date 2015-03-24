@@ -1,7 +1,7 @@
 <div class="row">
     <div class="col-md-12 col-lg-12">
         <div class="top-panel">
-            <h5 class="text-secondary"> Main &nbsp; > &nbsp;<span class="text-accent"> Mentees </span></h5>
+            <h5 class="text-secondary"> Main &nbsp; > &nbsp;<span class="text-accent"> {{current_path}} </span></h5>
         </div>
     </div>
 </div>
@@ -13,7 +13,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h3 class="text-center">
-                            No mentees currently assigned
+                            No {{current_path}}'s currently assigned
                         </h3>
                     </div>
                 </div>
@@ -21,28 +21,21 @@
         </div>
     </div>
 </div>
-<div class="row" ng-repeat="mentee in mentees">
+<div class="row" ng-repeat="contact in mentees">
     <div class="col-lg-6">
         <div class="widget">
-            <div class="widget-header" ng-class="{'red': mentee.severity_grade === 'High', 'yellow': mentee.severity_grade === 'Medium', 'blue': mentee.severity_grade === 'Low' }">
-                {{mentee.username}}({{mentee._id}})
+            <div class="widget-header" ng-class="{'red': contact.severity_grade === 'High', 'yellow': contact.severity_grade === 'Medium', 'blue': contact.severity_grade === 'Low' }">
+                {{contact.username}}({{contact._id}})
             </div>
             <div class="widget-body large no-padding">
                 <br>
                 <div class="row">
                     <div class="col-lg-12">
                         <p class="no-padding">
-                            First name: &nbsp; {{mentee.first_name}}
+                            First name: &nbsp; {{contact.first_name}}
                         </p>
                         <p class="no-padding">
-                            Last name: &nbsp; {{mentee.last_name}}
-                        </p>
-                        <hr>
-                        <p class="no-padding">
-                            Created: &nbsp; {{mentee.date_created}}
-                        </p>
-                        <p class="no-padding">
-                            severity_grade: &nbsp; {{mentee.severity_grade}}
+                            Last name: &nbsp; {{contact.last_name}}
                         </p>
                     </div>
                 </div>
@@ -58,16 +51,15 @@
                 <br>
                 <div class="row">
                     <div class="col-lg-12">
-                        {{getMessages(mentee._id)}}
-                        <p class="no-padding" ng-repeat="message in mentee.messages">
+                        {{getMessages(contact._id)}}
+                        <p class="no-padding" ng-repeat="message in contact.messages">
                             <span ng-repeat="(user_id, message_content) in message">
                                 <strong>{{getUserNameFromID(user_id)}}: </strong>
                                 {{message_content}}
                             </span>
-
                         </p>
-                        <input ng-model="current_message" ng-enter="emitMessage(mentee._id)" type="text" placeholder="send message"></input>
-                        <a ng-click="emitMessage(mentee._id)" class="btn btn-accent"> Send message </a>
+                        <input ng-model="current_message" ng-enter="emitMessage(contact._id)" type="text" placeholder="send message"></input>
+                        <a ng-click="emitMessage(contact._id)" class="btn btn-accent"> Send message </a>
                     </div>
                 </div>
             </div>

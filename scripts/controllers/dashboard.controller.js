@@ -37,6 +37,7 @@ SU.controller('dashboardController', function($scope, apiService, notifyService,
                     is_complete: is_complete
                 }).then(function() {
                     console.log('updated task');
+                    dashboard_module.init();
                 }).caught(function() {
                     console.log('could not update task');
                     // TODO: MAKE A BETTER ERROR HANDLE HERE
@@ -50,7 +51,6 @@ SU.controller('dashboardController', function($scope, apiService, notifyService,
                     $scope.$apply(function() {
                         $scope.processes = result;
                     });
-
                 })
                 .caught(function() {
                     console.log('could not get current assigned processes');

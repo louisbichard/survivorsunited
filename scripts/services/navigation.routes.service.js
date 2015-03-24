@@ -36,17 +36,17 @@ SU.service("navigationRoutesService", function() {
             "route": "upcoming_events",
             "label": "Upcoming Events",
             "icon": "calendar",
-            "allowed_roles": ["Mentor", "Admin"]
+            "allowed_roles": ["Mentor", "Admin", "Basic"]
         }, {
             "route": "events_calendar",
             "label": "Events Calendar",
             "icon": "calendar",
-            "allowed_roles": ["Mentor", "Admin"]
+            "allowed_roles": ["Mentor", "Admin", "Basic"]
         }, {
             "route": "events_by_location",
             "label": "By Location",
             "icon": "map-marker",
-            "allowed_roles": ["Mentor", "Admin"]
+            "allowed_roles": ["Mentor", "Admin", "Basic"]
         }]
     }, {
         "group_title": "processes ",
