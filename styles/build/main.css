@@ -414,6 +414,19 @@ input.valid {
 .angular-google-map-container {
   height: 96%; }
 
+.process_manager .task_node, .process_manager .task_node_label {
+  cursor: move; }
+.process_manager .button_circle.pointer {
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+  cursor: pointer; }
+.process_manager .button_label.pointer {
+  cursor: pointer; }
+.process_manager .button_circle.e-resize {
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+  cursor: e-resize; }
+.process_manager .button_label.e-resize {
+  cursor: e-resize; }
+
 .text-white {
   color: #FFFFFF; }
 

@@ -1,8 +1,7 @@
-SU.controller('processManagerController', function($scope, apiService, utilityService, notifyService, $route, uuid, dateService) {
+SU.controller('processManagerController', function($scope, apiService, utilityService, notifyService, $route, uuid, dateService, $location) {
 
     var process_manager = {
         init: function() {
-            this.setupNewTask();
             this.setupNewAssignee();
             this.getAllUsers();
             this.refreshProcess();
@@ -12,12 +11,6 @@ SU.controller('processManagerController', function($scope, apiService, utilitySe
         users: [], // TO BE POPULATED WHEN THE DB CALL IS MADE
         setupNewAssignee: function() {
             $scope.new_assignee = undefined;
-        },
-        setupNewTask: function() {
-            $scope.new_task = {
-                id: uuid.v4(),
-                tasks: [] // SET UP DEFAULT INCASE THE PROCESS HAS NONE
-            };
         },
         getAllUsers: function() {
             return apiService.get('/users/listall').then(function(results) {
@@ -118,7 +111,15 @@ SU.controller('processManagerController', function($scope, apiService, utilitySe
     };
 
     $scope.taskActions = {
-        deleteTask: function(idx, id) {
+        editContent: function(task_id){
+            console.log('edit content');
+            $location.path('/task_editor/' + $scope.process._id + '/' + task_id);
+        },
+        deleteTask: function(id) {
+            console.log('remove task');
+            var idx = _.findIndex($scope.process.tasks, {
+                id: id
+            });
             $scope.process.tasks.splice(idx, 1);
             $scope.process.tasks = _.map($scope.process.tasks, function(task) {
                 if (task.dependencies) {
@@ -134,8 +135,13 @@ SU.controller('processManagerController', function($scope, apiService, utilitySe
 
     $scope.taskActionsTemp = {
         addToProcess: function() {
-            $scope.process.tasks.push($scope.new_task);
-            process_manager.setupNewTask();
+            $scope.process.tasks.push({
+                id: uuid.v4(),
+                name: 'A new task',
+                description: 'No description yet given',
+                tasks: [] // SET UP DEFAULT INCASE THE PROCESS HAS NONE
+            });
+
             notifyService.success('Added task to process');
         }
     };

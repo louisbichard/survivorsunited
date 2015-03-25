@@ -1,0 +1,19 @@
+.process_manager {
+    .task_node, .task_node_label {
+        cursor: move;
+    }
+    .button_circle.pointer {
+        box-shadow: $shadow-low;
+        cursor: pointer;
+    }
+    .button_label.pointer {
+        cursor: pointer;
+    }
+    .button_circle.e-resize {
+        box-shadow: $shadow-low;
+        cursor: e-resize;
+    }
+    .button_label.e-resize {
+        cursor: e-resize;
+    }
+}

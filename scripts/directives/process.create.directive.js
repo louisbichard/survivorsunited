@@ -35,40 +35,39 @@ SU.directive('d3CreateProcess', function() {
                     circles: [
                         // CONFIG FOR THE TASK NODES
                         {
-                            fill: 'purple'
+                            fill: 'purple',
+                            css_classes: ['task_node'],
+                            label_classes: ['task_node_label'],
                         },
                         // CONFIG FOR A BUTTON
                         {
-                            css_classes: ['button_circle', 'hide'],
-                            label_classes: ['button_label', 'hide'],
-                            label_text: 'E',
+                            css_classes: ['button_circle', 'hide', 'e-resize'],
+                            label_classes: ['button_label', 'hide', 'e-resize'],
+                            label_text: 'D',
                             x_offset: 70, // TODO: DRIVE THIS FROM THE CONFIG
                             fill: 'green',
                             radius: 20 // TODO: REPLACE WITH THIS; process_designer.config.task.radius
                         },
                         //CONFIG FOR A BUTTON 
                         {
-                            css_classes: ['button_circle', 'hide'],
-                            label_classes: ['button_label', 'hide'],
-                            label_text: 'D',
+                            events: {
+                                'click': scope.actions.deleteTask
+                            },
+                            css_classes: ['button_circle', 'hide', 'pointer'],
+                            label_classes: ['button_label', 'hide', 'pointer'],
+                            label_text: 'R',
                             y_offset: 70, // TODO: DRIVE THIS FROM THE CONFIG
                             fill: 'green',
                             radius: 20 // TODO: REPLACE WITH THIS; process_designer.config.task.radius
                         },
                         //CONFIG FOR A BUTTON 
                         {
-                            css_classes: ['button_circle', 'hide'],
-                            label_classes: ['button_label', 'hide'],
-                            label_text: 'N & D',
-                            x_offset: -70, // TODO: DRIVE THIS FROM THE CONFIG
-                            fill: 'green',
-                            radius: 20 // TODO: REPLACE WITH THIS; process_designer.config.task.radius
-                        },
-                        //CONFIG FOR A BUTTON 
-                        {
-                            css_classes: ['button_circle', 'hide'],
-                            label_classes: ['button_label', 'hide'],
-                            label_text: 'R',
+                            events: {
+                                'click': scope.actions.editContent
+                            },
+                            css_classes: ['button_circle', 'hide', 'pointer'],
+                            label_classes: ['button_label', 'hide', 'pointer'],
+                            label_text: 'C',
                             y_offset: -70, // TODO: DRIVE THIS FROM THE CONFIG
                             fill: 'green',
                             radius: 20 // TODO: REPLACE WITH THIS; process_designer.config.task.radius
@@ -122,14 +121,21 @@ SU.directive('d3CreateProcess', function() {
                             x_offset: 0,
                             y_offset: 0,
                             offset: process_designer.config.task.location_offset,
-                            css_classes: []
+                            css_classes: [],
+                            events: {}
                         });
+
+
 
                         var circle = g.insert("circle");
 
                         // APPLY ALL DEFINED CLASSES
                         _.each(options.css_classes, function(css_class) {
                             circle.classed(css_class, true);
+                        });
+
+                        _.each(options.events, function(event_function, event_type) {
+                            circle.on(event_type, _.partial(event_function, options.task_id));
                         });
 
                         circle.attr("cx", options.offset + options.x_offset)
@@ -180,10 +186,9 @@ SU.directive('d3CreateProcess', function() {
 
                             var drag_handler = this;
 
-                            return d3.behavior.drag().on('dragstart', function() {
-                                    d3.select(this.children[0]).style('fill', 'lightpurple');
-                                })
+                            return d3.behavior.drag()
                                 .on('drag', function() {
+                                    d3.event.sourceEvent.stopPropagation();
                                     process_designer.destroy.all_lines();
                                     process_designer.drawLines();
                                     var element = this;
@@ -242,8 +247,11 @@ SU.directive('d3CreateProcess', function() {
                         var g = process_designer.group.create(process_designer, curr_node.id);
                         process_designer.translateElement(g[0][0], curr_node.coordinates || {});
                         _.each(process_designer.config.circles, function(config) {
-                            process_designer.group.insertCircle(g, config);
+                            process_designer.group.insertCircle(g, _.extend(config, {
+                                task_id: curr_node.id,
+                            }));
                             process_designer.group.addLabel(g, _.extend({
+                                task_id: curr_node.id,
                                 label_text: curr_node.name
                             }, config));
                         });

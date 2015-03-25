@@ -5,14 +5,11 @@
         </div>
     </div>
 </div>
-
 <div class="row">
     <div class="col-lg-6">
         <accordion close-others="false">
             <accordion-group heading="Process details ({{process._id}})" is-open="true">
-
                 <p class="no-padding"> Created: {{process.date_created}} || Updated: {{process.date_updated}} || Created by: //todo </p>
-
                 <div class="row">
                     <div class="col-md-12 col-lg-12">
                         <div class="form-group">
@@ -64,7 +61,6 @@
                                     </tr>
                                 </tbody>
                             </table>
-
                             <div class="row">
                                 <div class="col-md-12">
                                     <select ng-model="assignee_to_add" class="form-control">
@@ -84,7 +80,6 @@
                                     </button>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>
@@ -92,50 +87,6 @@
         </accordion>
     </div>
 </div>
-
-<div class="row">
-    <div class="col-lg-12">
-        <accordion close-others="false">
-            <accordion-group heading="Create task">
-                <!-- 
-            TODO: FOR SOME REASON THE OVERFLOW CLASS ISN'T BEING APPLIED AND THEREFORE IS INLINE,
-            TRY TO RESOLVE AND REMOVE
-             -->
-                <div class="overflow-scroll-x row" style="overflow-x: scroll">
-                    <div class="col-md-12 col-lg-12">
-                        <form name="new_task_form" ng-submit="taskActionsTemp.addToProcess()">
-                            <table class="table table-striped">
-                                <thead>
-                                    <th class="text-center">name</th>
-                                    <th class="text-center">description</th>
-                                    <th class="text-center">dependencies</th>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>
-                                            <input class="form-control" required ng-model="new_task.name" type="text"> </input>
-                                        </td>
-                                        <td>
-                                            <input class="form-control" required ng-model="new_task.description" type="text"> </input>
-                                        </td>
-                                        <td>
-                                            <select ng-model="new_task.dependencies" class="form-control" multiple>
-                                                <option value="{{task.id}}" ng-repeat="task in process.tasks">{{task.name}}</option>
-                                            </select>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <input type="submit" class="pull-right btn btn-success">
-                            </input>
-                        </form>
-                    </div>
-            </accordion-group>
-        </accordion>
-        </div>
-    </div>
-</div>
-
 <div class="row">
     <div class="col-lg-12">
         <accordion close-others="false">
@@ -156,7 +107,6 @@
                                     <th class="text-center">description</th>
                                     <th class="text-center">content</th>
                                     <th class="text-center">dependencies</th>
-                                    <th class="text-center">actions</th>
                                 </thead>
                                 <tbody>
                                     <tr ng-repeat="task in process.tasks">
@@ -174,15 +124,26 @@
                                                 <option value="{{task.id}}" ng-repeat="task in process.tasks">{{task.name}}</option>
                                             </select>
                                         </td>
-                                        <td class="text-center">
-                                            <button ng-click="taskActions.deleteTask($index, task.id)" class="btn btn-danger">
-                                                <i class="fa fa-trash"></i>
-                                            </button>
-                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
+                    </div>
+            </accordion-group>
+        </accordion>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <accordion close-others="false">
+            <accordion-group heading="Create task" is-open="true">
+                <div class="overflow-scroll-x row" style="overflow-x: scroll">
+                    <div class="col-md-12 col-lg-12">
+                        <button class="btn btn-primary" ng-click="taskActionsTemp.addToProcess()"> 
+                            Add new task
+                        </button>
                     </div>
             </accordion-group>
         </accordion>
@@ -197,7 +158,7 @@
                 Task dependencies ({{process.tasks.length}})
             </div>
             <div class="widget-body">
-                <div d3-create-process tasks="process.tasks" actions="taskActions"></div>
+                <div class="process_manager" d3-create-process tasks="process.tasks" actions="taskActions"></div>
             </div>
         </div>
     </div>
