@@ -103,7 +103,7 @@
              -->
                 <div class="overflow-scroll-x row" style="overflow-x: scroll">
                     <div class="col-md-12 col-lg-12">
-                        <form name="new_task_form" ng-submit="taskActions.addToProcess()">
+                        <form name="new_task_form" ng-submit="taskActionsTemp.addToProcess()">
                             <table class="table table-striped">
                                 <thead>
                                     <th class="text-center">name</th>
@@ -197,7 +197,7 @@
                 Task dependencies ({{process.tasks.length}})
             </div>
             <div class="widget-body">
-                <div style="" d3-create-process tasks="process.tasks"></div>
+                <div d3-create-process tasks="process.tasks" actions="taskActions"></div>
             </div>
         </div>
     </div>

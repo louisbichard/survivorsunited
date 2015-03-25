@@ -118,21 +118,9 @@ SU.controller('processManagerController', function($scope, apiService, utilitySe
     };
 
     $scope.taskActions = {
-        addToProcess: function() {
-            $scope.process.tasks.push($scope.new_task);
-            process_manager.setupNewTask();
-            notifyService.success('Added task to process');
-        },
-        editContent: function(index) {
-            updateDatabase();
-        },
         deleteTask: function(idx, id) {
             $scope.process.tasks.splice(idx, 1);
-            $scope.process.tasks = this.removeIDfromTaskDependencies(id);
-            notifyService.success('Removed task successfully');
-        },
-        removeIDfromTaskDependencies: function(id) {
-            return _.map($scope.process.tasks, function(task) {
+            $scope.process.tasks = _.map($scope.process.tasks, function(task) {
                 if (task.dependencies) {
                     var dependency_idx = task.dependencies.indexOf(id);
                     // REMOVE REFERENCES TO DEPENDENCY
@@ -140,6 +128,15 @@ SU.controller('processManagerController', function($scope, apiService, utilitySe
                 }
                 return task;
             });
+            notifyService.success('Removed task successfully');
+        }
+    };
+
+    $scope.taskActionsTemp = {
+        addToProcess: function() {
+            $scope.process.tasks.push($scope.new_task);
+            process_manager.setupNewTask();
+            notifyService.success('Added task to process');
         }
     };
 

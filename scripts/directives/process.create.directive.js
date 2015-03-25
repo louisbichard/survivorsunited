@@ -3,20 +3,18 @@ SU.directive('d3CreateProcess', function() {
         restrict: 'EA',
         scope: {
             tasks: '=',
+            actions: '='
         },
         link: function(scope, element, attrs, $window, $rootScope) {
+
+            console.log('directive was passed these actions', scope.actions);
 
             var canvas = d3.select(element[0])
                 .html('') // Reset the canvas so that it redraws on init command
                 .append('svg')
                 .attr("width", '100%')
                 //.style('background-color', 'red')
-                .attr("height", '100%')
-                .on('click', function(d, i) {
-                      d3.event.stopPropagation();
-
-                    console.log('clicked chart area');
-                });
+                .attr("height", '100%');
 
 
             var process_designer = {
@@ -30,7 +28,54 @@ SU.directive('d3CreateProcess', function() {
                         // WHEN CREATING A TASK, THIS IS WHERE IT WILL APPEAR, (I.E 50 PIXELS FROM THE TOP & LEFT)
                         location_offset: 100,
                         radius: 70
-                    }
+                    },
+                    buttons: {
+                        radius: 20
+                    },
+                    circles: [
+                        // CONFIG FOR THE TASK NODES
+                        {
+                            fill: 'purple'
+                        },
+                        // CONFIG FOR A BUTTON
+                        {
+                            css_classes: ['button_circle', 'hide'],
+                            label_classes: ['button_label', 'hide'],
+                            label_text: 'E',
+                            x_offset: 70, // TODO: DRIVE THIS FROM THE CONFIG
+                            fill: 'green',
+                            radius: 20 // TODO: REPLACE WITH THIS; process_designer.config.task.radius
+                        },
+                        //CONFIG FOR A BUTTON 
+                        {
+                            css_classes: ['button_circle', 'hide'],
+                            label_classes: ['button_label', 'hide'],
+                            label_text: 'D',
+                            y_offset: 70, // TODO: DRIVE THIS FROM THE CONFIG
+                            fill: 'green',
+                            radius: 20 // TODO: REPLACE WITH THIS; process_designer.config.task.radius
+                        },
+                        //CONFIG FOR A BUTTON 
+                        {
+                            css_classes: ['button_circle', 'hide'],
+                            label_classes: ['button_label', 'hide'],
+                            label_text: 'N & D',
+                            x_offset: -70, // TODO: DRIVE THIS FROM THE CONFIG
+                            fill: 'green',
+                            radius: 20 // TODO: REPLACE WITH THIS; process_designer.config.task.radius
+                        },
+                        //CONFIG FOR A BUTTON 
+                        {
+                            css_classes: ['button_circle', 'hide'],
+                            label_classes: ['button_label', 'hide'],
+                            label_text: 'R',
+                            y_offset: -70, // TODO: DRIVE THIS FROM THE CONFIG
+                            fill: 'green',
+                            radius: 20 // TODO: REPLACE WITH THIS; process_designer.config.task.radius
+                        }
+
+
+                    ]
                 },
                 updateTask: function(task_id, property, value) {
                     scope.tasks[task_id][property] = value;
@@ -53,25 +98,68 @@ SU.directive('d3CreateProcess', function() {
                 group: {
                     // NOTE: PASSING IN PROCESS DESIGNER LIKE THIS IS A LITTLE HACKY
                     create: function(process_designer, id) {
-                        return canvas.append('g')
-                            .attr('id', 'task-' + id)
+                        var g = canvas.append('g');
+
+                        return g.attr('id', 'task-' + id)
+                            .on("mouseover", _.partial(process_designer.group.showHideButton, g, false))
+                            .on("mouseout", _.partial(process_designer.group.showHideButton, g, true))
                             .call(process_designer.handlers.drag.run());
                     },
-                    insertCircle: function(g) {
-                        return g.insert("circle")
-                            .attr("cx", process_designer.config.task.location_offset)
-                            .attr("cy", process_designer.config.task.location_offset)
-                            .attr("r", process_designer.config.task.radius)
-                            .style("fill", "purple");
+                    showHideButton: function(g, value) {
+                        var buttons = g.selectAll(".button_circle")[0] || [];
+                        var labels = g.selectAll(".button_label")[0] || [];
+                        var nodes = buttons.concat(labels);
+
+                        _.each(nodes, function(element) {
+                            var is_hidden = Array.prototype.slice.call(element.classList).indexOf("hide") > -1;
+                            d3.select(element).classed('hide', value);
+                        });
                     },
-                    addLabel: function(g, text) {
-                        return g.append('text')
-                            .style("fill", "white")
-                            .attr("dx", process_designer.config.task.location_offset)
-                            .attr("dy", process_designer.config.task.location_offset)
+                    insertCircle: function(g, options) {
+                        options = _.defaults(options, {
+                            fill: "red",
+                            radius: process_designer.config.task.radius,
+                            x_offset: 0,
+                            y_offset: 0,
+                            offset: process_designer.config.task.location_offset,
+                            css_classes: []
+                        });
+
+                        var circle = g.insert("circle");
+
+                        // APPLY ALL DEFINED CLASSES
+                        _.each(options.css_classes, function(css_class) {
+                            circle.classed(css_class, true);
+                        });
+
+                        circle.attr("cx", options.offset + options.x_offset)
+                            .attr("cy", options.offset + options.y_offset)
+                            .attr("r", options.radius)
+                            .style("fill", options.fill);
+                    },
+                    addLabel: function(g, options) {
+                        options = _.defaults(options, {
+                            label_colour: 'white',
+                            x_offset: 0,
+                            y_offset: 0,
+                            offset: process_designer.config.task.location_offset,
+                            label_text: '',
+                            label_classes: [],
+                        });
+
+                        var text = g.append('text');
+
+                        // APPLY ALL DEFINED CLASSES
+                        _.each(options.label_classes, function(css_class) {
+                            text.classed(css_class, true);
+                        });
+
+                        return text.style("fill", options.label_colour)
+                            .attr("dx", options.offset + options.x_offset)
+                            .attr("dy", options.offset + options.y_offset + 5) // REQUIRED JUST TO CENTER TEXT
                             .attr("text-anchor", "middle")
                             .text(function(d) {
-                                return text;
+                                return options.label_text;
                             });
                     }
                 },
@@ -150,11 +238,15 @@ SU.directive('d3CreateProcess', function() {
                 drawNodes: function() {
                     var process_designer = this;
                     // CREATE A GROUP WITH A CIRCLE AND LABEL
-                    _.each(scope.tasks, function(curr) {
-                        var g = process_designer.group.create(process_designer, curr.id);
-                        process_designer.translateElement(g[0][0], curr.coordinates || {});
-                        process_designer.group.insertCircle(g);
-                        process_designer.group.addLabel(g, curr.name);
+                    _.each(scope.tasks, function(curr_node) {
+                        var g = process_designer.group.create(process_designer, curr_node.id);
+                        process_designer.translateElement(g[0][0], curr_node.coordinates || {});
+                        _.each(process_designer.config.circles, function(config) {
+                            process_designer.group.insertCircle(g, config);
+                            process_designer.group.addLabel(g, _.extend({
+                                label_text: curr_node.name
+                            }, config));
+                        });
                     });
                 }
             };
