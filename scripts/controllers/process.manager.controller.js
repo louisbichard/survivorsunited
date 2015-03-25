@@ -122,9 +122,9 @@ SU.controller('processManagerController', function($scope, apiService, utilitySe
             });
             $scope.process.tasks.splice(idx, 1);
             $scope.process.tasks = _.map($scope.process.tasks, function(task) {
+                // REMOVE REFERENCES TO DEPENDENCY
                 if (task.dependencies) {
                     var dependency_idx = task.dependencies.indexOf(id);
-                    // REMOVE REFERENCES TO DEPENDENCY
                     if (dependency_idx !== -1) task.dependencies.splice(dependency_idx, 1);
                 }
                 return task;

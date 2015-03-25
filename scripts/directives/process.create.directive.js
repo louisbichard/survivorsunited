@@ -41,6 +41,11 @@ SU.directive('d3CreateProcess', function() {
                         },
                         // CONFIG FOR A BUTTON
                         {
+                            events: {
+                                'click': function(id) {
+                                    return process_designer.handlers.drag.addDependency(id);
+                                }
+                            },
                             css_classes: ['button_circle', 'hide', 'e-resize'],
                             label_classes: ['button_label', 'hide', 'e-resize'],
                             label_text: 'D',
@@ -171,6 +176,33 @@ SU.directive('d3CreateProcess', function() {
                 },
                 handlers: {
                     drag: {
+                        addDependency: function(id) {
+                            canvas.select('#add_dependency_line').remove();
+
+                            var node_coordinates = d3.transform(canvas.select('#task-' + id).attr("transform")).translate;
+                            var offset = process_designer.config.task.location_offset;
+                            var mouse_coordinates = [0, 0];
+
+                            canvas.on('mousemove', function(e) {
+                                mouse_coordinates = d3.mouse(this);
+
+                                canvas.select('#add_dependency_line').remove();
+                                process_designer.drawDependencyLine({
+                                    start: {
+                                        x: node_coordinates[0] + offset,
+                                        y: node_coordinates[1] + offset
+                                    },
+                                    end: {
+                                        x: mouse_coordinates[0],
+                                        y: mouse_coordinates[1]
+                                    },
+                                    id: 'add_dependency_line'
+                                });
+                            });
+
+
+                            console.log('add dependency');
+                        },
                         moveElementToMouseLocation: function(element, coordinates) {
                             return d3.select(element)
                                 .attr("transform",
@@ -218,6 +250,23 @@ SU.directive('d3CreateProcess', function() {
                         x: g_x + process_designer.config.task.location_offset
                     };
                 },
+                drawDependencyLine: function(options) {
+                    options = _.defaults(options, {
+                        start: {},
+                        end: {}
+                    });
+
+                    canvas
+                        .insert("line", ":first-child")
+                        .classed('dependency-line', true)
+                        .style("stroke", "black")
+                        .style("stroke-width", "5")
+                        .attr("id", options.id)
+                        .attr("x1", options.start.x || 0)
+                        .attr("y1", options.start.y || 0)
+                        .attr("x2", options.end.x || 0)
+                        .attr("y2", options.end.y || 0);
+                },
                 drawLines: function() {
                     var process_designer = this;
                     _.each(scope.tasks, function(curr) {
@@ -227,16 +276,12 @@ SU.directive('d3CreateProcess', function() {
                             var node = canvas.select('#task-' + id);
                             var end = process_designer.getGroupNodeLocation(node);
 
+                            process_designer.drawDependencyLine({
+                                start: start,
+                                end: end
+                            });
                             // Draw line between dependent nodes
-                            canvas
-                                .insert("line", ":first-child")
-                                .classed('dependency-line', true)
-                                .style("stroke", "black")
-                                .style("stroke-width", "5")
-                                .attr("x1", start.x)
-                                .attr("y1", start.y)
-                                .attr("x2", end.x)
-                                .attr("y2", end.y);
+
                         });
                     });
                 },

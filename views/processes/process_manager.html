@@ -7,8 +7,11 @@
 </div>
 <div class="row">
     <div class="col-lg-6">
-        <accordion close-others="false">
-            <accordion-group heading="Process details ({{process._id}})" is-open="true">
+        <div class="widget">
+            <div class="widget-header">
+                Process manager
+            </div>
+            <div class="widget-body">
                 <p class="no-padding"> Created: {{process.date_created}} || Updated: {{process.date_updated}} || Created by: //todo </p>
                 <div class="row">
                     <div class="col-md-12 col-lg-12">
@@ -27,16 +30,18 @@
                         <label class="text-center">Publish</label>
                     </div>
                     <div class="col-md-2">
-                        {{process.published}}
                         <a><i ng-click="processActions.publish()" ng-class="{'fa-circle-o': !process.published, 'fa-check-circle-o': process.published}" class="fa fa-2x pull-right"></i></a>
                     </div>
                 </div>
-            </accordion-group>
-        </accordion>
+            </div>
+        </div>
     </div>
     <div class="col-lg-6">
-        <accordion close-others="false">
-            <accordion-group heading="Assignees" is-open="true">
+        <div class="widget">
+            <div class="widget-header">
+                Assignees
+            </div>
+            <div class="widget-body">
                 <div class="row">
                     <div class="col-md-12 col-lg-12">
                         <div class="form-group">
@@ -77,85 +82,27 @@
                                 <div class="col-md-12">
                                     <button ng-click="assigneeActions.addNewAssignee(assignee_to_add)" class="pull-right btn btn-success btn-block">
                                         <i class="fa fa-plus"></i> Add new assignee
+
                                     </button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </accordion-group>
-        </accordion>
-    </div>
-</div>
-<div class="row">
-    <div class="col-lg-12">
-        <accordion close-others="false">
-            <accordion-group heading="Task details (Last updated: 25/03/2015)" is-open="true">
-                <!-- 
-            TODO: FOR SOME REASON THE OVERFLOW CLASS ISN'T BEING APPLIED AND THEREFORE IS INLINE,
-            TRY TO RESOLVE AND REMOVE
-             -->
-                <div class="show" ng-show="process.tasks.length === 0">
-                    <p>There are currently no tasks for this process</p>
-                </div>
-                <div class="overflow-scroll-x row" style="overflow-x: scroll" ng-hide="process.tasks.length === 0">
-                    <div class="col-md-12 col-lg-12">
-                        <div class="form-group">
-                            <table class="table table-striped">
-                                <thead>
-                                    <th class="text-center">name (id)</th>
-                                    <th class="text-center">description</th>
-                                    <th class="text-center">content</th>
-                                    <th class="text-center">dependencies</th>
-                                </thead>
-                                <tbody>
-                                    <tr ng-repeat="task in process.tasks">
-                                        <td class="text-center">{{task.name}} ({{task.id}})</td>
-                                        <td class="text-center">{{task.description}}</td>
-                                        <td class="text-center">
-                                            <a href="#task_editor/{{process._id}}/{{task.id}}">
-                                                <button class="btn btn-primary btn-sm">
-                                                    <i class="fa fa-pencil"></i> Edit
-                                                </button>
-                                            </a>
-                                        </td>
-                                        <td class="text-center">
-                                            <select ng-model="process.tasks[$index].dependencies" class="form-control" multiple>
-                                                <option value="{{task.id}}" ng-repeat="task in process.tasks">{{task.name}}</option>
-                                            </select>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-            </accordion-group>
-        </accordion>
+            </div>
         </div>
     </div>
 </div>
-
-<div class="row">
-    <div class="col-lg-12">
-        <accordion close-others="false">
-            <accordion-group heading="Create task" is-open="true">
-                <div class="overflow-scroll-x row" style="overflow-x: scroll">
-                    <div class="col-md-12 col-lg-12">
-                        <button class="btn btn-primary" ng-click="taskActionsTemp.addToProcess()"> 
-                            Add new task
-                        </button>
-                    </div>
-            </accordion-group>
-        </accordion>
-        </div>
-    </div>
-</div>
-
 <div class="row">
     <div class="col-lg-12">
         <div class="widget">
-            <div class="widget-header">
+            <div class="widget-header">                
                 Task dependencies ({{process.tasks.length}})
+                
+                <button class="btn btn-primary pull-right" ng-click="taskActionsTemp.addToProcess()">
+                    <i class="fa fa-plus"></i>
+                    Add new task
+                </button>
             </div>
             <div class="widget-body">
                 <div class="process_manager" d3-create-process tasks="process.tasks" actions="taskActions"></div>
