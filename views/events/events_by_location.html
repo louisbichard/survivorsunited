@@ -7,27 +7,7 @@
 </div>
 
 <div class="row">
-    <div class="col-xs-6 col-sm-6 col-md-4">
-        <div class="widget small">
-            <div class="widget widget-header">
-                Events
-            </div>
-            <div class="widget widget-body full">
-                <div ng-repeat="event in events">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <h4>{{event.title}} </h4>
-                            <p>{{event.description}} </p>
-                            <button class="btn pull-right btn-sm btn-accent" ng-click="renderMap(event.postcode)">
-                                <i class="fa fa-map-marker"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-xs-6 col-sm-6 col-md-8">
+    <div class="col-xs-12 col-sm-12 col-md-12">
         <ui-gmap-google-map class="animated slideInLeft" center='map.coords' zoom='map.zoom'>
             <ui-gmap-marker coords="map.coords" idkey="0">
             </ui-gmap-marker>

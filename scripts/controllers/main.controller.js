@@ -61,12 +61,7 @@ SU.controller('mainController', function($scope, apiService, $location, notifySe
     };
 
     $scope.routeToLogin = function() {
-        $location.path('/login');
-    };
-
-    $scope.successfulLogin = function(input) {
-        window.location = "http://" + window.location.hostname + '#/dashboard';
-        return input;
+        window.location = "http://" + window.location.hostname + '#/login';
     };
 
     $scope.bindUserToScope = function(user) {
@@ -97,7 +92,9 @@ SU.controller('mainController', function($scope, apiService, $location, notifySe
             .post('/auth/login', user, {
                 preventNotifications: true
             })
-            .then($scope.successfulLogin)
+            .then(function() {
+                return window.location = "http://" + window.location.hostname + '#/dashboard';
+            })
             .caught(notifyService.error);
     };
 

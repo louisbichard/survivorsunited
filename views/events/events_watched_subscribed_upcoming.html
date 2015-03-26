@@ -5,7 +5,6 @@
         </div>
     </div>
 </div>
-
 <!-- SEARCH INPUT -->
 <div class="row">
     <div class="col-lg-12">
@@ -29,13 +28,20 @@
                                     <div class="panel panel-default">
                                         <div class="panel-body">
                                             <div class="row">
-                                                <div class="col-md-8 col-lg-8">
+                                                <div class="col-md-7 col-lg-7">
                                                     <h3>{{event.title}}</h3>
+                                                    <div ng-show="user_details.role !== 'Basic'">            
+                                                        <p class="no-padding">
+                                                            <a href="#users_watching_event?id={{event._id}}&type=attending">Attendee's list</a> ||
+                                                            <a href="#users_watching_event?id={{event._id}}&type=watching">Watchers list</a>
+                                                        </p>
+                                                    </div>
                                                 </div>
-                                                <div class="col-md-2">
-                                                    <h3>
-                                                        <a href="#events_by_location/{{event._id}}"><i class="fa fa-map-marker"></i></a>
-                                                    </h3>
+                                                <div class="col-md-3">
+                                                    <br>
+                                                    <a href="#events_by_location/{{event._id}}"><i class="fa fa-map-marker">
+                                                            View on map
+                                                        </i></a>
                                                 </div>
                                                 <div class="col-md-2">
                                                     <h3 class="pull-right">£{{event.price}}</h3>
@@ -45,10 +51,6 @@
                                                 <div class="col-md-6 col-lg-6">
                                                     <h4>Description</h4>
                                                     <p>{{event.description}}</p>
-                                                    <p class="no-padding">
-                                                        <a href="#users_watching_event?id={{event._id}}&type=attending">Attendee's list</a> ||
-                                                        <a href="#users_watching_event?id={{event._id}}&type=watching">Watchers list</a>
-                                                    </p>
                                                 </div>
                                                 <div class="col-md-6 col-lg-6">
                                                     <p class="no-padding">
@@ -61,7 +63,6 @@
                                                     <p class="no-padding">
                                                         <strong>Time:</strong>&nbsp;{{event.start}}&nbsp;-&nbsp;{{event.end}}
                                                     </p>
-
                                                 </div>
                                             </div>
                                             <div class="row">

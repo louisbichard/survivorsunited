@@ -10,7 +10,7 @@ SU.service("navigationRoutesService", function() {
             "route": "mentees",
             "label": "Mentees",
             "icon": "male",
-            "allowed_roles": ["Mentor"]
+            "allowed_roles": ["Mentor", "Admin"]
         }, {
             "route": "mentor",
             "label": "Mentor",
@@ -41,11 +41,6 @@ SU.service("navigationRoutesService", function() {
             "route": "events_calendar",
             "label": "Events Calendar",
             "icon": "calendar",
-            "allowed_roles": ["Mentor", "Admin", "Basic"]
-        }, {
-            "route": "events_by_location",
-            "label": "By Location",
-            "icon": "map-marker",
             "allowed_roles": ["Mentor", "Admin", "Basic"]
         }]
     }, {

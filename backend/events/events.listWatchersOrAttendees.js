@@ -58,6 +58,7 @@ module.exports = function(req, res) {
             }, {
                 first_name: true,
                 last_name: true,
+                role: true,
                 severity_grade: true
             }]);
         };

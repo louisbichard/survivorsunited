@@ -33,7 +33,12 @@
                     <div class="col-lg-12">
                         <div class="row">
                             <div class="col-md-4">
-                                <img class="img-responsive" src="{{contact.img}}">
+                                <div ng-show="contact.img">
+                                    <img class="img-responsive" src="{{contact.img}}">
+                                </div>
+                                <div ng-show="!contact.img">
+                                    <img class="img-responsive" src="../../assets/img/img_placeholder.jpg">
+                                </div>
                             </div>
                             <div class="col-md-8">
                                 <p class="no-padding">
@@ -43,7 +48,7 @@
                                 </p>
                                 <p class="no-padding"> <strong>Account since:</strong> &nbsp; {{contact.date_created}}
                                 </p>
-<!--                                 <p class="no-padding"> <strong>Last logon:</strong> &nbsp; //TODO
+                                <!--                                 <p class="no-padding"> <strong>Last logon:</strong> &nbsp; //TODO
                                 </p> -->
                             </div>
                         </div>
@@ -51,7 +56,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <strong>Biography</strong>
-                                <p>  {{contact.biography}} </p>        
+                                <p> {{contact.biography}} </p>
                             </div>
                         </div>
                     </div>
