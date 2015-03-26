@@ -6,7 +6,6 @@ SU.controller('processManagerController', function($scope, apiService, utilitySe
             this.getAllUsers();
             this.refreshProcess();
             this.watchAssigneesForChanges();
-            this.watchTasksForChanges();
         },
         users: [], // TO BE POPULATED WHEN THE DB CALL IS MADE
         setupNewAssignee: function() {
@@ -58,14 +57,6 @@ SU.controller('processManagerController', function($scope, apiService, utilitySe
                     process_manager.removeAlreadyAllocatedUsers();
                 }
             });
-        },
-        watchTasksForChanges: function() {
-            $scope.$watch('process.tasks', function() {
-                // PREVENT ANUGLAR FROM TRYING TO UPDATE THE DB ON LOAD
-                if ($scope.process !== undefined) {
-                    process_manager.syncroniseDatabaseTasks();
-                }
-            }, true);
         }
     };
 
@@ -111,7 +102,7 @@ SU.controller('processManagerController', function($scope, apiService, utilitySe
     };
 
     $scope.taskActions = {
-        editContent: function(task_id){
+        editContent: function(task_id) {
             console.log('edit content');
             $location.path('/task_editor/' + $scope.process._id + '/' + task_id);
         },
@@ -130,6 +121,29 @@ SU.controller('processManagerController', function($scope, apiService, utilitySe
                 return task;
             });
             notifyService.success('Removed task successfully');
+            process_manager.syncroniseDatabaseTasks();
+        },
+        addDependency: function(start_id, end_id) {
+            var origin_idx = _.findIndex($scope.process.tasks, {
+                id: start_id
+            });
+            var dependency_idx = _.findIndex($scope.process.tasks, {
+                id: end_id
+            });
+
+            var already_in_dependency = $scope.process.tasks[origin_idx].dependencies.indexOf(end_id) > -1;
+            var is_cyclical = $scope.process.tasks[dependency_idx].dependencies.indexOf(start_id) > -1;
+
+            if (already_in_dependency) {
+                notifyService.warning('Task already a dependency');
+            } else if (is_cyclical) {
+                notifyService.warning('Cannot define cyclical dependencies');
+            } else if (!already_in_dependency) {
+                $scope.process.tasks[origin_idx].dependencies.push(end_id);
+                notifyService.success('Added task dependency');
+            }
+
+            process_manager.syncroniseDatabaseTasks();
         }
     };
 
@@ -139,10 +153,11 @@ SU.controller('processManagerController', function($scope, apiService, utilitySe
                 id: uuid.v4(),
                 name: 'A new task',
                 description: 'No description yet given',
-                tasks: [] // SET UP DEFAULT INCASE THE PROCESS HAS NONE
+                dependencies: [] // SET UP DEFAULT INCASE THE PROCESS HAS NONE
             });
 
             notifyService.success('Added task to process');
+            process_manager.syncroniseDatabaseTasks();
         }
     };
 

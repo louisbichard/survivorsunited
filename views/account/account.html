@@ -5,7 +5,6 @@
         </div>
     </div>
 </div>
-
 <div class="row">
     <div class="col-md-6 col-lg-6">
         <!-- ACCOUNT DETAILS -->
@@ -71,7 +70,6 @@
                     <div class="col-lg-12">
                         <div class="input-group">
                             <label>Escape URL</label>
-
                             <input value="{{user.escape_url}}" ng-model="user.escape_url" class="form-control" rows="3" placeholder="http://..." ng-change="userFieldChanged()"></input>
                             <span popover="This will override the functionality of the logo in the top left, allowing you to quickly 'escape' the website to somewhere less conspicuous" popover-trigger="mouseenter" popover-placement="right" class="input-group-addon">?</span>
                         </div>
@@ -81,7 +79,6 @@
                             <input value="{{user.site_name}}" ng-model="user.site_name" class="form-control" rows="3" placeholder="Mums online" ng-change="userFieldChanged()"></input>
                             <span popover="This will override the name of the site, to rebrand it as something less conspicuous" popover-trigger="mouseenter" popover-placement="right" class="input-group-addon">?</span>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -90,7 +87,7 @@
     <div class="col-md-6 col-lg-6">
         <div class="widget">
             <div class="widget-header">
-                <i class="fa fa-file-picture-o"></i> Biography
+                <i class="fa fa-file-picture-o"></i> Image
             </div>
             <div class="widget-body no-padding">
                 <br>
@@ -99,6 +96,20 @@
                         <img class="img-responsive" src="{{user.img}}" />
                         <input value="{{user.img}}" ng-model="user.img" class="form-control" placeholder="Image URL" ng-change="userFieldChanged()">
                         <!-- <button type="submit" class="full-width btn btn-default">Upload</button> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="widget">
+            <div class="widget-header">
+                <i class="fa fa-file-picture-o"></i> Biography
+            </div>
+            <div class="widget-body no-padding">
+                <br>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <input value="{{user.biography}}" ng-model="user.biography" class="form-control" placeholder="Biography" ng-change="userFieldChanged()">
                     </div>
                 </div>
             </div>

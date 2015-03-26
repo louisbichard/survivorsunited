@@ -49,8 +49,8 @@
                     <input id="searchBox" ng-enter="runSearch()" ng-model="search_text" class="form-control" placeholder="Search ...">
                 </li>
 
-                <span ng-repeat="nav_values in navigation_routes">                    
-                    <li class="sidebar-title ">
+                <span ng-repeat="nav_values in navigation_routes" ng-show="canViewNavHeading(nav_values, user_details.role)">
+                    <li class="sidebar-title">
                         <span class="">{{nav_values.group_title}}</span>                        
                     </li>
                     <li class="sidebar-list" ng-class="{'sidebar-selected': current_location === nav_link.route}" ng-repeat="nav_link in nav_values.sub_routes" ng-show="canViewNavLink(nav_link.allowed_roles, user_details.role)">

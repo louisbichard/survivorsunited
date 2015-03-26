@@ -4,6 +4,13 @@ SU.controller('mainController', function($scope, apiService, $location, notifySe
 
     $scope.referral = {};
 
+    $scope.canViewNavHeading = function(nav_values, role) {
+        return _.reduce(nav_values.sub_routes, function(prev, link) {
+            if (link.allowed_roles.indexOf(role) > -1) prev = true;
+            return prev;
+        }, false);
+    };
+
     $scope.canViewNavLink = function(allowed_roles, role) {
         //return true;
         return allowed_roles.indexOf(role) > -1;
@@ -58,10 +65,7 @@ SU.controller('mainController', function($scope, apiService, $location, notifySe
     };
 
     $scope.successfulLogin = function(input) {
-        $scope.$apply(function() {
-            $location.path('/dashboard');
-            $scope.anonymous_user = false;
-        });
+        window.location = "http://" + window.location.hostname + '#/dashboard';
         return input;
     };
 

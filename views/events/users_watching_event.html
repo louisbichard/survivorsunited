@@ -1,15 +1,16 @@
 <div class="row">
     <div class="col-md-12 col-lg-12">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h4>Users {{type}} "{{event_title}}" 
-                    <button class="btn btn-accent pull-right"> 
-                        Print&nbsp;
-                        <i class="fa fa-print"></i>
-                    </button>
-                </h4>
+        <div class="widget">
+            <div class="widget-header">
+                Users {{type}} event: &nbsp;
+                <i class="fa fa-quote-left"></i> {{event_title}}
+                <i class="fa fa-quote-right"></i>
+                <button class="btn btn-accent pull-right">
+                    Print&nbsp;
+                    <i class="fa fa-print"></i>
+                </button>
             </div>
-            <div class="panel-body">
+            <div class="widget-body">
                 <div ng-if="error_message" class="alert alert-danger" role="alert">
                     <h4> Something went wrong </h4> Could not fetch users, please try again
                 </div>

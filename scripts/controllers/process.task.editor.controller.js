@@ -16,7 +16,8 @@ SU.controller('taskEditorController', function($scope, apiService, utilityServic
                 })
                 .then(this.findTaskInArray)
                 .then(function(task) {
-                    $scope.content = task.content;
+                    console.log(task);
+                    $scope.task_details = task;
                 })
                 .caught(function() {
                     // TODO: MAKE THIS BETTER
@@ -25,13 +26,37 @@ SU.controller('taskEditorController', function($scope, apiService, utilityServic
         }
     };
 
+    $scope.updateNameAndDescription = function() {
+        console.log('save name and description here', $scope.task_details);
+
+
+
+
+        var payload = {
+            task_id: $scope.config.task_id,
+            process_id: $scope.config.process_id,
+            name: $scope.task_details.name,
+            description: $scope.task_details.description
+        };
+
+        apiService.post('/process/task/update/name_and_description', payload)
+            .then(function() {
+                notifyService.success('Updated name and description');
+            })
+            .caught(function() {
+                console.log('save contnet updates');
+            });
+
+
+    };
+
     $scope.saveContent = function() {
         console.log('save content');
 
         var payload = {
             task_id: $scope.config.task_id,
             process_id: $scope.config.process_id,
-            content: $scope.content
+            content: $scope.task_details.content
         };
 
         apiService.post('/process/task/update/content', payload)

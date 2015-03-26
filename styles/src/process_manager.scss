@@ -1,4 +1,7 @@
 .process_manager {
+    .dependency-line {
+        cursor: pointer;
+    }
     .task_node, .task_node_label {
         cursor: move;
     }
@@ -17,3 +20,4 @@
         cursor: e-resize;
     }
 }
+

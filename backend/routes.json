@@ -132,6 +132,11 @@
             "file_path": "./../events/events.listall.js"
         }
     },
+    "/events/read/watchingandattending": {
+        "get": {
+            "file_path": "./../events/read/events.read.watchingorattending.js"
+        }
+    },
     "/events/listWatchersOrAttendees": {
         "get": {
             "file_path": "./../events/events.listWatchersOrAttendees.js"
@@ -255,6 +260,26 @@
                     "type": "object_id"
                 },
                 "content": {
+                    "type": "string"
+                }
+            }
+        }
+    },
+
+    "/process/task/update/name_and_description": {
+        "post": {
+            "file_path": "./../process/update/task.update.name_and_description.js",
+            "parameters": {
+                "task_id": {
+                    "type": "string"
+                },
+                "process_id": {
+                    "type": "object_id"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "description": {
                     "type": "string"
                 }
             }

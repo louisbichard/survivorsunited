@@ -414,6 +414,8 @@ input.valid {
 .angular-google-map-container {
   height: 96%; }
 
+.process_manager .dependency-line {
+  cursor: pointer; }
 .process_manager .task_node, .process_manager .task_node_label {
   cursor: move; }
 .process_manager .button_circle.pointer {
@@ -426,6 +428,20 @@ input.valid {
   cursor: e-resize; }
 .process_manager .button_label.e-resize {
   cursor: e-resize; }
+
+div.instant_messenger div.message_bar {
+  bottom: 0px;
+  align-content: center; }
+div.instant_messenger input.form-control {
+  padding-left: 20px;
+  padding-bottom: 15px;
+  padding-top: 15px;
+  border-bottom: 0px;
+  border-top: #4DD0E1;
+  border-top-width: 1px;
+  border-top-style: solid; }
+div.instant_messenger span.input-group-addon {
+  padding: 0px; }
 
 .text-white {
   color: #FFFFFF; }

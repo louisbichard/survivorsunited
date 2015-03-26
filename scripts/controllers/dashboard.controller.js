@@ -28,6 +28,7 @@ SU.controller('dashboardController', function($scope, apiService, notifyService,
 
         init: function() {
             this.getProcesses();
+            this.getEvents();
         },
         taskActions: {
             update_status: function(process_id, task_id, is_complete) {
@@ -43,6 +44,20 @@ SU.controller('dashboardController', function($scope, apiService, notifyService,
                     // TODO: MAKE A BETTER ERROR HANDLE HERE
                 });
             }
+        },
+        filterEvents: function(events, prop, user_id) {
+            return _.filter(events, function(event_details){
+                return event_details[prop].indexOf(user_id) > -1;
+            });
+        },
+        getEvents: function() {
+            apiService.get('/events/listall')
+                .then(function(events) {
+                      $scope.filtered_events = {
+                        attending: dashboard_module.filterEvents(events, 'attending', $scope.user_details._id),
+                        watching: dashboard_module.filterEvents(events, 'watching',  $scope.user_details._id)
+                    };
+                });
         },
         getProcesses: function() {
             return apiService.get('/process/assigned_to_me')

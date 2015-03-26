@@ -6,7 +6,7 @@
     </div>
 </div>
 <div class="row">
-    <div class="col-lg-6">
+    <div class="col-lg-4">
         <div class="widget">
             <div class="widget-header">
                 Process manager
@@ -35,8 +35,7 @@
                 </div>
             </div>
         </div>
-    </div>
-    <div class="col-lg-6">
+        <br>
         <div class="widget">
             <div class="widget-header">
                 Assignees
@@ -82,7 +81,6 @@
                                 <div class="col-md-12">
                                     <button ng-click="assigneeActions.addNewAssignee(assignee_to_add)" class="pull-right btn btn-success btn-block">
                                         <i class="fa fa-plus"></i> Add new assignee
-
                                     </button>
                                 </div>
                             </div>
@@ -92,20 +90,20 @@
             </div>
         </div>
     </div>
-</div>
-<div class="row">
-    <div class="col-lg-12">
-        <div class="widget">
-            <div class="widget-header">                
-                Task dependencies ({{process.tasks.length}})
-                
-                <button class="btn btn-primary pull-right" ng-click="taskActionsTemp.addToProcess()">
-                    <i class="fa fa-plus"></i>
-                    Add new task
-                </button>
-            </div>
-            <div class="widget-body">
-                <div class="process_manager" d3-create-process tasks="process.tasks" actions="taskActions"></div>
+    <div class="col-md-8">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="widget">
+                    <div class="widget-header">
+                        Task dependencies ({{process.tasks.length}})
+                        <button class="btn btn-primary pull-right" ng-click="taskActionsTemp.addToProcess()">
+                            <i class="fa fa-plus"></i> Add new task
+                        </button>
+                    </div>
+                    <div class="widget-body">
+                        <div class="process_manager" d3-create-process tasks="process.tasks" actions="taskActions"></div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
