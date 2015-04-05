@@ -402,7 +402,7 @@ textarea.form-control, input.form-control {
 .gold {
   color: gold; }
 
-input.ng-invalid {
+input.ng-invalid.ng-dirty {
   border-bottom-color: red; }
 
 input.valid {
