@@ -59,7 +59,8 @@ SU.config(function($routeProvider) {
 
     // FAQ
     .when('/faq', {
-        templateUrl: '../views/utilities/faq.html'
+        templateUrl: '../views/utilities/faq.html',
+        controller: 'faqController'
     })
 
     //MAIN NOTIFICATIONS PAGE

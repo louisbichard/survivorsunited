@@ -5,7 +5,6 @@ SU.controller('processManagerController', function($scope, apiService, utilitySe
             this.setupNewAssignee();
             this.getAllUsers();
             this.refreshProcess();
-            this.watchAssigneesForChanges();
         },
         users: [], // TO BE POPULATED WHEN THE DB CALL IS MADE
         setupNewAssignee: function() {
@@ -49,14 +48,6 @@ SU.controller('processManagerController', function($scope, apiService, utilitySe
                 console.log('caught error');
             });
 
-        },
-        watchAssigneesForChanges: function() {
-            $scope.$watch('process.assignees', function() {
-                if ($scope.process !== undefined) {
-                    process_manager.syncroniseDatabaseAsignees();
-                    process_manager.removeAlreadyAllocatedUsers();
-                }
-            });
         }
     };
 
@@ -83,6 +74,19 @@ SU.controller('processManagerController', function($scope, apiService, utilitySe
             assignees.push(assignee);
             assignees = _.uniq(assignees);
             $scope.process.assignees = assignees;
+            this.syncModel();
+        },
+        removeAssignee: function(assignee) {
+            var assignees = $scope.process.assignees;
+            var assignee_index = assignees.indexOf(assignee);
+            assignees.splice(assignee_index, 1);
+            $scope.process.assignees = assignees;
+            console.log('remove assignee');
+            this.syncModel();
+        },
+        syncModel: function() {
+            process_manager.syncroniseDatabaseAsignees();
+            process_manager.removeAlreadyAllocatedUsers();
         }
     };
 
@@ -103,8 +107,20 @@ SU.controller('processManagerController', function($scope, apiService, utilitySe
 
     $scope.taskActions = {
         editContent: function(task_id) {
-            console.log('edit content');
-            $location.path('/task_editor/' + $scope.process._id + '/' + task_id);
+            $scope.$apply(function() {
+                console.log('edit content');
+                $location.path('/task_editor/' + $scope.process._id + '/' + task_id);
+            });
+        },
+        removeDependency: function(origin, dependency) {
+            var task_index = _.findIndex($scope.process.tasks, {
+                id: origin
+            });
+            var dependencies = $scope.process.tasks[task_index].dependencies || [];
+            var dependency_index = dependencies.indexOf(dependency);
+            $scope.process.tasks[task_index].dependencies.splice(dependency_index, 1);
+            notifyService.success('Removed dependency successfully');
+            process_manager.syncroniseDatabaseTasks();
         },
         deleteTask: function(id) {
             console.log('remove task');

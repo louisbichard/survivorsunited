@@ -1,8 +1,12 @@
 .process_manager {
+    svg {
+        padding: 100px;
+    }
     .dependency-line {
         cursor: pointer;
     }
-    .task_node, .task_node_label {
+    .task_node,
+    .task_node_label {
         cursor: move;
     }
     .button_circle.pointer {
@@ -20,4 +24,3 @@
         cursor: e-resize;
     }
 }
-

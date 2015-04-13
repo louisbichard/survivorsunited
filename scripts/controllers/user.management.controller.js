@@ -97,7 +97,10 @@ SU.controller('userDetailsController', function($scope, apiService, utilityServi
         var changes = $scope.updated[user_id];
         changes.user_id = changes._id;
         changes = _.omit(changes, 'date_created');
-        apiService.post('/user/update', changes);
+        apiService.post('/user/update', changes)
+            .then(function() {
+                notifyService.success('updated details');
+            });
     };
 
     $scope.filterMentors = function(user) {

@@ -23,6 +23,9 @@ SU.controller('dashboardController', function($scope, apiService, notifyService,
         doneLabel: 'Thanks'
     };
 
+    $scope.capitalise = function(string){
+        return (string.charAt(0).toUpperCase() + string.slice(1));
+    };
 
     var dashboard_module = {
 

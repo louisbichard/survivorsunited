@@ -26,7 +26,7 @@ SU.directive('d3CreateProcess', function() {
                 config: {
                     task: {
                         // WHEN CREATING A TASK, THIS IS WHERE IT WILL APPEAR, (I.E 50 PIXELS FROM THE TOP & LEFT)
-                        location_offset: 100,
+                        location_offset: 0,
                         radius: 70
                     },
                     buttons: {
@@ -174,7 +174,9 @@ SU.directive('d3CreateProcess', function() {
                 },
                 handlers: {
                     removeDependency: function(){
-                        console.log('Remove dependency');
+                        var origin = d3.select(this)[0][0].attributes.origin_id.value;
+                        var dependency = d3.select(this)[0][0].attributes.dependency_id.value;
+                        scope.actions.removeDependency(origin, dependency);
                     },
                     completeDependency: function() {
                         // TODO: CHECK THAT IT IS NOT CLICKING ITSELF
