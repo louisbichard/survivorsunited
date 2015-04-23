@@ -2,6 +2,9 @@
 <link rel="shortcut icon" href="./assets/survivorsunited.ico" />
 
 <head>
+    <script type="text/javascript">
+    var timerStart = Date.now();
+    </script>
     <title>Survivors United Ltd.</title>
     <!-- ================FONTS=================== -->
     <link href='http://fonts.googleapis.com/css?family=Roboto:500,100,300' rel='stylesheet' type='text/css'>
@@ -22,7 +25,6 @@
     <link rel="stylesheet" type="text/css" href="styles/build/main.css">
     <link rel="stylesheet" type="text/css" href="styles/lib/animate.css">
     <link rel='stylesheet' href='/bower_components/textAngular/src/textAngular.css'>
-
 </head>
 
 <body ng-controller="mainController">
@@ -44,23 +46,19 @@
                         </span>
                     </a>
                 </li>
-                
                 <li class="sidebar-list sidebar-search">
                     <input id="searchBox" ng-enter="runSearch()" ng-model="search_text" class="form-control" placeholder="Search ...">
                 </li>
-
                 <span ng-repeat="nav_values in navigation_routes" ng-show="canViewNavHeading(nav_values, user_details.role)">
                     <li class="sidebar-title">
-                        <span class="">{{nav_values.group_title}}</span>                        
-                    </li>
-                    <li class="sidebar-list" ng-class="{'sidebar-selected': current_location === nav_link.route}" ng-repeat="nav_link in nav_values.sub_routes" ng-show="canViewNavLink(nav_link.allowed_roles, user_details.role)">
-                        <a href="#{{nav_link.route}}">
-                            <span class="menu-icon fa fa-{{nav_link.icon}}"></span>
-                            {{nav_link.label}}                            
-                        </a>
-                    </li>
+                        <span class="">{{nav_values.group_title}}</span>
+                </li>
+                <li class="sidebar-list" ng-class="{'sidebar-selected': current_location === nav_link.route}" ng-repeat="nav_link in nav_values.sub_routes" ng-show="canViewNavLink(nav_link.allowed_roles, user_details.role)">
+                    <a href="#{{nav_link.route}}">
+                        <span class="menu-icon fa fa-{{nav_link.icon}}"></span> {{nav_link.label}}
+                    </a>
+                </li>
                 </span>
-
             </ul>
             <div class="sidebar-footer">
                 <div class="col-xs-4">
@@ -185,7 +183,14 @@ var socket = io.connect('survivorsunited.dev:3000');
 <script src='/bower_components/textAngular/dist/textAngular-rangy.min.js'></script>
 <script src='/bower_components/textAngular/dist/textAngular-sanitize.min.js'></script>
 <script src='/bower_components/textAngular/dist/textAngular.min.js'></script>
-
+<script type="text/javascript">
+$(document).ready(function() {
+    console.log("Time until DOMready: ", Date.now() - timerStart);
+});
+$(window).load(function() {
+    console.log("Time until everything loaded: ", Date.now() - timerStart);
+});
+</script>
 </body>
 
 </html>
