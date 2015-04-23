@@ -30,7 +30,6 @@
                     <form name="create_process_form" ng-submit="createProcess()">
                         <div class="row">
                             <div class="col-md-12">
-                                {{new_process}}
                                 <label for="">Name</label>
                                 <input ng-model="new_process.name" class="form-control" type="text"></input>
                                 <label for="">Description</label>
@@ -39,12 +38,6 @@
                         </div>
                         <br>
                         <div class="row">
-                            <div class="col-md-6">
-                                <button type="submit" class="form-control btn btn-primary">
-                                    <i class="fa fa-save"></i>
-                                    <i class="fa fa-pencil"></i> Save & Edit
-                                </button>
-                            </div>
                             <div class="col-md-6">
                                 <button type="submit" class="form-control btn btn-success">
                                     <i class="fa fa-save"></i> Save

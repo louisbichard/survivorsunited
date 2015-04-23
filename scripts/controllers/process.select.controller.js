@@ -6,9 +6,22 @@ SU.controller('selectProcessController', function($scope, apiService, $location,
         }
     };
 
-    $scope.createProcess = function(){
+    $scope.createProcess = function() {
         console.log('Create process');
-        notifyService.success('todo make this work');
+
+        var new_process = _.extend($scope.new_process, {
+            assignees: [],
+            tasks: [],
+            published: 0
+        });
+
+        apiService.post('/process/create', new_process)
+            .then(function() {
+                notifyService.success('Process created');
+            }).caught(function() {
+                console.log('Process create failed');
+            });
+
     };
 
     var select_module = {

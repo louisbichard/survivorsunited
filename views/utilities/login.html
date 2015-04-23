@@ -20,13 +20,13 @@
             <br>
         </div>
     </div>
-    <div class="row background-dark text-white" ng-show="region === 'Bradford'">
+    <div class="row background-dark text-white" ng-show="region !== 'Leeds'">
         <div class="col-md-8 col-md-offset-2">
             <h3 class="text-white"> Oh no! </h3>
-            <p> Unfortunately Survivors United is only running in the Bradford area at the moment, if you are looking for support please visit: x resources</p>
+            <p> Unfortunately Survivors United is only running in the Leeds area at the moment, please check back later as we update the service to include your location</p>
         </div>
     </div>
-    <div class="row" ng-hide="region === 'Bradford'">
+    <div class="row" ng-hide="region != 'Leeds'">
         <div class="col-md-4 col-md-offset-1">
             <h3> Login </h3>
             <form name="login" ng-submit="mainLogin(user)">

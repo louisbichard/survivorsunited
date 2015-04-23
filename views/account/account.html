@@ -92,8 +92,12 @@
             <div class="widget-body no-padding">
                 <br>
                 <div class="row">
-                    <div class="col-lg-12">
+                    <div class="col-lg-3">
                         <img class="img-responsive" src="{{user.img}}" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
                         <input value="{{user.img}}" ng-model="user.img" class="form-control" placeholder="Image URL" ng-blur="updateContact('img', user.img)">
                         <!-- <button type="submit" class="full-width btn btn-default">Upload</button> -->
                     </div>

@@ -1,14 +1,18 @@
 <div class="row">
     <div class="col-md-12 col-lg-12">
+        <div class="top-panel">
+            <h5 class="text-secondary"> Events &nbsp; > &nbsp;<span class="text-accent"> Attendance list </span></h5>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-lg-12">
         <div class="widget">
             <div class="widget-header">
                 Users {{type}} event: &nbsp;
                 <i class="fa fa-quote-left"></i> {{event_title}}
                 <i class="fa fa-quote-right"></i>
-                <button class="btn btn-accent pull-right">
-                    Print&nbsp;
-                    <i class="fa fa-print"></i>
-                </button>
             </div>
             <div class="widget-body">
                 <div ng-show="users.length === 0">

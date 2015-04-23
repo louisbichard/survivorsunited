@@ -25,7 +25,9 @@
     <div class="col-lg-6">
         <div class="widget">
             <div class="widget-header" ng-class="{'red': contact.severity_grade === 'High', 'yellow': contact.severity_grade === 'Medium', 'blue': contact.severity_grade === 'Low' }">
-                {{contact.username}}({{contact._id}})
+                <span tooltip="{{contact._id}}" tooltip-placement="right">
+                    {{contact.username}}
+                </span>
             </div>
             <div class="widget-body large no-padding">
                 <br>
@@ -44,19 +46,15 @@
                                 <p class="no-padding">
                                     <strong>  Name: </strong> &nbsp; {{contact.first_name}} {{contact.last_name}}
                                 </p>
-                                <p class="no-padding"> <strong>Role:</strong> &nbsp; {{contact.role}}
+                                <p class="no-padding">
+                                    <strong>  Bio: </strong> &nbsp; {{contact.bio}}
                                 </p>
-                                <p class="no-padding"> <strong>Account since:</strong> &nbsp; {{contact.date_created}}
-                                </p>
+                                <!-- <p class="no-padding"> <strong>Role:</strong> &nbsp; {{contact.role}}
+                                </p> -->
+                                <!-- <p class="no-padding"> <strong>Account since:</strong> &nbsp; {{contact.date_created}}
+                                </p> -->
                                 <!--                                 <p class="no-padding"> <strong>Last logon:</strong> &nbsp; //TODO
                                 </p> -->
-                            </div>
-                        </div>
-                        <hr>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <strong>Biography</strong>
-                                <p> {{contact.biography}} </p>
                             </div>
                         </div>
                     </div>
