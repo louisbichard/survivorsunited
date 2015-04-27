@@ -93,43 +93,23 @@
             "file_path": "./../search/search.js"
         }
     },
-    "/chat": {
+    "/chat/send_message": {
         "post": {
-            "file_path": "./../chat/chat.js"
-        }
-    },
-    "/task/add": {
-        "post": {
-            "file_path": "./../tasks/task.add.js",
+            "file_path": "./../chat/update/chat.send.js",
             "parameters": {
-                "title": {
-                    "type": "string"
-                },
-                "assignees": {
-                    "type": "array"
-                },
-                "description": {
-                    "type": "string"
-                },
-                "actions": {
-                    "type": "array"
-                }
+                "sender": "string",
+                "reciever": "string",
+                "message": "string"
             }
         }
     },
-    "/tasks/listall": {
+    "/chat/get_messages": {
         "get": {
-            "file_path": "./../tasks/tasks.listall.js"
-        }
-    },
-    "/tasks/assigned": {
-        "get": {
-            "file_path": "./../tasks/tasks.assigned.js"
-        }
-    },
-    "/task/update": {
-        "post": {
-            "file_path": "./../tasks/task.update.js"
+            "file_path": "./../chat/read/chat.read.js",
+            "parameters": {
+                "sender": "string",
+                "reciever": "string"
+            }
         }
     },
     "/user/assigned_mentees": {
@@ -150,6 +130,11 @@
     "/events/listall": {
         "get": {
             "file_path": "./../events/events.listall.js"
+        }
+    },
+    "/events/read/watchingandattending": {
+        "get": {
+            "file_path": "./../events/read/events.read.watchingorattending.js"
         }
     },
     "/events/listWatchersOrAttendees": {
@@ -206,6 +191,166 @@
         "get": {
             "file_path": "./../email/email.sendtest.js"
         }
-    }
+    },
+    "/process/create": {
+        "post": {
+            "file_path": "./../process/create/process.create.js",
+            "parameters": {
+                "name": {
+                    "type": "string"
+                },
+                "published": {
+                    "type": "boolean"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "tasks": {
+                    "type": "array"
+                },
+                "assignees": {
+                    "type": "array"
+                }
+            }
+        }
+    },
+    "/process/read/all": {
+        "get": {
+            "file_path": "./../process/read/process.read.all.js",
+            "parameters": {}
+        }
+    },
+    "/process/read/getallids": {
+        "get": {
+            "file_path": "./../process/read/process.read.getallids.js",
+            "parameters": {}
+        }
+    },
+    "/process/read/get_by_id": {
+        "get": {
+            "file_path": "./../process/read/process.read.get_by_id.js",
+            "parameters": {
+                "id": {
+                    "type": "object_id"
+                }
+            }
+        }
+    },
+    "/process/update/publish": {
+        "post": {
+            "file_path": "./../process/update/process.publish.js",
+            "parameters": {
+                "id": {
+                    "type": "object_id"
+                },
+                "published": {
+                    "type": "boolean"
+                }
+            }
+        }
+    },
+    "/process/task/update/content": {
+        "post": {
+            "file_path": "./../process/update/task.content.update.js",
+            "parameters": {
+                "task_id": {
+                    "type": "string"
+                },
+                "process_id": {
+                    "type": "object_id"
+                },
+                "content": {
+                    "type": "string"
+                }
+            }
+        }
+    },
 
+    "/process/task/update/name_and_description": {
+        "post": {
+            "file_path": "./../process/update/task.update.name_and_description.js",
+            "parameters": {
+                "task_id": {
+                    "type": "string"
+                },
+                "process_id": {
+                    "type": "object_id"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                }
+            }
+        }
+    },
+    "/process/read/getalltasks": {
+        "get": {
+            "file_path": "./../process/read/process.read.getalltasks.js",
+            "parameters": {
+                "id": {
+                    "type": "object_id"
+                }
+            }
+        }
+    },
+    "/process/update/updatealltasks": {
+        "post": {
+            "file_path": "./../process/update/task.updateall.js",
+            "parameters": {
+                "id": {
+                    "type": "object_id"
+                },
+                "tasks": {
+                    "type": "array"
+                }
+            }
+        }
+    },
+    "/process/update/name_and_description": {
+        "post": {
+            "file_path": "./../process/update/process.update.name_and_description.js",
+            "parameters": {
+                "id": {
+                    "type": "object_id"
+                }
+            }
+        }
+    },
+    "/process/update/assignees": {
+        "post": {
+            "file_path": "./../process/update/process.update.assignees.js",
+            "parameters": {
+                "id": {
+                    "type": "object_id"
+                },
+                "assignees": {
+                    "type": "array"
+                }
+            }
+        }
+    },
+    "/process/assigned_to_me": {
+        "get": {
+            "file_path": "./../process/read/process.assigned_to_me.js",
+            "parameters": {}
+        }
+    },
+    "/process/update/task/completed_status": {
+        "post": {
+            "file_path": "./../process/update/task.update.completed_status.js",
+            "parameters": {
+                "process_id": {
+                    "type": "object_id"
+                },
+                "task_id": {
+                    "type": "string"
+                },
+                "is_complete": {
+                    "type": "boolean"
+                }
+            }
+        }
+    }
 }

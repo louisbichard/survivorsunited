@@ -1,3 +1,11 @@
+.invisible {
+  visibility: hidden; }
+
+div .overflow-scroll-x {
+  overflow-x: scroll; }
+div .overflow-scroll-y {
+  overflow-y: scroll; }
+
 .green {
   background: #23ae89 !important; }
 
@@ -242,9 +250,6 @@ ul.sidebar {
 #page-wrapper:not(.active) ul.sidebar {
   bottom: 0; }
 
-#page-wrapper:not(.active) ul.sidebar .sidebar-title {
-  display: none; }
-
 #page-wrapper:not(.active) ul.sidebar .sidebar-title.separator {
   display: block;
   height: 2px;
@@ -260,6 +265,7 @@ ul.sidebar {
 input#searchBox {
   color: #4DD0E1; }
 
+/* Animate sidebar moving/ removing */
 .btn {
   border-radius: 1px; }
 
@@ -396,7 +402,7 @@ textarea.form-control, input.form-control {
 .gold {
   color: gold; }
 
-input.ng-invalid {
+input.ng-invalid.ng-dirty {
   border-bottom-color: red; }
 
 input.valid {
@@ -407,6 +413,38 @@ input.valid {
 
 .angular-google-map-container {
   height: 96%; }
+
+.process_manager svg {
+  padding: 100px; }
+.process_manager .dependency-line {
+  cursor: pointer; }
+.process_manager .task_node,
+.process_manager .task_node_label {
+  cursor: move; }
+.process_manager .button_circle.pointer {
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+  cursor: pointer; }
+.process_manager .button_label.pointer {
+  cursor: pointer; }
+.process_manager .button_circle.e-resize {
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+  cursor: e-resize; }
+.process_manager .button_label.e-resize {
+  cursor: e-resize; }
+
+div.instant_messenger div.message_bar {
+  bottom: 0px;
+  align-content: center; }
+div.instant_messenger input.form-control {
+  padding-left: 20px;
+  padding-bottom: 15px;
+  padding-top: 15px;
+  border-bottom: 0px;
+  border-top: #4DD0E1;
+  border-top-width: 1px;
+  border-top-style: solid; }
+div.instant_messenger span.input-group-addon {
+  padding: 0px; }
 
 .text-white {
   color: #FFFFFF; }

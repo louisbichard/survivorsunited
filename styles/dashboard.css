@@ -141,11 +141,17 @@ ul.sidebar .sidebar-list {
 ul.sidebar .sidebar-list a:hover .menu-icon {
     text-indent: 25px;
 }
-ul.sidebar .sidebar-list .menu-icon {
+div.#page-wrapper.active > ul.sidebar .sidebar-list .menu-icon {
     float: right;
     padding-right: 29px;
     line-height: 40px;
     width: 70px;
+}
+div.#page-wrapper > ul.sidebar .sidebar-list .menu-icon {
+    float: left;
+    padding-right: 29px;
+    line-height: 40px;
+    width: 10px;
 }
 #page-wrapper:not(.active) ul.sidebar {
     bottom: 0;

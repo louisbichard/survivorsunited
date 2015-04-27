@@ -58,7 +58,7 @@
                         <!-- USERS -->
                         <div ng-if="search_area_name==='users' ">
                             <div ng-repeat="search_record in search_area_results ">
-                                <a ng-click="goToItem( '/user_management/search'+ search_record._id) ">
+                                <a ng-click="goToItem( '/user_management/search/'+ search_record._id) ">
                                     <h4>{{search_record.first_name}} {{search_record.last_name}} ({{search_record.username}}) </h4>
                                 </a>
 

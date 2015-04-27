@@ -24,7 +24,7 @@ module.exports = function(args) {
                 result: "Access denied for anonymous users, please login"
             });
         },
-        success: function(message) {
+        success: function(message) {            
             var construct_response = JSON.stringify({
                 success: true,
                 result: message

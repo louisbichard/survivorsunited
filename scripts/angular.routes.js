@@ -19,8 +19,8 @@ SU.config(function($routeProvider) {
 
     // MENTOR
     .when('/mentor', {
-        templateUrl: '../views/main/mentor.html',
-        controller: 'mentorController'
+        templateUrl: '../views/main/mentees.html',
+        controller: 'menteesController'
     })
 
     // MENTEES
@@ -59,7 +59,8 @@ SU.config(function($routeProvider) {
 
     // FAQ
     .when('/faq', {
-        templateUrl: '../views/utilities/faq.html'
+        templateUrl: '../views/utilities/faq.html',
+        controller: 'faqController'
     })
 
     //MAIN NOTIFICATIONS PAGE
@@ -79,28 +80,25 @@ SU.config(function($routeProvider) {
         templateUrl: '../views/utilities/credits.html'
     })
 
-    ////////////
-    // TASKS  //
-    ////////////
-
-    .when('/add_task', {
-        templateUrl: '../views/tasks/add_task.html',
-        controller: 'addTaskController'
+    // PROCESSES
+    .when('/complete_task/:process_id/:task_id', {
+        templateUrl: '../views/processes/complete_task.html',
+        controller: 'completeTaskController'
     })
 
-    .when('/task_management', {
-        templateUrl: '../views/tasks/task_management.html',
-        controller: 'taskManagementController'
+    .when('/select_process', {
+        templateUrl: '../views/processes/select_process.html',
+        controller: 'selectProcessController'
     })
 
-    .when('/task_management/:url_search', {
-        templateUrl: '../views/tasks/task_management.html',
-        controller: 'taskManagementController'
+    .when('/process_manager/:process_id', {
+        templateUrl: '../views/processes/process_manager.html',
+        controller: 'processManagerController'
     })
 
-    .when('/task_allocation', {
-        templateUrl: '../views/tasks/task_allocation.html',
-        controller: 'taskManagementController' // TODO: UPDATE THIS
+    .when('/task_editor/:process_id/:task_id', {
+        templateUrl: '../views/processes/task_editor.html',
+        controller: 'taskEditorController'
     })
 
     ////////////

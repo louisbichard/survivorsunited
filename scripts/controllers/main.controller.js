@@ -1,6 +1,20 @@
-SU.controller('mainController', function($scope, apiService, $location, notifyService) {
+SU.controller('mainController', function($scope, apiService, $location, notifyService, navigationRoutesService) {
+
+    $scope.navigation_routes = navigationRoutesService.routes;
 
     $scope.referral = {};
+
+    $scope.canViewNavHeading = function(nav_values, role) {
+        return _.reduce(nav_values.sub_routes, function(prev, link) {
+            if (link.allowed_roles.indexOf(role) > -1) prev = true;
+            return prev;
+        }, false);
+    };
+
+    $scope.canViewNavLink = function(allowed_roles, role) {
+        //return true;
+        return allowed_roles.indexOf(role) > -1;
+    };
 
     // WATCH FOR NAV CHANGES AND SETUP SCOPE FOR LEFT PANEL TABBING HIGHLIGHTING
     $scope.region = "Select region";
@@ -35,24 +49,19 @@ SU.controller('mainController', function($scope, apiService, $location, notifySe
         }
     };
 
+    /* Remove if you don't want to animate the sidebar */
+    $scope.sidebar = {
+        toggle: function(show_sidebar) {
+            //$scope.toggle = show_sidebar;
+        }
+    };
+
     $scope.runSearch = function() {
         $location.path('/search/' + $scope.search_text);
     };
 
-    $scope.toggleSidebar = function() {
-        $scope.toggle = !$scope.toggle;
-    };
-
     $scope.routeToLogin = function() {
-        $location.path('/login');
-    };
-
-    $scope.successfulLogin = function(input) {
-        $scope.$apply(function() {
-            $location.path('/dashboard');
-            $scope.anonymous_user = false;
-        });
-        return input;
+        window.location = "http://" + window.location.hostname + '#/login';
     };
 
     $scope.bindUserToScope = function(user) {
@@ -83,7 +92,9 @@ SU.controller('mainController', function($scope, apiService, $location, notifySe
             .post('/auth/login', user, {
                 preventNotifications: true
             })
-            .then($scope.successfulLogin)
+            .then(function() {
+                return window.location = "http://" + window.location.hostname + '#/dashboard';
+            })
             .caught(notifyService.error);
     };
 

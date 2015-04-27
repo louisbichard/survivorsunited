@@ -23,41 +23,119 @@ SU.controller('dashboardController', function($scope, apiService, notifyService,
         doneLabel: 'Thanks'
     };
 
-    $scope.passScopeToSetup = function(results) {
-        $scope.user = results.user;
-        $scope.tasks = results.tasks;
-        $scope.pending_tasks = userDataService.countStatus(results.tasks, 'open', $scope.user);
-        $scope.complete_tasks = userDataService.countStatus(results.tasks, 'closed', $scope.user);
+    $scope.capitalise = function(string){
+        return (string.charAt(0).toUpperCase() + string.slice(1));
     };
 
-    $scope.bootstrap = function() {
-        return Promise.props({
-                tasks: apiService.get('/tasks/listall', {
-                    user: 'current'
-                }, {
-                    preventNotifications: true
-                }),
-                user: apiService.get('/user/current', null, {
-                    preventNotifications: true
+    var dashboard_module = {
+
+        init: function() {
+            this.getProcesses();
+            this.getEvents();
+        },
+        taskActions: {
+            update_status: function(process_id, task_id, is_complete) {
+                apiService.post("/process/update/task/completed_status", {
+                    process_id: process_id,
+                    task_id: task_id,
+                    is_complete: is_complete
+                }).then(function() {
+                    console.log('updated task');
+                    dashboard_module.init();
+                }).caught(function() {
+                    console.log('could not update task');
+                    // TODO: MAKE A BETTER ERROR HANDLE HERE
+                });
+            }
+        },
+        filterEvents: function(events, prop, user_id) {
+            return _.filter(events, function(event_details){
+                return event_details[prop].indexOf(user_id) > -1;
+            });
+        },
+        getEvents: function() {
+            apiService.get('/events/listall')
+                .then(function(events) {
+                      $scope.filtered_events = {
+                        attending: dashboard_module.filterEvents(events, 'attending', $scope.user_details._id),
+                        watching: dashboard_module.filterEvents(events, 'watching',  $scope.user_details._id)
+                    };
+                });
+        },
+        getProcesses: function() {
+            return apiService.get('/process/assigned_to_me')
+                .then(dashboard_module.modifyTasksWithIncompleteTasks)
+                .then(function(result) {
+                    $scope.$apply(function() {
+                        $scope.processes = result;
+                    });
                 })
-            })
-            .then($scope.passScopeToSetup);
-    };
+                .caught(function() {
+                    console.log('could not get current assigned processes');
+                    // TODO: DO SOMETHING HERE
+                });
+        },
+        modifyTasksWithIncompleteTasks: function(processes) {
+            return _.map(processes, function(process) {
+                var modified_tasks = dashboard_module.mapTasks(process.tasks, process);
+                process.tasks = _.sortBy(modified_tasks, function(task) {
+                    return task.completed_by_current_user;
+                });
 
-    $scope.updateTask = function(task_id, status) {
-        if (!task_id || !status) {
-            throw new Error('No task ID or status found in update task function');
+                return process;
+            });
+        },
+        completedByCurrentUser: function(task) {
+            var user_id = $scope.user_details._id;
+            var completed_by = task.completed_by || [];
+            var is_complete = completed_by.indexOf(user_id) !== -1;
+            return is_complete;
+        },
+        mapTasks: function(tasks, process) {
+            return _.map(tasks, function(task, index) {
+                task.completed_by_current_user = dashboard_module.completedByCurrentUser(task);
+                task.incomplete_tasks = dashboard_module.incomplete_tasks(
+                    $scope.user_details._id,
+                    process,
+                    index
+                );
+                return task;
+            });
+        },
+        incomplete_tasks: function(user_id, process, task_index) {
+            var current_task = process.tasks[task_index];
+            var current_dependencies = current_task.dependencies || [];
+
+            return _.chain(process.tasks)
+                // FILTER OUT ONLY DEPENDENT TASKS 
+                .filter(function(task, index) {
+                    // CHECK THAT TASK IS DEPENDENT ON THE CURRENT TASK IN QUESTION
+                    var is_dependency = current_dependencies.indexOf(task.id) !== -1;
+
+                    var completed_by = task.completed_by || [];
+                    // LOOK IN THE ARRAY FOR THE USERS ID, AND SEE ITS STATUS
+                    var incomplete = completed_by.indexOf(user_id) === -1;
+
+                    // IF TASK IS NOT COMPLETE OR IS DEPENDENT RETURN IT
+                    return incomplete && is_dependency;
+                })
+                .map(function(curr) {
+                    return _.pick(curr, ['name', 'id']);
+                })
+                .value();
         }
-        apiService.post('/task/update', {
-                task_id: task_id,
-                status: status
-            }, {
-                preventNotifications: true
-            })
-            .then($scope.bootstrap)
-            .then(_.partial(notifyService.success, 'Updated task'));
     };
 
-    $scope.bootstrap();
+    $scope.processActions = {
+        markAsComplete: function(process_id, task_id, is_complete) {
+            if (process_id && task_id && is_complete !== undefined) {
+                is_complete = Number(!is_complete);
+                dashboard_module.taskActions.update_status(process_id, task_id, is_complete);
+                dashboard_module.init();
+            }
+        }
+    };
+
+    dashboard_module.init();
 
 });

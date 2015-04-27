@@ -1,7 +1,7 @@
 <div class="row">
     <div class="col-md-12 col-lg-12">
         <div class="top-panel">
-            <h5 class="text-secondary"> Main &nbsp; > &nbsp;<span class="text-accent"> Mentees </span></h5>
+            <h5 class="text-secondary"> Main &nbsp; > &nbsp;<span class="text-accent"> {{current_path}} </span></h5>
         </div>
     </div>
 </div>
@@ -13,7 +13,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h3 class="text-center">
-                            No mentees currently assigned
+                            No {{current_path}}'s currently assigned
                         </h3>
                     </div>
                 </div>
@@ -21,46 +21,73 @@
         </div>
     </div>
 </div>
-<div class="row" ng-repeat="mentee in mentees">
-    <div class="col-lg-8">
+<div class="row" ng-repeat="contact in mentees">
+    <div class="col-lg-6">
         <div class="widget">
-            <div class="widget-header" ng-class="{'red': mentee.severity_grade === 'High', 'yellow': mentee.severity_grade === 'Medium', 'blue': mentee.severity_grade === 'Low' }">
-                <p class="text-white"><i class="fa fa-user"></i>{{mentee.username}}({{mentee._id}})</p>
+            <div class="widget-header" ng-class="{'red': contact.severity_grade === 'High', 'yellow': contact.severity_grade === 'Medium', 'blue': contact.severity_grade === 'Low' }">
+                <span tooltip="{{contact._id}}" tooltip-placement="right">
+                    {{contact.username}}
+                </span>
             </div>
-            <div class="widget-body small no-padding">
+            <div class="widget-body large no-padding">
                 <br>
                 <div class="row">
                     <div class="col-lg-12">
-                        <p>
-                            First name: &nbsp; {{mentee.first_name}}
-                        </p>
-                        <p>
-                            Last name: &nbsp; {{mentee.last_name}}
-                        </p>
-                        <hr>
-                        <p>
-                            Created: &nbsp; {{mentee.date_created}}
-                        </p>
-                        <p>
-                            severity_grade: &nbsp; {{mentee.severity_grade}}
-                        </p>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div ng-show="contact.img">
+                                    <img class="img-responsive" src="{{contact.img}}">
+                                </div>
+                                <div ng-show="!contact.img">
+                                    <img class="img-responsive" src="../../assets/img/img_placeholder.jpg">
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <p class="no-padding">
+                                    <strong>  Name: </strong> &nbsp; {{contact.first_name}} {{contact.last_name}}
+                                </p>
+                                <p class="no-padding">
+                                    <strong>  Bio: </strong> &nbsp; {{contact.bio}}
+                                </p>
+                                <!-- <p class="no-padding"> <strong>Role:</strong> &nbsp; {{contact.role}}
+                                </p> -->
+                                <!-- <p class="no-padding"> <strong>Account since:</strong> &nbsp; {{contact.date_created}}
+                                </p> -->
+                                <!--                                 <p class="no-padding"> <strong>Last logon:</strong> &nbsp; //TODO
+                                </p> -->
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="col-lg-4">
+    <div class="col-lg-6">
         <div class="widget">
             <div class="widget-header">
-                <p><i class="fa fa-envelope"></i> Instant message module</p>
+                <i class="fa fa-envelope"></i> Instant message module
             </div>
-            <div class="widget-body small no-padding">
+            <div class="widget-body large no-padding" scroll-glue>
                 <br>
-                <div class="row">
-                    <div class="col-lg-12">
-                        <p class="no-padding" ng-repeat="chat_message in chat[mentee._id]">{{chat_message}}</p>
-                        <input ng-model="messages[mentee._id]" ng-enter="emitMessage(mentee)" type="text" placeholder="send message"></input>
-                        <a ng-click="emitMessage(mentee, this)" class="btn btn-accent"> Send message </a>
+                <div class="instant_messenger">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            {{getMessages(contact._id)}}
+                            <p class="no-padding" ng-repeat="message in contact.messages">
+                                <span ng-repeat="(user_id, message_content) in message">
+                                <strong>{{getUserNameFromID(user_id)}}: </strong>
+                                {{message_content}}
+                            </span>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="message_bar">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Enter message" ng-model="current_message" ng-enter="emitMessage(contact._id)">
+                            <span class="input-group-addon">
+                                <a ng-click="emitMessage(contact._id)" class="btn btn-accent pull-right"> Send message </a>
+                            </span>
+                        </div>
                     </div>
                 </div>
             </div>

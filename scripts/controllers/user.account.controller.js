@@ -10,7 +10,6 @@ SU.controller('accountController', function($scope, apiService, $timeout, utilit
             .then(function(user_details) {
                 $scope.$apply(function() {
                     $scope.user = user_details;
-                    $scope.user_original = _.clone(user_details);
                 });
             });
     };
@@ -28,30 +27,20 @@ SU.controller('accountController', function($scope, apiService, $timeout, utilit
 
     };
 
-    $scope.updateContact = function() {
 
-        // ENSURE THAT THEY HAVE AN ID (REQUIRED FOR API CALL)
-        if (!$scope.user_id) throw new Error('Could not establish the users ID');
-        else $scope.update_params.user_id = $scope.user_id;
+    $scope.updateContact = function(prop, value) {
 
-        // ENSURE THAT THEY HAVE ALTERED SOME FIELDS
-        if (_.keys($scope.update_params)
-            .length <= 1) {
-            notifyService.warning('You have not updated any fields');
-        }
+        // GENERATE PARAMS
+        var payload = {
+            user_id: $scope.user._id
+        };
+        payload[prop] = value;
 
-        // SUCCESSFULLY REGISTER UPDATE
-        else {
-            apiService.post('/user/update', $scope.update_params, {
-                    preventNotifications: true
-                })
-                .then(function() {
-                    $scope.$apply(function() {
-                        $scope.update_params = _.pick($scope.update_params, 'user_id');
-                    });
-                })
-                .then(_.partial(notifyService.success, 'Profile fields updated'));
-        }
+        // UPDATE USER CONTACT DETAILS
+        apiService.post('/user/update', payload, {
+                preventNotifications: true
+            })
+            .then(_.partial(notifyService.success, 'Profile fields updated'));
     };
 
     $scope.bootstrap();

@@ -1,0 +1,109 @@
+<div class="row">
+    <div class="col-md-12 col-lg-12">
+        <div class="top-panel">
+            <h5 class="text-secondary"> Processes &nbsp; > &nbsp;<span class="text-accent"> Manager </span></h5>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-4">
+        <div class="widget">
+            <div class="widget-header">
+                Process manager
+            </div>
+            <div class="widget-body">
+                <!-- <p class="no-padding"> Created: {{process.date_created}} || Updated: {{process.date_updated}} || Created by: //todo </p>
+ -->                <div class="row">
+                    <div class="col-md-12 col-lg-12">
+                        <div class="form-group">
+                            <label>Name</label>
+                            <input ng-blur="updateNameAndDescription()" required ng-model="process.name" class="form-control input-sm" placeholder="Name">
+                        </div>
+                        <div class="form-group">
+                            <label>Description</label>
+                            <textarea ng-blur="updateNameAndDescription()" required ng-model="process.description" class="form-control input-sm" rows="3" placeholder="Tell us something about your process"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2 col-md-offset-4">
+                        <label class="text-center">Publish</label>
+                    </div>
+                    <div class="col-md-2">
+                        <a><i ng-click="processActions.publish()" ng-class="{'fa-circle-o': !process.published, 'fa-check-circle-o': process.published}" class="fa fa-2x pull-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="widget">
+            <div class="widget-header">
+                Assignees
+            </div>
+            <div class="widget-body">
+                <div class="row">
+                    <div class="col-md-12 col-lg-12">
+                        <div class="form-group">
+                            <table class="table table-striped">
+                                <thead>
+                                    <th class="text-center">Name</th>
+                                    <th class="text-center">Actions</th>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="assignee in process.assignees">
+                                        <td class="text-center">
+                                            <span tooltip="{{assignee}}">
+                                            {{lookUpNameFromID(assignee)}}
+                                            </span>
+                                        </td>
+                                        <td class="text-center">
+                                            <button ng-click="assigneeActions.removeAssignee(assignee)"class="btn btn-danger btn-sm">
+                                                <i class="fa fa-trash"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <select ng-model="assignee_to_add" class="form-control">
+                                        <option value="{{user._id}}" ng-repeat="user in users">
+                                            {{user.first_name}} {{user.last_name}}
+                                            <span ng-show="!user.first_name || !user.last_name">
+                                                    Anonymous user
+                                                </span> ({{user._id}})
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <button ng-click="assigneeActions.addNewAssignee(assignee_to_add)" class="pull-right btn btn-success btn-block">
+                                        <i class="fa fa-plus"></i> Add new assignee
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="widget">
+                    <div class="widget-header">
+                        Task dependencies ({{process.tasks.length}})
+                        <button class="btn btn-primary pull-right" ng-click="taskActionsTemp.addToProcess()">
+                            <i class="fa fa-plus"></i> Add new task
+                        </button>
+                    </div>
+                    <div class="widget-body">
+                        <div class="process_manager" d3-create-process tasks="process.tasks" actions="taskActions"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

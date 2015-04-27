@@ -1,0 +1,67 @@
+<div class="row">
+    <div class="col-md-12 col-lg-12">
+        <div class="top-panel">
+            <h5 class="text-secondary"> Processes &nbsp; > &nbsp;<span class="text-accent"> Task Editor </span></h5>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <div class="widget">
+            <div class="widget-header">
+                Task details
+            </div>
+            <div class="widget-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <a href="#process_manager/{{config.process_id}}">
+                            <button class="form-control btn btn-sm btn-primary">
+                                <i class="fa fa-arrow-left"> 
+                                    &nbsp; Back to process
+                                </i>
+                            </button>
+                        </a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <label>Process ID</label>
+                        <input class="form-control" disabled=disabled type="text" ng-model="config.process_id"></input>
+                        <label>Task ID</label>
+                        <input class="form-control" disabled=disabled type="text" ng-model="config.task_id">
+                        </input>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <form ng-submit="updateNameAndDescription()">
+                            <input ng-model="task_details.name" required class="form-control" placeholder="Name">
+                            </input>
+                            <textarea required class="form-control" ng-model="task_details.description"></textarea>
+                            <button type="submit" class="btn btn-sm btn-success">
+                                <i class="fa fa-save">
+                                    &nbsp;
+                                    Save
+                                </i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="widget">
+            <div class="widget-header">
+                Edit task
+            </div>
+            <div class="widget-body">
+                <div text-angular ng-model="task_details.content"></div>
+                <br>
+                <button ng-click="saveContent()" class="btn btn-success btn-sm">
+                    <i class="fa fa-save">&nbsp; Save</i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
