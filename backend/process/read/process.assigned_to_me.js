@@ -8,6 +8,8 @@ module.exports = function(req, res) {
         res: res,
         file: __dirname + __filename
     });
+
+    console.log('user', req.user);
     var users_id = String(req.user._id);
 
     db.find('processes', [{
